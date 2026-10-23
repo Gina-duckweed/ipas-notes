@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第四章 大數據處理技術</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+
+  :root {
+    --bg: #F9F8F4;
+    --surface: #FFFFFF;
+    --surface2: #F3F2EE;
+    --border: #E2DDD5;
+    --text: #2C2A26;
+    --text2: #6B6560;
+    --text3: #9B9590;
+    --blue: #2D5F9A;
+    --blue-light: #E8F0F9;
+    --orange: #E85D3A;
+    --orange-light: #FDF0EC;
+    --green: #3A9A6E;
+    --green-light: #E8F5EF;
+    --amber: #D4920A;
+    --amber-light: #FDF6E3;
+    --purple: #7B5EA7;
+    --purple-light: #F0EBF8;
+    --teal: #2A8F9A;
+    --teal-light: #E6F4F5;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1A1916;
+      --surface: #252320;
+      --surface2: #2E2C28;
+      --border: #3A3830;
+      --text: #F0EDE8;
+      --text2: #B0A898;
+      --text3: #7A7268;
+      --blue: #5B8FCC;
+      --blue-light: #1A2535;
+      --orange: #F07A5A;
+      --orange-light: #2A1A15;
+      --green: #5ABF8E;
+      --green-light: #142216;
+      --amber: #E8B040;
+      --amber-light: #251C08;
+      --purple: #A885D4;
+      --purple-light: #1E1628;
+      --teal: #50B8C4;
+      --teal-light: #0E1F22;
+      --shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1A1916;
+    --surface: #252320;
+    --surface2: #2E2C28;
+    --border: #3A3830;
+    --text: #F0EDE8;
+    --text2: #B0A898;
+    --text3: #7A7268;
+    --blue: #5B8FCC;
+    --blue-light: #1A2535;
+    --orange: #F07A5A;
+    --orange-light: #2A1A15;
+    --green: #5ABF8E;
+    --green-light: #142216;
+    --amber: #E8B040;
+    --amber-light: #251C08;
+    --purple: #A885D4;
+    --purple-light: #1E1628;
+    --teal: #50B8C4;
+    --teal-light: #0E1F22;
+    --shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    background: var(--blue);
+    border-radius: 14px;
+    padding: 18px 28px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow);
+  }
+  .chapter-badge {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 13px;
+    border-radius: 8px;
+    padding: 4px 10px;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+  .header-title {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+  }
+  .header-sub {
+    color: rgba(255,255,255,0.75);
+    font-size: 12px;
+    margin-top: 3px;
+  }
+  .header-tags {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .htag {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border-radius: 6px;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* ── Grid ── */
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    align-items: start;
+  }
+
+  /* ── Column ── */
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ── Section Card ── */
+  .section-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-num {
+    font-weight: 900;
+    font-size: 14px;
+    color: #fff;
+    background: var(--accent);
+    border-radius: 6px;
+    padding: 2px 8px;
+  }
+  .section-title {
+    font-weight: 800;
+    font-size: 14px;
+    color: #fff;
+  }
+  .section-body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* ── Sub-card ── */
+  .card {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    border-left: 3px solid var(--accent);
+  }
+  .card-title {
+    font-weight: 800;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Highlight span ── */
+  .hl { font-weight: 700; color: var(--accent); }
+  .hl-blue { font-weight: 700; color: var(--blue); }
+  .hl-orange { font-weight: 700; color: var(--orange); }
+  .hl-green { font-weight: 700; color: var(--green); }
+  .hl-amber { font-weight: 700; color: var(--amber); }
+  .hl-purple { font-weight: 700; color: var(--purple); }
+  .hl-teal { font-weight: 700; color: var(--teal); }
+
+  /* ── Pills ── */
+  .pills { display: flex; flex-wrap: wrap; gap: 5px; }
+  .pill {
+    border-radius: 20px;
+    padding: 3px 9px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .pill-blue { background: var(--blue-light); color: var(--blue); }
+  .pill-orange { background: var(--orange-light); color: var(--orange); }
+  .pill-green { background: var(--green-light); color: var(--green); }
+  .pill-amber { background: var(--amber-light); color: var(--amber); }
+  .pill-purple { background: var(--purple-light); color: var(--purple); }
+  .pill-teal { background: var(--teal-light); color: var(--teal); }
+
+  /* ── Table ── */
+  .sk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11.5px;
+  }
+  .sk-table th {
+    background: var(--blue-light);
+    color: var(--blue);
+    font-weight: 800;
+    padding: 5px 8px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+  .sk-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .sk-table tr:last-child td { border-bottom: none; }
+  .sk-table tr:nth-child(even) td { background: var(--surface2); }
+
+  /* ── Mini table ── */
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  .mini-table th {
+    padding: 4px 7px;
+    font-weight: 800;
+    font-size: 10.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .mini-table td {
+    padding: 4px 7px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .mini-table tr:last-child td { border-bottom: none; }
+
+  /* ── Quality problem grid ── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .problem-item {
+    background: var(--surface2);
+    border-radius: 7px;
+    padding: 7px 9px;
+    border-top: 2px solid var(--accent);
+  }
+  .problem-name {
+    font-weight: 800;
+    font-size: 11.5px;
+    color: var(--accent);
+    margin-bottom: 2px;
+  }
+  .problem-en {
+    font-size: 10px;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+  .problem-desc {
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.4;
+  }
+  .problem-fix {
+    margin-top: 3px;
+    font-size: 10.5px;
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* ── Source type rows ── */
+  .source-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .source-row:last-child { border-bottom: none; }
+  .source-icon {
+    font-size: 16px;
+    min-width: 22px;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .source-name {
+    font-weight: 800;
+    font-size: 11.5px;
+    color: var(--text);
+  }
+  .source-en {
+    font-size: 10px;
+    color: var(--text3);
+  }
+  .source-detail {
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.4;
+  }
+
+  /* ── ACID grid ── */
+  .acid-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .acid-box {
+    border-radius: 7px;
+    padding: 7px 10px;
+    background: var(--surface2);
+  }
+  .acid-letter {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .acid-name { font-weight: 800; font-size: 11px; margin-bottom: 2px; }
+  .acid-desc { font-size: 10.5px; color: var(--text2); line-height: 1.4; }
+
+  /* ── Storage type comparison ── */
+  .data-type-row {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 6px;
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .data-type-row:last-child { border-bottom: none; }
+  .dtype-badge {
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 5px;
+    padding: 3px 5px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* ── Encoding table ── */
+  .enc-item {
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .enc-item:last-child { border-bottom: none; }
+  .enc-name { font-weight: 800; font-size: 11.5px; }
+  .enc-desc { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .enc-use { font-size: 10.5px; color: var(--green); font-weight: 700; margin-top: 2px; }
+
+  /* ── Feature selection ── */
+  .feat-row {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+    gap: 6px;
+    align-items: start;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .feat-row:last-child { border-bottom: none; }
+  .feat-badge {
+    border-radius: 5px;
+    padding: 3px 5px;
+    font-size: 10px;
+    font-weight: 800;
+    text-align: center;
+  }
+  .feat-detail { font-size: 11px; color: var(--text2); line-height: 1.4; }
+  .feat-name { font-weight: 700; font-size: 11.5px; color: var(--text); }
+
+  /* ── Quality metric strip ── */
+  .metric-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .metric-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 6px;
+    align-items: start;
+  }
+  .metric-name {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--accent);
+    background: var(--surface2);
+    border-radius: 5px;
+    padding: 2px 6px;
+    text-align: center;
+  }
+  .metric-desc { font-size: 11px; color: var(--text2); line-height: 1.4; padding-top: 2px; }
+
+  /* ── Pipeline flow ── */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .pipe-step {
+    background: var(--blue-light);
+    color: var(--blue);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .pipe-arrow {
+    color: var(--text3);
+    font-size: 12px;
+  }
+
+  /* ── SVG diagram area ── */
+  .diagram-box {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+  }
+
+  /* ── Consistency compare ── */
+  .consist-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .consist-box {
+    border-radius: 7px;
+    padding: 7px 9px;
+  }
+  .consist-title { font-weight: 800; font-size: 11.5px; margin-bottom: 3px; }
+  .consist-desc { font-size: 10.5px; color: var(--text2); line-height: 1.4; }
+
+  /* ── Access control table ── */
+  .access-row {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 5px;
+    align-items: start;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .access-row:last-child { border-bottom: none; }
+  .access-badge {
+    font-size: 10px;
+    font-weight: 900;
+    border-radius: 4px;
+    padding: 2px 3px;
+    text-align: center;
+  }
+  .access-detail { font-size: 11px; color: var(--text2); line-height: 1.4; }
+  .access-name { font-weight: 700; font-size: 11px; color: var(--text); }
+
+  /* ── Augment grid ── */
+  .aug-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .aug-item {
+    background: var(--surface2);
+    border-radius: 7px;
+    padding: 6px 8px;
+  }
+  .aug-icon { font-size: 14px; margin-bottom: 2px; }
+  .aug-name { font-weight: 800; font-size: 11px; margin-bottom: 2px; }
+  .aug-desc { font-size: 10.5px; color: var(--text2); line-height: 1.4; }
+
+  /* ── Info note ── */
+  .note-box {
+    background: var(--amber-light);
+    border-left: 3px solid var(--amber);
+    border-radius: 7px;
+    padding: 7px 10px;
+    font-size: 11.5px;
+    color: var(--text);
+  }
+  .note-box strong { color: var(--amber); }
+
+  /* ── Sketch dashed ── */
+  .sketch-box {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    background: var(--surface);
+  }
+  .sketch-label {
+    font-size: 10px;
+    color: var(--text3);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+</style>
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <div>
+    <div class="chapter-badge">第四章 · CH4</div>
+  </div>
+  <div>
+    <div class="header-title">大數據處理技術</div>
+    <div class="header-sub">Big Data Processing Technologies</div>
+  </div>
+  <div class="header-tags">
+    <span class="htag">4.1 收集與清理</span>
+    <span class="htag">4.2 儲存與管理</span>
+    <span class="htag">4.3 處理技術與工具</span>
+  </div>
+</div>
+
+<!-- ── PIPELINE OVERVIEW ── -->
+<div style="background:var(--surface); border-radius:10px; padding:10px 16px; margin-bottom:14px; box-shadow:var(--shadow);">
+  <div style="font-size:11px; color:var(--text3); font-weight:700; margin-bottom:6px;">大數據處理流程 BIG DATA PIPELINE</div>
+  <div class="pipeline">
+    <div class="pipe-step">🌐 收集</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">🧹 清理</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">🗄️ 儲存</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">⚙️ 處理</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">🔧 特徵工程</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">📊 分析/建模</div><div class="pipe-arrow">→</div>
+    <div class="pipe-step">💡 應用</div>
+  </div>
+</div>
+
+<!-- ── GRID 3 COLUMNS ── -->
+<div class="grid3">
+
+  <!-- ════ COL 1: 4.1 數據收集與清理 ════ -->
+  <div class="col">
+
+    <div class="section-card" style="--accent:var(--orange)">
+      <div class="section-header" style="background:var(--orange)">
+        <span class="section-num" style="background:rgba(255,255,255,0.25);">4.1</span>
+        <span class="section-title">數據收集與清理</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 資料來源 -->
+        <div class="card" style="--accent:var(--orange)">
+          <div class="card-title">資料來源類型 Data Sources</div>
+          <div class="source-row">
+            <div class="source-icon">📡</div>
+            <div>
+              <div class="source-name">感測器 / IoT</div>
+              <div class="source-detail">高頻、時間序列；MQTT、Kafka 串流；邊緣運算預處理</div>
+            </div>
+          </div>
+          <div class="source-row">
+            <div class="source-icon">📋</div>
+            <div>
+              <div class="source-name">系統日誌 / 行為紀錄</div>
+              <div class="source-detail">Web Log、點擊軌跡；Flume、Logstash、NiFi 傳輸</div>
+            </div>
+          </div>
+          <div class="source-row">
+            <div class="source-icon">🔌</div>
+            <div>
+              <div class="source-name">API / 外部資料交換</div>
+              <div class="source-detail">RESTful API；JSON/XML；ETL 整合 (Airflow、Talend)</div>
+            </div>
+          </div>
+          <div class="source-row">
+            <div class="source-icon">🕷️</div>
+            <div>
+              <div class="source-name">網路爬蟲 / 開放平台</div>
+              <div class="source-detail">Scrapy、BeautifulSoup；data.gov、Kaggle 資料集</div>
+            </div>
+          </div>
+          <div class="source-row">
+            <div class="source-icon">🏭</div>
+            <div>
+              <div class="source-name">企業內部系統</div>
+              <div class="source-detail">ERP / CRM / POS；SQL 批次匯出；Snowflake、BigQuery</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 收集考量因素 -->
+        <div class="pills">
+          <span class="pill pill-orange">更新頻率：即時/批次</span>
+          <span class="pill pill-blue">格式轉換需求</span>
+          <span class="pill pill-green">資料品質</span>
+          <span class="pill pill-amber">即時性要求</span>
+          <span class="pill pill-purple">隱私與合規 GDPR/CCPA</span>
+        </div>
+
+        <!-- 資料品質問題 -->
+        <div class="card" style="--accent:var(--orange)">
+          <div class="card-title">資料品質問題類型</div>
+          <div class="problem-grid">
+            <div class="problem-item" style="--accent:var(--orange)">
+              <div class="problem-name">缺失值</div>
+              <div class="problem-en">Missing Data</div>
+              <div class="problem-desc">欄位空值；MCAR / MAR / MNAR 三類缺失</div>
+              <div class="problem-fix">→ 填補 (均值/KNN) / 刪除 / 保留</div>
+            </div>
+            <div class="problem-item" style="--accent:var(--blue)">
+              <div class="problem-name" style="color:var(--blue)">異常值</div>
+              <div class="problem-en">Outliers</div>
+              <div class="problem-desc">極端偏離分佈；可能是輸入錯誤或真實罕見事件</div>
+              <div class="problem-fix" style="color:var(--blue)">→ IQR法 / Z分數 / 孤立森林</div>
+            </div>
+            <div class="problem-item" style="--accent:var(--green)">
+              <div class="problem-name" style="color:var(--green)">重複值</div>
+              <div class="problem-en">Duplicates</div>
+              <div class="problem-desc">同一觀察多次出現；高估頻次、影響模型</div>
+              <div class="problem-fix" style="color:var(--green)">→ 唯一識別碼偵測並移除</div>
+            </div>
+            <div class="problem-item" style="--accent:var(--amber)">
+              <div class="problem-name" style="color:var(--amber)">一致性錯誤</div>
+              <div class="problem-en">Inconsistency</div>
+              <div class="problem-desc">單位/格式不統一；「臺北市」vs「台北市」</div>
+              <div class="problem-fix" style="color:var(--amber)">→ 標準化命名規則格式</div>
+            </div>
+            <div class="problem-item" style="--accent:var(--purple); grid-column:1/-1">
+              <div class="problem-name" style="color:var(--purple)">邏輯錯誤</div>
+              <div class="problem-en">Logical Errors</div>
+              <div class="problem-desc">格式正確但違反邏輯（出生年1890、負金額、體溫43°C）→ 設定規則範圍 (年齡0-120)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 資料品質指標 -->
+        <div class="card" style="--accent:var(--orange)">
+          <div class="card-title">資料品質評估指標</div>
+          <div class="metric-strip" style="--accent:var(--orange)">
+            <div class="metric-row">
+              <div class="metric-name" style="color:var(--orange); background:var(--orange-light)">缺失率</div>
+              <div class="metric-desc">各欄位空值/缺漏資料的比例；高缺失率影響特徵可用性</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-name" style="color:var(--blue); background:var(--blue-light)">唯一值比率</div>
+              <div class="metric-desc">主鍵出現重複 → 嚴重破壞資料正確性</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-name" style="color:var(--green); background:var(--green-light)">一致性比率</div>
+              <div class="metric-desc">欄位格式、單位、命名標準是否統一</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-name" style="color:var(--amber); background:var(--amber-light)">異常值比率</div>
+              <div class="metric-desc">明顯偏離正態分佈或超出上下限的資料比例</div>
+            </div>
+            <div class="metric-row">
+              <div class="metric-name" style="color:var(--purple); background:var(--purple-light)">完整性比率</div>
+              <div class="metric-desc">觀察對象是否具備足夠的資料描述 (多欄位完整性)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════ COL 2: 4.2 數據儲存與管理 ════ -->
+  <div class="col">
+
+    <div class="section-card" style="--accent:var(--blue)">
+      <div class="section-header" style="background:var(--blue)">
+        <span class="section-num" style="background:rgba(255,255,255,0.25);">4.2</span>
+        <span class="section-title">數據儲存與管理</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 資料型態 -->
+        <div class="card" style="--accent:var(--blue)">
+          <div class="card-title">資料型態與儲存技術</div>
+          <div class="data-type-row">
+            <div class="dtype-badge" style="background:var(--blue-light); color:var(--blue);">結構化<br>Structured</div>
+            <div>
+              <div style="font-size:11px;"><span class="hl-blue">RDBMS</span>：MySQL / PostgreSQL / Oracle</div>
+              <div style="font-size:10.5px; color:var(--text2); margin-top:2px;">固定欄位、SQL查詢、ACID特性、ERP/CRM/POS來源</div>
+              <div style="font-size:10.5px; color:var(--text3); margin-top:1px;">⚠ 結構固定，模式變動靈活度低</div>
+            </div>
+          </div>
+          <div class="data-type-row">
+            <div class="dtype-badge" style="background:var(--amber-light); color:var(--amber);">半結構化<br>Semi</div>
+            <div>
+              <div style="font-size:11px;"><span class="hl-amber">NoSQL</span>：MongoDB / ElasticSearch / 資料湖</div>
+              <div style="font-size:10.5px; color:var(--text2); margin-top:2px;">JSON / XML / YAML；API傳輸、IoT封包、網站內容</div>
+              <div style="font-size:10.5px; color:var(--text3); margin-top:1px;">⚠ 缺乏結構約束，查詢邏輯需自定</div>
+            </div>
+          </div>
+          <div class="data-type-row">
+            <div class="dtype-badge" style="background:var(--purple-light); color:var(--purple);">非結構化<br>Unstructured</div>
+            <div>
+              <div style="font-size:11px;"><span class="hl-purple">物件儲存</span>：S3 / MinIO / HDFS</div>
+              <div style="font-size:10.5px; color:var(--text2); margin-top:2px;">文字、圖片、音訊、影片；需 metadata 管理系統</div>
+              <div style="font-size:10.5px; color:var(--text3); margin-top:1px;">⚠ 難以直接搜尋，需外部標註與索引</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 分散式儲存 + 資料湖 -->
+        <div class="card" style="--accent:var(--blue)">
+          <div class="card-title">分散式儲存 &amp; 資料湖架構</div>
+
+          <!-- Storage SVG -->
+          <div class="diagram-box" style="margin-bottom:8px;">
+            <svg viewBox="0 0 280 90" width="100%" height="90">
+              <defs>
+                <style>.st{font-family:'Nunito',sans-serif; font-size:9px; font-weight:700;}</style>
+              </defs>
+              <!-- Data Sources -->
+              <rect x="2" y="5" width="48" height="18" rx="4" fill="#FDF0EC"></rect>
+              <text x="26" y="17" class="st" fill="#E85D3A" text-anchor="middle">IoT/API</text>
+              <rect x="2" y="28" width="48" height="18" rx="4" fill="#FDF0EC"></rect>
+              <text x="26" y="40" class="st" fill="#E85D3A" text-anchor="middle">DB/ERP</text>
+              <rect x="2" y="51" width="48" height="18" rx="4" fill="#FDF0EC"></rect>
+              <text x="26" y="63" class="st" fill="#E85D3A" text-anchor="middle">Logs/Web</text>
+              <!-- Arrow -->
+              <path d="M52 36 L72 36" stroke="#9B9590" stroke-width="1.5" marker-end="url(#arr)" fill="none"></path>
+              <defs>
+                <marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                  <path d="M0,0 L6,3 L0,6 Z" fill="#9B9590"></path>
+                </marker>
+              </defs>
+              <!-- Data Lake -->
+              <rect x="74" y="12" width="68" height="52" rx="6" fill="#E8F0F9" stroke="#2D5F9A" stroke-width="1.5"></rect>
+              <text x="108" y="30" class="st" fill="#2D5F9A" text-anchor="middle">Data Lake</text>
+              <text x="108" y="44" style="font-family:&#39;Nunito&#39;; font-size:8px;" fill="#2D5F9A" text-anchor="middle">原始格式儲存</text>
+              <text x="108" y="55" style="font-family:&#39;Nunito&#39;; font-size:8px;" fill="#2D5F9A" text-anchor="middle">Schema-on-Read</text>
+              <!-- Arrow -->
+              <path d="M144 38 L162 38" stroke="#9B9590" stroke-width="1.5" marker-end="url(#arr)" fill="none"></path>
+              <!-- Data Lakehouse -->
+              <rect x="164" y="5" width="72" height="25" rx="5" fill="#E8F5EF" stroke="#3A9A6E" stroke-width="1.5"></rect>
+              <text x="200" y="16" class="st" fill="#3A9A6E" text-anchor="middle">Lakehouse</text>
+              <text x="200" y="26" style="font-family:&#39;Nunito&#39;; font-size:8px;" fill="#3A9A6E" text-anchor="middle">Delta/Iceberg/Hudi</text>
+              <!-- Data Warehouse -->
+              <rect x="164" y="36" width="72" height="25" rx="5" fill="#F0EBF8" stroke="#7B5EA7" stroke-width="1.5"></rect>
+              <text x="200" y="47" class="st" fill="#7B5EA7" text-anchor="middle">Data Warehouse</text>
+              <text x="200" y="57" style="font-family:&#39;Nunito&#39;; font-size:8px;" fill="#7B5EA7" text-anchor="middle">Schema-on-Write</text>
+              <!-- Labels at bottom -->
+              <text x="26" y="80" style="font-family:&#39;Nunito&#39;; font-size:8px;" fill="#9B9590" text-anchor="middle">來源</text>
+              <text x="108" y="80" style="font-family:&#39;Nunito&#39;; font-size:8px;" fill="#9B9590" text-anchor="middle">HDFS/S3/GCS</text>
+              <text x="200" y="80" style="font-family:&#39;Nunito&#39;; font-size:8px;" fill="#9B9590" text-anchor="middle">分析層</text>
+            </svg>
+          </div>
+
+          <div style="font-size:10.5px; color:var(--text2); line-height:1.5;">
+            <span class="hl-blue">分散式特性</span>：橫向擴充 · 容錯容災 · 高並行存取 · 資料本地性<br>
+            <span class="hl-green">Lakehouse</span>：ACID操作 + 版本控制 + 即時查詢 (Delta Lake / Apache Iceberg / Hudi)
+          </div>
+        </div>
+
+        <!-- ACID -->
+        <div class="card" style="--accent:var(--blue)">
+          <div class="card-title">ACID 交易特性</div>
+          <div class="acid-grid">
+            <div class="acid-box" style="border-top:2px solid var(--blue)">
+              <div class="acid-letter" style="color:var(--blue)">A</div>
+              <div class="acid-name">Atomicity 原子性</div>
+              <div class="acid-desc">全做完 或 全不做，無法只執行部分</div>
+            </div>
+            <div class="acid-box" style="border-top:2px solid var(--orange)">
+              <div class="acid-letter" style="color:var(--orange)">C</div>
+              <div class="acid-name">Consistency 一致性</div>
+              <div class="acid-desc">交易前後維持邏輯一致狀態（主鍵/外鍵約束）</div>
+            </div>
+            <div class="acid-box" style="border-top:2px solid var(--green)">
+              <div class="acid-letter" style="color:var(--green)">I</div>
+              <div class="acid-name">Isolation 隔離性</div>
+              <div class="acid-desc">並行交易互不干擾，如同獨立執行</div>
+            </div>
+            <div class="acid-box" style="border-top:2px solid var(--amber)">
+              <div class="acid-letter" style="color:var(--amber)">D</div>
+              <div class="acid-name">Durability 持久性</div>
+              <div class="acid-desc">Commit 後永久保存，系統當機不遺失</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 資料一致性對比 -->
+        <div class="card" style="--accent:var(--blue)">
+          <div class="card-title">資料一致性策略</div>
+          <div class="consist-compare">
+            <div class="consist-box" style="background:var(--blue-light)">
+              <div class="consist-title" style="color:var(--blue)">強一致性</div>
+              <div class="consist-desc">寫入後所有讀取即時得最新狀態<br>適用：金融交易、帳務<br><em>技術：Delta Lake, Iceberg</em></div>
+            </div>
+            <div class="consist-box" style="background:var(--green-light)">
+              <div class="consist-title" style="color:var(--green)">最終一致性</div>
+              <div class="consist-desc">允許短時間非同步，最終趨一致<br>適用：S3、HDFS 物件儲存<br><em>高吞吐，犧牲即時性</em></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 存取控制 -->
+        <div class="card" style="--accent:var(--blue)">
+          <div class="card-title">存取控制模型 Access Control</div>
+          <div class="access-row">
+            <div class="access-badge" style="background:var(--blue-light); color:var(--blue)">RBAC</div>
+            <div>
+              <div class="access-name">角色存取控制</div>
+              <div class="access-detail">依角色（工程師/分析師/主管）控管；邏輯清楚、中小企業常用</div>
+            </div>
+          </div>
+          <div class="access-row">
+            <div class="access-badge" style="background:var(--green-light); color:var(--green)">ABAC</div>
+            <div>
+              <div class="access-name">屬性存取控制</div>
+              <div class="access-detail">依使用者屬性+資料屬性+環境條件；彈性高，大型企業</div>
+            </div>
+          </div>
+          <div class="access-row">
+            <div class="access-badge" style="background:var(--amber-light); color:var(--amber)">PBAC</div>
+            <div>
+              <div class="access-name">策略存取控制</div>
+              <div class="access-detail">預設策略規則 (OPA/Rego)；雲端平台、跨系統整合</div>
+            </div>
+          </div>
+          <div class="access-row">
+            <div class="access-badge" style="background:var(--purple-light); color:var(--purple)">DAC</div>
+            <div>
+              <div class="access-name">自主存取控制</div>
+              <div class="access-detail">資料擁有者自決誰可存取；彈性高，研發小團隊</div>
+            </div>
+          </div>
+          <div style="margin-top:6px;" class="note-box">
+            <strong>Zero Trust</strong>：不信任任何人，持續驗證 · 最小權限 · 動態授權 (JIT)
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════ COL 3: 4.3 數據處理技術與工具 ════ -->
+  <div class="col">
+
+    <div class="section-card" style="--accent:var(--green)">
+      <div class="section-header" style="background:var(--green)">
+        <span class="section-num" style="background:rgba(255,255,255,0.25);">4.3</span>
+        <span class="section-title">數據處理技術與工具</span>
+      </div>
+      <div class="section-body">
+
+        <!-- 資料準備流程 -->
+        <div class="card" style="--accent:var(--green)">
+          <div class="card-title">清理後的資料準備轉換</div>
+          <div style="font-size:11px; color:var(--text2); margin-bottom:8px;">清理完 → 型態轉換 → 標準化 → 編碼 → 可分析狀態</div>
+
+          <!-- 編碼轉換 -->
+          <div style="font-weight:800; font-size:11.5px; color:var(--green); margin-bottom:5px;">類別變數編碼方式 Encoding</div>
+          <div class="enc-item">
+            <div class="enc-name">Label Encoding <span style="font-size:10px; color:var(--text3)">標籤編碼</span></div>
+            <div class="enc-desc">每類別 → 整數（小學→0, 高中→1, 大學→2）</div>
+            <div class="enc-use">✓ 有序類別 (Ordinal)；⚠ 誤用於無序類別會誤導模型</div>
+          </div>
+          <div class="enc-item">
+            <div class="enc-name">One-hot Encoding <span style="font-size:10px; color:var(--text3)">獨熱編碼</span></div>
+            <div class="enc-desc">每類別 → 獨立二元欄位（紅/藍/綠 → 3欄位）</div>
+            <div class="enc-use">✓ 無序類別 (Nominal)；⚠ 高基數導致維度爆炸</div>
+          </div>
+          <div class="enc-item">
+            <div class="enc-name">Target Encoding <span style="font-size:10px; color:var(--text3)">目標編碼</span></div>
+            <div class="enc-desc">以目標變數統計量（平均轉換率）取代類別值</div>
+            <div class="enc-use">✓ 高基數類別且與目標高度關聯；⚠ 需防資料洩漏</div>
+          </div>
+        </div>
+
+        <!-- 數值標準化 -->
+        <div class="card" style="--accent:var(--green)">
+          <div class="card-title">數值標準化 / 正規化</div>
+          <table class="mini-table">
+            <thead>
+              <tr>
+                <th style="background:var(--green-light); color:var(--green);">方法</th>
+                <th style="background:var(--green-light); color:var(--green);">公式 / 範圍</th>
+                <th style="background:var(--green-light); color:var(--green);">注意</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Min-Max</strong><br><span style="font-size:9.5px; color:var(--text3)">最小最大正規化</span></td>
+                <td style="font-family:monospace; font-size:10px;">[0, 1]<br>(x-min)/(max-min)</td>
+                <td style="font-size:10px; color:var(--text2)">⚠ 對極端值敏感</td>
+              </tr>
+              <tr>
+                <td><strong>Z-score</strong><br><span style="font-size:9.5px; color:var(--text3)">標準化</span></td>
+                <td style="font-family:monospace; font-size:10px;">μ=0, σ=1<br>(x-μ)/σ</td>
+                <td style="font-size:10px; color:var(--text2)">⚠ 資料偏態時偏移</td>
+              </tr>
+              <tr>
+                <td><strong>Robust</strong><br><span style="font-size:9.5px; color:var(--text3)">穩健標準化</span></td>
+                <td style="font-family:monospace; font-size:10px;">中位數 + IQR<br>(x-median)/IQR</td>
+                <td style="font-size:10px; color:var(--text2)">✓ 偏態/離群值強健</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="note-box" style="margin-top:7px; font-size:10.5px;">
+            <strong>何時需要縮放？</strong> KNN、梯度下降、神經網路、正則化模型 (Lasso/Ridge) 必要前處理；決策樹類模型不受影響
+          </div>
+        </div>
+
+        <!-- 特徵工程 -->
+        <div class="card" style="--accent:var(--green)">
+          <div class="card-title">特徵工程 Feature Engineering</div>
+
+          <!-- 特徵選擇 -->
+          <div style="font-weight:800; font-size:11.5px; color:var(--green); margin-bottom:5px;">特徵選擇 Feature Selection</div>
+          <div class="feat-row">
+            <div class="feat-badge" style="background:var(--blue-light); color:var(--blue)">Filter<br>過濾法</div>
+            <div>
+              <div class="feat-name">統計量篩選 (Pearson/χ²/ANOVA)</div>
+              <div class="feat-detail">速度快，不依賴模型；缺：無法考量特徵交互</div>
+            </div>
+          </div>
+          <div class="feat-row">
+            <div class="feat-badge" style="background:var(--orange-light); color:var(--orange)">Wrapper<br>包裝法</div>
+            <div>
+              <div class="feat-name">RFE / 前向後向選擇</div>
+              <div class="feat-detail">模型表現為標準，精確考量交互；計算成本高</div>
+            </div>
+          </div>
+          <div class="feat-row">
+            <div class="feat-badge" style="background:var(--green-light); color:var(--green)">Embedded<br>嵌入法</div>
+            <div>
+              <div class="feat-name">Lasso / Ridge / 決策樹重要性</div>
+              <div class="feat-detail">訓練同時完成特徵選擇；需特定模型支援</div>
+            </div>
+          </div>
+
+          <!-- 特徵衍生 -->
+          <div style="font-weight:800; font-size:11.5px; color:var(--green); margin: 8px 0 5px;">特徵衍生 Feature Generation</div>
+          <div class="pills">
+            <span class="pill pill-blue">交互特徵 (乘積/除法)</span>
+            <span class="pill pill-amber">時間特徵 (星期/假日/Recency)</span>
+            <span class="pill pill-green">聚合特徵 (群組統計)</span>
+            <span class="pill pill-orange">分箱 Binning (等寬/等頻/K-Means)</span>
+          </div>
+        </div>
+
+        <!-- 資料增強 -->
+        <div class="card" style="--accent:var(--green)">
+          <div class="card-title">資料增強 Data Augmentation</div>
+          <div class="aug-grid">
+            <div class="aug-item">
+              <div class="aug-icon">🖼️</div>
+              <div class="aug-name">圖像增強</div>
+              <div class="aug-desc">翻轉、旋轉、裁剪、色彩變換；人臉辨識、醫學影像</div>
+            </div>
+            <div class="aug-item">
+              <div class="aug-icon">📝</div>
+              <div class="aug-name">文字增強</div>
+              <div class="aug-desc">同義詞替換、隨機插入/刪除；情感分析、對話模型</div>
+            </div>
+            <div class="aug-item">
+              <div class="aug-icon">📈</div>
+              <div class="aug-name">時序增強</div>
+              <div class="aug-desc">加入噪聲、Jittering、視窗裁切；設備故障預測</div>
+            </div>
+            <div class="aug-item">
+              <div class="aug-icon">📊</div>
+              <div class="aug-name">表格增強 SMOTE</div>
+              <div class="aug-desc">合成少數類樣本；詐欺偵測、疾病診斷不平衡問題</div>
+            </div>
+          </div>
+          <div class="note-box" style="margin-top:7px; font-size:10.5px;">
+            <strong>⚠ 注意</strong>：避免資料洩漏 (Data Leakage)；增強需在 cross-validation 或 time-window 外進行
+          </div>
+        </div>
+
+        <!-- 儲存效能優化摘要 -->
+        <div class="card" style="--accent:var(--teal)">
+          <div class="card-title" style="color:var(--teal)">儲存效能優化策略</div>
+          <div style="display:flex; flex-direction:column; gap:4px;">
+            <div style="font-size:11px;"><span class="hl-teal">分區儲存 Partitioning</span> — 依時間/地區分區，縮小查詢掃描範圍</div>
+            <div style="font-size:11px;"><span class="hl-teal">壓縮技術</span> — Parquet/ORC + Snappy/ZSTD，降低I/O成本</div>
+            <div style="font-size:11px;"><span class="hl-teal">儲存分層 Tiering</span> — 熱資料→SSD；冷資料→HDD/雲端</div>
+            <div style="font-size:11px;"><span class="hl-teal">欄位裁剪 Column Pruning</span> — 查詢時僅讀必要欄位，減少I/O</div>
+            <div style="font-size:11px;"><span class="hl-teal">物化檢視 Materialized View</span> — 預計算重複查詢 (BI報表加速)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<div style="margin-top:14px; background:var(--surface); border-radius:10px; padding:10px 16px; box-shadow:var(--shadow); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+  <div style="font-size:11px; color:var(--text3); font-weight:700;">iPAS 中級 AI應用規劃師 · 科目二</div>
+  <div style="width:1px; height:14px; background:var(--border);"></div>
+  <div class="pills">
+    <span class="pill pill-orange">4.1 收集策略 + 品質管理</span>
+    <span class="pill pill-blue">4.2 儲存架構 + 資料治理</span>
+    <span class="pill pill-green">4.3 轉換 + 特徵工程 + 增強</span>
+  </div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第四章 機器學習與深度學習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+:root{
+  --R:#C0392B;--Rlt:#FDEDEC;--Rdk:#922B21;
+  --B:#2D5F9A;--O:#E85D3A;--G:#3A9A6E;--A:#D4920A;--P:#7B5EA7;--T:#2A8A8A;
+  --Alt:#FFF8E1;
+  --s:#FAFAFA;--s2:#F2F2F2;--b:#E0E0E0;--t:#1A1A1A;--t2:#555;--t3:#888;
+  --card:#fff;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --s:#181818;--s2:#232323;--b:#333;--t:#F0F0F0;--t2:#BBB;--t3:#888;
+  --card:#222;--Rlt:#3B1210;--Alt:#3A2E00;
+}}
+[data-theme=dark]{
+  --s:#181818;--s2:#232323;--b:#333;--t:#F0F0F0;--t2:#BBB;--t3:#888;
+  --card:#222;--Rlt:#3B1210;--Alt:#3A2E00;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--s);color:var(--t);font-family:'Nunito','Noto Sans TC',sans-serif;font-size:13px;line-height:1.5}
+.wrap{max-width:960px;margin:0 auto;padding:18px 16px}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--Rdk) 0%,var(--R) 55%,#E05C50 100%);border-radius:16px;padding:28px 28px 22px;margin-bottom:18px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-30px;top:-30px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero::after{content:'';position:absolute;right:60px;bottom:-40px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero-eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:rgba(255,255,255,.75);text-transform:uppercase;margin-bottom:6px}
+.hero-title{font-size:26px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:8px;text-wrap:balance}
+.hero-sub{font-size:12px;color:rgba(255,255,255,.82);max-width:520px;line-height:1.6}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbadge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:3px 10px;font-size:10.5px;font-weight:700;color:#fff}
+
+/* SECTION GRID */
+.sec-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+@media(max-width:640px){.sec-row{grid-template-columns:1fr}}
+.sec{background:var(--card);border-radius:12px;border:2px solid var(--R);overflow:hidden}
+.sec-hdr{background:var(--R);color:#fff;padding:9px 13px;display:flex;align-items:center;gap:8px}
+.sec-hdr svg{flex-shrink:0}
+.sec-hdr-txt{font-size:12px;font-weight:800}
+.sec-hdr-sub{font-size:9.5px;font-weight:600;opacity:.85}
+.sec-body{padding:10px 12px;font-size:11.5px;color:var(--t2)}
+.sec-item{display:flex;align-items:flex-start;gap:6px;padding:4px 0;border-bottom:1px solid var(--b)}
+.sec-item:last-child{border-bottom:none}
+.sec-dot{width:6px;height:6px;border-radius:50%;background:var(--R);flex-shrink:0;margin-top:5px}
+.sec-item-txt{line-height:1.45}
+.tag{display:inline-block;background:var(--Rlt);color:var(--Rdk);font-size:9px;font-weight:800;padding:1px 5px;border-radius:4px;margin-left:4px}
+
+/* ALGO COMPARE TABLE */
+.algo-section{background:var(--card);border-radius:12px;border:2px solid var(--R);overflow:hidden;margin-bottom:16px}
+.algo-hdr{background:var(--R);color:#fff;padding:9px 14px;font-size:12px;font-weight:800;display:flex;align-items:center;gap:7px}
+.algo-body{padding:12px}
+.algo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media(max-width:580px){.algo-grid{grid-template-columns:1fr 1fr}}
+.algo-card{background:var(--s2);border-radius:8px;padding:8px 10px;border-left:3px solid var(--R)}
+.algo-name{font-size:11px;font-weight:800;color:var(--Rdk);margin-bottom:3px}
+.algo-type{font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--t3);text-transform:uppercase;margin-bottom:4px}
+.algo-desc{font-size:10.5px;color:var(--t2);line-height:1.4}
+
+/* DL SECTION */
+.dl-section{background:var(--card);border-radius:12px;border:2px solid var(--R);overflow:hidden;margin-bottom:16px}
+.dl-hdr{background:linear-gradient(90deg,var(--Rdk),var(--R));color:#fff;padding:9px 14px;font-size:12px;font-weight:800;display:flex;align-items:center;gap:7px}
+.dl-body{padding:12px}
+.dl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(max-width:580px){.dl-grid{grid-template-columns:1fr}}
+.dl-card{background:var(--s2);border-radius:9px;padding:10px 12px;border-top:3px solid var(--R)}
+.dl-name{font-size:12px;font-weight:800;color:var(--Rdk);margin-bottom:4px}
+.dl-arch{font-size:10px;font-weight:700;color:var(--t3);margin-bottom:5px}
+.dl-pts{font-size:10.5px;color:var(--t2);line-height:1.55}
+.dl-pts li{margin-left:12px;margin-bottom:2px}
+
+/* FORMULA / KEY ROW */
+.formula-strip{background:var(--Rlt);border:1.5px solid var(--R);border-radius:10px;padding:10px 14px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.formula-item{text-align:center}
+.formula-label{font-size:9px;font-weight:800;color:var(--Rdk);letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:3px}
+.formula-eq{font-size:11px;font-weight:700;color:var(--t);font-family:monospace}
+
+/* CONNECTION */
+.conn-box{background:var(--card);border-radius:12px;border:2px solid var(--b);padding:12px 14px;margin-bottom:16px}
+.conn-title{font-size:11px;font-weight:800;color:var(--t3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px}
+.conn-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+.conn-node{background:var(--Rlt);border:2px solid var(--R);border-radius:8px;padding:5px 10px;font-size:10.5px;font-weight:700;color:var(--Rdk);text-align:center}
+.conn-arrow{font-size:16px;color:var(--R);font-weight:900}
+
+/* EXAM BOX */
+.exam-box{background:var(--Alt);border:2px solid var(--A);border-radius:12px;padding:12px 14px}
+.exam-title{font-size:10px;font-weight:800;color:var(--A);letter-spacing:.8px;text-transform:uppercase;margin-bottom:8px}
+.exam-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+@media(max-width:480px){.exam-grid{grid-template-columns:1fr}}
+.exam-item{background:rgba(255,255,255,.55);border-radius:7px;padding:6px 9px;font-size:10.5px;color:var(--t2);line-height:1.5}
+.exam-item b{display:block;font-size:9.5px;font-weight:800;color:#A0720A;margin-bottom:2px}
+</style>
+
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">科目三 · 第四章</div>
+  <div class="hero-title">機器學習與深度學習</div>
+  <div class="hero-sub">從監督、非監督到強化學習三大典範，掌握迴歸與分類主流演算法，以及 CNN、RNN、Transformer 深度學習架構的核心原理。</div>
+  <div class="hero-badges">
+    <span class="hbadge">4.1 學習典範</span>
+    <span class="hbadge">4.2 常見演算法</span>
+    <span class="hbadge">4.3 深度學習框架</span>
+    <span class="hbadge">監督 ／ 非監督 ／ 強化</span>
+  </div>
+</div>
+
+<!-- THREE SECTIONS -->
+<div class="sec-row">
+  <!-- 4.1 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="none" stroke="#fff" stroke-width="1.5"></circle><path d="M9 5v4l3 2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"></path></svg>
+      <div><div class="sec-hdr-txt">4.1 原理與技術</div><div class="sec-hdr-sub">Learning Paradigms</div></div>
+    </div>
+    <div class="sec-body">
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>監督式學習</b>：有標籤資料→學習映射函數<span class="tag">分類/迴歸</span></div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>非監督式學習</b>：無標籤→發現結構<span class="tag">聚類/降維</span></div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>強化式學習</b>：Agent與環境互動獲Reward<span class="tag">MDP</span></div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>特徵空間</b>：所有特徵構成的高維空間</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>損失函數</b>：MSE / MAE / Cross-Entropy</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>評估指標</b>：Acc / Precision / Recall / F1 / R²</div></div>
+    </div>
+  </div>
+  <!-- 4.2 迴歸 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <svg width="18" height="18" viewBox="0 0 18 18"><polyline points="2,14 6,8 10,11 14,4 16,6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>
+      <div><div class="sec-hdr-txt">4.2 迴歸演算法</div><div class="sec-hdr-sub">Regression Algorithms</div></div>
+    </div>
+    <div class="sec-body">
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>線性迴歸</b>：y=β₀+Σβᵢxᵢ+ε，OLS最小化MSE</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>Lasso (L1)</b>：+λΣ|βⱼ| 稀疏化，特徵選擇</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>Ridge (L2)</b>：+λΣβⱼ² 縮減係數，多共線</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>SVR</b>：ε-不敏感管道，C控制懲罰</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>隨機森林</b>：Bootstrap+投票，抗過擬合</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>XGBoost/LightGBM</b>：梯度提升高效版</div></div>
+    </div>
+  </div>
+  <!-- 4.2 分類 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <svg width="18" height="18" viewBox="0 0 18 18"><rect x="2" y="2" width="6" height="6" rx="1.5" fill="none" stroke="#fff" stroke-width="1.5"></rect><rect x="10" y="2" width="6" height="6" rx="1.5" fill="none" stroke="#fff" stroke-width="1.5"></rect><rect x="2" y="10" width="6" height="6" rx="1.5" fill="none" stroke="#fff" stroke-width="1.5"></rect><rect x="10" y="10" width="6" height="6" rx="1.5" fill="none" stroke="#fff" stroke-width="1.5"></rect></svg>
+      <div><div class="sec-hdr-txt">4.2 分類演算法</div><div class="sec-hdr-sub">Classification Algorithms</div></div>
+    </div>
+    <div class="sec-body">
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>邏輯迴歸</b>：Sigmoid輸出機率，線性邊界</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>SVM</b>：最大化Margin，核函數非線性</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>決策樹</b>：Gini/Entropy分裂，可解釋</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>KNN</b>：K個最近鄰投票，惰性學習</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>樸素貝氏</b>：條件獨立假設，文本分類</div></div>
+      <div class="sec-item"><div class="sec-dot"></div><div class="sec-item-txt"><b>集成分類</b>：Bagging降變異/Boosting降偏差</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ALGO COMPARE -->
+<div class="algo-section">
+  <div class="algo-hdr">
+    <svg width="16" height="16" viewBox="0 0 16 16"><rect x="1" y="10" width="3" height="5" rx="1" fill="#fff"></rect><rect x="6" y="6" width="3" height="9" rx="1" fill="#fff"></rect><rect x="11" y="2" width="3" height="13" rx="1" fill="#fff" opacity=".7"></rect></svg>
+    非監督演算法 · 聚類方法
+  </div>
+  <div class="algo-body">
+    <div class="algo-grid">
+      <div class="algo-card">
+        <div class="algo-type">Centroid-based</div>
+        <div class="algo-name">k-means 分群</div>
+        <div class="algo-desc">預設K個質心，迭代分配→更新，需先指定K值。對初始質心敏感，只能處理凸形群集。</div>
+      </div>
+      <div class="algo-card">
+        <div class="algo-type">Density-based</div>
+        <div class="algo-name">DBSCAN</div>
+        <div class="algo-desc">以密度可達定義群集，不需預設K值，可發現任意形狀群集，自動辨識雜訊點（離群值）。</div>
+      </div>
+      <div class="algo-card">
+        <div class="algo-type">Hierarchical</div>
+        <div class="algo-name">階層式分群</div>
+        <div class="algo-desc">凝聚式(bottom-up)或分裂式(top-down)，產生樹狀圖(Dendrogram)，不需預設K值。</div>
+      </div>
+      <div class="algo-card">
+        <div class="algo-type">Dimensionality</div>
+        <div class="algo-name">降維方法</div>
+        <div class="algo-desc">PCA(線性), t-SNE/UMAP(非線性視覺化), Autoencoder(學習壓縮表示)用於資料探索與視覺化。</div>
+      </div>
+      <div class="algo-card">
+        <div class="algo-type">Association</div>
+        <div class="algo-name">關聯規則</div>
+        <div class="algo-desc">Apriori/FP-Growth挖掘頻繁項目集，計算支持度(Support)、信賴度(Confidence)、提升度(Lift)。</div>
+      </div>
+      <div class="algo-card">
+        <div class="algo-type">Evaluation</div>
+        <div class="algo-name">聚類評估</div>
+        <div class="algo-desc">Silhouette Score（群內緊密/群間分離）、Davies-Bouldin Index、Reconstruction Error（降維）。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KEY FORMULA STRIP -->
+<div class="formula-strip">
+  <div class="formula-item"><span class="formula-label">邏輯迴歸</span><span class="formula-eq">p = 1/(1+e⁻ᶻ)</span></div>
+  <div class="formula-item"><span class="formula-label">SVM 決策邊界</span><span class="formula-eq">w·x + b = 0</span></div>
+  <div class="formula-item"><span class="formula-label">Gini 不純度</span><span class="formula-eq">G = 1-Σpᵢ²</span></div>
+  <div class="formula-item"><span class="formula-label">樸素貝氏</span><span class="formula-eq">P(C|X) ∝ P(X|C)·P(C)</span></div>
+  <div class="formula-item"><span class="formula-label">Boosting</span><span class="formula-eq">F(x)=Σhₜ(x)·ηₜ</span></div>
+</div>
+
+<!-- DEEP LEARNING SECTION -->
+<div class="dl-section">
+  <div class="dl-hdr">
+    <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="3" cy="8" r="2" fill="#fff"></circle><circle cx="8" cy="3" r="2" fill="#fff" opacity=".8"></circle><circle cx="8" cy="13" r="2" fill="#fff" opacity=".8"></circle><circle cx="13" cy="8" r="2" fill="#fff" opacity=".7"></circle><line x1="5" y1="8" x2="6" y2="5" stroke="#fff" stroke-width="1.2"></line><line x1="5" y1="8" x2="6" y2="11" stroke="#fff" stroke-width="1.2"></line><line x1="10" y1="5" x2="11" y2="7" stroke="#fff" stroke-width="1.2"></line><line x1="10" y1="11" x2="11" y2="9" stroke="#fff" stroke-width="1.2"></line></svg>
+    4.3 深度學習框架與核心架構
+  </div>
+  <div class="dl-body">
+    <div class="dl-grid">
+      <div class="dl-card">
+        <div class="dl-name">CNN 卷積神經網路</div>
+        <div class="dl-arch">Convolutional Neural Network</div>
+        <div class="dl-pts"><ul>
+          <li>卷積層(Conv)：局部感受野，參數共享</li>
+          <li>池化層(Pooling)：降維，提取主要特徵</li>
+          <li>全連接層：最終分類/迴歸輸出</li>
+          <li>適用：影像辨識、物件偵測、醫學影像</li>
+        </ul></div>
+      </div>
+      <div class="dl-card">
+        <div class="dl-name">RNN / LSTM</div>
+        <div class="dl-arch">Recurrent Network / Long Short-Term Memory</div>
+        <div class="dl-pts"><ul>
+          <li>RNN：處理序列資料，隱藏狀態傳遞記憶</li>
+          <li>LSTM：記憶閘(Input/Forget/Output Gate)解決梯度消失</li>
+          <li>GRU：LSTM簡化版，更新門+重置門</li>
+          <li>適用：NLP、時間序列、語音辨識</li>
+        </ul></div>
+      </div>
+      <div class="dl-card">
+        <div class="dl-name">Transformer</div>
+        <div class="dl-arch">Self-Attention Architecture</div>
+        <div class="dl-pts"><ul>
+          <li>自注意力(Self-Attention)：捕捉全局依賴關係</li>
+          <li>Multi-Head Attention：並行多組注意力</li>
+          <li>位置編碼(Positional Encoding)：補充序列順序資訊</li>
+          <li>基礎：BERT、GPT、Vision Transformer(ViT)</li>
+        </ul></div>
+      </div>
+      <div class="dl-card">
+        <div class="dl-name">訓練技術與框架</div>
+        <div class="dl-arch">Training Techniques &amp; Frameworks</div>
+        <div class="dl-pts"><ul>
+          <li>Batch Normalization：層內標準化穩定訓練</li>
+          <li>Dropout：隨機丟棄神經元防過擬合</li>
+          <li>反向傳播(Backpropagation)：鏈式法則計算梯度</li>
+          <li>框架：PyTorch(動態圖) / TensorFlow(靜態+動態)</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KNOWLEDGE CONNECTION -->
+<div class="conn-box">
+  <div class="conn-title">📌 演算法選擇脈絡</div>
+  <div class="conn-row">
+    <div class="conn-node">有標籤資料</div>
+    <div class="conn-arrow">→</div>
+    <div class="conn-node">連續輸出<br><small>迴歸任務</small></div>
+    <div class="conn-arrow">→</div>
+    <div class="conn-node">線性/Lasso/Ridge<br>SVR/RF/XGBoost</div>
+    <div class="conn-arrow">|</div>
+    <div class="conn-node">離散輸出<br><small>分類任務</small></div>
+    <div class="conn-arrow">→</div>
+    <div class="conn-node">LR/SVM/DT<br>KNN/NB/Ensemble</div>
+  </div>
+  <div style="margin-top:10px">
+  <div class="conn-row">
+    <div class="conn-node">無標籤資料</div>
+    <div class="conn-arrow">→</div>
+    <div class="conn-node">聚類<br>k-means/DBSCAN</div>
+    <div class="conn-arrow">+</div>
+    <div class="conn-node">降維<br>PCA/t-SNE</div>
+    <div class="conn-arrow">|</div>
+    <div class="conn-node">序列決策</div>
+    <div class="conn-arrow">→</div>
+    <div class="conn-node">強化學習<br>Q-learning/PG</div>
+  </div>
+  </div>
+</div>
+
+<!-- EXAM FOCUS -->
+<div class="exam-box">
+  <div class="exam-title">⚡ 考試重點方向</div>
+  <div class="exam-grid">
+    <div class="exam-item"><b>三大學習典範辨別</b>監督 vs. 非監督 vs. 強化式的核心差異與適用場景，MDP 五元素定義</div>
+    <div class="exam-item"><b>正則化方法比較</b>Lasso(L1)產生稀疏解做特徵選擇；Ridge(L2)縮減係數防多共線性；ElasticNet 兩者結合</div>
+    <div class="exam-item"><b>SVM 核函數機制</b>核技巧(Kernel Trick)將資料映射高維、最大化Margin、支援向量的角色</div>
+    <div class="exam-item"><b>Bagging vs. Boosting</b>隨機森林(Bagging：降變異)vs. XGBoost/LightGBM(Boosting：降偏差)的核心差異</div>
+    <div class="exam-item"><b>深度學習架構匹配</b>CNN→影像，RNN/LSTM→序列，Transformer→NLP/多模態；各架構解決的核心問題</div>
+    <div class="exam-item"><b>DBSCAN vs. k-means</b>DBSCAN不需預設K、能識別噪音點、處理任意形狀；k-means只能處理凸形群集</div>
+  </div>
+</div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>科目三 第六章｜名詞解釋 30 詞</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --P:#7B5EA7;--Plt:#F0EBF8;--Pdk:#5A3E80;
+  --O:#E85D3A;--G:#3A9A6E;--A:#D4920A;--B:#2D5F9A;--R:#C0392B;
+  --Alt:#FFF8E1;
+  --bg:#F8F5FC;--s:#FFFFFF;--s2:#F0EBF8;--b:#D8C8ED;
+  --t:#1A0F2E;--t2:#3D2A60;--t3:#7A6A9A;
+  --card:#fff;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#130D20;--s:#1E1435;--s2:#291A45;--b:#3A2860;
+  --t:#E0D4F8;--t2:#B09AD8;--t3:#7060A0;
+  --card:#1E1435;--Plt:#2A1A40;--Alt:#2A2000;
+}}
+[data-theme=dark]{
+  --bg:#130D20;--s:#1E1435;--s2:#291A45;--b:#3A2860;
+  --t:#E0D4F8;--t2:#B09AD8;--t3:#7060A0;
+  --card:#1E1435;--Plt:#2A1A40;--Alt:#2A2000;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);padding:16px;font-size:13px;line-height:1.5}
+.page{max-width:980px;margin:0 auto}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--Pdk),var(--P) 55%,#A07ACD);color:#fff;border-radius:14px;padding:20px 24px;margin-bottom:16px;position:relative;overflow:hidden}
+.hero::after{content:'🛡️';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:56px;opacity:.15}
+.hero-eye{font-size:10px;font-weight:800;letter-spacing:2px;opacity:.75;margin-bottom:4px}
+.hero h1{font-size:22px;font-weight:900;margin-bottom:4px}
+.hero-sub{font-size:11.5px;opacity:.85;font-weight:600}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:16px}
+
+/* Card */
+.card{background:var(--card);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b);border-left:4px solid var(--P)}
+.ctop{padding:9px 10px 7px;background:var(--Plt)}
+.ctop .en{font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--Pdk);text-transform:uppercase;opacity:.85}
+.ctop .zh{font-size:14px;font-weight:900;color:var(--Pdk);line-height:1.2;margin:2px 0}
+.ctop .abbr{display:inline-block;background:var(--P);color:#fff;font-size:8.5px;font-weight:800;padding:1px 7px;border-radius:10px;margin-top:2px}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1;color:var(--t2)}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2)}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px;color:var(--P)}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2);border:1.5px solid var(--A);background:var(--Alt)}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+
+/* Section divider */
+.sdiv{grid-column:1/-1;display:flex;align-items:center;gap:8px;margin:4px 0 2px}
+.sdiv span{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--P);white-space:nowrap;text-transform:uppercase}
+.sdiv::after{content:'';flex:1;height:1.5px;background:var(--Plt)}
+
+.footer{text-align:center;font-size:10px;color:var(--t3);padding:4px}
+</style>
+
+<div class="page">
+<div class="hero">
+  <div class="hero-eye">iPAS 中級 AI應用規劃師・科目三・第六章</div>
+  <h1>機器學習治理 ── 名詞解釋 30 詞</h1>
+  <div class="hero-sub">資料隱私安全合規 / 匿名化技術 / 演算法偏見 / 公平性指標</div>
+</div>
+
+<div class="grid">
+
+<!-- ─── 6.1 隱私安全合規 ─── -->
+<div class="sdiv"><span>6.1 數據隱私、安全與合規</span></div>
+
+<!-- 1 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Data Governance</div>
+    <div class="zh">資料治理</div>
+  </div>
+  <div class="cdef">對組織資料的蒐集、儲存、處理、使用與刪除進行系統性管理的框架，確保資料品質、安全性、合規性與可用性。包含資料政策制定、資料擁有者定義、存取控制與稽核機制。</div>
+  <div class="cscene"><b>🔍 應用場景</b>金融機構制定客戶個資資料治理政策，明確各系統的資料流向與使用目的。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>資料治理是 ML 治理的基礎；Data Map 是資料治理的第一步（盤點資料流向）。</div>
+</div>
+
+<!-- 2 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Personally Identifiable Information</div>
+    <div class="zh">個人識別資訊</div>
+    <div class="abbr">PII</div>
+  </div>
+  <div class="cdef">可直接或間接識別特定自然人身份的任何資訊。直接 PII：姓名、身分證號、護照號；間接 PII（準識別資訊 Quasi-Identifier）：郵遞區號、生日、性別等組合可能唯一識別個人。</div>
+  <div class="cscene"><b>🔍 應用場景</b>醫療資料集去除姓名後，若保留年齡+郵遞區號+性別，仍可能再識別患者。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>準識別資訊（Quasi-Identifier）是 K-匿名的核心概念；需泛化或抑制以達到匿名標準。</div>
+</div>
+
+<!-- 3 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Re-identification Risk</div>
+    <div class="zh">再識別風險</div>
+  </div>
+  <div class="cdef">將已匿名化的資料與外部資料集交叉比對，重新識別出個人身份的風險。即使資料已移除直接識別欄位，組合多個準識別欄位仍可能在大型外部資料庫中唯一識別個人。</div>
+  <div class="cscene"><b>🔍 應用場景</b>87% 的美國人可透過郵遞區號+生日+性別三個欄位組合唯一識別（Sweeney 研究）。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>再識別風險是 K-匿名、L-多樣性、T-接近性等匿名標準存在的根本原因。</div>
+</div>
+
+<!-- 4 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Privacy Impact Assessment</div>
+    <div class="zh">隱私影響評估</div>
+    <div class="abbr">PIA</div>
+  </div>
+  <div class="cdef">在新系統、新流程或高風險資料處理活動上線前進行的系統性評估。識別隱私風險、量化衝擊程度、制定緩解措施。GDPR 稱之為 DPIA（Data Protection Impact Assessment），高風險處理活動必須執行。</div>
+  <div class="cscene"><b>🔍 應用場景</b>醫院導入 AI 診斷系統前，執行 PIA 評估患者資料使用方式與洩漏風險。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>PIA 在「系統上線前」執行；風險矩陣（發生率×衝擊）是 PIA 的核心工具。</div>
+</div>
+
+<!-- 5 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Data Masking</div>
+    <div class="zh">資料遮蔽</div>
+    <div class="abbr">Masking</div>
+  </div>
+  <div class="cdef">以特定字元（如 *、X）替換敏感資料部分或全部內容的匿名化技術。如電話號碼 0912-345-678 → 0912-***-***。靜態遮蔽（不可逆）適用於測試環境；動態遮蔽（即時替換）適用於查詢展示。</div>
+  <div class="cscene"><b>🔍 應用場景</b>客服系統顯示客戶資料時，信用卡號僅顯示後四碼，前 12 碼以 * 遮蔽。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Masking 與 Hashing 的差異：Masking 部分可見；Hashing 完全不可逆轉換。</div>
+</div>
+
+<!-- 6 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Hashing</div>
+    <div class="zh">雜湊處理</div>
+  </div>
+  <div class="cdef">以單向雜湊函數（如 SHA-256）將原始資料轉換為固定長度雜湊值的技術。相同輸入永遠產生相同輸出，但無法從雜湊值反推原始資料（單向不可逆）。常用於密碼儲存與資料連結去識別化。</div>
+  <div class="cscene"><b>🔍 應用場景</b>跨資料庫比對時，用相同雜湊函數處理身分證號，在不揭露原值的情況下連結同一個人的紀錄。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Hashing 是「不可逆」轉換；若原始值空間小（如身分證號），可被彩虹表攻擊反推，需加鹽（Salt）。</div>
+</div>
+
+<!-- 7 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Generalization</div>
+    <div class="zh">泛化處理</div>
+  </div>
+  <div class="cdef">將具體精確的資料值替換為更廣泛的範圍或類別的匿名化技術。如年齡 32 → 30-39；城市「台北市大安區」→「台北市」。是 K-匿名實現的主要手段，犧牲資料精確性換取隱私保護。</div>
+  <div class="cscene"><b>🔍 應用場景</b>公衛研究資料集將確切年齡泛化為 10 年組，使每組包含足夠多筆記錄。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>泛化是 K-匿名的主要實現方式；泛化程度越高，資料可用性越低（資訊損失越大）。</div>
+</div>
+
+<!-- 8 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Bucketing</div>
+    <div class="zh">分桶處理</div>
+  </div>
+  <div class="cdef">將連續數值特徵離散化為有限個組別（桶）的匿名化技術。如薪資 → 低/中/高三組；分數 → A/B/C/D。降低個別值的可識別性，是泛化的特殊形式，廣泛用於統計資料發布。</div>
+  <div class="cscene"><b>🔍 應用場景</b>政府統計局發布薪資調查，將具體金額分為 5 個薪資區間發布，防止個人被識別。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>分桶 vs 泛化：分桶通常指數值離散化；泛化更廣泛，含地理層級、時間粒度等。</div>
+</div>
+
+<!-- 9 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">K-Anonymity</div>
+    <div class="zh">K-匿名性</div>
+  </div>
+  <div class="cdef">資料集中每筆記錄，對於所有準識別欄位組合，至少與其他 k-1 筆記錄無法區分。透過泛化與抑制實現。k 越大隱私保護越強，但資料可用性越低。弱點：同質性攻擊（k 組內敏感值相同）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>k=5 的病患資料集，每種「年齡段+性別+郵遞區號」組合至少有 5 筆，無法精確識別個人。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>K-匿名缺點：若 k 組內所有人患同種病（敏感值同質），攻擊者仍可推斷→需 L-多樣性。</div>
+</div>
+
+<!-- 10 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">L-Diversity</div>
+    <div class="zh">L-多樣性</div>
+  </div>
+  <div class="cdef">K-匿名的延伸，要求每個 K-匿名等價類（k 組）中的敏感屬性至少有 l 個不同的值，防止同質性攻擊。即使攻擊者鎖定某人所在的 k 組，也無法確定其敏感屬性值。</div>
+  <div class="cscene"><b>🔍 應用場景</b>l=3 的醫療資料：每個 k 組的疾病欄位至少有 3 種不同疾病，無法推斷特定人的病況。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>L-多樣性解決 K-匿名的同質性攻擊；弱點：傾斜攻擊（整體分佈極端時仍可推斷）→T-接近性。</div>
+</div>
+
+<!-- 11 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">T-Closeness</div>
+    <div class="zh">T-接近性</div>
+  </div>
+  <div class="cdef">K-匿名的進一步強化，要求每個 K-匿名等價類中敏感屬性的分佈，與整體資料集中敏感屬性的分佈差異不超過閾值 t（用地球移動距離 EMD 衡量）。防止傾斜攻擊（Skewness Attack）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>若整體資料中 HIV 陽性率 5%，各 k 組的 HIV 陽性率也應接近 5%（在 t 容忍範圍內）。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>三階標準：K-匿名→L-多樣性→T-接近性；保護強度遞增，但資料可用性遞減。</div>
+</div>
+
+<!-- 12 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Federated Learning</div>
+    <div class="zh">聯邦學習</div>
+  </div>
+  <div class="cdef">分散式機器學習範式，訓練資料不離開各方本地設備，僅上傳模型梯度（Gradient）至中央伺服器聚合，再將更新後的全域模型下發各方。實現「資料不動、模型動」的隱私保護訓練。</div>
+  <div class="cscene"><b>🔍 應用場景</b>Google Gboard 鍵盤預測：各用戶手機本地訓練，只上傳梯度，個人打字習慣不上傳雲端。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>聯邦學習仍可能洩漏資訊（梯度可被逆向工程）；常搭配差分隱私或安全聚合強化保護。</div>
+</div>
+
+<!-- 13 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Homomorphic Encryption</div>
+    <div class="zh">同態加密</div>
+  </div>
+  <div class="cdef">允許在不解密的情況下直接對加密資料進行計算的密碼學技術。計算結果解密後與在明文上計算的結果相同。分為部分同態（只支援加或乘）和全同態（支援任意計算）。計算成本極高，目前應用場景有限。</div>
+  <div class="cscene"><b>🔍 應用場景</b>醫院將加密病患資料送至雲端模型推論，雲端在不看到明文的情況下回傳加密預測結果。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>同態加密是最強隱私保護（計算全程加密），但計算開銷大；聯邦學習是隱私保護機器學習的主流方案。</div>
+</div>
+
+<!-- 14 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">GDPR</div>
+    <div class="zh">歐盟通用資料保護規則</div>
+    <div class="abbr">GDPR</div>
+  </div>
+  <div class="cdef">2018 年生效的歐盟個人資料保護法規。核心原則：資料最小化、目的限定、儲存限期、正確性、完整性與機密性。重要權利：被遺忘權、資料可攜權、反對自動決策權。違規最高罰款 2000 萬歐元或全球年營業額 4%。</div>
+  <div class="cscene"><b>🔍 應用場景</b>用戶要求刪除帳戶資料（被遺忘權），企業需在 30 天內從所有系統中清除該用戶個資。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>GDPR 要求資料外洩後 72 小時內通報主管機關；高風險處理需先做 DPIA（PIA）。</div>
+</div>
+
+<!-- 15 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Differential Privacy</div>
+    <div class="zh">差分隱私</div>
+  </div>
+  <div class="cdef">提供數學隱私保證的機制：無論資料集中是否包含某個人的資料，查詢結果的概率分佈差異不超過 eᵉ 倍（ε 為隱私預算）。通常透過加入 Laplace 或高斯噪聲實現。ε 越小，隱私保護越強，資料準確度越低。</div>
+  <div class="cscene"><b>🔍 應用場景</b>Apple 在 iOS 上收集使用習慣統計，以差分隱私添加噪聲，確保無法追溯到個別用戶。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>差分隱私是唯一有數學保證的隱私定義；ε 是隱私損失預算，越小越安全但資料越不準確。</div>
+</div>
+
+<!-- ─── 6.2 演算法偏見與公平性 ─── -->
+<div class="sdiv"><span>6.2 演算法偏見與公平性</span></div>
+
+<!-- 16 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Algorithmic Bias</div>
+    <div class="zh">演算法偏見</div>
+  </div>
+  <div class="cdef">AI/ML 系統對特定群體（以種族、性別、年齡等保護特徵劃分）產生系統性不公平結果的現象。成因涵蓋訓練資料偏誤、模型架構偏向、目標函數設計不當等。可能固化甚至放大社會既有偏見。</div>
+  <div class="cscene"><b>🔍 應用場景</b>亞馬遜 AI 招募系統因訓練資料以男性為主，自動降低女性履歷評分。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>演算法偏見的五大成因：來源偏誤、內容偏誤、製程偏誤、演算法偏誤、目標函數偏誤。</div>
+</div>
+
+<!-- 17 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Source Bias</div>
+    <div class="zh">來源偏誤</div>
+  </div>
+  <div class="cdef">訓練資料本身不具代表性，未能涵蓋所有相關群體的偏誤。如影像識別訓練集多為白人男性，導致對深色皮膚或女性的識別準確率明顯較低。是最根本的偏誤成因之一。</div>
+  <div class="cscene"><b>🔍 應用場景</b>MIT 研究發現多款商業人臉辨識系統對深色皮膚女性的錯誤率高達 35%，因訓練集以白人男性為主。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>來源偏誤解決方案：增加多樣化資料、重新抽樣、資料增強；是資料前處理階段的降偏策略。</div>
+</div>
+
+<!-- 18 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Content Bias</div>
+    <div class="zh">內容偏誤</div>
+  </div>
+  <div class="cdef">資料本身的內容或標籤帶有人類主觀偏見，即使樣本覆蓋率足夠，標籤本身仍有偏向。例如：人工標注者主觀評分帶有文化或性別偏見，或媒體報導本身具有立場。</div>
+  <div class="cscene"><b>🔍 應用場景</b>情感分析訓練資料中，標注者對不同族裔的語言風格貼上不同情感標籤，導致模型繼承偏見。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>內容偏誤的解決：多元標注者、跨文化審查、標注一致性檢驗（Cohen's Kappa）。</div>
+</div>
+
+<!-- 19 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Demographic Parity</div>
+    <div class="zh">群體平等率</div>
+  </div>
+  <div class="cdef">公平性指標之一。要求不同受保護群體（如不同性別或種族）獲得正面預測結果（ŷ=1）的機率相等。即 P(ŷ=1|A=0) = P(ŷ=1|A=1)，不考慮各群體的實際標籤分佈。</div>
+  <div class="cscene"><b>🔍 應用場景</b>貸款審核系統：男性核准率 70%，女性也應達到 70%，無論實際信用風險分佈差異。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Demographic Parity 不考慮真實標籤；Equal Opportunity 看 TPR；Equalized Odds 看 TPR+FPR。</div>
+</div>
+
+<!-- 20 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Equal Opportunity</div>
+    <div class="zh">機會平等</div>
+  </div>
+  <div class="cdef">公平性指標之一。要求不同受保護群體中，對真實正類（y=1）的召回率（TPR/Recall）相等。即 TPR_A = TPR_B。意即對所有真正符合條件者，各群體被正確識別的機會均等。</div>
+  <div class="cscene"><b>🔍 應用場景</b>癌症篩查系統：真正患癌的白人與黑人患者，被系統偵測出的比例（Recall）應相等。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Equal Opportunity 比 Demographic Parity 更合理（考慮 Ground Truth）；比 Equalized Odds 要求更寬鬆。</div>
+</div>
+
+<!-- 21 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Equalized Odds</div>
+    <div class="zh">均衡機率</div>
+  </div>
+  <div class="cdef">最嚴格的公平性指標之一。要求不同受保護群體的 TPR（真陽率）和 FPR（假陽率）同時相等：TPR_A = TPR_B 且 FPR_A = FPR_B。Equal Opportunity 是其放寬版本（只要求 TPR 相等）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>假釋風險評估系統：不同種族的真陽率（高風險被正確標記）和假陽率（低風險被誤標）均應相同。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>公平性指標嚴格度：Equalized Odds &gt; Equal Opportunity &gt; Demographic Parity；三者數學上不可能同時滿足。</div>
+</div>
+
+<!-- 22 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Disparate Impact</div>
+    <div class="zh">不利影響比</div>
+  </div>
+  <div class="cdef">衡量受保護群體與優勢群體獲得正面結果比例之比值。公式：DI = P(ŷ=1|保護群體) / P(ŷ=1|優勢群體)。美國就業法的「80% 規則」：DI &lt; 0.8 則認定存在不利影響（Adverse Impact），可能觸發法律審查。</div>
+  <div class="cscene"><b>🔍 應用場景</b>招募系統女性通過率 60%、男性 80%，DI = 0.75 &lt; 0.8，觸發歧視審查。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>DI = 1 完全公平；DI &lt; 0.8 = 疑似歧視；DI &gt; 1 反向歧視（優勢群體劣勢）。</div>
+</div>
+
+<!-- 23 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">IBM AI Fairness 360</div>
+    <div class="zh">IBM AI 公平性工具包</div>
+    <div class="abbr">AIF360</div>
+  </div>
+  <div class="cdef">IBM 開源的 Python 公平性工具包，提供多種公平性指標的計算（Demographic Parity、Equalized Odds 等）與多種降偏算法（Reweighing、Adversarial Debiasing、Calibrated Equalized Odds 等），支援前/中/後處理三個階段。</div>
+  <div class="cscene"><b>🔍 應用場景</b>信用評分模型開發中，使用 AIF360 評估不同種族群體的 DI 指標並套用 Reweighing 降偏。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>AIF360 支援三階段降偏（前/中/後處理）；Microsoft Fairlearn 亦提供類似功能但介面不同。</div>
+</div>
+
+<!-- 24 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Adversarial Debiasing</div>
+    <div class="zh">對抗式去偏</div>
+  </div>
+  <div class="cdef">模型內部（In-processing）降偏方法。以對抗式訓練架構，主分類器嘗試最大化預測準確率的同時，對抗式判別器嘗試從預測結果中推斷受保護屬性；主分類器需騙過判別器，使預測與敏感屬性解耦。</div>
+  <div class="cscene"><b>🔍 應用場景</b>訓練貸款審核模型時，加入對抗器阻止模型從預測結果中推斷申請人性別，強制公平。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>對抗式去偏在訓練時強制公平約束（In-processing）；後處理門檻調整不修改模型本身。</div>
+</div>
+
+<!-- 25 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Threshold Adjustment</div>
+    <div class="zh">結果門檻調整</div>
+  </div>
+  <div class="cdef">後處理（Post-processing）降偏方法。模型訓練完成後，對不同受保護群體設定不同的分類決策門檻（而非統一 0.5），以達到群體間公平性指標（如 Equal Opportunity 或 Demographic Parity）的平衡。</div>
+  <div class="cscene"><b>🔍 應用場景</b>假釋預測系統對不同種族群體設不同門檻，確保各群體假陽率相近，減少種族歧視效應。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>門檻調整最簡單，不需重新訓練；缺點是不同群體用不同標準，本身可能引發爭議。</div>
+</div>
+
+<!-- 26 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Fairness Constraints Training</div>
+    <div class="zh">公平性約束訓練</div>
+  </div>
+  <div class="cdef">模型內部（In-processing）降偏方法。在模型訓練的目標函數中加入公平性約束項，使模型在優化準確率的同時滿足特定公平性條件。Microsoft Fairlearn 的 ExponentiatedGradient 是代表性實現。</div>
+  <div class="cscene"><b>🔍 應用場景</b>招募篩選模型訓練時加入 Demographic Parity 約束，確保訓練結束後各性別通過率差距在設定範圍內。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>公平性約束訓練屬 In-processing；前處理（Reweighting/Resampling）不改模型；後處理（閾值調整）不改模型。</div>
+</div>
+
+<!-- 27 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Model Card</div>
+    <div class="zh">模型卡</div>
+  </div>
+  <div class="cdef">記錄 ML 模型關鍵資訊的標準化文件，由 Google 提出。包含：模型用途與適用場景、訓練資料說明、評估指標（整體及各子群體）、已知侷限性與偏見、建議使用限制。是 AI 透明度與治理的重要工具。</div>
+  <div class="cscene"><b>🔍 應用場景</b>發布面部辨識 API 時附上 Model Card，明確指出在不同膚色群體的準確率差異與適用限制。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Model Card 是 AI 治理與透明度的實踐工具；應包含各子群體（性別/種族）的分別評估指標。</div>
+</div>
+
+<!-- 28 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Process Bias</div>
+    <div class="zh">製程偏誤</div>
+  </div>
+  <div class="cdef">資料蒐集流程、標注流程或系統設計過程中造成的系統性偏差。例如：問卷設計不當、蒐集地點偏頗（只在特定地區部署感測器）、樣本選取方式偏向特定群體。屬於資料品質管理問題。</div>
+  <div class="cscene"><b>🔍 應用場景</b>健康監測 APP 只在都市地區用戶中測試，農村用戶的使用情境未被蒐集，造成製程偏誤。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>五大偏見成因：來源偏誤（資料代表性）、內容偏誤（標籤主觀）、製程偏誤（蒐集流程）、演算法偏誤（模型架構）、目標函數偏誤。</div>
+</div>
+
+<!-- 29 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Reweighting（Pre-processing）</div>
+    <div class="zh">資料重新加權</div>
+  </div>
+  <div class="cdef">資料前處理階段的降偏方法。對不同群體的訓練樣本賦予不同權重，使邊緣化群體的樣本在訓練中獲得更多關注。不改變資料集大小，僅調整各樣本對損失函數的貢獻度，等效於重採樣。</div>
+  <div class="cscene"><b>🔍 應用場景</b>訓練資料中女性樣本占 20%，對每筆女性樣本賦予 5× 權重，使模型平等對待兩性。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>前處理降偏：Reweighting（加權）、Resampling（重採樣）；不修改模型架構，最易實施。</div>
+</div>
+
+<!-- 30 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">AI Ethics Committee</div>
+    <div class="zh">AI 倫理委員會</div>
+  </div>
+  <div class="cdef">組織層級的 AI 治理機制，由技術、法律、業務、倫理等多元背景人員組成。負責審查高風險 AI 系統的倫理衝擊、公平性評估結果與隱私合規，制定 AI 使用準則，確保 AI 決策符合組織價值觀與法規要求。</div>
+  <div class="cscene"><b>🔍 應用場景</b>銀行 AI 信貸決策系統上線前，由倫理委員會審查偏見評估報告與 PIA 結果方可部署。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>組織治理三要素：AI 倫理委員會（審查機制）+ Model Card（透明文件）+ 持續監控（上線後定期審查）。</div>
+</div>
+
+</div><!-- /grid -->
+<div class="footer">iPAS 中級 AI應用規劃師 ・ 科目三第六章 ・ 名詞解釋 30 詞</div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>科目三 第五章｜名詞解釋 30 詞</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --B:#2D5F9A;--Blt:#E3EDF8;--Bdk:#1B3A6B;
+  --O:#E85D3A;--G:#3A9A6E;--A:#D4920A;--P:#7B5EA7;
+  --Alt:#FFF8E1;
+  --bg:#F5F8FC;--s:#FFFFFF;--s2:#EEF4FB;--b:#C8D8ED;
+  --t:#0F1E35;--t2:#2C4A70;--t3:#6080A0;
+  --card:#fff;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0D1928;--s:#102040;--s2:#162A4E;--b:#1E3560;
+  --t:#D0E4F8;--t2:#8AADD8;--t3:#5070A0;
+  --card:#142035;--Blt:#0D1E35;--Alt:#2A2000;
+}}
+[data-theme=dark]{
+  --bg:#0D1928;--s:#102040;--s2:#162A4E;--b:#1E3560;
+  --t:#D0E4F8;--t2:#8AADD8;--t3:#5070A0;
+  --card:#142035;--Blt:#0D1E35;--Alt:#2A2000;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);padding:16px;font-size:13px;line-height:1.5}
+.page{max-width:980px;margin:0 auto}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--Bdk),var(--B) 55%,#4A85C8);color:#fff;border-radius:14px;padding:20px 24px;margin-bottom:16px;position:relative;overflow:hidden}
+.hero::after{content:'📘';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:56px;opacity:.15}
+.hero-eye{font-size:10px;font-weight:800;letter-spacing:2px;opacity:.75;margin-bottom:4px}
+.hero h1{font-size:22px;font-weight:900;margin-bottom:4px}
+.hero-sub{font-size:11.5px;opacity:.85;font-weight:600}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:16px}
+
+/* Card */
+.card{background:var(--card);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b);border-left:4px solid var(--B)}
+.ctop{padding:9px 10px 7px;background:var(--Blt)}
+.ctop .en{font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--Bdk);text-transform:uppercase;opacity:.85}
+.ctop .zh{font-size:14px;font-weight:900;color:var(--Bdk);line-height:1.2;margin:2px 0}
+.ctop .abbr{display:inline-block;background:var(--B);color:#fff;font-size:8.5px;font-weight:800;padding:1px 7px;border-radius:10px;margin-top:2px}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1;color:var(--t2)}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2)}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px;color:var(--B)}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2);border:1.5px solid var(--A);background:var(--Alt)}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+
+/* Section divider */
+.sdiv{grid-column:1/-1;display:flex;align-items:center;gap:8px;margin:4px 0 2px}
+.sdiv span{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--B);white-space:nowrap;text-transform:uppercase}
+.sdiv::after{content:'';flex:1;height:1.5px;background:var(--Blt)}
+
+.footer{text-align:center;font-size:10px;color:var(--t3);padding:4px}
+</style>
+
+<div class="page">
+<div class="hero">
+  <div class="hero-eye">iPAS 中級 AI應用規劃師・科目三・第五章</div>
+  <h1>機器學習建模與參數調校 ── 名詞解釋 30 詞</h1>
+  <div class="hero-sub">特徵工程 / 模型選擇 / 訓練評估 / 超參數調校 / 模型壓縮</div>
+</div>
+
+<div class="grid">
+
+<!-- ─── 5.1 特徵工程 ─── -->
+<div class="sdiv"><span>5.1 數據準備與特徵工程</span></div>
+
+<!-- 1 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Missing Value Imputation</div>
+    <div class="zh">缺失值填補</div>
+  </div>
+  <div class="cdef">針對資料集中遺漏的欄位值，用適當策略補齊的技術。常見方法：均值/中位數填補（數值型）、眾數填補（類別型）、KNN 或迴歸模型預測填補、缺失指標法（新增 is_missing 欄位）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>醫療紀錄部分欄位空白，以同年齡患者均值補齊血壓值。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>刪除法適用於缺失比例低（&lt;5%）；缺失指標法可保留缺失本身的資訊。</div>
+</div>
+
+<!-- 2 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Outlier Detection</div>
+    <div class="zh">異常值偵測</div>
+  </div>
+  <div class="cdef">識別資料中偏離整體分佈的極端值。方法包含：Z-score（|z|&gt;3）、IQR 法（Q1−1.5×IQR ~ Q3+1.5×IQR）、Isolation Forest（路徑短＝異常）、LOF 局部離群因子（密度對比）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>信用卡交易中，突然大額消費以 Isolation Forest 標記為潛在詐欺。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Z-score 假設常態分佈；IQR 法對非常態更穩健。</div>
+</div>
+
+<!-- 3 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Interquartile Range Method</div>
+    <div class="zh">IQR 法</div>
+    <div class="abbr">IQR</div>
+  </div>
+  <div class="cdef">以四分位距（Q3−Q1）定義正常值範圍的異常偵測方法。落在 [Q1−1.5×IQR, Q3+1.5×IQR] 區間外的值視為異常。對偏態分佈、含極端值的資料比 Z-score 更穩健。</div>
+  <div class="cscene"><b>🔍 應用場景</b>薪資資料右偏，用 IQR 法濾除少數超高薪資的干擾。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>IQR = Q3 − Q1；箱形圖（Box Plot）就是 IQR 法的視覺化呈現。</div>
+</div>
+
+<!-- 4 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Isolation Forest</div>
+    <div class="zh">孤立森林</div>
+  </div>
+  <div class="cdef">以隨機切割（Random Partitioning）偵測異常點的非監督式算法。異常點因特徵值極端，隨機切割幾次就能被「孤立」，平均路徑長度短；正常點需要更多切割才能孤立，路徑長。</div>
+  <div class="cscene"><b>🔍 應用場景</b>網路流量異常偵測：攻擊封包特徵極端，孤立森林快速標記。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>無需距離計算，高維資料表現優；路徑越短＝異常分數越高。</div>
+</div>
+
+<!-- 5 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Feature Selection</div>
+    <div class="zh">特徵選擇</div>
+  </div>
+  <div class="cdef">從原始特徵中挑選對模型最有貢獻的子集，去除冗餘與無關特徵，降低維度、防止過擬合、加快訓練。三大類：Filter（統計獨立評估）、Wrapper（以模型反饋搜尋）、Embedded（訓練時自動選擇）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>房價預測資料有 100 個特徵，用 RFE 保留最重要的 20 個。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Filter 最快但忽略特徵互動；Wrapper 最準但計算成本高。</div>
+</div>
+
+<!-- 6 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Principal Component Analysis</div>
+    <div class="zh">主成分分析</div>
+    <div class="abbr">PCA</div>
+  </div>
+  <div class="cdef">線性降維方法，將原始特徵投影到最大化變異的新正交軸（主成分）。非監督式，不需標籤。透過 SVD 分解協方差矩陣獲得主成分方向，保留前 k 個主成分以捕捉大部分資訊。</div>
+  <div class="cscene"><b>🔍 應用場景</b>人臉辨識前，用 PCA 將 10,000 維像素壓縮成 200 個主臉（Eigenfaces）。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>PCA 無監督、線性；LDA 有監督、線性；t-SNE 無監督、非線性（僅視覺化）。</div>
+</div>
+
+<!-- 7 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Linear Discriminant Analysis</div>
+    <div class="zh">線性判別分析</div>
+    <div class="abbr">LDA</div>
+  </div>
+  <div class="cdef">監督式線性降維方法，目標是最大化類別間距離（Between-class variance）、最小化類別內變異（Within-class variance），同時完成降維與分類。需要類別標籤，適合分類前處理。</div>
+  <div class="cscene"><b>🔍 應用場景</b>多類別鳶尾花資料集降維，使各類別在低維空間最易分開。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>LDA 最多降至 C−1 維（C 為類別數）；假設各類別高斯分佈且共享協方差矩陣。</div>
+</div>
+
+<!-- 8 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">t-SNE / UMAP</div>
+    <div class="zh">非線性降維（視覺化）</div>
+  </div>
+  <div class="cdef">t-SNE（t分佈隨機鄰域嵌入）與 UMAP 皆為非線性降維技術，將高維資料嵌入 2D/3D 以利視覺化。t-SNE 保留局部結構但不保全局；UMAP 更快且更好保留全局結構，可用於預處理。</div>
+  <div class="cscene"><b>🔍 應用場景</b>MNIST 手寫數字 784 維特徵以 t-SNE 降至 2D，可見各數字明顯聚類。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>t-SNE 不能用於新資料推論（無法 transform）；UMAP 可，且速度更快。</div>
+</div>
+
+<!-- 9 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Min-Max Normalization</div>
+    <div class="zh">Min-Max 正規化</div>
+  </div>
+  <div class="cdef">將數值特徵線性縮放到固定區間（通常 [0,1]）的特徵縮放方法。公式：x' = (x−min)/(max−min)。對異常值敏感（極值會主導範圍），適用於不含極端值的資料。</div>
+  <div class="cscene"><b>🔍 應用場景</b>影像像素值 [0,255] 縮放為 [0,1] 供神經網路輸入。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>vs Z-score：Min-Max 輸出範圍固定；Z-score 輸出均值0、標準差1，對異常值更穩健。</div>
+</div>
+
+<!-- 10 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Z-score Standardization</div>
+    <div class="zh">Z-score 標準化</div>
+  </div>
+  <div class="cdef">將特徵轉換為均值 0、標準差 1 的標準正態分佈。公式：z = (x−μ)/σ。比 Min-Max 更抗異常值。適用於假設特徵近似常態的演算法（如 SVM、線性回歸、PCA、LDA）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>SVM 訓練前對所有特徵做 Z-score，避免大尺度特徵主導支持向量。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Robust Scaler 以 IQR 縮放，對含離群值的資料比 Z-score 更佳。</div>
+</div>
+
+<!-- 11 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">One-hot Encoding</div>
+    <div class="zh">One-hot 編碼</div>
+  </div>
+  <div class="cdef">將類別變數轉為二元稀疏向量，每個類別對應一個維度，該維度為 1 其餘為 0。避免整數編碼引入假的大小關係。缺點：高基數（high cardinality）類別會產生大量稀疏維度（維度災難）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>城市欄位有台北/台中/高雄，轉為 [1,0,0]、[0,1,0]、[0,0,1] 三個特徵。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>有序類別（小/中/大）用 Label Encoding；無序類別用 One-hot；高基數用 Target Encoding。</div>
+</div>
+
+<!-- 12 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">SMOTE</div>
+    <div class="zh">合成少數類過採樣技術</div>
+    <div class="abbr">SMOTE</div>
+  </div>
+  <div class="cdef">Synthetic Minority Over-sampling Technique。在少數類樣本之間「插值」合成新樣本，而非直接複製，解決類別不平衡問題。公式：x_new = x + δ·(x_neighbor − x)，δ∈[0,1]。</div>
+  <div class="cscene"><b>🔍 應用場景</b>詐欺偵測資料正常:詐欺＝99:1，用 SMOTE 合成詐欺樣本至 80:20。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>SMOTE 合成新樣本（非複製）；Oversampling 是直接複製；兩者皆增加少數類數量。</div>
+</div>
+
+<!-- ─── 5.2 模型選擇 ─── -->
+<div class="sdiv"><span>5.2 模型選擇與架構設計</span></div>
+
+<!-- 13 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Bias-Variance Tradeoff</div>
+    <div class="zh">偏差－變異權衡</div>
+  </div>
+  <div class="cdef">模型泛化誤差 = 偏差² + 變異 + 不可消除雜訊。高偏差（欠擬合）：模型太簡單，訓練與測試誤差均高；高變異（過擬合）：訓練誤差低但測試誤差高。需在兩者間找平衡點。</div>
+  <div class="cscene"><b>🔍 應用場景</b>決策樹深度越大，偏差降低但變異增高；用剪枝或 Random Forest 集成降低變異。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>加正則化→降低變異；增加特徵/模型複雜度→降低偏差；取得平衡是調參核心。</div>
+</div>
+
+<!-- ─── 5.3 訓練評估驗證 ─── -->
+<div class="sdiv"><span>5.3 訓練評估驗證</span></div>
+
+<!-- 14 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">K-fold Cross Validation</div>
+    <div class="zh">K-fold 交叉驗證</div>
+  </div>
+  <div class="cdef">將資料分成 k 等份，輪流以其中一份為驗證集、其餘為訓練集，共訓練 k 次，取平均誤差作為模型泛化估計。能充分利用有限資料，比單一 Train/Test Split 更穩健。</div>
+  <div class="cscene"><b>🔍 應用場景</b>小型醫療資料集，5-fold CV 估計模型性能，確保每筆樣本都被驗證一次。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>k 越大：偏差越低但計算越慢；k=N 即 LOOCV（計算成本最高）。</div>
+</div>
+
+<!-- 15 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Leave-One-Out Cross Validation</div>
+    <div class="zh">留一交叉驗證</div>
+    <div class="abbr">LOOCV</div>
+  </div>
+  <div class="cdef">K-fold 的特例，k = N（總樣本數）。每次只留一筆作驗證集，其餘 N-1 筆訓練。誤差估計幾乎無偏，但計算代價極高（需訓練 N 次模型），適用於極小資料集。</div>
+  <div class="cscene"><b>🔍 應用場景</b>罕見疾病研究，樣本僅 30 筆，用 LOOCV 充分利用每筆樣本。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>LOOCV 低偏差但高變異（各折訓練集幾乎相同，結果相關性高）；計算成本隨 N 線性增加。</div>
+</div>
+
+<!-- 16 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Precision</div>
+    <div class="zh">精確率（查準率）</div>
+  </div>
+  <div class="cdef">在所有被模型預測為正類的樣本中，真正為正類的比例。公式：Precision = TP / (TP + FP)。當誤報（FP）代價高時（如垃圾郵件過濾），應優先最大化 Precision。</div>
+  <div class="cscene"><b>🔍 應用場景</b>推薦系統：推薦給用戶的商品中，真正喜歡的比例 → 追求高 Precision。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Precision 高 → 誤報少；Recall 高 → 漏報少；兩者往往成反比，F1 取調和均值。</div>
+</div>
+
+<!-- 17 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Recall（Sensitivity）</div>
+    <div class="zh">召回率（敏感度）</div>
+  </div>
+  <div class="cdef">在所有真實正類樣本中，被模型正確預測到的比例。公式：Recall = TP / (TP + FN)。當漏報（FN）代價高時（如癌症篩查、詐欺偵測），應優先最大化 Recall。</div>
+  <div class="cscene"><b>🔍 應用場景</b>癌症篩查：真正患癌者中，被系統正確偵測出的比例 → 寧可多報也不漏報。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>降低分類門檻 → Recall↑、Precision↓；提高門檻 → Precision↑、Recall↓。</div>
+</div>
+
+<!-- 18 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">F1-Score</div>
+    <div class="zh">F1 分數</div>
+  </div>
+  <div class="cdef">Precision 與 Recall 的調和均值，綜合兩者表現。公式：F1 = 2×P×R / (P+R)。在類別不平衡資料中比 Accuracy 更具參考價值，適合詐欺偵測、罕見疾病診斷等場景。</div>
+  <div class="cscene"><b>🔍 應用場景</b>詐欺偵測：正負樣本 1:99，Accuracy 99% 沒意義，F1 才能衡量少數類表現。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>F1 是調和均值，對 P/R 的低值更敏感；Fβ 可調整 P/R 的相對重要性。</div>
+</div>
+
+<!-- 19 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">ROC-AUC</div>
+    <div class="zh">ROC 曲線下面積</div>
+    <div class="abbr">AUC</div>
+  </div>
+  <div class="cdef">ROC 曲線以 TPR（Recall）為 Y 軸、FPR 為 X 軸，AUC 為該曲線下面積（0–1）。AUC=1 完美；AUC=0.5 等同隨機猜測。對類別不平衡資料仍有意義，適合比較不同模型整體分類能力。</div>
+  <div class="cscene"><b>🔍 應用場景</b>比較邏輯回歸與隨機森林在信用違約預測的表現，以 AUC 為統一標準。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>AUC 與分類門檻無關，衡量整體排名能力；PR-AUC 在極度不平衡時比 ROC-AUC 更具區分力。</div>
+</div>
+
+<!-- ─── 5.4 模型調整與優化 ─── -->
+<div class="sdiv"><span>5.4 模型調整與優化</span></div>
+
+<!-- 20 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Early Stopping</div>
+    <div class="zh">早停法</div>
+  </div>
+  <div class="cdef">在訓練過程中監控驗證集損失，當驗證損失停止下降（或開始上升）時提前終止訓練，防止過擬合。是一種隱性正則化，無需修改損失函數，配合 Patience 參數使用。</div>
+  <div class="cscene"><b>🔍 應用場景</b>深度神經網路訓練，設 patience=10，驗證損失連 10 個 epoch 不降即停止。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Early Stopping 是正則化技術，與 Dropout、L1/L2 並列，可同時使用。</div>
+</div>
+
+<!-- 21 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">L1 Regularization (Lasso)</div>
+    <div class="zh">L1 正則化</div>
+    <div class="abbr">Lasso</div>
+  </div>
+  <div class="cdef">在損失函數中加入權重絕對值之和的懲罰項（λΣ|wᵢ|）。使部分係數精確歸零，自動進行特徵選擇，產生稀疏模型。適合特徵數量多且多數無關的場景。</div>
+  <div class="cscene"><b>🔍 應用場景</b>基因表達資料有 20,000 個特徵，Lasso 自動保留與疾病相關的少數基因。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>L1→稀疏/特徵選擇；L2→係數縮小但不歸零；Elastic Net＝L1+L2 兼顧兩者。</div>
+</div>
+
+<!-- 22 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">L2 Regularization (Ridge)</div>
+    <div class="zh">L2 正則化</div>
+    <div class="abbr">Ridge</div>
+  </div>
+  <div class="cdef">在損失函數中加入權重平方和的懲罰項（λΣwᵢ²）。使所有係數均勻縮小趨近於零，但不精確歸零。防止任一特徵過度主導模型，適合特徵間高度相關（多共線性）的資料。</div>
+  <div class="cscene"><b>🔍 應用場景</b>房價預測模型中面積、房間數高度相關，Ridge 防止某特徵係數過大。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Ridge 不做特徵選擇；需保留全部特徵但防過擬合時首選；計算上比 Lasso 更穩定。</div>
+</div>
+
+<!-- 23 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Dropout</div>
+    <div class="zh">隨機失活</div>
+  </div>
+  <div class="cdef">深度學習正則化技術。訓練時每個 epoch 以概率 p（通常 0.5）隨機將某些神經元輸出設為 0，迫使模型學習冗餘表示、不依賴特定神經元。推論時不丟棄，但輸出乘以 (1−p) 縮放。</div>
+  <div class="cscene"><b>🔍 應用場景</b>CNN 全連接層加入 Dropout(0.5)，顯著降低測試集誤差，防止過擬合。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Dropout 等效於訓練多個不同子網路的集成；推論時輸出需乘以保留率 (1−p)。</div>
+</div>
+
+<!-- 24 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Adam Optimizer</div>
+    <div class="zh">Adam 優化器</div>
+    <div class="abbr">Adam</div>
+  </div>
+  <div class="cdef">結合 Momentum（一階動量）與 RMSProp（二階動量）的自適應學習率優化器。分別估計梯度的一階矩（均值）和二階矩（方差），為每個參數自動調整學習率。目前深度學習首選預設優化器。</div>
+  <div class="cscene"><b>🔍 應用場景</b>訓練 Transformer 語言模型，Adam with weight decay（AdamW）為標配優化器。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Adam = Momentum + RMSProp；AdamW 加入 Weight Decay 解決 L2 正則化等效問題。</div>
+</div>
+
+<!-- 25 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Oversampling / SMOTE</div>
+    <div class="zh">過採樣（重取樣）</div>
+  </div>
+  <div class="cdef">解決類別不平衡的重取樣策略。Oversampling 直接複製少數類樣本；SMOTE 在少數類樣本間插值合成新樣本（避免過擬合到已存在樣本）；Undersampling 則刪減多數類樣本。</div>
+  <div class="cscene"><b>🔍 應用場景</b>正負樣本 1:100，使用 SMOTE 使比例接近 1:3，再配合 Class Weight 訓練。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>SMOTE 合成新樣本；Oversampling 複製；兩者皆增加少數類數量；Undersampling 丟失資料。</div>
+</div>
+
+<!-- 26 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Knowledge Distillation</div>
+    <div class="zh">知識蒸餾</div>
+  </div>
+  <div class="cdef">模型壓縮技術。以大型「教師模型（Teacher）」的輸出軟標籤（類別機率分佈）訓練小型「學生模型（Student）」，使學生模型在推論效能接近教師模型的同時大幅降低計算量與記憶體。</div>
+  <div class="cscene"><b>🔍 應用場景</b>GPT-4 為教師，蒸餾出可在手機端執行的 DistilBERT 學生模型。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>軟標籤（soft labels）比 One-hot 硬標籤包含更多類別間關係資訊，是蒸餾的核心。</div>
+</div>
+
+<!-- 27 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Model Pruning</div>
+    <div class="zh">模型剪枝</div>
+  </div>
+  <div class="cdef">刪除神經網路中對輸出貢獻微小的權重或神經元的模型壓縮方法。可分為：非結構化剪枝（移除個別權重，產生稀疏矩陣）與結構化剪枝（移除整個神經元/卷積核，模型直接縮小）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>將 ResNet-50 結構化剪枝 40%，推論速度提升 1.5 倍，準確率下降不到 1%。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>剪枝後通常需 Fine-tuning 恢復精度；結構化剪枝可直接加速，非結構化需特殊稀疏計算硬體。</div>
+</div>
+
+<!-- 28 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Quantization</div>
+    <div class="zh">模型量化</div>
+  </div>
+  <div class="cdef">將模型權重和/或激活值從高精度浮點數（FP32）轉換為低精度表示（INT8、INT4）的壓縮技術。可大幅降低模型大小（4×）與推論延遲，代價是極小精度損失，適合邊緣裝置部署。</div>
+  <div class="cscene"><b>🔍 應用場景</b>LLM 以 4-bit 量化在消費級 GPU 上執行，記憶體需求從 80GB 降至 8GB。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>Post-Training Quantization（PTQ）無需重新訓練；QAT（量化感知訓練）精度更高。</div>
+</div>
+
+<!-- 29 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Mixed Precision Training</div>
+    <div class="zh">混合精度訓練</div>
+    <div class="abbr">FP16+FP32</div>
+  </div>
+  <div class="cdef">訓練時同時使用 FP16（半精度）與 FP32（全精度）。前向傳播和梯度計算用 FP16（速度快、記憶體省），梯度更新用 FP32（防止數值下溢）。配合「損失縮放」技術防止梯度消失。</div>
+  <div class="cscene"><b>🔍 應用場景</b>在 A100 GPU 訓練大型語言模型，啟用 AMP 後速度提升 2-3 倍，顯存減半。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>FP16 速度快但數值範圍小，需 Loss Scaling 防梯度下溢；PyTorch AMP 自動處理。</div>
+</div>
+
+<!-- 30 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Singular Value Decomposition</div>
+    <div class="zh">奇異值分解</div>
+    <div class="abbr">SVD</div>
+  </div>
+  <div class="cdef">矩陣分解方法，將矩陣 A 分解為 A = UΣVᵀ。U、V 為正交矩陣，Σ 為奇異值對角矩陣。取前 k 個奇異值可得最佳低秩近似（PCA 的數值實現基礎），廣泛用於推薦系統（潛在語義分析）。</div>
+  <div class="cscene"><b>🔍 應用場景</b>Netflix 電影推薦：用戶-電影評分矩陣 SVD 分解，發現潛在偏好因子。</div>
+  <div class="cexam"><b>⚡ 考試提示</b>PCA 等同於對協方差矩陣做 SVD；SVD 也是 NLP 中 LSA（潛在語義分析）的核心。</div>
+</div>
+
+</div><!-- /grid -->
+<div class="footer">iPAS 中級 AI應用規劃師 ・ 科目三第五章 ・ 名詞解釋 30 詞</div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

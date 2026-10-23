@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第六章名詞解釋：大數據在人工智慧之應用</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+
+<style>
+:root{
+--bg:#F7F8FA;--s:#FFFFFF;--s2:#F0F2F6;--t:#1A2035;--t2:#4A5568;--b:#D8DCE8;
+--B:#2D5F9A;--Blt:#E8EFF8;--O:#E85D3A;--Olt:#FCF0ED;--G:#3A9A6E;--Glt:#E8F5EF;
+--A:#D4920A;--Alt:#FDF6E3;--P:#7B5EA7;--Plt:#F0ECF8;--T:#2A8A8A;--Tlt:#E8F5F5;--R:#C0392B;--Rlt:#FCECEA;
+font-size:13px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:#111827;--s:#1E2538;--s2:#252D40;--t:#E8EAF0;--t2:#9AA3B8;--b:#2E3650}}
+:root[data-theme="dark"]{--bg:#111827;--s:#1E2538;--s2:#252D40;--t:#E8EAF0;--t2:#9AA3B8;--b:#2E3650}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito','Noto Sans TC',sans-serif;background:var(--bg);color:var(--t);padding:14px}
+.hdr{text-align:center;background:var(--s);border:2px solid var(--b);border-radius:12px;padding:14px;margin-bottom:14px}
+.badge{display:inline-block;background:var(--O);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.htitle{font-size:18px;font-weight:900;color:var(--t);font-family:'Noto Sans TC',sans-serif}
+.hsub{font-size:11px;color:var(--t2);margin-top:3px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.card{background:var(--s);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b)}
+.ctop{padding:9px 10px 8px}
+.cnum{font-size:9px;font-weight:800;color:var(--t2);letter-spacing:1px;margin-bottom:4px}
+.crow{display:flex;align-items:flex-start;gap:7px}
+.cico{font-size:22px;line-height:1}
+.cname{font-size:13px;font-weight:900;color:var(--t);font-family:'Noto Sans TC',sans-serif;line-height:1.2}
+.cen{font-size:9.5px;font-weight:600;color:var(--t2);margin-top:1px;letter-spacing:.3px}
+.cdiag{padding:4px 10px;display:flex;justify-content:center}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1;color:var(--t)}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;line-height:1.5;color:var(--t)}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px;color:var(--T)}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;line-height:1.5;border:1.5px solid var(--A);background:var(--Alt);color:var(--t)}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+svg text{font-family:'Nunito',sans-serif}
+</style>
+
+
+<div class="hdr">
+<div class="badge">CHAPTER 6</div>
+<div class="htitle">大數據在人工智慧之應用</div>
+<div class="hsub">iPAS 中級 AI應用規劃師｜科目二：大數據處理分析與應用｜30個核心名詞解釋</div>
+</div>
+<div class="grid">
+
+<!-- 01 分散式訓練 -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">01 / 30</div>
+<div class="crow"><span class="cico">🖥️</span><div><div class="cname">分散式訓練</div><div class="cen">Distributed Training</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="10" width="40" height="22" rx="4" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="25" y="25" font-size="9" text-anchor="middle" fill="#E85D3A" font-weight="700">GPU 1</text>
+<rect x="70" y="10" width="40" height="22" rx="4" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="90" y="25" font-size="9" text-anchor="middle" fill="#E85D3A" font-weight="700">GPU 2</text>
+<rect x="135" y="10" width="40" height="22" rx="4" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="155" y="25" font-size="9" text-anchor="middle" fill="#E85D3A" font-weight="700">GPU 3</text>
+<rect x="65" y="48" width="50" height="18" rx="4" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1.2"></rect>
+<text x="90" y="60" font-size="9" text-anchor="middle" fill="#2D5F9A" font-weight="700">Parameter Server</text>
+<line x1="25" y1="32" x2="80" y2="48" stroke="#888" stroke-width="1" stroke-dasharray="3,2"></line>
+<line x1="90" y1="32" x2="90" y2="48" stroke="#888" stroke-width="1" stroke-dasharray="3,2"></line>
+<line x1="155" y1="32" x2="100" y2="48" stroke="#888" stroke-width="1" stroke-dasharray="3,2"></line>
+</svg></div>
+<div class="cdef">將模型訓練任務分散至多台機器或多個GPU同時進行，透過梯度聚合同步更新參數。可大幅縮短訓練大型模型所需時間，是訓練LLM等超大模型的必要技術。</div>
+<div class="cscene"><b>📍 適用情境</b>訓練GPT、BERT等百億參數模型，單機GPU記憶體不足時，跨節點分散計算梯度，加速訓練週期。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「分散式訓練解決什麼問題」——答：單機記憶體瓶頸與訓練時間過長，通過多節點並行計算解決。</div>
+</div>
+
+<!-- 02 Data Parallelism -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">02 / 30</div>
+<div class="crow"><span class="cico">📋</span><div><div class="cname">資料並行</div><div class="cen">Data Parallelism</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="5" width="170" height="18" rx="4" fill="#E85D3A" opacity=".12" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="90" y="17" font-size="9" text-anchor="middle" fill="#E85D3A" font-weight="700">完整模型複製</text>
+<rect x="5" y="30" width="50" height="16" rx="3" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="30" y="41" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">Batch A</text>
+<rect x="65" y="30" width="50" height="16" rx="3" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="90" y="41" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">Batch B</text>
+<rect x="125" y="30" width="50" height="16" rx="3" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="150" y="41" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">Batch C</text>
+<rect x="55" y="52" width="70" height="14" rx="3" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="90" y="62" font-size="8" text-anchor="middle" fill="#2D5F9A" font-weight="700">梯度平均聚合</text>
+</svg></div>
+<div class="cdef">每個工作節點持有完整的模型副本，但各自處理不同的資料批次（mini-batch）。訓練結束後彙整各節點梯度取平均，統一更新模型參數。</div>
+<div class="cscene"><b>📍 適用情境</b>模型可放入單張GPU記憶體，但資料量龐大時，多GPU分批並行處理，訓練速度線性提升。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「Data Parallelism與Model Parallelism差異」——答：資料並行複製整個模型分批資料；模型並行將模型切割分配至不同裝置。</div>
+</div>
+
+<!-- 03 Model Parallelism -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">03 / 30</div>
+<div class="crow"><span class="cico">🧩</span><div><div class="cname">模型並行</div><div class="cen">Model Parallelism</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="15" width="45" height="40" rx="4" fill="#7B5EA7" opacity=".15" stroke="#7B5EA7" stroke-width="1.2"></rect>
+<text x="27" y="33" font-size="8" text-anchor="middle" fill="#7B5EA7" font-weight="700">Layer</text>
+<text x="27" y="45" font-size="8" text-anchor="middle" fill="#7B5EA7" font-weight="700">1–4</text>
+<text x="27" y="56" font-size="7" text-anchor="middle" fill="#7B5EA7">GPU 0</text>
+<rect x="68" y="15" width="45" height="40" rx="4" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="90" y="33" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">Layer</text>
+<text x="90" y="45" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">5–8</text>
+<text x="90" y="56" font-size="7" text-anchor="middle" fill="#E85D3A">GPU 1</text>
+<rect x="131" y="15" width="45" height="40" rx="4" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1.2"></rect>
+<text x="153" y="33" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">Layer</text>
+<text x="153" y="45" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">9–12</text>
+<text x="153" y="56" font-size="7" text-anchor="middle" fill="#3A9A6E">GPU 2</text>
+<line x1="50" y1="35" x2="68" y2="35" stroke="#888" stroke-width="1.5" marker-end="url(#arr)"></line>
+<line x1="113" y1="35" x2="131" y2="35" stroke="#888" stroke-width="1.5" marker-end="url(#arr)"></line>
+<defs><marker id="arr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">將模型的不同層（Layer）分配至不同GPU或節點，資料依序流過各部分。適用於單張GPU無法容納完整模型的超大型神經網路（如GPT-4）。</div>
+<div class="cscene"><b>📍 適用情境</b>訓練千億參數Transformer模型，將Embedding層、Attention層、FFN層切割分配至不同GPU節點，跨裝置完成前向傳播。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「為何需要Model Parallelism」——答：模型參數量超過單張GPU顯存，需拆分模型各層至不同裝置執行。</div>
+</div>
+
+<!-- 04 Mixed Precision Training -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">04 / 30</div>
+<div class="crow"><span class="cico">⚖️</span><div><div class="cname">混合精度訓練</div><div class="cen">Mixed Precision Training</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="10" width="75" height="50" rx="5" fill="#E85D3A" opacity=".1" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="42" y="30" font-size="9" text-anchor="middle" fill="#E85D3A" font-weight="700">FP16 計算</text>
+<text x="42" y="44" font-size="8" text-anchor="middle" fill="#E85D3A">速度快 省記憶體</text>
+<text x="42" y="55" font-size="7.5" text-anchor="middle" fill="#E85D3A">16-bit</text>
+<rect x="100" y="10" width="75" height="50" rx="5" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1.2"></rect>
+<text x="137" y="30" font-size="9" text-anchor="middle" fill="#2D5F9A" font-weight="700">FP32 梯度</text>
+<text x="137" y="44" font-size="8" text-anchor="middle" fill="#2D5F9A">精度高 防溢位</text>
+<text x="137" y="55" font-size="7.5" text-anchor="middle" fill="#2D5F9A">32-bit</text>
+<text x="90" y="37" font-size="11" text-anchor="middle" fill="#D4920A" font-weight="900">+</text>
+</svg></div>
+<div class="cdef">訓練時前向與反向傳播使用FP16（半精度）加速計算，梯度更新時使用FP32（單精度）保持數值穩定。可降低約50%顯存佔用，同時提升訓練吞吐量。</div>
+<div class="cscene"><b>📍 適用情境</b>使用NVIDIA A100 GPU訓練BERT-Large，啟用AMP（Automatic Mixed Precision）可使訓練速度提升2–3倍，顯存需求減半。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「Mixed Precision Training優缺點」——答：優：速度快省記憶體；缺：FP16數值範圍窄，需loss scaling防梯度下溢。</div>
+</div>
+
+<!-- 05 Gradient Accumulation -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">05 / 30</div>
+<div class="crow"><span class="cico">📦</span><div><div class="cname">梯度累積</div><div class="cen">Gradient Accumulation</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="20" width="30" height="20" rx="3" fill="#E85D3A" opacity=".2" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="20" y="33" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">B1</text>
+<rect x="40" y="20" width="30" height="20" rx="3" fill="#E85D3A" opacity=".35" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="55" y="33" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">B2</text>
+<rect x="75" y="20" width="30" height="20" rx="3" fill="#E85D3A" opacity=".5" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="90" y="33" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">B3</text>
+<rect x="110" y="20" width="30" height="20" rx="3" fill="#E85D3A" opacity=".7" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="125" y="33" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">B4</text>
+<path d="M145 30 L165 30" stroke="#D4920A" stroke-width="1.5" stroke-dasharray="3,2"></path>
+<rect x="160" y="20" width="15" height="20" rx="3" fill="#D4920A" opacity=".8" stroke="#D4920A" stroke-width="1"></rect>
+<text x="168" y="33" font-size="7" text-anchor="middle" fill="#fff" font-weight="700">↑</text>
+<text x="90" y="62" font-size="8.5" text-anchor="middle" fill="#888">累積N步後才更新參數</text>
+</svg></div>
+<div class="cdef">在顯存不足時，每次只載入小批次資料計算梯度但不立即更新，累積多個小批次的梯度後才統一執行一次參數更新，等效於使用更大Batch Size訓練。</div>
+<div class="cscene"><b>📍 適用情境</b>消費級GPU（16GB VRAM）訓練大型模型，設定accumulation_steps=8，等效batch_size擴大8倍，提升模型訓練穩定性。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「梯度累積的目的」——答：在記憶體有限下模擬大Batch Size訓練效果，改善模型收斂穩定性。</div>
+</div>
+
+<!-- 06 MLOps -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">06 / 30</div>
+<div class="crow"><span class="cico">🔄</span><div><div class="cname">MLOps</div><div class="cen">Machine Learning Operations</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<circle cx="90" cy="35" r="28" fill="none" stroke="#E85D3A" stroke-width="1.2" stroke-dasharray="4,2"></circle>
+<text x="30" y="18" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">資料</text>
+<text x="150" y="18" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">訓練</text>
+<text x="20" y="55" font-size="8" text-anchor="middle" fill="#7B5EA7" font-weight="700">監控</text>
+<text x="160" y="55" font-size="8" text-anchor="middle" fill="#2D5F9A" font-weight="700">部署</text>
+<text x="90" y="38" font-size="9" text-anchor="middle" fill="#E85D3A" font-weight="800">MLOps</text>
+<text x="90" y="49" font-size="7.5" text-anchor="middle" fill="#888">持續整合循環</text>
+<path d="M40 20 Q60 10 80 20" fill="none" stroke="#E85D3A" stroke-width="1" marker-end="url(#a6)"></path>
+<path d="M150 25 Q155 40 145 55" fill="none" stroke="#3A9A6E" stroke-width="1" marker-end="url(#a6)"></path>
+<path d="M40 55 Q35 40 35 25" fill="none" stroke="#7B5EA7" stroke-width="1" marker-end="url(#a6)"></path>
+<defs><marker id="a6" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">將DevOps理念應用於機器學習，涵蓋資料管理、模型訓練、評估、部署、監控的完整生命週期自動化。核心組件包含CI/CD、模型版本控制、特徵工程平台及線上監控。</div>
+<div class="cscene"><b>📍 適用情境</b>金融機構每週自動重訓風險評分模型，透過MLflow追蹤實驗、Kubeflow自動化部署、Grafana監控線上效能漂移。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「MLOps解決什麼問題」——答：解決ML模型從研發到生產的落差，實現持續訓練、持續評估、持續部署的自動化閉環。</div>
+</div>
+
+<!-- 07 Concept Drift -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">07 / 30</div>
+<div class="crow"><span class="cico">📉</span><div><div class="cname">概念漂移</div><div class="cen">Concept Drift</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<line x1="10" y1="60" x2="170" y2="60" stroke="#ccc" stroke-width="1"></line>
+<line x1="10" y1="10" x2="10" y2="60" stroke="#ccc" stroke-width="1"></line>
+<polyline points="10,50 40,48 70,42 100,38 130,25 160,18" fill="none" stroke="#E85D3A" stroke-width="2"></polyline>
+<text x="90" y="8" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">模型效能</text>
+<line x1="90" y1="10" x2="90" y2="60" stroke="#D4920A" stroke-width="1.2" stroke-dasharray="3,2"></line>
+<text x="90" y="9" font-size="7" text-anchor="middle" fill="#D4920A">漂移點</text>
+<text x="20" y="68" font-size="7.5" fill="#888">部署初期</text>
+<text x="140" y="68" font-size="7.5" fill="#888">時間增加</text>
+</svg></div>
+<div class="cdef">模型訓練後，現實世界中輸入特徵（X）與目標變數（Y）之間的統計關係隨時間改變，導致模型預測效能逐漸下降。常見於季節變化、消費習慣改變等情境。</div>
+<div class="cscene"><b>📍 適用情境</b>電商推薦系統在疫情後消費者偏好改變，導致點擊率預測準確率從92%降至78%，需觸發模型重訓機制。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「Concept Drift vs Data Drift差異」——答：Concept Drift是P(Y|X)改變（關係變化）；Data Drift是P(X)改變（輸入分布變化）。</div>
+</div>
+
+<!-- 08 Data Drift -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">08 / 30</div>
+<div class="crow"><span class="cico">🌊</span><div><div class="cname">資料漂移</div><div class="cen">Data Drift</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<ellipse cx="55" cy="38" rx="40" ry="22" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1.2"></ellipse>
+<text x="55" y="35" font-size="8.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">訓練分布</text>
+<text x="55" y="47" font-size="7.5" text-anchor="middle" fill="#2D5F9A">μ=50, σ=10</text>
+<ellipse cx="125" cy="38" rx="40" ry="22" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.2"></ellipse>
+<text x="125" y="35" font-size="8.5" text-anchor="middle" fill="#E85D3A" font-weight="700">線上分布</text>
+<text x="125" y="47" font-size="7.5" text-anchor="middle" fill="#E85D3A">μ=65, σ=15</text>
+<text x="90" y="10" font-size="8" text-anchor="middle" fill="#D4920A" font-weight="700">分布偏移</text>
+</svg></div>
+<div class="cdef">線上服務收到的輸入資料分布（P(X)）與訓練時的資料分布顯著不同，但Y=f(X)的映射關係不變。可透過PSI（Population Stability Index）、KS檢定等偵測。</div>
+<div class="cscene"><b>📍 適用情境</b>信用評分模型訓練資料中年齡均值45歲，但新客群均值降至28歲，PSI&gt;0.25觸發警報，需評估是否重新採樣訓練。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「偵測Data Drift的指標」——答：PSI（&gt;0.25為顯著漂移）、KS統計量、JS散度、特徵分布監控儀表板。</div>
+</div>
+
+<!-- 09 鑑別式AI -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">09 / 30</div>
+<div class="crow"><span class="cico">🔍</span><div><div class="cname">鑑別式AI</div><div class="cen">Discriminative AI</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="20" width="50" height="30" rx="5" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="30" y="33" font-size="8" text-anchor="middle" fill="#2D5F9A" font-weight="700">輸入X</text>
+<text x="30" y="44" font-size="7.5" text-anchor="middle" fill="#888">影像/文字</text>
+<rect x="70" y="20" width="60" height="30" rx="5" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="100" y="33" font-size="8.5" text-anchor="middle" fill="#E85D3A" font-weight="700">P(Y|X)</text>
+<text x="100" y="44" font-size="7.5" text-anchor="middle" fill="#E85D3A">條件機率</text>
+<rect x="145" y="20" width="30" height="30" rx="5" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="160" y="33" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">標籤</text>
+<text x="160" y="44" font-size="7.5" text-anchor="middle" fill="#3A9A6E">Y</text>
+<line x1="55" y1="35" x2="70" y2="35" stroke="#888" stroke-width="1.2" marker-end="url(#a9)"></line>
+<line x1="130" y1="35" x2="145" y2="35" stroke="#888" stroke-width="1.2" marker-end="url(#a9)"></line>
+<defs><marker id="a9" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">學習從輸入X直接預測輸出Y的條件機率P(Y|X)，關注如何「鑑別」不同類別之間的邊界。包含CNN分類器、BERT分類器、SVM、決策樹等，適合分類與回歸任務。</div>
+<div class="cscene"><b>📍 適用情境</b>垃圾郵件過濾器學習P(垃圾|郵件文字)，醫療影像AI學習P(腫瘤|MRI影像)，焦點在正確預測標籤，無需理解資料生成過程。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「鑑別式vs生成式AI」——答：鑑別式學P(Y|X)做分類；生成式學P(X)或P(X,Y)，可生成新樣本。</div>
+</div>
+
+<!-- 10 生成式AI -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">10 / 30</div>
+<div class="crow"><span class="cico">✨</span><div><div class="cname">生成式AI</div><div class="cen">Generative AI</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<circle cx="40" cy="35" r="20" fill="#888" opacity=".15" stroke="#888" stroke-width="1"></circle>
+<text x="40" y="32" font-size="8" text-anchor="middle" fill="#888" font-weight="700">雜訊/</text>
+<text x="40" y="43" font-size="8" text-anchor="middle" fill="#888">Prompt</text>
+<rect x="75" y="22" width="40" height="26" rx="5" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="95" y="32" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">生成</text>
+<text x="95" y="43" font-size="8" text-anchor="middle" fill="#E85D3A">模型</text>
+<rect x="130" y="15" width="45" height="40" rx="5" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1.2"></rect>
+<text x="152" y="32" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">新樣本</text>
+<text x="152" y="43" font-size="7.5" text-anchor="middle" fill="#3A9A6E">文/圖/音</text>
+<line x1="60" y1="35" x2="75" y2="35" stroke="#888" stroke-width="1.2" marker-end="url(#a10)"></line>
+<line x1="115" y1="35" x2="130" y2="35" stroke="#888" stroke-width="1.2" marker-end="url(#a10)"></line>
+<defs><marker id="a10" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">學習資料的底層分布P(X)，能生成與訓練資料相似但全新的內容。典型架構包含GAN、VAE、Diffusion Model、Transformer（GPT系列）。近年GenAI快速擴展至文字、影像、音樂、視頻生成。</div>
+<div class="cscene"><b>📍 適用情境</b>ChatGPT接收Prompt生成回應、Stable Diffusion依文字描述生成圖像、Sora生成影片，皆為生成式AI在商業場景的應用。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「生成式AI常見架構」——答：GAN（對抗生成）、VAE（變分自編碼）、Diffusion（擴散模型）、GPT（自回歸語言模型）。</div>
+</div>
+
+<!-- 11 Fine-tuning -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">11 / 30</div>
+<div class="crow"><span class="cico">🎛️</span><div><div class="cname">微調</div><div class="cen">Fine-tuning</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="15" width="60" height="40" rx="5" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1.2"></rect>
+<text x="35" y="32" font-size="8.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">預訓練模型</text>
+<text x="35" y="44" font-size="7.5" text-anchor="middle" fill="#888">大量通用資料</text>
+<text x="35" y="53" font-size="7" text-anchor="middle" fill="#888">凍結底層</text>
+<line x1="65" y1="35" x2="82" y2="35" stroke="#D4920A" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#a11)"></line>
+<text x="73" y="29" font-size="7" text-anchor="middle" fill="#D4920A">微調</text>
+<rect x="82" y="15" width="93" height="40" rx="5" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="128" y="30" font-size="8.5" text-anchor="middle" fill="#E85D3A" font-weight="700">任務特定模型</text>
+<text x="128" y="42" font-size="7.5" text-anchor="middle" fill="#888">少量領域資料</text>
+<text x="128" y="52" font-size="7" text-anchor="middle" fill="#888">更新頂層/全部</text>
+<defs><marker id="a11" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#D4920A"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">在大型預訓練模型基礎上，使用少量領域特定標注資料繼續訓練，調整模型參數使其適應特定任務。包含全參數微調（Full Fine-tuning）與參數高效微調（LoRA、Adapter）。</div>
+<div class="cscene"><b>📍 適用情境</b>使用5000筆醫療問診記錄對LLaMA-3進行LoRA微調，使通用LLM具備醫療術語理解與回答能力，僅需訓練0.1%參數。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「Fine-tuning vs RAG差異」——答：Fine-tuning更新模型參數學習領域知識；RAG不改模型，透過檢索外部文件擴充知識。</div>
+</div>
+
+<!-- 12 Transfer Learning -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">12 / 30</div>
+<div class="crow"><span class="cico">🚀</span><div><div class="cname">遷移學習</div><div class="cen">Transfer Learning</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="12" width="65" height="46" rx="5" fill="#3A9A6E" opacity=".12" stroke="#3A9A6E" stroke-width="1.2"></rect>
+<text x="37" y="28" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">Source Task</text>
+<text x="37" y="40" font-size="7.5" text-anchor="middle" fill="#888">ImageNet分類</text>
+<text x="37" y="52" font-size="7.5" text-anchor="middle" fill="#888">大量標注資料</text>
+<path d="M70 35 C85 20 95 50 110 35" fill="none" stroke="#E85D3A" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#a12)"></path>
+<text x="90" y="18" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">知識遷移</text>
+<rect x="110" y="12" width="65" height="46" rx="5" fill="#E85D3A" opacity=".12" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="142" y="28" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">Target Task</text>
+<text x="142" y="40" font-size="7.5" text-anchor="middle" fill="#888">醫療X光分類</text>
+<text x="142" y="52" font-size="7.5" text-anchor="middle" fill="#888">少量標注資料</text>
+<defs><marker id="a12" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#E85D3A"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">將在某一任務（Source Domain）學到的知識遷移至另一相關任務（Target Domain），避免從頭訓練。通常凍結預訓練模型的底層特徵提取層，只訓練頂層分類器以適應新任務。</div>
+<div class="cscene"><b>📍 適用情境</b>ResNet50在ImageNet預訓練的視覺特徵，直接遷移用於工廠瑕疵檢測，僅需500張瑕疵圖即達95%準確率，節省大量標注成本。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「遷移學習的前提條件」——答：源任務與目標任務需具備相關性（如同為視覺任務），否則負遷移會降低效能。</div>
+</div>
+
+<!-- 13 Differential Privacy -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">13 / 30</div>
+<div class="crow"><span class="cico">🔐</span><div><div class="cname">差分隱私</div><div class="cen">Differential Privacy</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="15" width="55" height="40" rx="5" fill="#2D5F9A" opacity=".12" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="32" y="33" font-size="8" text-anchor="middle" fill="#2D5F9A" font-weight="700">原始資料</text>
+<text x="32" y="45" font-size="7.5" text-anchor="middle" fill="#888">含敏感個資</text>
+<rect x="75" y="22" width="35" height="25" rx="4" fill="#D4920A" opacity=".15" stroke="#D4920A" stroke-width="1"></rect>
+<text x="92" y="33" font-size="8" text-anchor="middle" fill="#D4920A" font-weight="700">加入</text>
+<text x="92" y="42" font-size="8" text-anchor="middle" fill="#D4920A">雜訊ε</text>
+<rect x="125" y="15" width="50" height="40" rx="5" fill="#3A9A6E" opacity=".12" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="150" y="31" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">輸出結果</text>
+<text x="150" y="42" font-size="7.5" text-anchor="middle" fill="#888">無法反推</text>
+<text x="150" y="52" font-size="7.5" text-anchor="middle" fill="#888">個人資訊</text>
+<line x1="60" y1="35" x2="75" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a13)"></line>
+<line x1="110" y1="35" x2="125" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a13)"></line>
+<defs><marker id="a13" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">在統計分析或機器學習過程中加入校準雜訊（Laplace/Gaussian噪聲），確保單一個體的存在或缺失不會顯著影響輸出結果。以隱私預算ε量化隱私保護強度，ε越小保護越強。</div>
+<div class="cscene"><b>📍 適用情境</b>政府統計部門發布人口普查統計時，使用DP對計數資料加噪，確保攻擊者無法透過多次查詢推導出特定個人資訊。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「差分隱私的ε意義」——答：ε為隱私預算，越小隱私保護越強但資料效用越低；ε=0為完全隱私，實用上取0.1–10之間。</div>
+</div>
+
+<!-- 14 Federated Learning -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">14 / 30</div>
+<div class="crow"><span class="cico">🌐</span><div><div class="cname">聯邦學習</div><div class="cen">Federated Learning</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<circle cx="90" cy="35" r="16" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.5"></circle>
+<text x="90" y="33" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">聚合</text>
+<text x="90" y="43" font-size="7.5" text-anchor="middle" fill="#E85D3A">伺服器</text>
+<rect x="5" y="5" width="40" height="22" rx="4" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="25" y="14" font-size="7.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">裝置A</text>
+<text x="25" y="23" font-size="7" text-anchor="middle" fill="#888">本地資料</text>
+<rect x="135" y="5" width="40" height="22" rx="4" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="155" y="14" font-size="7.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">裝置B</text>
+<text x="155" y="23" font-size="7" text-anchor="middle" fill="#888">本地資料</text>
+<rect x="70" y="52" width="40" height="16" rx="4" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="90" y="63" font-size="7.5" text-anchor="middle" fill="#3A9A6E" font-weight="700">裝置C</text>
+<line x1="45" y1="18" x2="76" y2="28" stroke="#888" stroke-dasharray="3,2" stroke-width="1" marker-end="url(#a14)"></line>
+<line x1="135" y1="18" x2="104" y2="28" stroke="#888" stroke-dasharray="3,2" stroke-width="1" marker-end="url(#a14)"></line>
+<line x1="90" y1="51" x2="90" y2="51" stroke="#888" stroke-dasharray="3,2" stroke-width="1"></line>
+<line x1="90" y1="51" x2="90" y2="51" stroke="#888" stroke-width="1"></line>
+<path d="M90 51 L90 51" stroke="#3A9A6E" stroke-width="1"></path>
+<line x1="90" y1="52" x2="90" y2="51" stroke="#888" stroke-dasharray="3,2" stroke-width="1" marker-end="url(#a14)"></line>
+<defs><marker id="a14" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">各參與方在本地訓練模型，只上傳梯度或模型更新（而非原始資料）至中央伺服器聚合，保護資料隱私。常見聚合演算法：FedAvg（加權平均）。適用於醫療、金融等資料敏感場景。</div>
+<div class="cscene"><b>📍 適用情境</b>全台30家醫院聯合訓練癌症診斷模型，各院病歷留在本地，僅共享模型梯度，滿足個資法合規要求，同時提升模型泛化能力。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「聯邦學習的挑戰」——答：通訊成本高、各節點資料異質性（Non-IID）、梯度攻擊（Gradient Leakage）風險。</div>
+</div>
+
+<!-- 15 Homomorphic Encryption -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">15 / 30</div>
+<div class="crow"><span class="cico">🔒</span><div><div class="cname">同態加密</div><div class="cen">Homomorphic Encryption</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<text x="20" y="20" font-size="10" fill="#2D5F9A" font-weight="700">a=5</text>
+<text x="5" y="38" font-size="8.5" fill="#2D5F9A">Enc(a)→🔒</text>
+<rect x="68" y="15" width="45" height="40" rx="5" fill="#E85D3A" opacity=".12" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="90" y="30" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">密文運算</text>
+<text x="90" y="42" font-size="7.5" text-anchor="middle" fill="#E85D3A">f(🔒a,🔒b)</text>
+<text x="90" y="52" font-size="7" text-anchor="middle" fill="#888">無需解密</text>
+<text x="135" y="20" font-size="10" fill="#3A9A6E" font-weight="700">Enc(f)</text>
+<text x="130" y="38" font-size="8.5" fill="#3A9A6E">解密→f(a,b)</text>
+<line x1="50" y1="35" x2="68" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a15)"></line>
+<line x1="113" y1="35" x2="130" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a15)"></line>
+<defs><marker id="a15" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">允許在加密資料上直接執行計算（加法、乘法），解密後得到與對明文計算相同的結果。雲端服務商無需看到原始資料即可提供計算服務，實現「盲計算」。</div>
+<div class="cscene"><b>📍 適用情境</b>醫療機構將加密基因資料上傳雲端，雲端在密文上執行疾病風險模型推論，回傳加密結果，機構本地解密得到預測，資料全程不暴露。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「同態加密的缺點」——答：計算效能極低（比明文慢1000倍以上），目前主要用於對安全性要求極高的特定場景。</div>
+</div>
+
+<!-- 16 K-Anonymity -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">16 / 30</div>
+<div class="crow"><span class="cico">👥</span><div><div class="cname">K-匿名性</div><div class="cen">K-Anonymity</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="8" width="80" height="55" rx="5" fill="#2D5F9A" opacity=".08" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="45" y="20" font-size="7.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">原始表格</text>
+<text x="45" y="32" font-size="7" text-anchor="middle" fill="#888">張三,28,台北,糖尿病</text>
+<text x="45" y="42" font-size="7" text-anchor="middle" fill="#888">李四,29,台北,高血壓</text>
+<text x="45" y="52" font-size="7" text-anchor="middle" fill="#888">王五,27,台北,失眠</text>
+<text x="45" y="62" font-size="7" text-anchor="middle" fill="#888">（K=3，可保護）</text>
+<rect x="100" y="8" width="75" height="55" rx="5" fill="#3A9A6E" opacity=".08" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="137" y="20" font-size="7.5" text-anchor="middle" fill="#3A9A6E" font-weight="700">K=3匿名化</text>
+<text x="137" y="32" font-size="7" text-anchor="middle" fill="#888">*,25-30,北部,糖尿病</text>
+<text x="137" y="42" font-size="7" text-anchor="middle" fill="#888">*,25-30,北部,高血壓</text>
+<text x="137" y="52" font-size="7" text-anchor="middle" fill="#888">*,25-30,北部,失眠</text>
+<text x="137" y="62" font-size="7" text-anchor="middle" fill="#3A9A6E">無法識別個人</text>
+</svg></div>
+<div class="cdef">資料集中每一筆記錄至少與其他K-1筆記錄在準識別屬性（如年齡、性別、郵遞區號）上無法區分，確保攻擊者無法鎖定特定個人。K值越大隱私保護越強但資料效用越低。</div>
+<div class="cscene"><b>📍 適用情境</b>衛福部發布健保資料供學術研究，對出生年月、診斷碼、就醫地區進行泛化處理，確保每組準識別屬性至少有5筆（K=5）。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「K-Anonymity的弱點」——答：易受同質性攻擊（同組敏感屬性值相同）與背景知識攻擊，故延伸出L-Diversity與T-Closeness。</div>
+</div>
+
+<!-- 17 資料匿名化 -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">17 / 30</div>
+<div class="crow"><span class="cico">🎭</span><div><div class="cname">資料匿名化</div><div class="cen">Data Anonymization</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<text x="5" y="18" font-size="8.5" fill="#2D5F9A" font-weight="700">技術方法</text>
+<rect x="5" y="22" width="42" height="15" rx="3" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="26" y="33" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">資料遮蔽</text>
+<rect x="52" y="22" width="42" height="15" rx="3" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="73" y="33" font-size="7.5" text-anchor="middle" fill="#3A9A6E" font-weight="700">假名化</text>
+<rect x="99" y="22" width="42" height="15" rx="3" fill="#7B5EA7" opacity=".15" stroke="#7B5EA7" stroke-width="1"></rect>
+<text x="120" y="33" font-size="7.5" text-anchor="middle" fill="#7B5EA7" font-weight="700">資料泛化</text>
+<rect x="5" y="42" width="42" height="15" rx="3" fill="#2A8A8A" opacity=".15" stroke="#2A8A8A" stroke-width="1"></rect>
+<text x="26" y="53" font-size="7.5" text-anchor="middle" fill="#2A8A8A" font-weight="700">資料擾動</text>
+<rect x="52" y="42" width="55" height="15" rx="3" fill="#D4920A" opacity=".15" stroke="#D4920A" stroke-width="1"></rect>
+<text x="79" y="53" font-size="7.5" text-anchor="middle" fill="#D4920A" font-weight="700">合成資料替換</text>
+<rect x="112" y="42" width="60" height="15" rx="3" fill="#C0392B" opacity=".15" stroke="#C0392B" stroke-width="1"></rect>
+<text x="142" y="53" font-size="7.5" text-anchor="middle" fill="#C0392B" font-weight="700">資料聚合統計</text>
+</svg></div>
+<div class="cdef">透過遮蔽、泛化、假名化、擾動等技術處理個人識別資訊（PII），使資料無法直接或間接識別特定個人。分為可逆（假名化）與不可逆（真正匿名化）兩類。</div>
+<div class="cscene"><b>📍 適用情境</b>銀行開放交易資料供FinTech分析時，將姓名替換為雜湊ID、完整卡號只保留後四碼、出生年月僅保留年份，確保GDPR合規。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「假名化vs匿名化」——答：假名化（Pseudonymization）可逆，保留重新識別可能；匿名化（Anonymization）不可逆，無法還原，GDPR不適用於後者。</div>
+</div>
+
+<!-- 18 Credit Scoring -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">18 / 30</div>
+<div class="crow"><span class="cico">💳</span><div><div class="cname">信用評分</div><div class="cen">Credit Scoring</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<text x="5" y="20" font-size="8" fill="#2D5F9A" font-weight="700">特徵輸入</text>
+<text x="5" y="33" font-size="7.5" fill="#888">• 還款歷史 35%</text>
+<text x="5" y="43" font-size="7.5" fill="#888">• 負債比率 30%</text>
+<text x="5" y="53" font-size="7.5" fill="#888">• 信用長度 15%</text>
+<text x="5" y="63" font-size="7.5" fill="#888">• 信用組合 10%</text>
+<rect x="100" y="15" width="72" height="40" rx="20" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.5"></rect>
+<text x="136" y="32" font-size="14" text-anchor="middle" fill="#E85D3A" font-weight="900">750</text>
+<text x="136" y="46" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">優良 ✓</text>
+<text x="136" y="56" font-size="7" text-anchor="middle" fill="#888">300–850</text>
+</svg></div>
+<div class="cdef">使用統計模型或機器學習演算法（邏輯回歸、XGBoost、神經網路）評估借款人違約風險，輸出信用分數。傳統FICO評分基於規則，現代AI評分引入更多行為特徵，如消費模式、社交資料等。</div>
+<div class="cscene"><b>📍 適用情境</b>P2P借貸平台使用XGBoost模型，結合申請人銀行流水、電商消費記錄、手機APP使用行為，輸出350–950的動態信用分數。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「信用評分模型的公平性問題」——答：AI模型可能放大歷史偏見，需定期進行公平性稽核（Fairness Audit），避免對特定族群產生歧視性評分。</div>
+</div>
+
+<!-- 19 Fraud Detection -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">19 / 30</div>
+<div class="crow"><span class="cico">🚨</span><div><div class="cname">詐欺偵測</div><div class="cen">Fraud Detection</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="20" width="45" height="30" rx="4" fill="#2D5F9A" opacity=".12" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="27" y="33" font-size="7.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">交易串流</text>
+<text x="27" y="44" font-size="7" text-anchor="middle" fill="#888">即時資料</text>
+<rect x="68" y="20" width="44" height="30" rx="4" fill="#E85D3A" opacity=".12" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="90" y="32" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">ML模型</text>
+<text x="90" y="43" font-size="7" text-anchor="middle" fill="#888">風險評分</text>
+<rect x="130" y="10" width="45" height="20" rx="4" fill="#3A9A6E" opacity=".12" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="152" y="23" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">通過 ✓</text>
+<rect x="130" y="40" width="45" height="20" rx="4" fill="#C0392B" opacity=".15" stroke="#C0392B" stroke-width="1"></rect>
+<text x="152" y="53" font-size="8" text-anchor="middle" fill="#C0392B" font-weight="700">攔截 ✗</text>
+<line x1="50" y1="35" x2="68" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a19)"></line>
+<line x1="112" y1="30" x2="130" y2="23" stroke="#3A9A6E" stroke-width="1" marker-end="url(#a19)"></line>
+<line x1="112" y1="40" x2="130" y2="50" stroke="#C0392B" stroke-width="1" marker-end="url(#a19)"></line>
+<defs><marker id="a19" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">使用機器學習（隨機森林、XGBoost、圖神經網路）在海量交易資料中即時識別異常模式，區分正常交易與詐欺行為。核心挑戰是極度不平衡標籤（詐欺率&lt;0.1%）與概念漂移。</div>
+<div class="cscene"><b>📍 適用情境</b>信用卡公司部署即時串流處理系統，每筆交易在50ms內完成風險評分，結合規則引擎與ML模型，詐欺偵測率達95%，誤報率低於0.5%。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「處理詐欺偵測類別不平衡問題」——答：SMOTE過採樣、欠採樣、代價敏感學習（Cost-sensitive Learning）、使用AUC-ROC而非Accuracy評估。</div>
+</div>
+
+<!-- 20 Active Learning -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">20 / 30</div>
+<div class="crow"><span class="cico">🎯</span><div><div class="cname">主動學習</div><div class="cen">Active Learning</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="20" width="40" height="30" rx="4" fill="#3A9A6E" opacity=".12" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="25" y="33" font-size="7.5" text-anchor="middle" fill="#3A9A6E" font-weight="700">未標注</text>
+<text x="25" y="44" font-size="7" text-anchor="middle" fill="#888">資料池</text>
+<rect x="70" y="20" width="40" height="30" rx="4" fill="#E85D3A" opacity=".12" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="90" y="32" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">查詢策略</text>
+<text x="90" y="43" font-size="7" text-anchor="middle" fill="#888">選最有價值</text>
+<rect x="135" y="20" width="40" height="30" rx="4" fill="#2D5F9A" opacity=".12" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="155" y="33" font-size="7.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">專家</text>
+<text x="155" y="44" font-size="7" text-anchor="middle" fill="#888">標注</text>
+<line x1="45" y1="35" x2="70" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a20)"></line>
+<line x1="110" y1="35" x2="135" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a20)"></line>
+<path d="M155 50 Q155 65 90 65 Q25 65 25 50" fill="none" stroke="#D4920A" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a20)"></path>
+<text x="90" y="63" font-size="7" text-anchor="middle" fill="#D4920A">更新模型</text>
+<defs><marker id="a20" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">讓學習算法主動選擇「最有資訊量」的樣本請求標注，而非隨機標注全部資料。常見查詢策略：不確定性採樣（Uncertainty Sampling）、委員會查詢（Query by Committee）。可大幅減少標注成本。</div>
+<div class="cscene"><b>📍 適用情境</b>法律文件分類系統僅標注2000份（主動選擇），比隨機標注10000份達到更高準確率，減少律師80%標注工時。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「Active Learning查詢策略」——答：不確定性採樣選預測信心最低的樣本；委員會查詢選多個模型預測分歧最大的樣本。</div>
+</div>
+
+<!-- 21 Weak Supervision -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">21 / 30</div>
+<div class="crow"><span class="cico">📝</span><div><div class="cname">弱監督學習</div><div class="cen">Weak Supervision</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="8" width="50" height="54" rx="5" fill="#888" opacity=".08" stroke="#888" stroke-width="1"></rect>
+<text x="30" y="22" font-size="7.5" text-anchor="middle" fill="#888" font-weight="700">標注規則</text>
+<text x="30" y="34" font-size="7" text-anchor="middle" fill="#888">規則1:關鍵字</text>
+<text x="30" y="44" font-size="7" text-anchor="middle" fill="#888">規則2:正規式</text>
+<text x="30" y="54" font-size="7" text-anchor="middle" fill="#888">規則3:模型</text>
+<rect x="68" y="20" width="45" height="30" rx="5" fill="#E85D3A" opacity=".12" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="90" y="33" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">標籤模型</text>
+<text x="90" y="44" font-size="7" text-anchor="middle" fill="#888">Snorkel</text>
+<rect x="130" y="20" width="45" height="30" rx="5" fill="#3A9A6E" opacity=".12" stroke="#3A9A6E" stroke-width="1.2"></rect>
+<text x="152" y="33" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">雜訊標注</text>
+<text x="152" y="44" font-size="7" text-anchor="middle" fill="#888">自動生成</text>
+<line x1="55" y1="35" x2="68" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a21)"></line>
+<line x1="113" y1="35" x2="130" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a21)"></line>
+<defs><marker id="a21" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">使用不精確、不完整或雜訊標注（啟發式規則、遠端監督、眾包）替代昂貴的人工精確標注，透過標籤模型（Label Model）整合多個弱標注源，生成機率性標籤供模型訓練。代表框架：Snorkel。</div>
+<div class="cscene"><b>📍 適用情境</b>醫療NLP系統使用ICD編碼規則、藥品名稱詞典、現有分類器作為三個弱監督源，無需醫師逐一標注即可生成百萬筆訓練資料。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「弱監督學習vs半監督學習」——答：弱監督使用嘈雜標籤（有標注但不精確）；半監督混合少量精確標注與大量無標注資料。</div>
+</div>
+
+<!-- 22 Synthetic Data -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">22 / 30</div>
+<div class="crow"><span class="cico">🔮</span><div><div class="cname">合成資料</div><div class="cen">Synthetic Data</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="15" width="50" height="40" rx="5" fill="#2D5F9A" opacity=".12" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="30" y="30" font-size="7.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">真實資料</text>
+<text x="30" y="42" font-size="7" text-anchor="middle" fill="#888">稀少/敏感</text>
+<text x="30" y="52" font-size="7" text-anchor="middle" fill="#888">有限樣本</text>
+<rect x="70" y="22" width="40" height="25" rx="4" fill="#E85D3A" opacity=".12" stroke="#E85D3A" stroke-width="1.2"></rect>
+<text x="90" y="33" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">生成模型</text>
+<text x="90" y="43" font-size="7" text-anchor="middle" fill="#888">GAN/VAE</text>
+<rect x="125" y="15" width="50" height="40" rx="5" fill="#3A9A6E" opacity=".12" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="150" y="30" font-size="7.5" text-anchor="middle" fill="#3A9A6E" font-weight="700">合成資料</text>
+<text x="150" y="42" font-size="7" text-anchor="middle" fill="#888">大量生成</text>
+<text x="150" y="52" font-size="7" text-anchor="middle" fill="#888">無隱私問題</text>
+<line x1="55" y1="35" x2="70" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a22)"></line>
+<line x1="110" y1="35" x2="125" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a22)"></line>
+<defs><marker id="a22" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">使用生成模型（GAN、VAE、Diffusion Model）或統計方法人工產生與真實資料具有相似統計特性的虛構資料。解決資料稀缺、隱私限制、類別不平衡等問題，常用於自動駕駛、醫療AI、金融風控。</div>
+<div class="cscene"><b>📍 適用情境</b>自動駕駛公司使用模擬器生成億張合成影像（雨天、夜晚、緊急情境），補充真實世界難以收集的邊緣案例（Edge Cases）訓練資料。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「合成資料的風險」——答：可能放大真實資料偏見（Amplification of Bias）、合成資料分布偏移（Distribution Gap）導致模型在真實環境表現下降。</div>
+</div>
+
+<!-- 23 GDPR -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">23 / 30</div>
+<div class="crow"><span class="cico">🇪🇺</span><div><div class="cname">GDPR</div><div class="cen">General Data Protection Regulation</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<circle cx="90" cy="35" r="25" fill="none" stroke="#2D5F9A" stroke-width="1.5"></circle>
+<text x="90" y="32" font-size="9" text-anchor="middle" fill="#2D5F9A" font-weight="800">GDPR</text>
+<text x="90" y="44" font-size="7.5" text-anchor="middle" fill="#888">EU 2018</text>
+<text x="15" y="18" font-size="7.5" fill="#E85D3A" font-weight="700">知情權</text>
+<text x="140" y="18" font-size="7.5" fill="#3A9A6E" font-weight="700">遺忘權</text>
+<text x="5" y="55" font-size="7.5" fill="#7B5EA7" font-weight="700">資料可攜</text>
+<text x="130" y="55" font-size="7.5" fill="#D4920A" font-weight="700">罰款4%</text>
+<text x="130" y="65" font-size="7" fill="#D4920A">全球營收</text>
+</svg></div>
+<div class="cdef">歐盟2018年施行的個人資料保護法規，賦予個人知情權、存取權、更正權、刪除權（遺忘權）、資料可攜權。企業違規最高罰款達全球年營收4%或2000萬歐元（取較高者）。</div>
+<div class="cscene"><b>📍 適用情境</b>台灣SaaS公司有歐盟用戶即須符合GDPR，需設立DPO（資料保護長）、進行DPIA（資料保護影響評估）、在72小時內通報資料外洩。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「GDPR核心原則」——答：目的限制、資料最小化、儲存期限限制、完整性與保密性、問責性，以及「明確、積極同意」要求。</div>
+</div>
+
+<!-- 24 個資法 -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">24 / 30</div>
+<div class="crow"><span class="cico">🏛️</span><div><div class="cname">個資法</div><div class="cen">Taiwan PDPA</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="55" y="5" width="70" height="18" rx="4" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1.2"></rect>
+<text x="90" y="17" font-size="8.5" text-anchor="middle" fill="#2D5F9A" font-weight="800">個人資料保護法</text>
+<rect x="5" y="30" width="52" height="34" rx="4" fill="#E85D3A" opacity=".12" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="31" y="44" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">蒐集/處理</text>
+<text x="31" y="55" font-size="7" text-anchor="middle" fill="#888">需合法依據</text>
+<rect x="64" y="30" width="52" height="34" rx="4" fill="#3A9A6E" opacity=".12" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="90" y="44" font-size="7.5" text-anchor="middle" fill="#3A9A6E" font-weight="700">當事人權利</text>
+<text x="90" y="55" font-size="7" text-anchor="middle" fill="#888">查閱/更正</text>
+<rect x="123" y="30" width="52" height="34" rx="4" fill="#7B5EA7" opacity=".12" stroke="#7B5EA7" stroke-width="1"></rect>
+<text x="149" y="44" font-size="7.5" text-anchor="middle" fill="#7B5EA7" font-weight="700">跨境傳輸</text>
+<text x="149" y="55" font-size="7" text-anchor="middle" fill="#888">需主管機關</text>
+</svg></div>
+<div class="cdef">台灣《個人資料保護法》規範個人資料（足以識別個人的資訊）的蒐集、處理及利用。須有法定蒐集依據，規範特種資料（病歷、基因、財務等）之加強保護，違規最高罰款新台幣1500萬元。</div>
+<div class="cscene"><b>📍 適用情境</b>AI新創公司蒐集用戶行為資料訓練模型，需在隱私政策中明確告知蒐集目的、保存期限，並提供用戶查閱、更正、刪除資料的申請管道。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「個資法特種資料」——答：醫療、基因、性生活、健康、犯罪前科、聯工資料等，須具特定情形方可蒐集，保護強度高於一般個資。</div>
+</div>
+
+<!-- 25 Model Card -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">25 / 30</div>
+<div class="crow"><span class="cico">📋</span><div><div class="cname">模型卡</div><div class="cen">Model Card</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="20" y="5" width="140" height="60" rx="6" fill="none" stroke="#E85D3A" stroke-width="1.5"></rect>
+<text x="90" y="17" font-size="8.5" text-anchor="middle" fill="#E85D3A" font-weight="800">Model Card</text>
+<line x1="20" y1="22" x2="160" y2="22" stroke="#E85D3A" stroke-width=".8" opacity=".5"></line>
+<text x="28" y="33" font-size="7.5" fill="#888">📌 模型概述與用途</text>
+<text x="28" y="43" font-size="7.5" fill="#888">⚠️ 限制與偏見分析</text>
+<text x="28" y="53" font-size="7.5" fill="#888">📊 效能指標各子群</text>
+<text x="28" y="63" font-size="7.5" fill="#888">🔒 訓練資料說明</text>
+</svg></div>
+<div class="cdef">由Google提出的AI模型文件化標準（Mitchell et al., 2019），記錄模型的預期用途、效能評估（分群子組）、倫理考量、限制與潛在偏見。是AI透明度（Transparency）與問責性（Accountability）的重要工具。</div>
+<div class="cscene"><b>📍 適用情境</b>醫療AI公司發布皮膚病診斷模型時，附上Model Card說明在不同膚色族群的準確率差異，讓醫師了解模型局限性再決定是否採用。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「Model Card的目的」——答：提升AI透明度，讓使用者了解模型適用範圍、效能差異與潛在風險，避免在不適合場景中誤用模型。</div>
+</div>
+
+<!-- 26 Data Catalog -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">26 / 30</div>
+<div class="crow"><span class="cico">📚</span><div><div class="cname">資料目錄</div><div class="cen">Data Catalog</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="8" width="170" height="54" rx="6" fill="#2D5F9A" opacity=".06" stroke="#2D5F9A" stroke-width="1.2"></rect>
+<text x="90" y="20" font-size="8.5" text-anchor="middle" fill="#2D5F9A" font-weight="800">Data Catalog</text>
+<rect x="12" y="24" width="47" height="16" rx="3" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width=".8"></rect>
+<text x="35" y="35" font-size="7.5" text-anchor="middle" fill="#E85D3A">資料集名稱</text>
+<rect x="65" y="24" width="47" height="16" rx="3" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width=".8"></rect>
+<text x="88" y="35" font-size="7.5" text-anchor="middle" fill="#3A9A6E">Schema資訊</text>
+<rect x="118" y="24" width="50" height="16" rx="3" fill="#7B5EA7" opacity=".15" stroke="#7B5EA7" stroke-width=".8"></rect>
+<text x="143" y="35" font-size="7.5" text-anchor="middle" fill="#7B5EA7">資料來源</text>
+<rect x="12" y="44" width="47" height="16" rx="3" fill="#D4920A" opacity=".15" stroke="#D4920A" stroke-width=".8"></rect>
+<text x="35" y="55" font-size="7.5" text-anchor="middle" fill="#D4920A">擁有者/負責人</text>
+<rect x="65" y="44" width="47" height="16" rx="3" fill="#2A8A8A" opacity=".15" stroke="#2A8A8A" stroke-width=".8"></rect>
+<text x="88" y="55" font-size="7.5" text-anchor="middle" fill="#2A8A8A">資料品質</text>
+<rect x="118" y="44" width="50" height="16" rx="3" fill="#888" opacity=".15" stroke="#888" stroke-width=".8"></rect>
+<text x="143" y="55" font-size="7.5" text-anchor="middle" fill="#888">血緣關係</text>
+</svg></div>
+<div class="cdef">組織資料資產的集中化目錄系統，記錄資料集的元資料（Metadata）：位置、Schema、資料品質、負責人、存取權限、資料血緣（Data Lineage）。幫助資料工程師、分析師快速發現、理解並信任資料。</div>
+<div class="cscene"><b>📍 適用情境</b>大型銀行使用Apache Atlas建立資料目錄，資料科學家可在5分鐘內找到所需的交易資料集，查看欄位定義、資料品質分數與上游血緣，取代過去依靠口耳相傳的方式。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「Data Catalog vs Data Dictionary差異」——答：Data Dictionary僅定義資料欄位；Data Catalog更涵蓋資料發現、血緣追蹤、品質監控、存取治理等更廣泛功能。</div>
+</div>
+
+<!-- 27 A/B Testing -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">27 / 30</div>
+<div class="crow"><span class="cico">⚡</span><div><div class="cname">A/B 測試</div><div class="cen">A/B Testing</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="22" width="35" height="26" rx="4" fill="#888" opacity=".12" stroke="#888" stroke-width="1"></rect>
+<text x="22" y="33" font-size="8" text-anchor="middle" fill="#888" font-weight="700">用戶</text>
+<text x="22" y="43" font-size="7.5" text-anchor="middle" fill="#888">流量</text>
+<line x1="40" y1="30" x2="60" y2="20" stroke="#888" stroke-width="1" marker-end="url(#a27)"></line>
+<line x1="40" y1="40" x2="60" y2="50" stroke="#888" stroke-width="1" marker-end="url(#a27)"></line>
+<rect x="60" y="10" width="45" height="22" rx="4" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="82" y="24" font-size="8" text-anchor="middle" fill="#2D5F9A" font-weight="700">A組(控制)</text>
+<rect x="60" y="40" width="45" height="22" rx="4" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="82" y="54" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">B組(實驗)</text>
+<rect x="120" y="22" width="55" height="26" rx="4" fill="#3A9A6E" opacity=".12" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="147" y="33" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">統計顯著</text>
+<text x="147" y="44" font-size="7.5" text-anchor="middle" fill="#888">p&lt;0.05</text>
+<defs><marker id="a27" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">隨機將用戶分為對照組（A）與實驗組（B），分別暴露於不同版本（功能、模型、UI），收集行為指標後進行統計假設檢定，確認差異是否具統計顯著性（p&lt;0.05）。是線上AI產品迭代的標準評估方法。</div>
+<div class="cscene"><b>📍 適用情境</b>推薦系統團隊部署新推薦演算法，50%用戶看新模型推薦，連續14天後比較CTR（點擊率），t檢定確認提升2.3%達統計顯著，全量推出。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「A/B Testing的前提」——答：需隨機分配排除選擇偏差、足夠樣本數保證統計功效（Power≥80%）、定義好衡量指標（OEC）。</div>
+</div>
+
+<!-- 28 Isolation Forest -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">28 / 30</div>
+<div class="crow"><span class="cico">🌲</span><div><div class="cname">孤立森林</div><div class="cen">Isolation Forest</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<circle cx="60" cy="38" r="20" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1"></circle>
+<circle cx="55" cy="35" r="3" fill="#2D5F9A" opacity=".6"></circle>
+<circle cx="65" cy="42" r="3" fill="#2D5F9A" opacity=".6"></circle>
+<circle cx="58" cy="44" r="3" fill="#2D5F9A" opacity=".6"></circle>
+<circle cx="63" cy="32" r="3" fill="#2D5F9A" opacity=".6"></circle>
+<text x="60" y="65" font-size="8" text-anchor="middle" fill="#2D5F9A">正常（密集）</text>
+<circle cx="150" cy="30" r="7" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.5"></circle>
+<circle cx="150" cy="30" r="3" fill="#E85D3A" opacity=".8"></circle>
+<text x="150" y="48" font-size="8" text-anchor="middle" fill="#E85D3A" font-weight="700">異常（孤立）</text>
+<text x="150" y="58" font-size="7.5" text-anchor="middle" fill="#888">短路徑即隔離</text>
+<line x1="85" y1="35" x2="135" y2="30" stroke="#D4920A" stroke-width="1.2" stroke-dasharray="4,2"></line>
+</svg></div>
+<div class="cdef">基於隔離原理的無監督異常偵測演算法。透過隨機分割特徵空間，異常點因其稀疏性而能被快速（少量切割）隔離，正常點需更多次切割才能隔離。異常分數由平均路徑長度計算，越短越異常。</div>
+<div class="cscene"><b>📍 適用情境</b>工廠感測器資料異常偵測，在無標注故障資料的情況下，Isolation Forest自動識別異常振動模式，提前14小時預警設備故障。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「Isolation Forest優勢」——答：無監督（無需標注）、計算效率高（O(n log n)）、對高維資料表現良好，適合大規模串流異常偵測。</div>
+</div>
+
+<!-- 29 SMOTE -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">29 / 30</div>
+<div class="crow"><span class="cico">⚖️</span><div><div class="cname">SMOTE</div><div class="cen">Synthetic Minority Over-sampling Technique</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<circle cx="30" cy="35" r="5" fill="#2D5F9A" opacity=".8"></circle>
+<circle cx="50" cy="45" r="5" fill="#2D5F9A" opacity=".8"></circle>
+<circle cx="70" cy="30" r="5" fill="#2D5F9A" opacity=".8"></circle>
+<text x="50" y="62" font-size="7.5" text-anchor="middle" fill="#2D5F9A">少數類（原始）</text>
+<line x1="30" y1="35" x2="50" y2="45" stroke="#2D5F9A" stroke-width="1" stroke-dasharray="2,2"></line>
+<line x1="50" y1="45" x2="70" y2="30" stroke="#2D5F9A" stroke-width="1" stroke-dasharray="2,2"></line>
+<circle cx="40" cy="40" r="4" fill="#E85D3A" opacity=".6" stroke="#E85D3A" stroke-width="1"></circle>
+<circle cx="60" cy="37" r="4" fill="#E85D3A" opacity=".6" stroke="#E85D3A" stroke-width="1"></circle>
+<circle cx="45" cy="32" r="4" fill="#E85D3A" opacity=".6" stroke="#E85D3A" stroke-width="1"></circle>
+<text x="115" y="30" font-size="7.5" fill="#E85D3A" font-weight="700">🔴 合成樣本</text>
+<text x="115" y="42" font-size="7" fill="#888">在KNN鄰居間</text>
+<text x="115" y="52" font-size="7" fill="#888">插值生成</text>
+<text x="115" y="62" font-size="7" fill="#888">平衡類別分布</text>
+</svg></div>
+<div class="cdef">在少數類別樣本（Minority Class）的K個最近鄰居之間進行線性插值，合成新的少數類樣本，解決類別不平衡問題（Class Imbalance）。比簡單複製（Over-sampling）更能提升模型泛化能力。</div>
+<div class="cscene"><b>📍 適用情境</b>醫療診斷資料集中陽性案例佔1%，使用SMOTE對少數類過採樣至10%，再配合欠採樣，使XGBoost模型Recall從0.45提升至0.82。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「SMOTE的適用條件與限制」——答：適合結構化數值特徵；在高維稀疏空間（如TF-IDF文字）效果差；可能生成不切實際的插值樣本（Noise Injection）。</div>
+</div>
+
+<!-- 30 Multimodal Model -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">30 / 30</div>
+<div class="crow"><span class="cico">🌈</span><div><div class="cname">多模態模型</div><div class="cen">Multimodal Model</div></div></div>
+</div>
+<div class="cdiag"><svg width="180" height="70" viewBox="0 0 180 70">
+<rect x="5" y="5" width="30" height="18" rx="3" fill="#2D5F9A" opacity=".2" stroke="#2D5F9A" stroke-width="1"></rect>
+<text x="20" y="17" font-size="7.5" text-anchor="middle" fill="#2D5F9A" font-weight="700">文字</text>
+<rect x="5" y="28" width="30" height="18" rx="3" fill="#E85D3A" opacity=".2" stroke="#E85D3A" stroke-width="1"></rect>
+<text x="20" y="40" font-size="7.5" text-anchor="middle" fill="#E85D3A" font-weight="700">影像</text>
+<rect x="5" y="51" width="30" height="16" rx="3" fill="#3A9A6E" opacity=".2" stroke="#3A9A6E" stroke-width="1"></rect>
+<text x="20" y="62" font-size="7.5" text-anchor="middle" fill="#3A9A6E" font-weight="700">音訊</text>
+<rect x="65" y="22" width="50" height="26" rx="6" fill="#7B5EA7" opacity=".15" stroke="#7B5EA7" stroke-width="1.5"></rect>
+<text x="90" y="33" font-size="8.5" text-anchor="middle" fill="#7B5EA7" font-weight="800">Cross</text>
+<text x="90" y="44" font-size="8.5" text-anchor="middle" fill="#7B5EA7" font-weight="800">Attention</text>
+<rect x="135" y="22" width="40" height="26" rx="5" fill="#D4920A" opacity=".15" stroke="#D4920A" stroke-width="1"></rect>
+<text x="155" y="33" font-size="8" text-anchor="middle" fill="#D4920A" font-weight="700">融合</text>
+<text x="155" y="44" font-size="8" text-anchor="middle" fill="#D4920A" font-weight="700">輸出</text>
+<line x1="35" y1="14" x2="65" y2="28" stroke="#2D5F9A" stroke-width="1"></line>
+<line x1="35" y1="37" x2="65" y2="35" stroke="#E85D3A" stroke-width="1"></line>
+<line x1="35" y1="59" x2="65" y2="42" stroke="#3A9A6E" stroke-width="1"></line>
+<line x1="115" y1="35" x2="135" y2="35" stroke="#888" stroke-width="1" marker-end="url(#a30)"></line>
+<defs><marker id="a30" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><polygon points="0,0 5,2.5 0,5" fill="#888"></polygon></marker></defs>
+</svg></div>
+<div class="cdef">能同時處理和理解多種資料模態（文字、影像、音訊、影片、表格）的AI模型，透過Cross-Attention等機制對齊不同模態的特徵表示。代表模型：GPT-4V、Gemini、CLIP、LLaVA、Flamingo。</div>
+<div class="cscene"><b>📍 適用情境</b>智慧醫療助理同時分析患者的電子病歷文字、X光影像、心電圖波形，綜合多模態資訊提供診斷建議，準確率高於單一模態模型。</div>
+<div class="cexam"><b>🎯 考題方向</b>考「多模態模型的挑戰」——答：模態對齊困難（如圖文語義對應）、訓練資料配對稀缺、計算資源需求龐大、模態間知識遷移不對稱。</div>
+</div>
+
+</div><!-- end grid -->
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

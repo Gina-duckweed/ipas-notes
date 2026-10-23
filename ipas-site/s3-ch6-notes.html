@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>科目三 第六章｜機器學習治理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --P:#7B5EA7;--Plt:#F0EBF8;--Pdk:#5A3E80;
+  --B:#2D5F9A;--O:#E85D3A;--G:#3A9A6E;--A:#D4920A;--R:#C0392B;--T:#2A8A8A;
+  --Alt:#FFF8E1;
+  --bg:#F8F5FC;--s:#FFFFFF;--s2:#F0EBF8;--b:#D8C8ED;--t:#1A0F2E;--t2:#3D2A60;--t3:#7A6A9A;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#130D20;--s:#1E1435;--s2:#291A45;--b:#3A2860;--t:#E0D4F8;--t2:#B09AD8;--t3:#7060A0;
+  --Plt:#2A1A40;--Alt:#2A2000;
+}}
+[data-theme=dark]{
+  --bg:#130D20;--s:#1E1435;--s2:#291A45;--b:#3A2860;--t:#E0D4F8;--t2:#B09AD8;--t3:#7060A0;
+  --Plt:#2A1A40;--Alt:#2A2000;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:13px;line-height:1.5;padding:18px}
+.page{max-width:980px;margin:0 auto}
+
+/* ── Hero ── */
+.hero{background:linear-gradient(135deg,var(--Pdk) 0%,var(--P) 55%,#A07ACD 100%);color:#fff;border-radius:16px;padding:24px 28px 20px;margin-bottom:18px;position:relative;overflow:hidden}
+.hero::after{content:'⚖ 🛡 🔐';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:44px;opacity:.12;letter-spacing:6px}
+.hero-eyebrow{font-size:10px;font-weight:800;letter-spacing:2px;opacity:.75;margin-bottom:6px}
+.hero h1{font-size:26px;font-weight:900;line-height:1.2;margin-bottom:6px}
+.hero-sub{font-size:12px;opacity:.85;font-weight:600}
+.hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.hero-tag{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:3px 12px;font-size:10.5px;font-weight:700}
+
+/* ── Layout ── */
+.sec-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+.sec-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.sec{background:var(--s);border-radius:12px;border:2px solid var(--P);overflow:hidden}
+.sec-hdr{background:var(--P);color:#fff;padding:9px 13px;display:flex;align-items:center;gap:8px}
+.sec-num{font-size:22px;font-weight:900;opacity:.4;line-height:1}
+.sec-title{font-size:12px;font-weight:800;line-height:1.3}
+.sec-body{padding:10px 12px}
+.topic-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.topic-list li{font-size:11px;line-height:1.45;padding-left:14px;position:relative;color:var(--t2)}
+.topic-list li::before{content:'▸';position:absolute;left:0;color:var(--P);font-size:10px}
+.topic-list li b{color:var(--t);font-weight:700}
+
+/* ── Subsection label ── */
+.sub-label{font-size:9.5px;font-weight:800;letter-spacing:1.2px;color:var(--P);text-transform:uppercase;margin:8px 0 4px;border-bottom:1.5px solid var(--Plt);padding-bottom:2px}
+
+/* ── Flow & pills ── */
+.flow{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:6px 0}
+.flow-node{background:var(--Plt);border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;color:var(--Pdk);white-space:nowrap}
+.flow-arr{color:var(--P);font-size:12px;font-weight:900}
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0}
+.pill{background:var(--Plt);color:var(--Pdk);border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700}
+.pill.red{background:#FDE8E5;color:#A0281C}
+.pill.grn{background:#E3F5EC;color:#1E6E48}
+.pill.amb{background:#FFF0C8;color:#8A5800}
+.pill.blu{background:#E3EDF8;color:#1B3A6B}
+
+/* ── Risk level badge ── */
+.risk-row{display:flex;gap:6px;margin:6px 0;flex-wrap:wrap}
+.risk-badge{border-radius:6px;padding:4px 8px;font-size:10px;font-weight:700;text-align:center;flex:1;min-width:80px}
+.risk-low{background:#E3F5EC;color:#1E6E48;border:1px solid #A8DFC0}
+.risk-med{background:#FFF0C8;color:#8A5800;border:1px solid #F0D080}
+.risk-hi{background:#FDE8E5;color:#A0281C;border:1px solid #F0A898}
+
+/* ── Metric grid ── */
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:5px 0}
+.metric-item{background:var(--s2);border-radius:6px;padding:5px 7px}
+.metric-item .mn{font-size:10px;font-weight:800;color:var(--Pdk)}
+.metric-item .md{font-size:10px;color:var(--t2);line-height:1.4}
+
+/* ── Wide card ── */
+.sec-wide{background:var(--s);border-radius:12px;border:2px solid var(--P);overflow:hidden;margin-bottom:14px}
+.sec-wide .sw-body{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px}
+.col-title{font-size:10px;font-weight:800;color:var(--P);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;border-bottom:1.5px solid var(--Plt);padding-bottom:3px}
+
+/* ── Fairness table ── */
+.fair-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:5px 0}
+.fair-item{background:var(--s2);border-radius:6px;padding:6px 8px}
+.fair-item .fn{font-size:10.5px;font-weight:800;color:var(--Pdk)}
+.fair-item .fd{font-size:10px;color:var(--t2);line-height:1.4;margin-top:2px}
+
+/* ── Formula strip ── */
+.formula-strip{background:var(--s);border:1.5px solid var(--b);border-radius:10px;padding:10px 14px;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap}
+.formula-group{flex:1;min-width:180px}
+.fg-title{font-size:9.5px;font-weight:800;letter-spacing:1.2px;color:var(--P);text-transform:uppercase;margin-bottom:5px;border-bottom:1.5px solid var(--Plt);padding-bottom:3px}
+.fi{font-size:11px;margin-bottom:3px;color:var(--t2)}
+.fi code{background:var(--s2);border-radius:4px;padding:1px 5px;font-size:10.5px;font-family:'Courier New',monospace;color:var(--P);font-weight:700}
+
+/* ── Exam box ── */
+.exam-box{background:var(--Alt);border:2px solid var(--A);border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.exam-title{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--A);margin-bottom:7px;text-transform:uppercase}
+.exam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.exam-item{background:rgba(255,255,255,.55);border-radius:7px;padding:7px 9px}
+.exam-item-q{font-size:10.5px;font-weight:700;color:var(--t);margin-bottom:3px}
+.exam-item-a{font-size:10px;color:var(--t2);line-height:1.45}
+
+/* ── Footer ── */
+.footer{text-align:center;font-size:10px;color:var(--t3);padding:6px}
+</style>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">iPAS 中級 AI應用規劃師・科目三：機器學習技術與應用</div>
+  <h1>第六章　機器學習治理</h1>
+  <div class="hero-sub">資料隱私安全合規 × 演算法偏見與公平性 ── AI 系統的責任框架與倫理防線</div>
+  <div class="hero-tags">
+    <span class="hero-tag">6.1 數據隱私、安全與合規</span>
+    <span class="hero-tag">6.2 演算法偏見與公平性</span>
+    <span class="hero-tag">GDPR / PDPA</span>
+    <span class="hero-tag">K-匿名 / 聯邦學習</span>
+    <span class="hero-tag">公平性指標</span>
+  </div>
+</div>
+
+<!-- ROW 1: 6.1 三欄 -->
+<div class="sec-row">
+
+  <!-- 6.1a 隱私風險與評估 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">6.1</div>
+      <div class="sec-title">隱私風險類型 &amp; 評估工具</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">三大識別風險</div>
+      <div class="risk-row">
+        <div class="risk-hi">直接識別<br>（姓名/身分證）</div>
+        <div class="risk-med">間接識別<br>（準識別資訊）</div>
+        <div class="risk-low">再識別風險<br>（多資料交叉）</div>
+      </div>
+      <ul class="topic-list">
+        <li><b>直接識別</b>：單一欄位即可識別個人（如姓名、身分證號）</li>
+        <li><b>準識別資訊</b>：郵遞區號+性別+生日組合可能唯一識別</li>
+        <li><b>再識別攻擊</b>：匿名資料與外部資料交叉比對重新識別</li>
+      </ul>
+      <div class="sub-label">隱私評估工具</div>
+      <ul class="topic-list">
+        <li><b>Data Map</b>：盤點資料流向、儲存位置、使用目的</li>
+        <li><b>PIA（隱私影響評估）</b>：系統上線前評估隱私衝擊</li>
+        <li><b>風險矩陣</b>：發生機率 × 衝擊程度 → 優先處理高風險</li>
+        <li><b>再識別模擬</b>：測試匿名資料是否能被重新識別</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6.1b 匿名化技術 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">6.1</div>
+      <div class="sec-title">資料匿名化技術</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">基礎匿名化方法</div>
+      <ul class="topic-list">
+        <li><b>Masking（遮蔽）</b>：部分字元以 * 替換；如 0912-***-***</li>
+        <li><b>Hashing（雜湊）</b>：單向不可逆轉換；相同輸入→相同雜湊</li>
+        <li><b>Generalization（泛化）</b>：具體值→範圍；年齡30→25-35</li>
+        <li><b>Bucketing（分桶）</b>：連續值分組；薪資分高/中/低三組</li>
+        <li><b>Noise Injection（加噪）</b>：加入隨機雜訊干擾精確值</li>
+      </ul>
+      <div class="sub-label">進階匿名化標準</div>
+      <ul class="topic-list">
+        <li><b>K-匿名性</b>：每筆紀錄至少與 k-1 筆無法區分</li>
+        <li><b>L-多樣性</b>：敏感屬性在 k 匿名組內至少有 l 種不同值</li>
+        <li><b>T-接近性</b>：敏感屬性分佈與整體分佈差異在 t 以內</li>
+      </ul>
+      <div class="flow">
+        <div class="flow-node">原始資料</div><div class="flow-arr">→</div>
+        <div class="flow-node">K-匿名</div><div class="flow-arr">→</div>
+        <div class="flow-node">L-多樣</div><div class="flow-arr">→</div>
+        <div class="flow-node">T-接近</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6.1c 進階技術 & 合規 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">6.1</div>
+      <div class="sec-title">進階隱私技術 &amp; 合規框架</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">進階隱私保護技術</div>
+      <ul class="topic-list">
+        <li><b>聯邦學習</b>：資料不離本地，僅傳送梯度更新；Google GBoard 鍵盤</li>
+        <li><b>同態加密</b>：在加密狀態下直接計算，結果解密後與明文計算相同</li>
+        <li><b>差分隱私</b>：加入校準雜訊，使單筆資料存在與否無法被推斷</li>
+      </ul>
+      <div class="sub-label">合規法規</div>
+      <div class="metric-grid">
+        <div class="metric-item"><div class="mn">GDPR（歐盟）</div><div class="md">被遺忘權、同意授權、資料可攜、最小化原則</div></div>
+        <div class="metric-item"><div class="mn">CCPA（加州）</div><div class="md">消費者知情權、拒絕販售權</div></div>
+        <div class="metric-item"><div class="mn">PDPA（台灣）</div><div class="md">個人資料保護法；蒐集/處理/利用需告知</div></div>
+        <div class="metric-item"><div class="mn">資料最小化</div><div class="md">只蒐集必要欄位，不過度蒐集</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sec-row -->
+
+<!-- ROW 2: 6.2 兩欄 -->
+<div class="sec-row-2">
+
+  <!-- 6.2a 偏見成因 & 公平性指標 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">6.2</div>
+      <div class="sec-title">演算法偏見成因 &amp; 公平性指標</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">五大偏見成因</div>
+      <ul class="topic-list">
+        <li><b>來源偏誤（Source Bias）</b>：訓練資料本身不具代表性</li>
+        <li><b>內容偏誤（Content Bias）</b>：資料標註帶有人類主觀偏見</li>
+        <li><b>製程偏誤（Process Bias）</b>：資料蒐集流程造成系統偏差</li>
+        <li><b>演算法偏誤（Algorithmic Bias）</b>：模型架構或目標函數本身的偏向</li>
+        <li><b>目標函數偏誤（Objective Bias）</b>：優化目標未對齊公平性</li>
+      </ul>
+      <div class="sub-label">四大公平性指標</div>
+      <div class="fair-grid">
+        <div class="fair-item">
+          <div class="fn">群體平等率</div>
+          <div class="fd">Demographic Parity：各群體獲得正面結果機率相等</div>
+        </div>
+        <div class="fair-item">
+          <div class="fn">機會平等</div>
+          <div class="fd">Equal Opportunity：各群體的 TPR（Recall）相等</div>
+        </div>
+        <div class="fair-item">
+          <div class="fn">均衡機率</div>
+          <div class="fd">Equalized Odds：各群體的 TPR 和 FPR 均相等</div>
+        </div>
+        <div class="fair-item">
+          <div class="fn">不利影響比</div>
+          <div class="fd">Disparate Impact：弱勢群體通過率 ÷ 優勢群體；&lt; 0.8 = 歧視</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6.2b 降偏方法 & 工具 & 治理 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">6.2</div>
+      <div class="sec-title">降偏方法、工具 &amp; 組織治理</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">三階段降偏策略</div>
+      <div class="flow">
+        <div class="flow-node">資料前處理<br>Reweighting/Resampling</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node">模型內部處理<br>公平性約束訓練</div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node">後處理<br>門檻調整/校準</div>
+      </div>
+      <ul class="topic-list">
+        <li><b>資料前處理</b>：重新加權（Reweighting）、重採樣使群體平衡</li>
+        <li><b>模型內部（In-processing）</b>：加入公平性約束至目標函數，對抗式去偏（Adversarial Debiasing）</li>
+        <li><b>後處理（Post-processing）</b>：對各群體設不同分類門檻，調整輸出達到公平</li>
+      </ul>
+      <div class="sub-label">開源公平性工具</div>
+      <div class="pills">
+        <span class="pill blu">IBM AIF360（偵測+降偏）</span>
+        <span class="pill blu">Microsoft Fairlearn</span>
+        <span class="pill grn">Google What-If Tool</span>
+      </div>
+      <div class="sub-label">組織治理架構</div>
+      <ul class="topic-list">
+        <li><b>AI 倫理委員會</b>：跨部門審查高風險 AI 系統</li>
+        <li><b>模型卡（Model Card）</b>：記錄訓練資料、評估指標、已知侷限</li>
+        <li><b>持續監控</b>：上線後定期審查模型公平性指標是否漂移</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /sec-row-2 -->
+
+<!-- WIDE: 對比總覽 -->
+<div class="sec-wide">
+  <div class="sec-hdr">
+    <div class="sec-num">6</div>
+    <div class="sec-title">隱私技術 vs 公平性工具 ── 核心概念對比總覽</div>
+  </div>
+  <div class="sw-body">
+    <div>
+      <div class="col-title">🔐 隱私強化技術階梯</div>
+      <ul class="topic-list">
+        <li><b>Masking/Hashing</b>：基礎遮蔽，可逆（Hash 不可逆）</li>
+        <li><b>Generalization</b>：具體→範圍，降低精確性</li>
+        <li><b>K-Anonymity</b>：每筆至少與 k-1 筆混同</li>
+        <li><b>L-Diversity</b>：敏感值必須多樣化（防同質攻擊）</li>
+        <li><b>T-Closeness</b>：敏感值分佈接近全局（防傾斜攻擊）</li>
+        <li><b>差分隱私</b>：數學保證，ε 越小隱私越強</li>
+        <li><b>聯邦學習</b>：資料不離本地訓練</li>
+        <li><b>同態加密</b>：加密中直接計算</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-title">⚖ 公平性指標選用指南</div>
+      <ul class="topic-list">
+        <li><b>Demographic Parity</b>：結果比例一致；貸款申請核准率</li>
+        <li><b>Equal Opportunity</b>：Recall 相等；癌症篩查 TPR</li>
+        <li><b>Equalized Odds</b>：TPR + FPR 均相等；最嚴格標準</li>
+        <li><b>Disparate Impact</b>：&lt;0.8 觸發法律審查（美國 80% 規則）</li>
+        <li>公平性定義互相矛盾（不可能同時滿足所有指標）</li>
+        <li>需根據業務場景選擇最重要的公平性標準</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-title">📋 合規要求速查</div>
+      <ul class="topic-list">
+        <li><b>GDPR（歐盟）</b>：72h 通報義務、被遺忘權、同意可撤回</li>
+        <li><b>CCPA（加州）</b>：知情權、拒絕販售個資</li>
+        <li><b>PDPA（台灣）</b>：目的限定使用、刪除請求</li>
+        <li><b>共同原則</b>：資料最小化、目的限定、儲存期限</li>
+        <li><b>跨境傳輸</b>：需有適當保護措施（Standard Contractual Clauses）</li>
+        <li><b>PIA 時機</b>：新系統上線前、高風險處理前必做</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- FORMULA STRIP -->
+<div class="formula-strip">
+  <div class="formula-group">
+    <div class="fg-title">🔐 K-匿名條件</div>
+    <div class="fi">每個準識別組：<code>count ≥ k</code></div>
+    <div class="fi">L-多樣性：<code>敏感值種類 ≥ l</code></div>
+    <div class="fi">T-接近性：<code>EMD(Q, P) ≤ t</code></div>
+  </div>
+  <div class="formula-group">
+    <div class="fg-title">⚖ 公平性指標公式</div>
+    <div class="fi">群體平等率：<code>P(ŷ=1|A=0) = P(ŷ=1|A=1)</code></div>
+    <div class="fi">不利影響比：<code>P(ŷ=1|弱勢) / P(ŷ=1|優勢)</code></div>
+    <div class="fi">機會平等：<code>TPR_A = TPR_B</code></div>
+  </div>
+  <div class="formula-group">
+    <div class="fg-title">🛡 差分隱私</div>
+    <div class="fi">ε-差分隱私：<code>P[M(D)∈S] ≤ eᵉ·P[M(D')∈S]</code></div>
+    <div class="fi">ε 越小 → 隱私越強 → 準確度越低</div>
+    <div class="fi">加 Laplace 雜訊：<code>b = Δf / ε</code></div>
+  </div>
+  <div class="formula-group">
+    <div class="fg-title">📊 Disparate Impact</div>
+    <div class="fi">80% 規則：<code>DI = P(+|保護群) / P(+|非保護群)</code></div>
+    <div class="fi">DI &lt; 0.8 → 疑似歧視</div>
+    <div class="fi">DI = 1 → 完全公平</div>
+  </div>
+</div>
+
+<!-- EXAM BOX -->
+<div class="exam-box">
+  <div class="exam-title">⚡ 考試高頻考點 Exam Focus</div>
+  <div class="exam-grid">
+    <div class="exam-item">
+      <div class="exam-item-q">Q：K-匿名的弱點是什麼？</div>
+      <div class="exam-item-a">A：同質性攻擊（敏感值都一樣）→L-多樣性；背景知識攻擊→T-接近性來彌補</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：聯邦學習保護隱私的方式？</div>
+      <div class="exam-item-a">A：資料不離本地，各方只上傳梯度（模型更新），中央聚合後下發新模型</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：Disparate Impact &lt; 0.8 意味著？</div>
+      <div class="exam-item-a">A：弱勢群體通過率不足優勢群體的 80%，觸發美國法律不利影響審查</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：PIA 應在何時進行？</div>
+      <div class="exam-item-a">A：新 AI 系統上線前、處理高風險個人資料前；識別、評估並降低隱私衝擊</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：Equal Opportunity vs Equalized Odds？</div>
+      <div class="exam-item-a">A：EO 只要求各群體 TPR 相等；Equalized Odds 要求 TPR 和 FPR 同時相等（更嚴格）</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：差分隱私的 ε 越小代表？</div>
+      <div class="exam-item-a">A：隱私保護越強，但加入的雜訊越多，資料可用性（準確度）越低；需在兩者間取捨</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">iPAS 中級 AI應用規劃師 ・ 科目三第六章 ・ 機器學習治理</div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

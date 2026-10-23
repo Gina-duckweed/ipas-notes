@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>科目一 Ch5｜AI 技術應用與系統部署</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap">
+<style>
+:root{
+  --C:#2D5F9A;--Clt:#E8EEF8;--Cdk:#1E4070;
+  --O:#E85D3A;--G:#3A9A6E;--A:#D4920A;--P:#7B5EA7;
+  --Alt:#FFF8E1;
+  --bg:#F4F6FC;--s:#FFFFFF;--s2:#E8EEF8;--b:#B0C0E0;
+  --t:#0F2040;--t2:#1E3A60;--t3:#3A5A80;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0A1428;--s:#101E38;--s2:#162848;--b:#2A4070;
+  --t:#D0E4F8;--t2:#8AADD8;--t3:#5070A0;--Clt:#162848;--Alt:#2A2000;
+}}
+[data-theme=dark]{--bg:#0A1428;--s:#101E38;--s2:#162848;--b:#2A4070;--t:#D0E4F8;--t2:#8AADD8;--t3:#5070A0;--Clt:#162848;--Alt:#2A2000;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--Cdk) 0%,var(--C) 60%,#4D7FBA 100%);padding:36px 40px 30px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero-sub{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:8px}
+.hero-title{font-size:32px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px}
+.hero-desc{font-size:13px;color:rgba(255,255,255,.82);line-height:1.6;max-width:680px}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:800;color:#fff;letter-spacing:.5px;margin-top:12px}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 24px}
+.sec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:24px}
+.sec-card{background:var(--s);border-radius:14px;border:1.5px solid var(--b);overflow:hidden}
+.sec-head{background:var(--Clt);padding:14px 16px 10px;border-bottom:2px solid var(--C)}
+.sec-num{font-size:10px;font-weight:800;color:var(--C);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
+.sec-name{font-size:16px;font-weight:900;color:var(--Cdk);line-height:1.2}
+.sec-en{font-size:10px;color:var(--t3);font-weight:600;margin-top:2px}
+.sec-body{padding:14px 16px}
+.item{margin-bottom:10px}
+.item-title{font-size:12px;font-weight:800;color:var(--C);margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.item-title::before{content:'▸';font-size:10px}
+.item-desc{font-size:11.5px;color:var(--t2);line-height:1.55}
+.tag{display:inline-block;background:var(--Clt);color:var(--Cdk);font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:10px;margin:2px 2px 0 0}
+.model-strip{background:var(--s);border:1.5px solid var(--b);border-radius:12px;padding:18px 22px;margin-bottom:24px}
+.model-strip h3{font-size:11px;font-weight:800;color:var(--C);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.model-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+.mdl{background:var(--s2);border-radius:8px;padding:9px 10px}
+.mdl-name{font-size:11px;font-weight:900;color:var(--Cdk);margin-bottom:3px}
+.mdl-type{font-size:9px;font-weight:700;color:var(--C);margin-bottom:2px}
+.mdl-desc{font-size:9.5px;color:var(--t2);line-height:1.35}
+.deploy-strip{background:var(--s);border:1.5px solid var(--b);border-radius:12px;padding:18px 22px;margin-bottom:24px}
+.deploy-strip h3{font-size:11px;font-weight:800;color:var(--C);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.deploy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dpl{background:var(--s2);border-radius:8px;padding:10px 12px}
+.dpl-name{font-size:12px;font-weight:900;color:var(--Cdk);margin-bottom:3px}
+.dpl-sub{font-size:9.5px;font-weight:700;color:var(--C);margin-bottom:3px}
+.dpl-desc{font-size:10px;color:var(--t2);line-height:1.4}
+.exam-box{background:var(--Alt);border:2px solid var(--A);border-radius:12px;padding:18px 22px}
+.exam-box h3{font-size:11px;font-weight:800;color:var(--A);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.exam-list{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.exam-item{font-size:11.5px;color:var(--t2);line-height:1.5;padding-left:14px;position:relative}
+.exam-item::before{content:'★';position:absolute;left:0;color:var(--A);font-size:10px}
+@media(max-width:700px){.sec-grid{grid-template-columns:1fr}.model-grid{grid-template-columns:repeat(2,1fr)}.deploy-grid{grid-template-columns:repeat(2,1fr)}.exam-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-sub">科目一・第五章</div>
+  <div class="hero-title">AI 技術應用與系統部署</div>
+  <div class="hero-desc">從資料準備、模型選擇到系統整合、部署模式與 MLOps 持續維運，完整 AI 系統生命週期。</div>
+  <div class="hero-badge">iPAS 中級 AI 應用規劃師</div>
+</div>
+
+<div class="wrap">
+  <div class="sec-grid">
+    <div class="sec-card">
+      <div class="sec-head">
+        <div class="sec-num">5.1</div>
+        <div class="sec-name">數據準備與模型選擇</div>
+        <div class="sec-en">Data Preparation & Model Selection</div>
+      </div>
+      <div class="sec-body">
+        <div class="item">
+          <div class="item-title">資料清理技術</div>
+          <div class="item-desc"><b>遺漏值</b>：均值/中位數填補（Imputation）、前後向填補（Forward/Backward Fill）、線性插補。<b>異常值</b>：Z-score、IQR、Isolation Forest、LOF。<b>重複值</b>：drop_duplicates。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">特徵工程</div>
+          <div class="item-desc"><b>編碼</b>：One-hot / Label / Target Encoding。<b>標準化</b>：Min-Max（0-1）、Z-score 標準化。<b>特徵選擇</b>：Information Gain、Pearson 相關係數、L1 正則化（Lasso）。<b>降維</b>：PCA（保留最大變異方向）、t-SNE/UMAP（視覺化）。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">AutoML</div>
+          <div class="item-desc">自動特徵工程與模型選擇。代表工具：Google AutoML、H2O.ai、AutoKeras、TPOT。自動執行特徵創建、篩選、超參數調優，降低技術門檻。</div>
+          <div><span class="tag">PCA</span><span class="tag">Lasso選特徵</span><span class="tag">AutoML</span><span class="tag">Imputation</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <div class="sec-num">5.2</div>
+        <div class="sec-name">AI 系統集成與部署</div>
+        <div class="sec-en">AI System Integration & Deployment</div>
+      </div>
+      <div class="sec-body">
+        <div class="item">
+          <div class="item-title">系統集成</div>
+          <div class="item-desc"><b>資料管線</b>：Data Pipeline（擷取→轉換→清理→入庫）。<b>企業系統整合</b>：ERP/CRM/POS/MES 接軌 AI 模型輸出。<b>API 封裝</b>：RESTful API / gRPC / Webhooks，提供推論服務。<b>安全</b>：OAuth2/JWT 身份驗證，API Gateway 流量控管。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">MLOps CI/CD</div>
+          <div class="item-desc"><b>CI（持續整合）</b>：程式碼/資料變動觸發自動訓練+測試。<b>CD（持續部署）</b>：通過閾值後自動部署至生產環境。<b>版本管理</b>：MLflow（實驗追蹤）、DVC（資料版本控制）。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">監控與成效追蹤</div>
+          <div class="item-desc">偵測 Model Drift / Data Drift；KPI 三層：系統層（延遲/吞吐量）、應用層（準確率/F1）、業務層（ROI/轉換率）。觸發再訓練：設定效能下降閾值（如準確率降5%）啟動 Retraining Pipeline。</div>
+          <div><span class="tag">MLflow</span><span class="tag">DVC</span><span class="tag">Prometheus+Grafana</span><span class="tag">Blue-Green</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="model-strip">
+    <h3>主要 ML 模型任務類型</h3>
+    <div class="model-grid">
+      <div class="mdl">
+        <div class="mdl-name">迴歸（Regression）</div>
+        <div class="mdl-type">監督式・連續輸出</div>
+        <div class="mdl-desc">Linear / Decision Tree / Random Forest / Gradient Boosting。應用：銷售預測、房價預測。</div>
+      </div>
+      <div class="mdl">
+        <div class="mdl-name">分類（Classification）</div>
+        <div class="mdl-type">監督式・離散輸出</div>
+        <div class="mdl-desc">Logistic / SVM / KNN / Random Forest / Gradient Boosting。應用：垃圾郵件、疾病診斷。</div>
+      </div>
+      <div class="mdl">
+        <div class="mdl-name">聚類（Clustering）</div>
+        <div class="mdl-type">非監督式・分群</div>
+        <div class="mdl-desc">K-means / DBSCAN / Hierarchical。應用：顧客分群、異常偵測。PCA 降維。</div>
+      </div>
+      <div class="mdl">
+        <div class="mdl-name">深度學習（DL）</div>
+        <div class="mdl-type">CNN / RNN / Transformer</div>
+        <div class="mdl-desc">CNN 影像分類；LSTM 時序資料；Transformer NLP 主流；PPO 強化學習。</div>
+      </div>
+      <div class="mdl">
+        <div class="mdl-name">生成模型</div>
+        <div class="mdl-type">GAN / VAE / Diffusion</div>
+        <div class="mdl-desc">GAN 對抗生成（Mode Collapse風險）；VAE 潛在空間平滑；Diffusion 品質最高。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="deploy-strip">
+    <h3>AI 系統部署模式</h3>
+    <div class="deploy-grid">
+      <div class="dpl">
+        <div class="dpl-name">公有雲部署</div>
+        <div class="dpl-sub">AWS / Azure / GCP</div>
+        <div class="dpl-desc">彈性擴充、按量付費、全球節點。挑戰：資料隱私合規（GDPR）、供應商鎖定風險。</div>
+      </div>
+      <div class="dpl">
+        <div class="dpl-name">私有雲部署</div>
+        <div class="dpl-sub">OpenStack / VMware</div>
+        <div class="dpl-desc">資料不外流、高安全合規性。適合：政府、金融、醫療等嚴格管制行業。成本高。</div>
+      </div>
+      <div class="dpl">
+        <div class="dpl-name">邊緣運算</div>
+        <div class="dpl-sub">Edge Computing</div>
+        <div class="dpl-desc">在終端裝置（IoT/手機/車載）本地推論，低延遲、保護隱私。挑戰：資源有限、更新複雜。</div>
+      </div>
+      <div class="dpl">
+        <div class="dpl-name">混合部署</div>
+        <div class="dpl-sub">Hybrid Deployment</div>
+        <div class="dpl-desc">雲端訓練 + 邊緣推論，兼顧算力與延遲。需設計資料同步與一致性機制，整合難度高。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exam-box">
+    <h3>⭐ 考試重點</h3>
+    <div class="exam-list">
+      <div class="exam-item">PCA 保留最大方差方向降維；t-SNE/UMAP 用於視覺化，不適合後續建模</div>
+      <div class="exam-item">迴歸預測連續值；分類輸出離散標籤；聚類無標注自動分群</div>
+      <div class="exam-item">Docker 容器確保跨平台環境一致性；Kubernetes 負責容器編排與自動擴縮</div>
+      <div class="exam-item">Blue-Green Deployment：兩套環境切換，零停機更新；Canary：逐步灰度發布</div>
+      <div class="exam-item">MLflow 追蹤實驗參數與模型版本；DVC 管理訓練資料集版本</div>
+      <div class="exam-item">邊緣運算：推論在終端本地執行，降低延遲和頻寬消耗，適合 IoT 即時場景</div>
+    </div>
+  </div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

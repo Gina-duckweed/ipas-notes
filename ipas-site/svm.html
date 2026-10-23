@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SVM 支援向量機</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root {
+  --green-dk: #1f5c33;
+  --green-md: #3d8b52;
+  --green-lt: #e8f5ed;
+  --green-hd: #4a9e5c;
+  --card-bd: #a8d5b5;
+  --page:     #f2f4f2;
+  --card:     #ffffff;
+  --txt:      #1e2b22;
+  --muted:    #5e7566;
+  --red-hd:   #c8373a;
+  --blue-bg:  #eaf4fb;
+  --blue-tx:  #1a6fa0;
+  --or-bg:    #fffae8;
+  --or-tx:    #9a5f08;
+  --tip-bg:   #fffcef;
+  --tip-bd:   #e0c858;
+  --pur-lt:   #ece8f4;
+  --form-bg:  #f5faf6;
+  --tbl-hd:   #e8f5ed;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page:    #0e1a11;
+    --card:    #162019;
+    --txt:     #dff0e4;
+    --muted:   #7a9e82;
+    --card-bd: #304838;
+    --green-lt:#162a1e;
+    --blue-bg: #132030;
+    --blue-tx: #70b8e0;
+    --or-bg:   #251a00;
+    --or-tx:   #e0b848;
+    --tip-bg:  #1e1900;
+    --tip-bd:  #c0a030;
+    --pur-lt:  #241e38;
+    --form-bg: #112018;
+    --tbl-hd:  #162a1e;
+  }
+}
+:root[data-theme="dark"] {
+  --page:    #0e1a11; --card:    #162019; --txt:     #dff0e4;
+  --muted:   #7a9e82; --card-bd: #304838; --green-lt:#162a1e;
+  --blue-bg: #132030; --blue-tx: #70b8e0; --or-bg:   #251a00;
+  --or-tx:   #e0b848; --tip-bg:  #1e1900; --tip-bd:  #c0a030;
+  --pur-lt:  #241e38; --form-bg: #112018; --tbl-hd:  #162a1e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  background: var(--page);
+  color: var(--txt);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1rem;
+  min-height: 100vh;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── CARD SHELL ─────────────────────────── */
+.card {
+  width: 100%;
+  max-width: 760px;
+  background: var(--card);
+  border: 2px solid var(--card-bd);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* ─── HEADER ─────────────────────────────── */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 1.6rem 2rem 1.4rem;
+}
+.num-badge {
+  width: 54px; height: 54px;
+  background: var(--green-dk);
+  border-radius: 10px;
+  display: grid; place-items: center;
+  color: #fff;
+  font-size: 2.1rem; font-weight: 900;
+  flex-shrink: 0;
+}
+.title-block { line-height: 1.2; }
+.title-block .en { font-size: 2.05rem; font-weight: 900; letter-spacing: -0.01em; }
+.title-block .zh { font-size: 1.35rem; font-weight: 700; margin-top: 0.05rem; }
+
+/* ─── PURPOSE BAND ──────────────────────── */
+.purpose-band {
+  margin: 0 1.5rem 1.25rem;
+  border: 2px solid var(--green-md);
+  border-radius: 9px;
+  padding: 0.85rem 1.1rem 0.85rem 3.6rem;
+  background: var(--green-lt);
+  position: relative;
+  font-size: 0.94rem;
+}
+.purpose-band::before {
+  content: '🎯';
+  position: absolute; left: 0.9rem; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.55rem;
+}
+.purpose-band p { margin-bottom: 0.25rem; }
+.purpose-band p:last-child { margin-bottom: 0; }
+.purpose-band b { color: var(--green-dk); }
+
+/* ─── SECTION BADGE ─────────────────────── */
+.sbadge {
+  display: inline-block;
+  background: var(--green-hd);
+  color: #fff;
+  padding: 0.18rem 0.7rem;
+  border-radius: 5px;
+  font-size: 0.83rem; font-weight: 700;
+  margin-bottom: 0.65rem;
+}
+
+/* ─── TWO-COL ───────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+  margin: 0 1.5rem 1.2rem;
+}
+.col-wrap { display: flex; flex-direction: column; }
+
+.plain-box {
+  flex: 1;
+  border: 1.5px solid var(--card-bd);
+  border-radius: 8px;
+  padding: 0.85rem 0.9rem;
+  background: var(--form-bg);
+  display: flex; gap: 0.55rem; align-items: flex-start;
+  font-size: 0.88rem; line-height: 1.75;
+}
+.plain-box .bulb { font-size: 1.35rem; flex-shrink: 0; margin-top: 0.05rem; }
+.kterm { color: var(--green-dk); font-weight: 700; border-bottom: 1.5px solid var(--green-md); }
+
+.chart-box {
+  flex: 1;
+  border: 1.5px solid var(--card-bd);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--card);
+  display: flex; align-items: center; justify-content: center;
+  padding: 0.35rem;
+  min-height: 172px;
+}
+
+/* ─── FORMULA / EXAMPLE ─────────────────── */
+.formula-box {
+  flex: 1;
+  border: 1.5px solid var(--card-bd);
+  border-radius: 8px;
+  padding: 0.85rem 0.9rem;
+  background: var(--form-bg);
+  font-size: 0.86rem; line-height: 1.9;
+}
+.formula-box code {
+  font-family: 'Courier New', monospace;
+  font-size: 0.93em;
+  color: var(--green-dk);
+  background: rgba(61,139,82,0.09);
+  padding: 0 3px; border-radius: 3px;
+}
+.formula-box .frow { display: flex; gap: 0.5rem; align-items: baseline; margin-bottom: 0.05rem; }
+.formula-box .flabel { color: var(--muted); font-size: 0.78rem; flex-shrink: 0; min-width: 1.5rem; }
+.formula-box .fdot { color: var(--muted); }
+
+.example-box {
+  flex: 1;
+  border: 1.5px solid var(--card-bd);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.ex-inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.75rem;
+}
+.ex-panel {
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.82rem;
+}
+.ex-panel.feat { background: var(--pur-lt); }
+.ex-panel.tgt  { background: var(--pur-lt); text-align: center; }
+.ex-panel h4 { font-size: 0.78rem; color: var(--muted); font-weight: 500; margin-bottom: 0.3rem; }
+.ex-panel ul { list-style: none; padding: 0; }
+.ex-panel ul li { padding: 0.07rem 0; }
+.ex-panel ul li::before { content: '• '; }
+.ex-panel .tgt-label { font-size: 0.92rem; font-weight: 700; margin-top: 0.3rem; color: var(--green-dk); }
+.arrow-sep { font-size: 1.5rem; color: var(--muted); }
+
+/* ─── FULL-WIDTH SECTION ─────────────────── */
+.full-sec { margin: 0 1.5rem 1.2rem; }
+.full-sec .sbadge-wrap {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 0;
+}
+.tbl-outer {
+  border: 1.5px solid var(--card-bd);
+  border-radius: 0 8px 8px 8px;
+  overflow: hidden;
+  margin-top: 0;
+}
+.ktbl {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.ktbl th {
+  background: var(--tbl-hd);
+  color: var(--green-dk); font-weight: 700;
+  padding: 0.4rem 0.7rem;
+  text-align: left;
+  border-bottom: 1.5px solid var(--card-bd);
+  border-right: 1px solid var(--card-bd);
+}
+.ktbl th:last-child { border-right: none; }
+.ktbl td {
+  padding: 0.35rem 0.7rem;
+  border-bottom: 1px solid var(--card-bd);
+  border-right: 1px solid var(--card-bd);
+  vertical-align: top;
+}
+.ktbl td:last-child { border-right: none; }
+.ktbl tr:last-child td { border-bottom: none; }
+.ktbl .kern-name { font-weight: 700; color: var(--green-dk); white-space: nowrap; }
+.ktbl .best { color: var(--green-dk); font-weight: 600; }
+
+/* ─── PROS / CONS ───────────────────────── */
+.pros-cons {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.9rem; margin: 0 1.5rem 1.2rem;
+}
+.pro-blk, .con-blk {
+  border: 1.5px solid var(--card-bd);
+  border-radius: 8px; overflow: hidden;
+}
+.pro-hd { background: #3d8b52; color: #fff; padding: 0.3rem 0.75rem; font-size: 0.84rem; font-weight: 700; }
+.con-hd { background: var(--red-hd); color: #fff; padding: 0.3rem 0.75rem; font-size: 0.84rem; font-weight: 700; }
+.pro-body, .con-body { padding: 0.6rem 0.8rem; font-size: 0.84rem; }
+.pro-body li, .con-body li {
+  list-style: none; padding: 0.13rem 0;
+  display: flex; gap: 0.35rem; align-items: flex-start;
+}
+.pro-body li::before { content: '✅'; font-size: 0.78rem; flex-shrink: 0; margin-top: 0.12rem; }
+.con-body li::before { content: '❌'; font-size: 0.78rem; flex-shrink: 0; margin-top: 0.12rem; }
+
+/* ─── KEYWORDS / WHEN ───────────────────── */
+.kw-when {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.9rem; margin: 0 1.5rem 1.2rem;
+}
+.kw-blk, .wh-blk { border: 1.5px solid var(--card-bd); border-radius: 8px; overflow: hidden; }
+.kw-hd {
+  background: var(--blue-bg); color: var(--blue-tx);
+  padding: 0.3rem 0.75rem; font-size: 0.82rem; font-weight: 700;
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.wh-hd {
+  background: var(--or-bg); color: var(--or-tx);
+  padding: 0.3rem 0.75rem; font-size: 0.82rem; font-weight: 700;
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.kw-body, .wh-body { padding: 0.6rem 0.8rem; font-size: 0.82rem; }
+.kw-body ul, .wh-body ul { list-style: none; padding: 0; }
+.kw-body ul li, .wh-body ul li { padding: 0.1rem 0; }
+.kw-body ul li::before { content: '• '; }
+.wh-body ul li::before { content: '• '; }
+
+/* ─── TIP ───────────────────────────────── */
+.tip-row {
+  margin: 0 1.5rem 1.6rem;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 0.9rem; align-items: start;
+}
+.tip-box {
+  background: var(--tip-bg);
+  border: 1.5px solid var(--tip-bd);
+  border-radius: 9px;
+  padding: 0.85rem 1rem 0.85rem 3.1rem;
+  position: relative; font-size: 0.85rem; line-height: 1.72;
+}
+.tip-box::before { content: '💡'; position: absolute; left: 0.7rem; top: 0.82rem; font-size: 1.1rem; }
+.tip-box strong { display: block; color: var(--or-tx); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.4rem; }
+.tip-box ol { padding-left: 1.2rem; margin-top: 0.3rem; }
+.tip-box ol li { margin-bottom: 0.18rem; }
+
+.mini-pair { display: flex; flex-direction: column; gap: 0.5rem; }
+.mini-item { text-align: center; }
+.mini-item figcaption { font-size: 0.72rem; color: var(--muted); margin-top: 0.2rem; }
+
+/* ─── RESPONSIVE ────────────────────────── */
+@media (max-width: 560px) {
+  .two-col, .pros-cons, .kw-when { grid-template-columns: 1fr; }
+  .tip-row { grid-template-columns: 1fr; }
+  .card-header { padding: 1.1rem 1.25rem; }
+  .title-block .en { font-size: 1.65rem; }
+  .purpose-band, .two-col, .full-sec, .pros-cons, .kw-when, .tip-row {
+    margin-left: 1rem; margin-right: 1rem;
+  }
+}
+</style>
+
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="card-header">
+    <div class="num-badge">4</div>
+    <div class="title-block">
+      <div class="en">SVM</div>
+      <div class="zh">支援向量機</div>
+    </div>
+  </div>
+
+  <!-- PURPOSE -->
+  <div class="purpose-band">
+    <p><b>用途</b>：分類（二元 / 多類別）、迴歸（SVR）</p>
+    <p><b>目標</b>：找到讓兩類資料之間「安全距離（margin）」最大的決策超平面。</p>
+  </div>
+
+  <!-- ROW 1: 白話理解 + 圖像示意 -->
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">白話理解</div>
+      <div class="plain-box">
+        <span class="bulb">💡</span>
+        <span>
+          把兩類資料想像成兩群人，SVM 找到一條
+          <span class="kterm">「最寬走廊」</span>把他們分開。<br>
+          走廊邊緣，最靠近中線的點叫
+          <span class="kterm">支援向量</span>，它們決定了走廊的位置與寬度。<br>
+          遇到非線性問題時，用
+          <span class="kterm">核函數</span>把資料映射到更高維的空間再分割。
+        </span>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">圖像示意</div>
+      <div class="chart-box">
+        <!-- SVM diagram -->
+        <svg viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+          <defs>
+            <marker id="ah" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+              <polygon points="0,0 7,2.5 0,5" fill="#8a9e90"></polygon>
+            </marker>
+            <marker id="ah2" markerWidth="7" markerHeight="5" refX="1" refY="2.5" orient="auto">
+              <polygon points="7,0 0,2.5 7,5" fill="#8a9e90"></polygon>
+            </marker>
+          </defs>
+
+          <!-- Axes -->
+          <line x1="18" y1="183" x2="292" y2="183" stroke="#aab8ac" stroke-width="1.4" marker-end="url(#ah)"></line>
+          <line x1="18" y1="183" x2="18" y2="12" stroke="#aab8ac" stroke-width="1.4" marker-end="url(#ah)"></line>
+          <text x="285" y="192" font-size="9" fill="#8a9e90" font-family="sans-serif">x₁</text>
+          <text x="6" y="16" font-size="9" fill="#8a9e90" font-family="sans-serif">x₂</text>
+
+          <!-- Margin band shading -->
+          <polygon points="36,156 256,6 284,51 64,201" fill="#e8f2ea" opacity="0.55"></polygon>
+
+          <!-- Decision boundary -->
+          <line x1="50" y1="178" x2="270" y2="28" stroke="#1f5c33" stroke-width="2.6"></line>
+
+          <!-- Upper margin (blue side) -->
+          <line x1="36" y1="156" x2="256" y2="6" stroke="#3b82f6" stroke-width="1.6" stroke-dasharray="7,4"></line>
+
+          <!-- Lower margin (red side) -->
+          <line x1="64" y1="200" x2="284" y2="50" stroke="#ef4444" stroke-width="1.6" stroke-dasharray="7,4"></line>
+
+          <!-- Blue class dots -->
+          <circle cx="28" cy="40" r="5.5" fill="#3b82f6" opacity="0.9"></circle>
+          <circle cx="48" cy="28" r="5.5" fill="#3b82f6" opacity="0.9"></circle>
+          <circle cx="42" cy="62" r="5.5" fill="#3b82f6" opacity="0.9"></circle>
+          <circle cx="68" cy="42" r="5.5" fill="#3b82f6" opacity="0.9"></circle>
+          <circle cx="72" cy="22" r="5.5" fill="#3b82f6" opacity="0.9"></circle>
+          <circle cx="22" cy="80" r="5.5" fill="#3b82f6" opacity="0.9"></circle>
+          <circle cx="55" cy="75" r="5.5" fill="#3b82f6" opacity="0.9"></circle>
+          <circle cx="32" cy="105" r="5.5" fill="#3b82f6" opacity="0.9"></circle>
+
+          <!-- Blue support vector -->
+          <circle cx="104" cy="106" r="5.5" fill="#3b82f6"></circle>
+          <circle cx="104" cy="106" r="10.5" fill="none" stroke="#3b82f6" stroke-width="1.8"></circle>
+
+          <!-- Red class dots -->
+          <circle cx="210" cy="142" r="5.5" fill="#ef4444" opacity="0.9"></circle>
+          <circle cx="234" cy="157" r="5.5" fill="#ef4444" opacity="0.9"></circle>
+          <circle cx="252" cy="138" r="5.5" fill="#ef4444" opacity="0.9"></circle>
+          <circle cx="244" cy="168" r="5.5" fill="#ef4444" opacity="0.9"></circle>
+          <circle cx="272" cy="128" r="5.5" fill="#ef4444" opacity="0.9"></circle>
+          <circle cx="218" cy="118" r="5.5" fill="#ef4444" opacity="0.9"></circle>
+          <circle cx="262" cy="158" r="5.5" fill="#ef4444" opacity="0.9"></circle>
+
+          <!-- Red support vector -->
+          <circle cx="165" cy="130" r="5.5" fill="#ef4444"></circle>
+          <circle cx="165" cy="130" r="10.5" fill="none" stroke="#ef4444" stroke-width="1.8"></circle>
+
+          <!-- Margin width double arrow -->
+          <line x1="148" y1="63" x2="136" y2="80" stroke="#666" stroke-width="1.2" marker-end="url(#ah)"></line>
+          <line x1="148" y1="63" x2="160" y2="46" stroke="#666" stroke-width="1.2" marker-end="url(#ah)"></line>
+          <text x="108" y="60" font-size="9" fill="#557060" font-family="sans-serif">← margin →</text>
+
+          <!-- Decision boundary label -->
+          <text x="168" y="58" font-size="9.5" fill="#1f5c33" font-family="sans-serif" font-weight="bold" transform="rotate(-34,168,58)">決策邊界</text>
+
+          <!-- Support vector labels -->
+          <text x="116" y="100" font-size="8.5" fill="#3b82f6" font-family="sans-serif" font-weight="600">支援向量</text>
+          <text x="174" y="125" font-size="8.5" fill="#ef4444" font-family="sans-serif" font-weight="600">支援向量</text>
+
+          <!-- Class labels -->
+          <text x="22" y="176" font-size="9.5" fill="#3b82f6" font-family="sans-serif" font-weight="700">類別 −1</text>
+          <text x="228" y="180" font-size="9.5" fill="#ef4444" font-family="sans-serif" font-weight="700">類別 +1</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: 數學表達式 + 例子 -->
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">數學表達式</div>
+      <div class="formula-box">
+        <div class="frow"><span class="flabel">決策：</span><code>f(x) = wᵀx + b</code></div>
+        <div class="frow"><span class="flabel">目標：</span>最大化 <code>margin = 2 / ‖w‖</code></div>
+        <div class="frow"><span class="flabel">等效：</span>最小化 <code>½‖w‖²</code>（帶約束）</div>
+        <div class="frow"><span class="flabel">核：</span><code>K(xᵢ,xⱼ) = φ(xᵢ)ᵀφ(xⱼ)</code></div>
+        <div style="margin-top:0.6rem;font-size:0.8rem;color:var(--muted);font-family:inherit;">
+          • <b style="color:var(--txt)">w</b>：法向量 &nbsp;|&nbsp;
+          <b style="color:var(--txt)">b</b>：截距 &nbsp;|&nbsp;
+          <b style="color:var(--txt)">C</b>：懲罰參數（軟間隔）
+        </div>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">例子</div>
+      <div class="example-box">
+        <div class="ex-inner">
+          <div class="ex-panel feat">
+            <h4>特徵（自變數）</h4>
+            <ul>
+              <li>詞頻向量</li>
+              <li>寄件者信譽</li>
+              <li>主旨關鍵字</li>
+              <li>郵件長度</li>
+            </ul>
+          </div>
+          <div class="arrow-sep">→</div>
+          <div class="ex-panel tgt">
+            <h4>目標（應變數）</h4>
+            <div style="font-size:2rem;margin:0.4rem 0;">📧</div>
+            <div class="tgt-label">垃圾信 /<br>正常信</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KERNEL TABLE -->
+  <div class="full-sec">
+    <div class="sbadge-wrap"><div class="sbadge">核函數比較（Kernel Functions）</div></div>
+    <div class="tbl-outer" style="border-radius:0 8px 8px 8px;margin-top:0;">
+      <table class="ktbl">
+        <thead>
+          <tr>
+            <th>核函數</th>
+            <th>公式</th>
+            <th>適用情境</th>
+            <th>常用程度</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="kern-name">Linear</span></td>
+            <td>xᵢᵀxⱼ</td>
+            <td>線性可分、文字分類</td>
+            <td>⭐⭐</td>
+          </tr>
+          <tr>
+            <td><span class="kern-name">RBF / Gaussian</span></td>
+            <td>exp(−γ‖xᵢ−xⱼ‖²)</td>
+            <td>非線性、通用首選</td>
+            <td><span class="best">⭐⭐⭐ 最常用</span></td>
+          </tr>
+          <tr>
+            <td><span class="kern-name">Polynomial</span></td>
+            <td>(γxᵢᵀxⱼ + r)ᵈ</td>
+            <td>多項式決策邊界</td>
+            <td>⭐⭐</td>
+          </tr>
+          <tr>
+            <td><span class="kern-name">Sigmoid</span></td>
+            <td>tanh(γxᵢᵀxⱼ + r)</td>
+            <td>類神經網路行為</td>
+            <td>⭐</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PROS / CONS -->
+  <div class="pros-cons">
+    <div class="pro-blk">
+      <div class="pro-hd">優點</div>
+      <ul class="pro-body">
+        <li>高維空間效果優秀（文字、基因）</li>
+        <li>核技巧靈活處理非線性邊界</li>
+        <li>Soft Margin 對離群值有抵抗力</li>
+        <li>僅依賴支援向量，記憶效率高</li>
+      </ul>
+    </div>
+    <div class="con-blk">
+      <div class="con-hd">缺點</div>
+      <ul class="con-body">
+        <li>大資料集訓練非常慢（O(n²)~O(n³)）</li>
+        <li>參數 C 與核參數（如 γ）選擇敏感</li>
+        <li>輸出非機率，需 Platt Scaling 轉換</li>
+        <li>對特徵縮放高度敏感</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- KEYWORDS / WHEN -->
+  <div class="kw-when">
+    <div class="kw-blk">
+      <div class="kw-hd"><span>🔍</span> 考試關鍵字</div>
+      <div class="kw-body">
+        <ul>
+          <li>超平面（Hyperplane）、法向量 w</li>
+          <li>支援向量（Support Vector）</li>
+          <li>間隔最大化（Margin Maximization）</li>
+          <li>核函數 / Kernel Trick</li>
+          <li>軟間隔 / Soft Margin / 參數 C</li>
+          <li>對偶問題（Dual Problem）/ KKT 條件</li>
+        </ul>
+      </div>
+    </div>
+    <div class="wh-blk">
+      <div class="wh-hd"><span>⭐</span> 什麼情境適合用？</div>
+      <div class="wh-body">
+        <ul>
+          <li>高維小樣本（文字、基因、影像特徵）</li>
+          <li>特徵數量遠多於樣本數</li>
+          <li>需要非線性分類邊界（用 RBF 核）</li>
+          <li>二元分類問題（多類用 One-vs-One）</li>
+          <li>訓練資料量不超過十萬筆</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIP -->
+  <div class="tip-row">
+    <div class="tip-box">
+      <strong>小提醒</strong>
+      使用 SVM 前，記得檢查：
+      <ol>
+        <li><b>特徵縮放</b>（StandardScaler）是必須的，SVM 對尺度極敏感！</li>
+        <li><b>參數 C</b>（越大 → 允許更少誤分 → 容易 Overfitting）</li>
+        <li><b>RBF 的 γ</b>（越大 → 決策邊界越複雜 → 容易 Overfitting）</li>
+        <li>多類別問題預設使用 <b>One-vs-One</b> 策略。</li>
+      </ol>
+    </div>
+    <div class="mini-pair">
+      <div class="mini-item">
+        <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" width="110">
+          <!-- Linear separable -->
+          <rect width="100" height="75" rx="6" fill="var(--green-lt)" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <circle cx="20" cy="22" r="4" fill="#3b82f6"></circle><circle cx="30" cy="38" r="4" fill="#3b82f6"></circle>
+          <circle cx="15" cy="50" r="4" fill="#3b82f6"></circle><circle cx="35" cy="28" r="4" fill="#3b82f6"></circle>
+          <circle cx="70" cy="25" r="4" fill="#ef4444"></circle><circle cx="80" cy="42" r="4" fill="#ef4444"></circle>
+          <circle cx="65" cy="55" r="4" fill="#ef4444"></circle><circle cx="85" cy="30" r="4" fill="#ef4444"></circle>
+          <line x1="50" y1="68" x2="52" y2="8" stroke="#1f5c33" stroke-width="2"></line>
+          <text x="50" y="73" font-size="8" fill="#1f5c33" text-anchor="middle" font-family="sans-serif" font-weight="bold">✅ 線性可分</text>
+        </svg>
+      </div>
+      <div class="mini-item">
+        <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" width="110">
+          <!-- Non-linear → kernel -->
+          <rect width="100" height="75" rx="6" fill="#fef0f0" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <!-- Red dots forming a circle/cluster in center -->
+          <circle cx="50" cy="38" r="4" fill="#ef4444"></circle><circle cx="58" cy="30" r="4" fill="#ef4444"></circle>
+          <circle cx="60" cy="44" r="4" fill="#ef4444"></circle><circle cx="42" cy="44" r="4" fill="#ef4444"></circle>
+          <circle cx="44" cy="30" r="4" fill="#ef4444"></circle>
+          <!-- Blue dots around the outside -->
+          <circle cx="18" cy="18" r="4" fill="#3b82f6"></circle><circle cx="82" cy="18" r="4" fill="#3b82f6"></circle>
+          <circle cx="18" cy="58" r="4" fill="#3b82f6"></circle><circle cx="82" cy="58" r="4" fill="#3b82f6"></circle>
+          <circle cx="50" cy="10" r="4" fill="#3b82f6"></circle><circle cx="50" cy="65" r="4" fill="#3b82f6"></circle>
+          <!-- Curved boundary hint -->
+          <ellipse cx="50" cy="38" rx="20" ry="18" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,3"></ellipse>
+          <text x="50" y="73" font-size="8" fill="#c8373a" text-anchor="middle" font-family="sans-serif" font-weight="bold">❌ 非線性 → 核</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

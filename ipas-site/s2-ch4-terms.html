@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第四章名詞解釋：大數據處理技術</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+:root{
+  --bg:#F9F8F4;--s:#fff;--s2:#F3F1EB;--t:#2A2820;--m:#6B6860;--b:#DDD9CF;
+  --B:#2D5F9A;--Blt:#EAF0F8;--O:#E85D3A;--Olt:#FDF0EC;
+  --G:#3A9A6E;--Glt:#EAF5EF;--A:#D4920A;--Alt:#FDF6E3;
+  --P:#7B5EA7;--Plt:#F2EEFA;--T:#2A8A8A;--Tlt:#E6F5F5;--R:#C0392B;--Rlt:#FDECEB;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A1916;--s:#252320;--s2:#2E2C28;--t:#EDE9E0;--m:#A09D95;--b:#3D3A34;
+  --B:#6B9FD4;--Blt:#1A2535;--O:#F08060;--Olt:#2D1E18;--G:#5CC490;--Glt:#142A1F;
+  --A:#F0B840;--Alt:#2A2008;--P:#A888D8;--Plt:#221630;--T:#50B8B8;--Tlt:#102222;--R:#E05040;--Rlt:#2A1210;
+}}
+:root[data-theme="dark"]{
+  --bg:#1A1916;--s:#252320;--s2:#2E2C28;--t:#EDE9E0;--m:#A09D95;--b:#3D3A34;
+  --B:#6B9FD4;--Blt:#1A2535;--O:#F08060;--Olt:#2D1E18;--G:#5CC490;--Glt:#142A1F;
+  --A:#F0B840;--Alt:#2A2008;--P:#A888D8;--Plt:#221630;--T:#50B8B8;--Tlt:#102222;--R:#E05040;--Rlt:#2A1210;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito','Noto Sans TC',sans-serif;background:var(--bg);color:var(--t);padding:14px;line-height:1.5}
+.hdr{text-align:center;background:var(--s);border:2px solid var(--b);border-radius:12px;padding:14px;margin-bottom:14px}
+.badge{display:inline-block;background:var(--G);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.htitle{font-family:'Noto Sans TC',sans-serif;font-size:20px;font-weight:900}.htitle span{color:var(--G)}
+.hsub{font-size:11px;color:var(--m);margin-top:3px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.card{background:var(--s);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b)}
+.ctop{padding:9px 10px 8px}
+.cnum{font-size:9px;font-weight:800;letter-spacing:1px;color:var(--m);margin-bottom:2px}
+.crow{display:flex;align-items:center;gap:8px}
+.cico{font-size:20px;line-height:1}
+.cname{font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900}
+.cen{font-size:9.5px;font-weight:700;letter-spacing:.3px;opacity:.7}
+.cdiag{padding:4px 10px;display:flex;justify-content:center}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;line-height:1.5}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;line-height:1.5;border:1.5px solid var(--A);background:var(--Alt)}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+</style>
+<div class="hdr">
+  <div class="badge">iPAS 科目二 · CH4</div>
+  <div class="htitle">第四章：<span>大數據處理技術</span></div>
+  <div class="hsub">30個核心名詞 · Sketchnote圖文說明 · 情境分析 · 考題方向</div>
+</div>
+<div class="grid">
+
+<!-- 01 MapReduce -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">01 / 30</div>
+<div class="crow"><span class="cico">🗺️</span><div><div class="cname">MapReduce</div><div class="cen">Distributed Computing Model</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="10" width="30" height="18" rx="4" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1.2"></rect>
+  <text x="20" y="23" text-anchor="middle" font-size="8" fill="#3A9A6E" font-weight="700">Input</text>
+  <rect x="5" y="34" width="30" height="18" rx="4" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1.2"></rect>
+  <text x="20" y="47" text-anchor="middle" font-size="8" fill="#3A9A6E" font-weight="700">Input</text>
+  <polygon points="40,19 55,14 55,24" fill="#3A9A6E" opacity=".6"></polygon>
+  <polygon points="40,43 55,38 55,48" fill="#3A9A6E" opacity=".6"></polygon>
+  <rect x="56" y="8" width="28" height="14" rx="3" fill="#3A9A6E" opacity=".8"></rect>
+  <text x="70" y="18" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">Map</text>
+  <rect x="56" y="27" width="28" height="14" rx="3" fill="#3A9A6E" opacity=".8"></rect>
+  <text x="70" y="37" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">Map</text>
+  <rect x="56" y="46" width="28" height="14" rx="3" fill="#3A9A6E" opacity=".8"></rect>
+  <text x="70" y="56" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">Map</text>
+  <text x="94" y="38" text-anchor="middle" font-size="9" fill="#A09D95">⇒</text>
+  <rect x="103" y="26" width="32" height="18" rx="4" fill="#2D5F9A" opacity=".8"></rect>
+  <text x="119" y="38" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">Shuffle</text>
+  <text x="140" y="38" text-anchor="middle" font-size="9" fill="#A09D95">⇒</text>
+  <rect x="148" y="26" width="30" height="18" rx="4" fill="#E85D3A" opacity=".8"></rect>
+  <text x="163" y="38" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">Reduce</text>
+</svg>
+</div>
+<div class="cdef">將大型任務拆分為兩個階段：<strong>Map</strong>（映射）將資料切割並平行處理，<strong>Reduce</strong>（歸納）對中間結果進行彙整合併。是Hadoop的核心計算框架，適合批次大規模資料處理。</div>
+<div class="cscene"><b>📍 適用情境</b>電商平台統計每日各商品銷售量：Map階段各節點各自統計局部，Reduce階段匯總全局結果。</div>
+<div class="cexam"><b>🎯 考題方向</b>考MapReduce兩階段差異、優缺點（不適合低延遲）、與Spark比較。</div>
+</div>
+
+<!-- 02 Hadoop -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">02 / 30</div>
+<div class="crow"><span class="cico">🐘</span><div><div class="cname">Hadoop</div><div class="cen">Distributed Big Data Platform</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="60" y="5" width="60" height="22" rx="5" fill="#3A9A6E" opacity=".85"></rect>
+  <text x="90" y="20" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">Hadoop</text>
+  <line x1="90" y1="27" x2="45" y2="42" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <line x1="90" y1="27" x2="90" y2="42" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <line x1="90" y1="27" x2="135" y2="42" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <rect x="15" y="42" width="60" height="18" rx="4" fill="#2D5F9A" opacity=".8"></rect>
+  <text x="45" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">HDFS (儲存)</text>
+  <rect x="60" y="42" width="60" height="18" rx="4" fill="#E85D3A" opacity=".8"></rect>
+  <text x="90" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">MapReduce</text>
+  <rect x="105" y="42" width="60" height="18" rx="4" fill="#7B5EA7" opacity=".8"></rect>
+  <text x="135" y="54" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">YARN (排程)</text>
+</svg>
+</div>
+<div class="cdef">Apache基金會開源的分散式大數據處理框架，核心組件包含：<strong>HDFS</strong>（分散式儲存）、<strong>MapReduce</strong>（計算引擎）、<strong>YARN</strong>（資源管理）。具高容錯性、水平擴充能力。</div>
+<div class="cscene"><b>📍 適用情境</b>企業將PB級日誌資料存入HDFS，用MapReduce批次分析，YARN調度叢集資源。</div>
+<div class="cexam"><b>🎯 考題方向</b>考三大核心組件功能、Hadoop vs Spark差異（磁碟IO vs 記憶體）。</div>
+</div>
+
+<!-- 03 Apache Spark -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">03 / 30</div>
+<div class="crow"><span class="cico">⚡</span><div><div class="cname">Apache Spark</div><div class="cen">In-Memory Distributed Engine</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="28" width="35" height="18" rx="4" fill="#A09D95" opacity=".3" stroke="#A09D95" stroke-width="1"></rect>
+  <text x="22" y="40" text-anchor="middle" font-size="7" fill="#6B6860">Disk</text>
+  <rect x="5" y="10" width="35" height="14" rx="3" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1"></rect>
+  <text x="22" y="20" text-anchor="middle" font-size="7" fill="#E85D3A" font-weight="700">RAM</text>
+  <polygon points="44,37 55,32 55,42" fill="#E85D3A" opacity=".7"></polygon>
+  <rect x="56" y="27" width="40" height="20" rx="5" fill="#E85D3A" opacity=".85"></rect>
+  <text x="76" y="40" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Spark RDD</text>
+  <polygon points="100,37 111,32 111,42" fill="#E85D3A" opacity=".7"></polygon>
+  <rect x="112" y="20" width="62" height="14" rx="3" fill="#E85D3A" opacity=".2" stroke="#E85D3A" stroke-width="1"></rect>
+  <text x="143" y="30" text-anchor="middle" font-size="7" fill="#E85D3A" font-weight="700">Spark SQL</text>
+  <rect x="112" y="38" width="62" height="14" rx="3" fill="#E85D3A" opacity=".2" stroke="#E85D3A" stroke-width="1"></rect>
+  <text x="143" y="48" text-anchor="middle" font-size="7" fill="#E85D3A" font-weight="700">MLlib / Streaming</text>
+</svg>
+</div>
+<div class="cdef">基於<strong>記憶體（In-Memory）</strong>的分散式運算框架，速度比Hadoop MapReduce快100倍。核心抽象為<strong>RDD</strong>（彈性分散式資料集），支援批次、串流、機器學習（MLlib）、圖運算（GraphX）。</div>
+<div class="cscene"><b>📍 適用情境</b>金融業即時反詐騙：Spark Streaming快速分析交易串流，毫秒級給出風險評分。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Spark優勢（記憶體計算）、RDD特性（不可變、容錯）、與MapReduce比較。</div>
+</div>
+
+<!-- 04 HDFS -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">04 / 30</div>
+<div class="crow"><span class="cico">💾</span><div><div class="cname">HDFS</div><div class="cen">Hadoop Distributed File System</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="65" y="5" width="50" height="18" rx="4" fill="#2D5F9A" opacity=".85"></rect>
+  <text x="90" y="17" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">NameNode</text>
+  <line x1="50" y1="23" x2="35" y2="42" stroke="#2D5F9A" stroke-width="1.2"></line>
+  <line x1="90" y1="23" x2="90" y2="42" stroke="#2D5F9A" stroke-width="1.2"></line>
+  <line x1="130" y1="23" x2="145" y2="42" stroke="#2D5F9A" stroke-width="1.2"></line>
+  <rect x="10" y="42" width="50" height="18" rx="4" fill="#2D5F9A" opacity=".5"></rect>
+  <text x="35" y="54" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">DataNode×3</text>
+  <rect x="65" y="42" width="50" height="18" rx="4" fill="#2D5F9A" opacity=".5"></rect>
+  <text x="90" y="54" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">DataNode×3</text>
+  <rect x="120" y="42" width="50" height="18" rx="4" fill="#2D5F9A" opacity=".5"></rect>
+  <text x="145" y="54" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">DataNode×3</text>
+</svg>
+</div>
+<div class="cdef">Hadoop分散式檔案系統。以<strong>NameNode</strong>（主節點，管理元資料）和<strong>DataNode</strong>（資料節點，儲存區塊）架構運作。每個檔案區塊預設複製<strong>3份</strong>到不同節點，確保容錯性。適合儲存大型檔案（TB~PB）。</div>
+<div class="cscene"><b>📍 適用情境</b>媒體公司將PB級影片素材存入HDFS，NameNode記錄區塊位置，任一DataNode故障不影響存取。</div>
+<div class="cexam"><b>🎯 考題方向</b>考NameNode/DataNode職責、預設複製因子(3)、適合大檔案而非小檔案。</div>
+</div>
+
+<!-- 05 Apache Kafka -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">05 / 30</div>
+<div class="crow"><span class="cico">📨</span><div><div class="cname">Apache Kafka</div><div class="cen">Distributed Message Queue</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="22" width="38" height="30" rx="4" fill="#E85D3A" opacity=".15" stroke="#E85D3A" stroke-width="1.2"></rect>
+  <text x="24" y="35" text-anchor="middle" font-size="7.5" fill="#E85D3A" font-weight="700">Producer</text>
+  <text x="24" y="47" text-anchor="middle" font-size="7" fill="#E85D3A">App/DB</text>
+  <polygon points="47,37 60,31 60,43" fill="#E85D3A" opacity=".7"></polygon>
+  <rect x="61" y="8" width="58" height="58" rx="6" fill="#E85D3A" opacity=".1" stroke="#E85D3A" stroke-width="1.5"></rect>
+  <text x="90" y="22" text-anchor="middle" font-size="8" fill="#E85D3A" font-weight="700">Kafka Broker</text>
+  <rect x="67" y="26" width="46" height="10" rx="2" fill="#E85D3A" opacity=".5"></rect>
+  <text x="90" y="34" text-anchor="middle" font-size="7" fill="#fff">Topic: orders</text>
+  <rect x="67" y="39" width="46" height="10" rx="2" fill="#E85D3A" opacity=".3"></rect>
+  <text x="90" y="47" text-anchor="middle" font-size="7" fill="#E85D3A">Topic: logs</text>
+  <polygon points="123,37 136,31 136,43" fill="#E85D3A" opacity=".7"></polygon>
+  <rect x="137" y="22" width="38" height="30" rx="4" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1.2"></rect>
+  <text x="156" y="35" text-anchor="middle" font-size="7.5" fill="#2D5F9A" font-weight="700">Consumer</text>
+  <text x="156" y="47" text-anchor="middle" font-size="7" fill="#2D5F9A">Spark/AI</text>
+</svg>
+</div>
+<div class="cdef">高吞吐量分散式<strong>訊息佇列</strong>系統。以<strong>Topic</strong>（主題）、<strong>Partition</strong>（分區）、<strong>Offset</strong>（偏移量）組織訊息。Producer生產訊息→Broker儲存→Consumer消費，支援消息回放與多消費者群組。</div>
+<div class="cscene"><b>📍 適用情境</b>IoT平台：百萬感測器資料進入Kafka，下游Spark Streaming、資料庫、監控系統各自消費不同Topic。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Kafka三角色（Producer/Broker/Consumer）、Topic分區優勢、與傳統MQ比較（持久化、回放）。</div>
+</div>
+
+<!-- 06 ETL -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">06 / 30</div>
+<div class="crow"><span class="cico">🔄</span><div><div class="cname">ETL</div><div class="cen">Extract · Transform · Load</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="24" width="40" height="22" rx="5" fill="#7B5EA7" opacity=".85"></rect>
+  <text x="25" y="34" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Extract</text>
+  <text x="25" y="43" text-anchor="middle" font-size="7" fill="#fff" opacity=".8">DB/API/CSV</text>
+  <polygon points="49,35 60,30 60,40" fill="#7B5EA7" opacity=".7"></polygon>
+  <rect x="61" y="24" width="58" height="22" rx="5" fill="#2D5F9A" opacity=".85"></rect>
+  <text x="90" y="34" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Transform</text>
+  <text x="90" y="43" text-anchor="middle" font-size="7" fill="#fff" opacity=".8">清洗/轉換/整合</text>
+  <polygon points="123,35 134,30 134,40" fill="#2D5F9A" opacity=".7"></polygon>
+  <rect x="135" y="24" width="40" height="22" rx="5" fill="#3A9A6E" opacity=".85"></rect>
+  <text x="155" y="34" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Load</text>
+  <text x="155" y="43" text-anchor="middle" font-size="7" fill="#fff" opacity=".8">DW/Lake</text>
+</svg>
+</div>
+<div class="cdef">資料整合三步驟流程：<strong>Extract</strong>（從各類來源擷取資料）→<strong>Transform</strong>（清洗、格式轉換、業務邏輯處理）→<strong>Load</strong>（載入資料倉儲或資料湖）。是BI與分析的資料準備核心。</div>
+<div class="cscene"><b>📍 適用情境</b>零售商從ERP、CRM、電商平台抽取訂單，統一格式清洗後，載入資料倉儲供BI報表使用。</div>
+<div class="cexam"><b>🎯 考題方向</b>考ETL三步驟、ELT差異（先載入再轉換，適合雲端）、ETL工具（Informatica/Talend）。</div>
+</div>
+
+<!-- 07 Data Lake -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">07 / 30</div>
+<div class="crow"><span class="cico">🏞️</span><div><div class="cname">資料湖</div><div class="cen">Data Lake</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <ellipse cx="90" cy="52" rx="70" ry="14" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1.2"></ellipse>
+  <text x="90" y="56" text-anchor="middle" font-size="8" fill="#2D5F9A" font-weight="700">Data Lake（原始格式）</text>
+  <rect x="18" y="20" width="28" height="16" rx="3" fill="#E85D3A" opacity=".7"></rect>
+  <text x="32" y="30" text-anchor="middle" font-size="7" fill="#fff">CSV</text>
+  <rect x="52" y="15" width="28" height="16" rx="3" fill="#3A9A6E" opacity=".7"></rect>
+  <text x="66" y="25" text-anchor="middle" font-size="7" fill="#fff">JSON</text>
+  <rect x="86" y="20" width="28" height="16" rx="3" fill="#7B5EA7" opacity=".7"></rect>
+  <text x="100" y="30" text-anchor="middle" font-size="7" fill="#fff">Image</text>
+  <rect x="120" y="15" width="40" height="16" rx="3" fill="#2A8A8A" opacity=".7"></rect>
+  <text x="140" y="25" text-anchor="middle" font-size="7" fill="#fff">Video/Log</text>
+  <line x1="32" y1="36" x2="60" y2="50" stroke="#2D5F9A" stroke-width="1" stroke-dasharray="3,2"></line>
+  <line x1="66" y1="31" x2="75" y2="46" stroke="#2D5F9A" stroke-width="1" stroke-dasharray="3,2"></line>
+  <line x1="100" y1="36" x2="100" y2="46" stroke="#2D5F9A" stroke-width="1" stroke-dasharray="3,2"></line>
+  <line x1="140" y1="31" x2="120" y2="46" stroke="#2D5F9A" stroke-width="1" stroke-dasharray="3,2"></line>
+</svg>
+</div>
+<div class="cdef">以<strong>原始格式</strong>儲存各類結構化、半結構化、非結構化資料的大型儲存庫。採用<strong>Schema-on-Read</strong>，儲存時無需定義結構，讀取時才套用schema。成本低、彈性高，適合大數據與AI原料儲存。</div>
+<div class="cscene"><b>📍 適用情境</b>醫療機構將病歷PDF、影像DICOM、感測器JSON全數存入S3資料湖，AI模型訓練時再取用。</div>
+<div class="cexam"><b>🎯 考題方向</b>考資料湖vs資料倉儲差異（格式/結構/用途）、Schema-on-Read vs Schema-on-Write。</div>
+</div>
+
+<!-- 08 Data Warehouse -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">08 / 30</div>
+<div class="crow"><span class="cico">🏛️</span><div><div class="cname">資料倉儲</div><div class="cen">Data Warehouse</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="10" y="5" width="160" height="14" rx="3" fill="#2D5F9A" opacity=".8"></rect>
+  <text x="90" y="15" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Subject-Oriented / Integrated / Time-Variant / Non-Volatile</text>
+  <rect x="10" y="24" width="48" height="18" rx="3" fill="#2D5F9A" opacity=".4"></rect>
+  <text x="34" y="36" text-anchor="middle" font-size="7.5" fill="#2D5F9A" font-weight="700">維度表 Dim</text>
+  <rect x="66" y="24" width="48" height="18" rx="3" fill="#2D5F9A" opacity=".6"></rect>
+  <text x="90" y="36" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">事實表 Fact</text>
+  <rect x="122" y="24" width="48" height="18" rx="3" fill="#2D5F9A" opacity=".4"></rect>
+  <text x="146" y="36" text-anchor="middle" font-size="7.5" fill="#2D5F9A" font-weight="700">維度表 Dim</text>
+  <rect x="10" y="48" width="160" height="16" rx="3" fill="#3A9A6E" opacity=".6"></rect>
+  <text x="90" y="59" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">BI報表 / OLAP分析</text>
+</svg>
+</div>
+<div class="cdef">儲存<strong>結構化歷史資料</strong>的分析型資料庫，具備四大特性：<strong>主題導向、整合性、時間變異性、非揮發性</strong>（Inmon定義）。採用星狀/雪花Schema，Schema-on-Write，支援OLAP多維分析。</div>
+<div class="cscene"><b>📍 適用情境</b>連鎖零售商將五年銷售資料整合進DW，管理層透過OLAP鑽取各區域、各商品的趨勢報表。</div>
+<div class="cexam"><b>🎯 考題方向</b>考DW四大特性、星狀schema、DW vs Data Lake（結構化vs原始、歷史分析vs探索分析）。</div>
+</div>
+
+<!-- 09 NoSQL -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">09 / 30</div>
+<div class="crow"><span class="cico">🗃️</span><div><div class="cname">NoSQL</div><div class="cen">Not Only SQL</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="10" width="38" height="50" rx="4" fill="#2A8A8A" opacity=".15" stroke="#2A8A8A" stroke-width="1.2"></rect>
+  <text x="24" y="28" text-anchor="middle" font-size="7" fill="#2A8A8A" font-weight="700">Key-Value</text>
+  <text x="24" y="40" text-anchor="middle" font-size="7" fill="#2A8A8A">Redis</text>
+  <text x="24" y="50" text-anchor="middle" font-size="7" fill="#2A8A8A">DynamoDB</text>
+  <rect x="48" y="10" width="38" height="50" rx="4" fill="#2A8A8A" opacity=".25" stroke="#2A8A8A" stroke-width="1.2"></rect>
+  <text x="67" y="28" text-anchor="middle" font-size="7" fill="#2A8A8A" font-weight="700">Document</text>
+  <text x="67" y="40" text-anchor="middle" font-size="7" fill="#2A8A8A">MongoDB</text>
+  <text x="67" y="50" text-anchor="middle" font-size="7" fill="#2A8A8A">CouchDB</text>
+  <rect x="91" y="10" width="38" height="50" rx="4" fill="#2A8A8A" opacity=".35" stroke="#2A8A8A" stroke-width="1.2"></rect>
+  <text x="110" y="28" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">Column</text>
+  <text x="110" y="40" text-anchor="middle" font-size="7" fill="#fff">HBase</text>
+  <text x="110" y="50" text-anchor="middle" font-size="7" fill="#fff">Cassandra</text>
+  <rect x="134" y="10" width="40" height="50" rx="4" fill="#2A8A8A" opacity=".55" stroke="#2A8A8A" stroke-width="1.2"></rect>
+  <text x="154" y="28" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">Graph</text>
+  <text x="154" y="40" text-anchor="middle" font-size="7" fill="#fff">Neo4j</text>
+  <text x="154" y="50" text-anchor="middle" font-size="7" fill="#fff">JanusGraph</text>
+</svg>
+</div>
+<div class="cdef">泛指非關聯式資料庫，分四大類型：<strong>Key-Value</strong>（快速存取）、<strong>Document</strong>（彈性JSON）、<strong>Column-Family</strong>（寬欄大數據）、<strong>Graph</strong>（關係網路）。犧牲部分ACID換取高擴展性與彈性。</div>
+<div class="cscene"><b>📍 適用情境</b>遊戲排行榜用Redis(KV)；電商商品目錄用MongoDB(文件)；社交圖譜用Neo4j(圖形)。</div>
+<div class="cexam"><b>🎯 考題方向</b>考四類NoSQL特性與代表產品、NoSQL vs RDBMS差異、BASE vs ACID。</div>
+</div>
+
+<!-- 10 HBase -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">10 / 30</div>
+<div class="crow"><span class="cico">📊</span><div><div class="cname">HBase</div><div class="cen">Hadoop Column-Family DB</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="5" width="170" height="15" rx="3" fill="#2A8A8A" opacity=".7"></rect>
+  <text x="90" y="15" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Row Key</text>
+  <rect x="5" y="24" width="80" height="40" rx="3" fill="#2A8A8A" opacity=".2" stroke="#2A8A8A" stroke-width="1"></rect>
+  <text x="45" y="37" text-anchor="middle" font-size="7.5" fill="#2A8A8A" font-weight="700">Column Family: info</text>
+  <text x="45" y="49" text-anchor="middle" font-size="7" fill="#2A8A8A">name / age / city</text>
+  <text x="45" y="59" text-anchor="middle" font-size="7" fill="#2A8A8A">（稀疏存儲）</text>
+  <rect x="92" y="24" width="83" height="40" rx="3" fill="#2A8A8A" opacity=".3" stroke="#2A8A8A" stroke-width="1"></rect>
+  <text x="133" y="37" text-anchor="middle" font-size="7.5" fill="#2A8A8A" font-weight="700">Column Family: score</text>
+  <text x="133" y="49" text-anchor="middle" font-size="7" fill="#2A8A8A">math / eng / total</text>
+  <text x="133" y="59" text-anchor="middle" font-size="7" fill="#2A8A8A">（版本控制）</text>
+</svg>
+</div>
+<div class="cdef">建立在HDFS上的<strong>分散式寬列資料庫</strong>（Column-Family），以<strong>Row Key</strong>快速查詢。支援稀疏存儲（空欄不佔空間）與多版本（Timestamp）。適合PB級結構化/半結構化資料的隨機讀寫。</div>
+<div class="cscene"><b>📍 適用情境</b>電信商儲存每位用戶的通話紀錄（億筆），以手機號碼為Row Key，毫秒內查詢單用戶歷史。</div>
+<div class="cexam"><b>🎯 考題方向</b>考HBase與RDBMS差異（無Join/FK）、Row Key設計原則、與Cassandra比較。</div>
+</div>
+
+<!-- 11 Cassandra -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">11 / 30</div>
+<div class="crow"><span class="cico">💎</span><div><div class="cname">Cassandra</div><div class="cen">AP-type Distributed DB</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <circle cx="90" cy="38" r="24" fill="none" stroke="#2A8A8A" stroke-width="1.5" stroke-dasharray="4,2"></circle>
+  <circle cx="90" cy="18" r="10" fill="#2A8A8A" opacity=".7"></circle>
+  <text x="90" y="22" text-anchor="middle" font-size="7" fill="#fff">Node</text>
+  <circle cx="110" cy="52" r="10" fill="#2A8A8A" opacity=".7"></circle>
+  <text x="110" y="56" text-anchor="middle" font-size="7" fill="#fff">Node</text>
+  <circle cx="70" cy="52" r="10" fill="#2A8A8A" opacity=".7"></circle>
+  <text x="70" y="56" text-anchor="middle" font-size="7" fill="#fff">Node</text>
+  <line x1="90" y1="28" x2="105" y2="43" stroke="#2A8A8A" stroke-width="1.2"></line>
+  <line x1="90" y1="28" x2="75" y2="43" stroke="#2A8A8A" stroke-width="1.2"></line>
+  <line x1="100" y1="52" x2="80" y2="52" stroke="#2A8A8A" stroke-width="1.2"></line>
+  <text x="148" y="20" text-anchor="middle" font-size="8" fill="#2A8A8A" font-weight="700">無主節點</text>
+  <text x="148" y="32" text-anchor="middle" font-size="7.5" fill="#2A8A8A">P2P架構</text>
+  <text x="148" y="44" text-anchor="middle" font-size="7.5" fill="#2A8A8A">高可用</text>
+  <text x="148" y="56" text-anchor="middle" font-size="7.5" fill="#2A8A8A">最終一致性</text>
+</svg>
+</div>
+<div class="cdef"><strong>去中心化（P2P）</strong>的分散式列存資料庫，無單點故障。採<strong>最終一致性</strong>，優先保障可用性（AP）。支援多資料中心部署，寫入速度極快。適合全球分散式、高寫入場景。</div>
+<div class="cscene"><b>📍 適用情境</b>全球電商平台用Cassandra儲存購物車資料，多地節點確保任一地區故障仍能寫入。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Cassandra vs HBase（P2P vs Master-Slave、AP vs CP）、最終一致性意義、適用場景。</div>
+</div>
+
+<!-- 12 批次處理 -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">12 / 30</div>
+<div class="crow"><span class="cico">📦</span><div><div class="cname">批次處理</div><div class="cen">Batch Processing</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="10" width="170" height="16" rx="4" fill="#3A9A6E" opacity=".2" stroke="#3A9A6E" stroke-width="1"></rect>
+  <text x="90" y="21" text-anchor="middle" font-size="8" fill="#3A9A6E">資料累積 → 定時觸發</text>
+  <rect x="5" y="32" width="30" height="12" rx="2" fill="#3A9A6E" opacity=".5"></rect>
+  <rect x="40" y="32" width="30" height="12" rx="2" fill="#3A9A6E" opacity=".5"></rect>
+  <rect x="75" y="32" width="30" height="12" rx="2" fill="#3A9A6E" opacity=".5"></rect>
+  <rect x="110" y="32" width="30" height="12" rx="2" fill="#3A9A6E" opacity=".5"></rect>
+  <rect x="145" y="32" width="30" height="12" rx="2" fill="#3A9A6E" opacity=".5"></rect>
+  <text x="90" y="41" text-anchor="middle" font-size="7.5" fill="#3A9A6E" font-weight="700">一批次資料（Batch）</text>
+  <polygon points="90,48 84,57 96,57" fill="#3A9A6E" opacity=".7"></polygon>
+  <text x="90" y="68" text-anchor="middle" font-size="8" fill="#3A9A6E" font-weight="700">統一處理輸出</text>
+</svg>
+</div>
+<div class="cdef">將<strong>累積的大量資料</strong>在特定時間點一次性批量處理的模式。高延遲（分鐘~小時）但吞吐量高，適合不需即時結果的場景。代表工具：Hadoop MapReduce、Spark Batch。</div>
+<div class="cscene"><b>📍 適用情境</b>銀行每日凌晨批次處理當日所有交易，計算帳戶餘額、生成月結單、更新信用評分。</div>
+<div class="cexam"><b>🎯 考題方向</b>考批次vs串流差異（延遲/吞吐）、適用情境（ETL/月報表）、Lambda架構中的角色。</div>
+</div>
+
+<!-- 13 串流處理 -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">13 / 30</div>
+<div class="crow"><span class="cico">🌊</span><div><div class="cname">串流處理</div><div class="cen">Stream Processing</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <path d="M5,35 Q30,20 55,35 Q80,50 105,35 Q130,20 155,35 Q168,42 175,35" stroke="#E85D3A" stroke-width="2.5" fill="none" stroke-linecap="round"></path>
+  <circle cx="30" cy="32" r="5" fill="#E85D3A" opacity=".7"></circle>
+  <circle cx="80" cy="38" r="5" fill="#E85D3A" opacity=".7"></circle>
+  <circle cx="130" cy="28" r="5" fill="#E85D3A" opacity=".7"></circle>
+  <text x="30" y="22" text-anchor="middle" font-size="7" fill="#E85D3A">event</text>
+  <text x="80" y="52" text-anchor="middle" font-size="7" fill="#E85D3A">event</text>
+  <text x="130" y="18" text-anchor="middle" font-size="7" fill="#E85D3A">event</text>
+  <rect x="60" y="55" width="60" height="12" rx="3" fill="#E85D3A" opacity=".7"></rect>
+  <text x="90" y="64" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">即時處理 &lt;秒</text>
+</svg>
+</div>
+<div class="cdef">對<strong>持續產生的資料流</strong>進行即時或近即時（毫秒~秒級）處理的模式。逐筆或微批次（Micro-batch）處理。代表工具：Kafka Streams、Spark Streaming、Flink、Storm。</div>
+<div class="cscene"><b>📍 適用情境</b>信用卡公司對每筆交易即時評分，&lt;500ms判斷是否為詐騙並即時攔截。</div>
+<div class="cexam"><b>🎯 考題方向</b>考串流處理特性（低延遲）、Micro-batch vs True Streaming、Exactly-once語義。</div>
+</div>
+
+<!-- 14 Lambda架構 -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">14 / 30</div>
+<div class="crow"><span class="cico">λ</span><div><div class="cname">Lambda 架構</div><div class="cen">Lambda Architecture</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="25" y="15" text-anchor="middle" font-size="8" fill="#7B5EA7" font-weight="700">資料流入</text>
+  <line x1="25" y1="17" x2="50" y2="30" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <line x1="25" y1="17" x2="50" y2="50" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <rect x="51" y="23" width="58" height="14" rx="3" fill="#2D5F9A" opacity=".7"></rect>
+  <text x="80" y="32" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Batch Layer</text>
+  <rect x="51" y="43" width="58" height="14" rx="3" fill="#E85D3A" opacity=".7"></rect>
+  <text x="80" y="52" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Speed Layer</text>
+  <line x1="113" y1="30" x2="135" y2="38" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <line x1="113" y1="50" x2="135" y2="42" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <rect x="136" y="30" width="38" height="18" rx="3" fill="#7B5EA7" opacity=".7"></rect>
+  <text x="155" y="42" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Serving</text>
+</svg>
+</div>
+<div class="cdef">同時維護<strong>批次層（Batch Layer）</strong>和<strong>速度層（Speed Layer）</strong>的混合架構。批次層提供準確歷史結果；速度層提供即時增量；服務層（Serving Layer）合併兩者查詢。</div>
+<div class="cscene"><b>📍 適用情境</b>推薦系統：批次層每日更新用戶偏好模型，速度層捕捉當日即時行為，服務層合併給出推薦。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Lambda三層架構職責、缺點（維護兩套系統）、與Kappa架構比較。</div>
+</div>
+
+<!-- 15 Kappa架構 -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">15 / 30</div>
+<div class="crow"><span class="cico">κ</span><div><div class="cname">Kappa 架構</div><div class="cen">Kappa Architecture</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="20" y="38" text-anchor="middle" font-size="8" fill="#7B5EA7" font-weight="700">資料</text>
+  <polygon points="36,38 50,31 50,45" fill="#7B5EA7" opacity=".7"></polygon>
+  <rect x="52" y="24" width="75" height="24" rx="5" fill="#7B5EA7" opacity=".8"></rect>
+  <text x="89" y="35" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Stream Processing</text>
+  <text x="89" y="44" text-anchor="middle" font-size="7" fill="#fff">（唯一處理層）</text>
+  <polygon points="131,38 145,31 145,45" fill="#7B5EA7" opacity=".7"></polygon>
+  <rect x="147" y="28" width="30" height="16" rx="3" fill="#3A9A6E" opacity=".7"></rect>
+  <text x="162" y="39" text-anchor="middle" font-size="7.5" fill="#fff">Serving</text>
+  <text x="89" y="62" text-anchor="middle" font-size="7" fill="#7B5EA7">歷史資料=重播串流 → 簡化架構</text>
+</svg>
+</div>
+<div class="cdef">Lambda架構的簡化版，<strong>只保留串流處理層</strong>。所有資料（歷史+即時）均以串流方式處理；需重算歷史時，重播（Replay）訊息佇列即可。代表工具：Kafka + Flink。</div>
+<div class="cscene"><b>📍 適用情境</b>新創公司維護成本受限，選Kappa架構：Kafka保留30天訊息，Flink串流計算，無需維護批次層。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Kappa優點（架構簡單）vs缺點（重播成本）、適合場景、與Lambda比較。</div>
+</div>
+
+<!-- 16 資料清洗 -->
+<div class="card" style="border-left:4px solid var(--R)">
+<div class="ctop" style="background:var(--Rlt)">
+<div class="cnum">16 / 30</div>
+<div class="crow"><span class="cico">🧹</span><div><div class="cname">資料清洗</div><div class="cen">Data Cleaning</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="20" width="70" height="32" rx="4" fill="#C0392B" opacity=".1" stroke="#C0392B" stroke-width="1"></rect>
+  <text x="40" y="33" text-anchor="middle" font-size="7" fill="#C0392B">缺失值 ❌</text>
+  <text x="40" y="44" text-anchor="middle" font-size="7" fill="#C0392B">重複 / 異常</text>
+  <text x="40" y="55" text-anchor="middle" font-size="7" fill="#C0392B">格式不一致</text>
+  <polygon points="80,36 95,31 95,41" fill="#6B6860" opacity=".5"></polygon>
+  <text x="88" y="27" text-anchor="middle" font-size="9">🧹</text>
+  <rect x="100" y="20" width="75" height="32" rx="4" fill="#3A9A6E" opacity=".1" stroke="#3A9A6E" stroke-width="1"></rect>
+  <text x="137" y="33" text-anchor="middle" font-size="7" fill="#3A9A6E">填補 / 刪除 ✅</text>
+  <text x="137" y="44" text-anchor="middle" font-size="7" fill="#3A9A6E">去重 / 修正</text>
+  <text x="137" y="55" text-anchor="middle" font-size="7" fill="#3A9A6E">標準化格式</text>
+</svg>
+</div>
+<div class="cdef">識別並修正資料中的<strong>錯誤、不一致、缺失、重複</strong>等問題的過程。主要處理：缺失值（填補/刪除）、離群值（修正/移除）、重複紀錄（去重）、格式標準化。資料品質的基礎。</div>
+<div class="cscene"><b>📍 適用情境</b>醫療資料集中，清除重複病歷、填補年齡缺失值（以中位數填補）、統一診斷代碼格式。</div>
+<div class="cexam"><b>🎯 考題方向</b>考缺失值處理方法（刪除/填補/插值）、資料清洗在ETL中的位置、「垃圾進垃圾出」原則。</div>
+</div>
+
+<!-- 17 資料整合 -->
+<div class="card" style="border-left:4px solid var(--R)">
+<div class="ctop" style="background:var(--Rlt)">
+<div class="cnum">17 / 30</div>
+<div class="crow"><span class="cico">🔗</span><div><div class="cname">資料整合</div><div class="cen">Data Integration</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="10" width="38" height="14" rx="3" fill="#C0392B" opacity=".6"></rect>
+  <text x="24" y="20" text-anchor="middle" font-size="7.5" fill="#fff">ERP</text>
+  <rect x="5" y="30" width="38" height="14" rx="3" fill="#C0392B" opacity=".5"></rect>
+  <text x="24" y="40" text-anchor="middle" font-size="7.5" fill="#fff">CRM</text>
+  <rect x="5" y="50" width="38" height="14" rx="3" fill="#C0392B" opacity=".4"></rect>
+  <text x="24" y="60" text-anchor="middle" font-size="7.5" fill="#fff">API</text>
+  <line x1="43" y1="17" x2="75" y2="35" stroke="#C0392B" stroke-width="1"></line>
+  <line x1="43" y1="37" x2="75" y2="37" stroke="#C0392B" stroke-width="1"></line>
+  <line x1="43" y1="57" x2="75" y2="39" stroke="#C0392B" stroke-width="1"></line>
+  <rect x="76" y="28" width="40" height="18" rx="4" fill="#C0392B" opacity=".8"></rect>
+  <text x="96" y="40" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">整合層</text>
+  <polygon points="120,37 132,31 132,43" fill="#C0392B" opacity=".6"></polygon>
+  <rect x="134" y="28" width="40" height="18" rx="4" fill="#3A9A6E" opacity=".7"></rect>
+  <text x="154" y="40" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">統一視圖</text>
+</svg>
+</div>
+<div class="cdef">將來自<strong>不同來源、格式、語意</strong>的資料合併，提供統一視圖的過程。技術包含：ETL管道、資料虛擬化、API整合、資料聯邦（Federation）。解決資料孤島（Data Silo）問題。</div>
+<div class="cscene"><b>📍 適用情境</b>銀行整合核心系統、信用卡、行動銀行、第三方評分等多源資料，建立360度客戶視圖。</div>
+<div class="cexam"><b>🎯 考題方向</b>考資料孤島問題、整合方法（ETL/虛擬化）、Schema衝突解決（命名/結構差異）。</div>
+</div>
+
+<!-- 18 資料轉換 -->
+<div class="card" style="border-left:4px solid var(--R)">
+<div class="ctop" style="background:var(--Rlt)">
+<div class="cnum">18 / 30</div>
+<div class="crow"><span class="cico">⚙️</span><div><div class="cname">資料轉換</div><div class="cen">Data Transformation</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="22" width="55" height="26" rx="4" fill="#C0392B" opacity=".15" stroke="#C0392B" stroke-width="1"></rect>
+  <text x="32" y="33" text-anchor="middle" font-size="7" fill="#C0392B">原始</text>
+  <text x="32" y="43" text-anchor="middle" font-size="7" fill="#C0392B">2024-01-01</text>
+  <text x="80" y="38" text-anchor="middle" font-size="10">→</text>
+  <rect x="90" y="14" width="85" height="42" rx="4" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1"></rect>
+  <text x="132" y="26" text-anchor="middle" font-size="7" fill="#3A9A6E" font-weight="700">正規化 / 標準化</text>
+  <text x="132" y="36" text-anchor="middle" font-size="7" fill="#3A9A6E">型別轉換</text>
+  <text x="132" y="46" text-anchor="middle" font-size="7" fill="#3A9A6E">欄位合併/拆分</text>
+  <text x="132" y="56" text-anchor="middle" font-size="7" fill="#3A9A6E">彙總 / 衍生欄位</text>
+</svg>
+</div>
+<div class="cdef">將原始資料轉換為目標系統所需格式和結構的過程。包含：<strong>型別轉換</strong>（日期格式）、<strong>正規化/標準化</strong>、<strong>彙總計算</strong>、<strong>衍生欄位</strong>（計算新特徵）、欄位合併/拆分。</div>
+<div class="cscene"><b>📍 適用情境</b>將各國電商平台訂單（幣別不同、日期格式各異）統一轉換為標準格式再存入DW。</div>
+<div class="cexam"><b>🎯 考題方向</b>考轉換類型（正規化vs標準化）、ETL中Transform的核心操作、特徵工程中的衍生欄位。</div>
+</div>
+
+<!-- 19 缺失值處理 -->
+<div class="card" style="border-left:4px solid var(--A)">
+<div class="ctop" style="background:var(--Alt)">
+<div class="cnum">19 / 30</div>
+<div class="crow"><span class="cico">❓</span><div><div class="cname">缺失值處理</div><div class="cen">Missing Value Handling</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="8" width="35" height="54" rx="3" fill="#D4920A" opacity=".15" stroke="#D4920A" stroke-width="1"></rect>
+  <text x="22" y="23" text-anchor="middle" font-size="6.5" fill="#D4920A" font-weight="700">刪除列</text>
+  <text x="22" y="35" text-anchor="middle" font-size="6" fill="#D4920A">少量缺失</text>
+  <text x="22" y="45" text-anchor="middle" font-size="6" fill="#D4920A">隨機缺失</text>
+  <rect x="45" y="8" width="35" height="54" rx="3" fill="#D4920A" opacity=".25" stroke="#D4920A" stroke-width="1"></rect>
+  <text x="62" y="23" text-anchor="middle" font-size="6.5" fill="#D4920A" font-weight="700">均值填補</text>
+  <text x="62" y="35" text-anchor="middle" font-size="6" fill="#D4920A">數值型</text>
+  <text x="62" y="45" text-anchor="middle" font-size="6" fill="#D4920A">常態分佈</text>
+  <rect x="85" y="8" width="35" height="54" rx="3" fill="#D4920A" opacity=".4" stroke="#D4920A" stroke-width="1"></rect>
+  <text x="102" y="23" text-anchor="middle" font-size="6.5" fill="#D4920A" font-weight="700">中位數</text>
+  <text x="102" y="35" text-anchor="middle" font-size="6" fill="#D4920A">偏態</text>
+  <text x="102" y="45" text-anchor="middle" font-size="6" fill="#D4920A">抗離群</text>
+  <rect x="125" y="8" width="50" height="54" rx="3" fill="#D4920A" opacity=".55" stroke="#D4920A" stroke-width="1"></rect>
+  <text x="150" y="23" text-anchor="middle" font-size="6.5" fill="#fff" font-weight="700">插補/模型</text>
+  <text x="150" y="35" text-anchor="middle" font-size="6" fill="#fff">KNN填補</text>
+  <text x="150" y="45" text-anchor="middle" font-size="6" fill="#fff">多重插補</text>
+  <text x="150" y="55" text-anchor="middle" font-size="6" fill="#fff">MICE</text>
+</svg>
+</div>
+<div class="cdef">處理資料中NULL/NaN值的策略。依缺失機制分：<strong>MCAR</strong>（完全隨機）、<strong>MAR</strong>（隨機）、<strong>MNAR</strong>（非隨機）。方法：刪除、均值/中位數/眾數填補、KNN插補、多重插補（MICE）。</div>
+<div class="cscene"><b>📍 適用情境</b>房價預測模型訓練前，以周邊房屋均價KNN填補缺失坪數；以中位數填補偏態的年齡欄位。</div>
+<div class="cexam"><b>🎯 考題方向</b>考三種缺失機制、各方法適用條件、填補後對模型的影響（引入偏差）。</div>
+</div>
+
+<!-- 20 異常值處理 -->
+<div class="card" style="border-left:4px solid var(--A)">
+<div class="ctop" style="background:var(--Alt)">
+<div class="cnum">20 / 30</div>
+<div class="crow"><span class="cico">📍</span><div><div class="cname">異常值處理</div><div class="cen">Outlier Handling</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <line x1="20" y1="58" x2="170" y2="58" stroke="#A09D95" stroke-width="1"></line>
+  <line x1="20" y1="58" x2="20" y2="8" stroke="#A09D95" stroke-width="1"></line>
+  <circle cx="40" cy="42" r="3.5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="60" cy="36" r="3.5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="80" cy="30" r="3.5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="100" cy="38" r="3.5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="120" cy="28" r="3.5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="155" cy="12" r="5" fill="#C0392B" stroke="#C0392B" stroke-width="1.5"></circle>
+  <text x="155" y="9" text-anchor="middle" font-size="8">⚠️</text>
+  <text x="130" y="20" text-anchor="middle" font-size="7" fill="#C0392B">異常值</text>
+  <line x1="30" y1="20" x2="130" y2="20" stroke="#2D5F9A" stroke-width="1" stroke-dasharray="3,2"></line>
+  <line x1="30" y1="48" x2="130" y2="48" stroke="#2D5F9A" stroke-width="1" stroke-dasharray="3,2"></line>
+  <text x="8" y="22" text-anchor="middle" font-size="7" fill="#2D5F9A">μ+3σ</text>
+  <text x="8" y="50" text-anchor="middle" font-size="7" fill="#2D5F9A">μ-3σ</text>
+</svg>
+</div>
+<div class="cdef">識別並處理資料中<strong>極端偏離正常範圍</strong>的數值。偵測方法：<strong>Z-Score</strong>（|z|&gt;3）、<strong>IQR法</strong>（1.5×IQR以外）、箱形圖視覺化。處置：刪除、截尾、轉換（log）、保留（若代表真實）。</div>
+<div class="cscene"><b>📍 適用情境</b>電商訂單分析：某日訂單金額9999999元為輸入錯誤，用IQR法識別後刪除；高額VIP訂單保留。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Z-Score vs IQR判斷方法、異常值vs離群值、處置策略依業務情境而定。</div>
+</div>
+
+<!-- 21 資料分割 -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">21 / 30</div>
+<div class="crow"><span class="cico">✂️</span><div><div class="cname">資料分割</div><div class="cen">Data Partitioning</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="10" y="10" width="160" height="50" rx="5" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1.5"></rect>
+  <text x="90" y="25" text-anchor="middle" font-size="8" fill="#2D5F9A" font-weight="700">全量資料</text>
+  <line x1="65" y1="28" x2="65" y2="55" stroke="#2D5F9A" stroke-width="1.5" stroke-dasharray="4,2"></line>
+  <line x1="120" y1="28" x2="120" y2="55" stroke="#E85D3A" stroke-width="1.5" stroke-dasharray="4,2"></line>
+  <text x="37" y="44" text-anchor="middle" font-size="8" fill="#2D5F9A" font-weight="700">Partition 1</text>
+  <text x="92" y="44" text-anchor="middle" font-size="8" fill="#2D5F9A" font-weight="700">Partition 2</text>
+  <text x="150" y="44" text-anchor="middle" font-size="8" fill="#E85D3A" font-weight="700">Partition 3</text>
+  <text x="37" y="56" text-anchor="middle" font-size="6.5" fill="#6B6860">2022年</text>
+  <text x="92" y="56" text-anchor="middle" font-size="6.5" fill="#6B6860">2023年</text>
+  <text x="150" y="56" text-anchor="middle" font-size="6.5" fill="#6B6860">2024年</text>
+</svg>
+</div>
+<div class="cdef">將大型資料集按特定<strong>分割鍵（Partition Key）</strong>拆分到不同節點/儲存位置的機制。分割策略：<strong>範圍分割</strong>（Range）、<strong>雜湊分割</strong>（Hash）、<strong>列表分割</strong>（List）。提升查詢效率與平行處理能力。</div>
+<div class="cscene"><b>📍 適用情境</b>大型資料倉儲按「年月」分割銷售資料，查詢2024年Q1時只掃描對應分區，速度提升100x。</div>
+<div class="cexam"><b>🎯 考題方向</b>考分割策略差異（Range/Hash/List）、分割鍵選擇原則、資料偏斜（Skew）問題。</div>
+</div>
+
+<!-- 22 資料複製 -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">22 / 30</div>
+<div class="crow"><span class="cico">📋</span><div><div class="cname">資料複製</div><div class="cen">Data Replication</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="10" y="20" width="42" height="30" rx="4" fill="#2D5F9A" opacity=".8"></rect>
+  <text x="31" y="33" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Primary</text>
+  <text x="31" y="44" text-anchor="middle" font-size="7" fill="#fff">Leader</text>
+  <line x1="55" y1="35" x2="75" y2="25" stroke="#2D5F9A" stroke-width="1.5" marker-end="url(#arr)"></line>
+  <line x1="55" y1="35" x2="75" y2="45" stroke="#2D5F9A" stroke-width="1.5"></line>
+  <rect x="77" y="10" width="42" height="24" rx="4" fill="#2D5F9A" opacity=".5"></rect>
+  <text x="98" y="25" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Replica 1</text>
+  <rect x="77" y="40" width="42" height="24" rx="4" fill="#2D5F9A" opacity=".5"></rect>
+  <text x="98" y="55" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Replica 2</text>
+  <text x="148" y="25" text-anchor="middle" font-size="7" fill="#3A9A6E">✅ 容錯</text>
+  <text x="148" y="38" text-anchor="middle" font-size="7" fill="#3A9A6E">✅ 讀取擴展</text>
+  <text x="148" y="51" text-anchor="middle" font-size="7" fill="#E85D3A">⚠️ 一致性</text>
+</svg>
+</div>
+<div class="cdef">將資料同步複製到多個節點的機制，提升<strong>可用性與容錯性</strong>。複製模式：<strong>同步複製</strong>（強一致性，延遲高）和<strong>非同步複製</strong>（最終一致性，延遲低）。HDFS預設複製因子為3。</div>
+<div class="cscene"><b>📍 適用情境</b>MySQL主從複製：寫入Primary後同步至兩個Replica，讀取分流至Replica，Primary故障時Replica自動晉升。</div>
+<div class="cexam"><b>🎯 考題方向</b>考同步vs非同步複製、複製因子意義、與分割的差異（複製=同樣資料多份，分割=不同資料分節點）。</div>
+</div>
+
+<!-- 23 CAP定理 -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">23 / 30</div>
+<div class="crow"><span class="cico">🔺</span><div><div class="cname">CAP 定理</div><div class="cen">Consistency·Availability·Partition</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <polygon points="90,5 20,65 160,65" fill="none" stroke="#E85D3A" stroke-width="1.5"></polygon>
+  <text x="90" y="17" text-anchor="middle" font-size="8" fill="#E85D3A" font-weight="700">C 一致性</text>
+  <text x="32" y="63" text-anchor="middle" font-size="8" fill="#E85D3A" font-weight="700">A 可用性</text>
+  <text x="152" y="63" text-anchor="middle" font-size="8" fill="#E85D3A" font-weight="700">P 分區容錯</text>
+  <text x="57" y="40" text-anchor="middle" font-size="7" fill="#2D5F9A" font-weight="700">CA</text>
+  <text x="57" y="50" text-anchor="middle" font-size="6.5" fill="#2D5F9A">MySQL</text>
+  <text x="90" y="55" text-anchor="middle" font-size="7" fill="#3A9A6E" font-weight="700">CP</text>
+  <text x="90" y="63" text-anchor="middle" font-size="6.5" fill="#3A9A6E">HBase/ZK</text>
+  <text x="123" y="40" text-anchor="middle" font-size="7" fill="#7B5EA7" font-weight="700">AP</text>
+  <text x="123" y="50" text-anchor="middle" font-size="6.5" fill="#7B5EA7">Cassandra</text>
+</svg>
+</div>
+<div class="cdef">分散式系統三大特性：<strong>C（一致性）</strong>所有節點資料相同、<strong>A（可用性）</strong>每次請求都有回應、<strong>P（分區容錯）</strong>網路分區時仍運作。定理：三者只能同時滿足兩個。</div>
+<div class="cscene"><b>📍 適用情境</b>設計全球電商：選AP(Cassandra)犧牲強一致性換高可用；選CP(HBase)犧牲可用性換資料準確。</div>
+<div class="cexam"><b>🎯 考題方向</b>考三特性定義、各NoSQL資料庫對應CAP類型、為何P通常必須保留（網路分區不可避免）。</div>
+</div>
+
+<!-- 24 一致性雜湊 -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">24 / 30</div>
+<div class="crow"><span class="cico">🎡</span><div><div class="cname">一致性雜湊</div><div class="cen">Consistent Hashing</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <circle cx="90" cy="35" r="28" fill="none" stroke="#E85D3A" stroke-width="1.5"></circle>
+  <circle cx="90" cy="7" r="6" fill="#E85D3A" opacity=".7"></circle>
+  <text x="90" y="10" text-anchor="middle" font-size="6" fill="#fff">N1</text>
+  <circle cx="115" cy="58" r="6" fill="#E85D3A" opacity=".7"></circle>
+  <text x="115" y="61" text-anchor="middle" font-size="6" fill="#fff">N2</text>
+  <circle cx="63" cy="58" r="6" fill="#E85D3A" opacity=".7"></circle>
+  <text x="63" y="61" text-anchor="middle" font-size="6" fill="#fff">N3</text>
+  <circle cx="62" cy="12" r="4" fill="#D4920A" opacity=".8"></circle>
+  <circle cx="116" cy="12" r="4" fill="#D4920A" opacity=".8"></circle>
+  <circle cx="118" cy="35" r="4" fill="#D4920A" opacity=".8"></circle>
+  <text x="62" y="10" text-anchor="middle" font-size="5.5" fill="#fff">K</text>
+  <text x="116" y="10" text-anchor="middle" font-size="5.5" fill="#fff">K</text>
+  <text x="118" y="37" text-anchor="middle" font-size="5.5" fill="#fff">K</text>
+  <text x="148" y="25" text-anchor="middle" font-size="7" fill="#E85D3A" font-weight="700">增/刪節點</text>
+  <text x="148" y="36" text-anchor="middle" font-size="7" fill="#E85D3A">只影響</text>
+  <text x="148" y="47" text-anchor="middle" font-size="7" fill="#E85D3A">相鄰資料</text>
+</svg>
+</div>
+<div class="cdef">分散式系統的資料分配算法，將節點與資料映射到一個<strong>虛擬環（Hash Ring）</strong>上。當節點增減時，只有<strong>相鄰資料</strong>需要遷移，而非全量重新分配。解決傳統Hash在節點變化時大量資料遷移問題。</div>
+<div class="cscene"><b>📍 適用情境</b>CDN快取叢集新增節點時，只有環上相鄰範圍的快取需要重新分配，其他快取命中率不受影響。</div>
+<div class="cexam"><b>🎯 考題方向</b>考一致性雜湊解決的問題（節點增刪時的資料遷移）、虛擬節點作用（解決負載不均）。</div>
+</div>
+
+<!-- 25 Apache Flink -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">25 / 30</div>
+<div class="crow"><span class="cico">🦅</span><div><div class="cname">Apache Flink</div><div class="cen">True Streaming Engine</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="28" width="35" height="18" rx="4" fill="#E85D3A" opacity=".2" stroke="#E85D3A" stroke-width="1"></rect>
+  <text x="22" y="40" text-anchor="middle" font-size="7.5" fill="#E85D3A">Kafka</text>
+  <polygon points="43,37 56,31 56,43" fill="#E85D3A" opacity=".6"></polygon>
+  <rect x="57" y="20" width="65" height="34" rx="5" fill="#E85D3A" opacity=".85"></rect>
+  <text x="89" y="33" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">Apache Flink</text>
+  <text x="89" y="44" text-anchor="middle" font-size="7" fill="#fff">真實串流 · 事件時間</text>
+  <polygon points="125,37 138,31 138,43" fill="#E85D3A" opacity=".6"></polygon>
+  <rect x="140" y="18" width="36" height="13" rx="3" fill="#3A9A6E" opacity=".7"></rect>
+  <text x="158" y="27" text-anchor="middle" font-size="7" fill="#fff">DB</text>
+  <rect x="140" y="35" width="36" height="13" rx="3" fill="#2D5F9A" opacity=".7"></rect>
+  <text x="158" y="44" text-anchor="middle" font-size="7" fill="#fff">Dashboard</text>
+</svg>
+</div>
+<div class="cdef">支援<strong>真實串流（True Streaming）</strong>的分散式計算框架（非Micro-batch）。以<strong>事件時間（Event Time）</strong>處理亂序資料，支援<strong>Exactly-once語義</strong>、有狀態計算（Stateful）。低延遲、高吞吐，適合複雜串流分析。</div>
+<div class="cscene"><b>📍 適用情境</b>股票交易系統：Flink對每筆報價即時計算5秒滑動窗口均價，事件時間處理網路延遲造成的亂序。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Flink vs Spark Streaming（True vs Micro-batch）、事件時間vs處理時間、Watermark機制。</div>
+</div>
+
+<!-- 26 Parquet -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">26 / 30</div>
+<div class="crow"><span class="cico">📄</span><div><div class="cname">Parquet 格式</div><div class="cen">Columnar Storage Format</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="45" y="12" text-anchor="middle" font-size="7.5" fill="#6B6860" font-weight="700">列存（Row）</text>
+  <rect x="5" y="16" width="80" height="12" rx="2" fill="#A09D95" opacity=".3"></rect>
+  <text x="45" y="25" font-size="6" fill="#6B6860">Row1: A1,B1,C1 | Row2: A2,B2,C2</text>
+  <text x="135" y="12" text-anchor="middle" font-size="7.5" fill="#3A9A6E" font-weight="700">Parquet（列）</text>
+  <rect x="95" y="16" width="25" height="46" rx="2" fill="#3A9A6E" opacity=".5"></rect>
+  <text x="107" y="32" text-anchor="middle" font-size="6" fill="#fff">A col</text>
+  <text x="107" y="42" text-anchor="middle" font-size="6" fill="#fff">A1</text>
+  <text x="107" y="51" text-anchor="middle" font-size="6" fill="#fff">A2</text>
+  <rect x="123" y="16" width="25" height="46" rx="2" fill="#3A9A6E" opacity=".65"></rect>
+  <text x="135" y="32" text-anchor="middle" font-size="6" fill="#fff">B col</text>
+  <text x="135" y="42" text-anchor="middle" font-size="6" fill="#fff">B1</text>
+  <text x="135" y="51" text-anchor="middle" font-size="6" fill="#fff">B2</text>
+  <rect x="151" y="16" width="25" height="46" rx="2" fill="#3A9A6E" opacity=".8"></rect>
+  <text x="163" y="32" text-anchor="middle" font-size="6" fill="#fff">C col</text>
+  <text x="163" y="42" text-anchor="middle" font-size="6" fill="#fff">C1</text>
+  <text x="163" y="51" text-anchor="middle" font-size="6" fill="#fff">C2</text>
+  <text x="135" y="68" text-anchor="middle" font-size="6.5" fill="#3A9A6E">壓縮率高・查詢快</text>
+</svg>
+</div>
+<div class="cdef">Apache開源的<strong>欄式儲存（Columnar）</strong>格式，將同欄位資料連續存放。優點：<strong>高壓縮率</strong>（同型態資料）、<strong>分析查詢快</strong>（只讀所需欄位）、支援嵌套資料結構。廣泛用於Data Lake（S3+Parquet）。</div>
+<div class="cscene"><b>📍 適用情境</b>數據分析師查詢銷售資料中的「金額」欄，Parquet只讀金額欄而非整行，I/O減少90%，速度大幅提升。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Parquet vs CSV/JSON（欄式vs列式）、適合OLAP而非OLTP、壓縮方式（Snappy/GZIP）。</div>
+</div>
+
+<!-- 27 Schema on Read/Write -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">27 / 30</div>
+<div class="crow"><span class="cico">🏷️</span><div><div class="cname">Schema On Read/Write</div><div class="cen">Schema Strategy</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="10" width="80" height="50" rx="4" fill="#3A9A6E" opacity=".1" stroke="#3A9A6E" stroke-width="1"></rect>
+  <text x="45" y="24" text-anchor="middle" font-size="7.5" fill="#3A9A6E" font-weight="700">Schema on Write</text>
+  <text x="45" y="35" text-anchor="middle" font-size="7" fill="#3A9A6E">寫入時定義格式</text>
+  <text x="45" y="45" text-anchor="middle" font-size="7" fill="#3A9A6E">資料倉儲 / RDBMS</text>
+  <text x="45" y="55" text-anchor="middle" font-size="7" fill="#3A9A6E">查詢快·彈性低</text>
+  <rect x="95" y="10" width="80" height="50" rx="4" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="135" y="24" text-anchor="middle" font-size="7.5" fill="#2D5F9A" font-weight="700">Schema on Read</text>
+  <text x="135" y="35" text-anchor="middle" font-size="7" fill="#2D5F9A">讀取時定義格式</text>
+  <text x="135" y="45" text-anchor="middle" font-size="7" fill="#2D5F9A">Data Lake / HDFS</text>
+  <text x="135" y="55" text-anchor="middle" font-size="7" fill="#2D5F9A">彈性高·查詢慢</text>
+</svg>
+</div>
+<div class="cdef"><strong>Schema on Write</strong>：寫入資料前先定義結構（如RDBMS、DW），資料品質高、查詢快，但彈性低。<strong>Schema on Read</strong>：資料原始存入，讀取時才套用結構（如Data Lake），彈性高，適合多樣化分析。</div>
+<div class="cscene"><b>📍 適用情境</b>DW用Schema on Write儲存訂單（格式嚴格）；Data Lake用Schema on Read儲存點擊流（可彈性分析）。</div>
+<div class="cexam"><b>🎯 考題方向</b>考兩種策略的優缺點、對應的資料儲存系統、Data Lake與DW的本質差異。</div>
+</div>
+
+<!-- 28 資料治理 -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">28 / 30</div>
+<div class="crow"><span class="cico">🏛️</span><div><div class="cname">資料治理</div><div class="cen">Data Governance</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="60" y="5" width="60" height="16" rx="4" fill="#7B5EA7" opacity=".8"></rect>
+  <text x="90" y="16" text-anchor="middle" font-size="8" fill="#fff" font-weight="700">資料治理框架</text>
+  <line x1="90" y1="21" x2="30" y2="38" stroke="#7B5EA7" stroke-width="1"></line>
+  <line x1="90" y1="21" x2="90" y2="38" stroke="#7B5EA7" stroke-width="1"></line>
+  <line x1="90" y1="21" x2="150" y2="38" stroke="#7B5EA7" stroke-width="1"></line>
+  <rect x="5" y="38" width="48" height="16" rx="3" fill="#7B5EA7" opacity=".4"></rect>
+  <text x="29" y="49" text-anchor="middle" font-size="7" fill="#fff">資料目錄</text>
+  <rect x="66" y="38" width="48" height="16" rx="3" fill="#7B5EA7" opacity=".5"></rect>
+  <text x="90" y="49" text-anchor="middle" font-size="7" fill="#fff">資料血緣</text>
+  <rect x="127" y="38" width="48" height="16" rx="3" fill="#7B5EA7" opacity=".6"></rect>
+  <text x="151" y="49" text-anchor="middle" font-size="7" fill="#fff">存取控制</text>
+  <text x="90" y="68" text-anchor="middle" font-size="7" fill="#7B5EA7">+ 資料品質 · 合規 · 元資料管理</text>
+</svg>
+</div>
+<div class="cdef">確保組織資料<strong>品質、安全、合規與可用性</strong>的管理框架。包含：<strong>資料目錄</strong>（Data Catalog，元資料管理）、<strong>資料血緣</strong>（Data Lineage，追蹤來源）、<strong>存取控制</strong>、資料品質規則、隱私合規（GDPR/個資法）。</div>
+<div class="cscene"><b>📍 適用情境</b>金融機構建立資料治理委員會，制定資料定義標準，建立Data Catalog讓分析師快速找到可信資料來源。</div>
+<div class="cexam"><b>🎯 考題方向</b>考資料治理四大支柱（品質/安全/合規/可用性）、Data Catalog功能、資料血緣在審計的重要性。</div>
+</div>
+
+<!-- 29 資料品質指標 -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">29 / 30</div>
+<div class="crow"><span class="cico">🎯</span><div><div class="cname">資料品質指標</div><div class="cen">Data Quality Metrics</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="8" width="52" height="26" rx="3" fill="#7B5EA7" opacity=".15" stroke="#7B5EA7" stroke-width="1"></rect>
+  <text x="31" y="20" text-anchor="middle" font-size="7.5" fill="#7B5EA7" font-weight="700">完整性</text>
+  <text x="31" y="30" text-anchor="middle" font-size="6.5" fill="#7B5EA7">Completeness</text>
+  <rect x="64" y="8" width="52" height="26" rx="3" fill="#7B5EA7" opacity=".25" stroke="#7B5EA7" stroke-width="1"></rect>
+  <text x="90" y="20" text-anchor="middle" font-size="7.5" fill="#7B5EA7" font-weight="700">準確性</text>
+  <text x="90" y="30" text-anchor="middle" font-size="6.5" fill="#7B5EA7">Accuracy</text>
+  <rect x="123" y="8" width="52" height="26" rx="3" fill="#7B5EA7" opacity=".4" stroke="#7B5EA7" stroke-width="1"></rect>
+  <text x="149" y="20" text-anchor="middle" font-size="7.5" fill="#7B5EA7" font-weight="700">一致性</text>
+  <text x="149" y="30" text-anchor="middle" font-size="6.5" fill="#fff">Consistency</text>
+  <rect x="5" y="40" width="52" height="26" rx="3" fill="#7B5EA7" opacity=".5" stroke="#7B5EA7" stroke-width="1"></rect>
+  <text x="31" y="52" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">及時性</text>
+  <text x="31" y="62" text-anchor="middle" font-size="6.5" fill="#fff">Timeliness</text>
+  <rect x="64" y="40" width="52" height="26" rx="3" fill="#7B5EA7" opacity=".65" stroke="#7B5EA7" stroke-width="1"></rect>
+  <text x="90" y="52" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">唯一性</text>
+  <text x="90" y="62" text-anchor="middle" font-size="6.5" fill="#fff">Uniqueness</text>
+  <rect x="123" y="40" width="52" height="26" rx="3" fill="#7B5EA7" opacity=".8" stroke="#7B5EA7" stroke-width="1"></rect>
+  <text x="149" y="52" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">有效性</text>
+  <text x="149" y="62" text-anchor="middle" font-size="6.5" fill="#fff">Validity</text>
+</svg>
+</div>
+<div class="cdef">評估資料品質的六大維度：<strong>完整性</strong>（無缺失）、<strong>準確性</strong>（反映現實）、<strong>一致性</strong>（跨系統相符）、<strong>及時性</strong>（資料新鮮度）、<strong>唯一性</strong>（無重複）、<strong>有效性</strong>（符合業務規則）。</div>
+<div class="cscene"><b>📍 適用情境</b>銀行資料治理：監控客戶電話欄位完整性&gt;99%、地址準確性、跨系統ID唯一性，自動告警品質下滑。</div>
+<div class="cexam"><b>🎯 考題方向</b>考六大維度定義與舉例、GIGO（垃圾進垃圾出）、資料品質影響AI模型效果。</div>
+</div>
+
+<!-- 30 資料目錄 -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">30 / 30</div>
+<div class="crow"><span class="cico">📚</span><div><div class="cname">資料目錄</div><div class="cen">Data Catalog</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="5" width="80" height="58" rx="5" fill="#2A8A8A" opacity=".12" stroke="#2A8A8A" stroke-width="1.2"></rect>
+  <text x="45" y="18" text-anchor="middle" font-size="7.5" fill="#2A8A8A" font-weight="700">Data Catalog</text>
+  <rect x="10" y="22" width="70" height="10" rx="2" fill="#2A8A8A" opacity=".4"></rect>
+  <text x="45" y="30" text-anchor="middle" font-size="6.5" fill="#fff">資產名稱 / 描述</text>
+  <rect x="10" y="35" width="70" height="10" rx="2" fill="#2A8A8A" opacity=".4"></rect>
+  <text x="45" y="43" text-anchor="middle" font-size="6.5" fill="#fff">欄位定義 / 類型</text>
+  <rect x="10" y="48" width="70" height="10" rx="2" fill="#2A8A8A" opacity=".4"></rect>
+  <text x="45" y="56" text-anchor="middle" font-size="6.5" fill="#fff">擁有者 / 標籤</text>
+  <polygon points="89,35 100,29 100,41" fill="#2A8A8A" opacity=".6"></polygon>
+  <text x="140" y="22" text-anchor="middle" font-size="7" fill="#2A8A8A">🔍 搜尋資產</text>
+  <text x="140" y="34" text-anchor="middle" font-size="7" fill="#2A8A8A">🔗 血緣追蹤</text>
+  <text x="140" y="46" text-anchor="middle" font-size="7" fill="#2A8A8A">📊 品質評分</text>
+  <text x="140" y="58" text-anchor="middle" font-size="7" fill="#2A8A8A">🔒 存取申請</text>
+</svg>
+</div>
+<div class="cdef">組織資料資產的<strong>元資料管理系統</strong>，記錄每個資料集的定義、來源、擁有者、格式、品質指標、存取權限、血緣關係。讓用戶快速<strong>發現、理解、信任</strong>資料。代表產品：Apache Atlas、AWS Glue、Databricks Unity Catalog。</div>
+<div class="cscene"><b>📍 適用情境</b>資料分析師輸入「客戶」關鍵字，Data Catalog列出所有相關資料表，顯示品質分數、更新頻率、申請路徑。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Data Catalog的三大價值（發現/理解/信任）、元資料類型（技術/業務/操作）、與資料治理的關係。</div>
+</div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

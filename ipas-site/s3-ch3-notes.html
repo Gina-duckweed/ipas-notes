@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>科目三 第三章｜機器學習基礎數學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --T:#2A8A8A;--Tlt:#E0F5F5;--Tdk:#1D6262;
+  --B:#2D5F9A;--O:#E85D3A;--G:#3A9A6E;--A:#D4920A;--P:#7B5EA7;--R:#C0392B;
+  --Alt:#FFF8E6;
+  --bg:#F7FAFA;--s:#FFFFFF;--s2:#F0F8F8;--b:#D0E8E8;--t:#1A2B2B;--t2:#3D5A5A;--t3:#6A8A8A;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F1E1E;--s:#162929;--s2:#1E3535;--b:#264040;--t:#D8F0F0;--t2:#A0C8C8;--t3:#6A9A9A;
+  --Tlt:#1A3838;--Alt:#2A2010;
+}}
+[data-theme=dark]{
+  --bg:#0F1E1E;--s:#162929;--s2:#1E3535;--b:#264040;--t:#D8F0F0;--t2:#A0C8C8;--t3:#6A9A9A;
+  --Tlt:#1A3838;--Alt:#2A2010;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:13px;line-height:1.5;padding:18px}
+.page{max-width:960px;margin:0 auto}
+
+/* ── Hero ── */
+.hero{background:linear-gradient(135deg,var(--Tdk) 0%,var(--T) 60%,#3AADAD 100%);color:#fff;border-radius:16px;padding:24px 28px 20px;margin-bottom:18px;position:relative;overflow:hidden}
+.hero::after{content:'∑ ∇ λ σ μ';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:44px;opacity:.12;font-weight:900;letter-spacing:6px;font-family:'Nunito',sans-serif}
+.hero-eyebrow{font-size:10px;font-weight:800;letter-spacing:2px;opacity:.75;margin-bottom:6px}
+.hero h1{font-size:26px;font-weight:900;line-height:1.2;margin-bottom:6px}
+.hero-sub{font-size:12px;opacity:.85;font-weight:600}
+.hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.hero-tag{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:3px 12px;font-size:10.5px;font-weight:700}
+
+/* ── Section row ── */
+.sec-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+.sec{background:var(--s);border-radius:12px;border:2px solid var(--T);overflow:hidden}
+.sec-hdr{background:var(--T);color:#fff;padding:9px 13px;display:flex;align-items:center;gap:8px}
+.sec-num{font-size:22px;font-weight:900;opacity:.45;line-height:1}
+.sec-title{font-size:12px;font-weight:800;line-height:1.3}
+.sec-body{padding:10px 12px}
+.sec-diagram{display:flex;justify-content:center;margin-bottom:8px}
+.topic-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.topic-list li{font-size:11px;line-height:1.45;padding-left:14px;position:relative;color:var(--t2)}
+.topic-list li::before{content:'▸';position:absolute;left:0;color:var(--T);font-size:10px}
+.topic-list li b{color:var(--t);font-weight:700}
+
+/* ── Formula strip ── */
+.formula-strip{background:var(--s);border:1.5px solid var(--b);border-radius:10px;padding:10px 14px;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap;align-items:flex-start}
+.formula-group{flex:1;min-width:200px}
+.formula-group-title{font-size:9.5px;font-weight:800;letter-spacing:1.2px;color:var(--T);text-transform:uppercase;margin-bottom:5px;border-bottom:1.5px solid var(--Tlt);padding-bottom:3px}
+.formula-item{font-size:11px;margin-bottom:3px;color:var(--t2)}
+.formula-item code{background:var(--s2);border-radius:4px;padding:1px 5px;font-size:10.5px;font-family:'Courier New',monospace;color:var(--T);font-weight:700}
+
+/* ── Connections map ── */
+.conn-box{background:var(--s);border:1.5px solid var(--b);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.conn-title{font-size:11px;font-weight:800;color:var(--T);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.conn-title::before{content:'';display:inline-block;width:14px;height:3px;background:var(--T);border-radius:2px}
+.conn-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.conn-item{background:var(--Tlt);border-radius:8px;padding:8px 10px;text-align:center}
+.conn-item-icon{font-size:18px;margin-bottom:2px}
+.conn-item-label{font-size:10.5px;font-weight:700;color:var(--Tdk);line-height:1.3}
+
+/* ── Exam focus ── */
+.exam-box{background:var(--Alt);border:2px solid var(--A);border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.exam-title{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--A);margin-bottom:7px;text-transform:uppercase}
+.exam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.exam-item{background:rgba(255,255,255,.55);border-radius:7px;padding:7px 9px}
+.exam-item-q{font-size:10.5px;font-weight:700;color:var(--t);margin-bottom:3px}
+.exam-item-a{font-size:10px;color:var(--t2);line-height:1.45}
+
+/* ── Footer ── */
+.footer{text-align:center;font-size:10px;color:var(--t3);padding:6px}
+</style>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">iPAS 中級 AI應用規劃師・科目三：機器學習技術與應用</div>
+  <h1>第三章　機器學習基礎數學</h1>
+  <div class="hero-sub">機率統計 × 線性代數 × 數值優化 ── 三大數學支柱，撐起整個 ML 理論體系</div>
+  <div class="hero-tags">
+    <span class="hero-tag">3.1 機率與統計</span>
+    <span class="hero-tag">3.2 線性代數</span>
+    <span class="hero-tag">3.3 數值優化</span>
+  </div>
+</div>
+
+<!-- 三個主節 -->
+<div class="sec-row">
+
+  <!-- 3.1 機率與統計 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <span class="sec-num">3.1</span>
+      <span class="sec-title">機率與統計<br>Probability &amp; Statistics</span>
+    </div>
+    <div class="sec-body">
+      <div class="sec-diagram">
+        <svg width="190" height="90" viewBox="0 0 190 90">
+          <!-- 常態分佈曲線 -->
+          <defs>
+            <lineargradient id="nd" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2A8A8A" stop-opacity=".35"></stop>
+              <stop offset="100%" stop-color="#2A8A8A" stop-opacity="0"></stop>
+            </lineargradient>
+          </defs>
+          <polyline points="10,80 30,78 50,65 70,38 95,12 120,38 140,65 160,78 180,80" fill="none" stroke="#2A8A8A" stroke-width="2.5" stroke-linejoin="round"></polyline>
+          <polygon points="10,80 30,78 50,65 70,38 95,12 120,38 140,65 160,78 180,80 180,82 10,82" fill="url(#nd)"></polygon>
+          <!-- μ line -->
+          <line x1="95" y1="14" x2="95" y2="82" stroke="#1D6262" stroke-width="1.2" stroke-dasharray="3,2"></line>
+          <text x="97" y="80" font-size="9" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700">μ</text>
+          <!-- σ markers -->
+          <text x="60" y="88" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif">-σ</text>
+          <text x="122" y="88" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif">+σ</text>
+          <!-- PMF bars beside -->
+          <rect x="10" y="56" width="8" height="24" fill="#3AADAD" opacity=".5" rx="1"></rect>
+          <rect x="20" y="46" width="8" height="34" fill="#3AADAD" opacity=".6" rx="1"></rect>
+          <rect x="30" y="38" width="8" height="42" fill="#3AADAD" opacity=".5" rx="1"></rect>
+          <text x="8" y="42" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">PMF</text>
+          <text x="112" y="42" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">PDF</text>
+        </svg>
+      </div>
+      <ul class="topic-list">
+        <li><b>隨機變數</b>：離散(PMF) vs 連續(PDF)</li>
+        <li><b>常見分佈</b>：Bernoulli・二項・Poisson・常態・卡方</li>
+        <li><b>條件機率</b>：P(A|B) = P(A∩B)/P(B)</li>
+        <li><b>貝氏定理</b>：後驗 ∝ 似然 × 先驗</li>
+        <li><b>MLE / MAP</b>：最大似然估計 vs 最大後驗估計</li>
+        <li><b>假設檢定</b>：p值、顯著水準α、Type I/II 錯誤</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3.2 線性代數 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <span class="sec-num">3.2</span>
+      <span class="sec-title">線性代數<br>Linear Algebra</span>
+    </div>
+    <div class="sec-body">
+      <div class="sec-diagram">
+        <svg width="190" height="90" viewBox="0 0 190 90">
+          <!-- Matrix visual -->
+          <rect x="8" y="10" width="60" height="70" rx="4" fill="none" stroke="#2A8A8A" stroke-width="1.8"></rect>
+          <line x1="8" y1="33" x2="68" y2="33" stroke="#2A8A8A" stroke-width=".8" opacity=".5"></line>
+          <line x1="8" y1="56" x2="68" y2="56" stroke="#2A8A8A" stroke-width=".8" opacity=".5"></line>
+          <line x1="28" y1="10" x2="28" y2="80" stroke="#2A8A8A" stroke-width=".8" opacity=".5"></line>
+          <line x1="48" y1="10" x2="48" y2="80" stroke="#2A8A8A" stroke-width=".8" opacity=".5"></line>
+          <text x="14" y="26" font-size="9" fill="#1D6262" font-family="Courier New,monospace">a₁₁</text>
+          <text x="34" y="26" font-size="9" fill="#1D6262" font-family="Courier New,monospace">a₁₂</text>
+          <text x="54" y="26" font-size="9" fill="#2A8A8A" font-family="Courier New,monospace">…</text>
+          <text x="14" y="49" font-size="9" fill="#1D6262" font-family="Courier New,monospace">a₂₁</text>
+          <text x="14" y="72" font-size="9" fill="#2A8A8A" font-family="Courier New,monospace">…</text>
+          <!-- Arrow to SVD -->
+          <text x="72" y="48" font-size="14" fill="#2A8A8A">→</text>
+          <!-- SVD label -->
+          <rect x="88" y="15" width="95" height="60" rx="6" fill="#E0F5F5" stroke="#2A8A8A" stroke-width="1.2"></rect>
+          <text x="135" y="30" font-size="9" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="800" text-anchor="middle">SVD</text>
+          <text x="135" y="42" font-size="8.5" fill="#2A8A8A" font-family="Courier New,monospace" text-anchor="middle">X = UΣVᵀ</text>
+          <!-- Eigen -->
+          <text x="135" y="56" font-size="8" fill="#1D6262" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">特徵值分解</text>
+          <text x="135" y="67" font-size="8" fill="#2A8A8A" font-family="Courier New,monospace" text-anchor="middle">Av = λv</text>
+        </svg>
+      </div>
+      <ul class="topic-list">
+        <li><b>向量 / 矩陣</b>：基礎運算、轉置、逆矩陣</li>
+        <li><b>點積</b>：a·b = |a||b|cosθ，衡量相似度</li>
+        <li><b>特徵值分解</b>：Av = λv，PCA 核心</li>
+        <li><b>SVD</b>：X = UΣVᵀ，推薦系統、降維</li>
+        <li><b>PCA</b>：投影最大方差方向，保留主要資訊</li>
+        <li><b>LDA</b>：類別間最大化分離，監督式降維</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3.3 數值優化 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <span class="sec-num">3.3</span>
+      <span class="sec-title">數值優化<br>Numerical Optimization</span>
+    </div>
+    <div class="sec-body">
+      <div class="sec-diagram">
+        <svg width="190" height="90" viewBox="0 0 190 90">
+          <!-- Loss curve -->
+          <defs>
+            <lineargradient id="lc" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#C0392B"></stop>
+              <stop offset="100%" stop-color="#2A8A8A"></stop>
+            </lineargradient>
+          </defs>
+          <!-- axes -->
+          <line x1="15" y1="82" x2="175" y2="82" stroke="#6A9A9A" stroke-width="1"></line>
+          <line x1="15" y1="10" x2="15" y2="82" stroke="#6A9A9A" stroke-width="1"></line>
+          <text x="80" y="90" font-size="8" fill="#6A9A9A" font-family="Nunito,sans-serif">Iterations</text>
+          <text x="1" y="50" font-size="8" fill="#6A9A9A" font-family="Nunito,sans-serif" transform="rotate(-90,8,50)">Loss</text>
+          <!-- Loss curve path -->
+          <path d="M18,14 C30,14 38,18 50,30 C70,52 90,65 120,72 C145,77 160,79 175,80" fill="none" stroke="url(#lc)" stroke-width="2.5"></path>
+          <!-- GD steps -->
+          <circle cx="28" cy="18" r="3" fill="#C0392B"></circle>
+          <circle cx="55" cy="34" r="3" fill="#E85D3A"></circle>
+          <circle cx="80" cy="55" r="3" fill="#D4920A"></circle>
+          <circle cx="110" cy="68" r="3" fill="#3A9A6E"></circle>
+          <circle cx="145" cy="76" r="3" fill="#2A8A8A"></circle>
+          <!-- arrows -->
+          <line x1="28" y1="18" x2="55" y2="34" stroke="#E85D3A" stroke-width="1" stroke-dasharray="3,2"></line>
+          <line x1="55" y1="34" x2="80" y2="55" stroke="#D4920A" stroke-width="1" stroke-dasharray="3,2"></line>
+          <line x1="80" y1="55" x2="110" y2="68" stroke="#3A9A6E" stroke-width="1" stroke-dasharray="3,2"></line>
+          <line x1="110" y1="68" x2="145" y2="76" stroke="#2A8A8A" stroke-width="1" stroke-dasharray="3,2"></line>
+          <!-- labels -->
+          <text x="16" y="12" font-size="7.5" fill="#C0392B" font-family="Nunito,sans-serif" font-weight="700">GD</text>
+          <text x="147" y="73" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif" font-weight="700">min</text>
+        </svg>
+      </div>
+      <ul class="topic-list">
+        <li><b>損失函數</b>：MSE・MAE・Cross-Entropy・Focal</li>
+        <li><b>梯度下降</b>：GD(全量)・SGD(單樣本)・Mini-batch</li>
+        <li><b>動量 / Adagrad</b>：累積梯度，自適應學習率</li>
+        <li><b>RMSprop / Adam</b>：主流優化器，Adam=動量+RMSprop</li>
+        <li><b>學習率排程</b>：Step Decay・Cosine Annealing・Warmup</li>
+        <li><b>梯度裁剪</b>：防止梯度爆炸，RNN 常用技巧</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /sec-row -->
+
+<!-- 關鍵公式彙整 -->
+<div class="formula-strip">
+  <div class="formula-group">
+    <div class="formula-group-title">機率核心公式</div>
+    <div class="formula-item">貝氏定理 <code>P(θ|X) ∝ P(X|θ)P(θ)</code></div>
+    <div class="formula-item">MLE <code>θ̂ = argmax Σ log P(xᵢ|θ)</code></div>
+    <div class="formula-item">常態分佈 <code>N(μ,σ²)</code>，68-95-99.7 法則</div>
+    <div class="formula-item">條件機率 <code>P(A|B) = P(A∩B)/P(B)</code></div>
+  </div>
+  <div class="formula-group">
+    <div class="formula-group-title">線性代數核心公式</div>
+    <div class="formula-item">SVD <code>X = UΣVᵀ</code>，U/V 正交，Σ 奇異值</div>
+    <div class="formula-item">特徵分解 <code>Av = λv</code></div>
+    <div class="formula-item">點積 <code>a·b = aᵀb = |a||b|cosθ</code></div>
+    <div class="formula-item">OLS <code>β = (XᵀX)⁻¹Xᵀy</code></div>
+  </div>
+  <div class="formula-group">
+    <div class="formula-group-title">優化核心公式</div>
+    <div class="formula-item">梯度更新 <code>θ ← θ − η∇L(θ)</code></div>
+    <div class="formula-item">MSE <code>L = (1/n)Σ(yᵢ−ŷᵢ)²</code></div>
+    <div class="formula-item">Adam <code>m̂ₜ/(√v̂ₜ+ε)</code>，β₁=.9, β₂=.999</div>
+    <div class="formula-item">Cross-Entropy <code>−Σ yᵢ log ŷᵢ</code></div>
+  </div>
+</div>
+
+<!-- 知識連結 map -->
+<div class="conn-box">
+  <div class="conn-title">第三章知識連結──數學工具如何支撐 ML 各環節</div>
+  <div class="conn-grid">
+    <div class="conn-item">
+      <div class="conn-item-icon">📊</div>
+      <div class="conn-item-label">機率分佈<br>↓<br>樸素貝氏、GMM、VAE</div>
+    </div>
+    <div class="conn-item">
+      <div class="conn-item-icon">📐</div>
+      <div class="conn-item-label">SVD / PCA<br>↓<br>特徵降維、推薦系統</div>
+    </div>
+    <div class="conn-item">
+      <div class="conn-item-icon">⚡</div>
+      <div class="conn-item-label">梯度下降<br>↓<br>神經網路反向傳播</div>
+    </div>
+    <div class="conn-item">
+      <div class="conn-item-icon">🎯</div>
+      <div class="conn-item-label">損失函數<br>↓<br>回歸/分類/偵測任務</div>
+    </div>
+  </div>
+</div>
+
+<!-- 考試焦點 -->
+<div class="exam-box">
+  <div class="exam-title">📝 考題焦點</div>
+  <div class="exam-grid">
+    <div class="exam-item">
+      <div class="exam-item-q">Q：貝氏定理應用</div>
+      <div class="exam-item-a">後驗 = 似然 × 先驗 / 邊際，垃圾郵件過濾情境常考</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：SVD vs PCA 差異</div>
+      <div class="exam-item-a">PCA 用特徵分解(需正方形)，SVD 適用任意矩陣且更穩定</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：Adam 優化器特點</div>
+      <div class="exam-item-a">結合動量(一階矩)+RMSprop(二階矩)，自適應學習率</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：Cross-Entropy 用途</div>
+      <div class="exam-item-a">分類任務損失，衡量預測分佈與真實分佈的距離(KL散度相關)</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：p值意義</div>
+      <div class="exam-item-a">在 H₀ 成立下，觀察到現有或更極端結果的機率；p＜α 則拒絕 H₀</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：梯度裁剪時機</div>
+      <div class="exam-item-a">RNN/LSTM 訓練深層網路時梯度爆炸，設定 max_norm 限制更新幅度</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">科目三・第三章・機器學習基礎數學 sketchnote ── iPAS 中級 AI應用規劃師備考</div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ML 學習卡 · Cards 15–21</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root {
+  --green-dk:#1f5c33;--green-md:#3d8b52;--green-lt:#e8f5ed;
+  --green-hd:#4a9e5c;--card-bd:#a8d5b5;--page:#f2f4f2;
+  --card:#ffffff;--txt:#1e2b22;--muted:#5e7566;
+  --red-hd:#c8373a;--blue-bg:#eaf4fb;--blue-tx:#1a6fa0;
+  --or-bg:#fffae8;--or-tx:#9a5f08;--tip-bg:#fffcef;
+  --tip-bd:#e0c858;--pur-lt:#ece8f4;--form-bg:#f5faf6;--tbl-hd:#e8f5ed;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#0e1a11;--card:#162019;--txt:#dff0e4;--muted:#7a9e82;
+  --card-bd:#304838;--green-lt:#162a1e;--blue-bg:#132030;--blue-tx:#70b8e0;
+  --or-bg:#251a00;--or-tx:#e0b848;--tip-bg:#1e1900;--tip-bd:#c0a030;
+  --pur-lt:#241e38;--form-bg:#112018;--tbl-hd:#162a1e;
+}}
+:root[data-theme="dark"]{
+  --page:#0e1a11;--card:#162019;--txt:#dff0e4;--muted:#7a9e82;
+  --card-bd:#304838;--green-lt:#162a1e;--blue-bg:#132030;--blue-tx:#70b8e0;
+  --or-bg:#251a00;--or-tx:#e0b848;--tip-bg:#1e1900;--tip-bd:#c0a030;
+  --pur-lt:#241e38;--form-bg:#112018;--tbl-hd:#162a1e;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;background:var(--page);color:var(--txt);display:flex;flex-direction:column;align-items:center;gap:2.5rem;padding:2.5rem 1rem;min-height:100vh;line-height:1.65;-webkit-font-smoothing:antialiased}
+.card{width:100%;max-width:760px;background:var(--card);border:2px solid var(--card-bd);border-radius:14px;overflow:hidden}
+.card-header{display:flex;align-items:center;gap:1.4rem;padding:1.6rem 2rem 1.4rem}
+.num-badge{width:54px;height:54px;border-radius:10px;display:grid;place-items:center;color:#fff;font-size:2.1rem;font-weight:900;flex-shrink:0}
+.bg-con{background:#92400e}.bg-met{background:#1e40af}
+.title-block{line-height:1.2}
+.title-block .en{font-size:1.75rem;font-weight:900;letter-spacing:-0.01em}
+.title-block .zh{font-size:1.25rem;font-weight:700;margin-top:0.05rem}
+.purpose-band{margin:0 1.5rem 1.25rem;border:2px solid var(--green-md);border-radius:9px;padding:.85rem 1.1rem .85rem 3.6rem;background:var(--green-lt);position:relative;font-size:.94rem}
+.purpose-band::before{content:'🎯';position:absolute;left:.9rem;top:50%;transform:translateY(-50%);font-size:1.55rem}
+.purpose-band p{margin-bottom:.25rem}.purpose-band p:last-child{margin-bottom:0}
+.purpose-band b{color:var(--green-dk)}
+.sbadge{display:inline-block;background:var(--green-hd);color:#fff;padding:.18rem .7rem;border-radius:5px;font-size:.83rem;font-weight:700;margin-bottom:.65rem}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:0 1.5rem 1.2rem}
+.col-wrap{display:flex;flex-direction:column}
+.plain-box{flex:1;border:1.5px solid var(--card-bd);border-radius:8px;padding:.85rem .9rem;background:var(--form-bg);display:flex;gap:.55rem;align-items:flex-start;font-size:.88rem;line-height:1.75}
+.plain-box .bulb{font-size:1.35rem;flex-shrink:0;margin-top:.05rem}
+.kterm{color:var(--green-dk);font-weight:700;border-bottom:1.5px solid var(--green-md)}
+.chart-box{flex:1;border:1.5px solid var(--card-bd);border-radius:8px;overflow:hidden;background:var(--card);display:flex;align-items:center;justify-content:center;padding:.35rem;min-height:172px}
+.formula-box{flex:1;border:1.5px solid var(--card-bd);border-radius:8px;padding:.85rem .9rem;background:var(--form-bg);font-size:.86rem;line-height:1.9}
+.formula-box code{font-family:'Courier New',monospace;font-size:.93em;color:var(--green-dk);background:rgba(61,139,82,.09);padding:0 3px;border-radius:3px}
+.formula-box .frow{display:flex;gap:.5rem;align-items:baseline;margin-bottom:.05rem}
+.formula-box .flabel{color:var(--muted);font-size:.78rem;flex-shrink:0;min-width:3.5rem}
+.example-box{flex:1;border:1.5px solid var(--card-bd);border-radius:8px;overflow:hidden}
+.ex-inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.45rem;padding:.75rem}
+.ex-panel{border-radius:8px;padding:.6rem .75rem;font-size:.82rem}
+.ex-panel.feat{background:var(--pur-lt)}.ex-panel.tgt{background:var(--pur-lt);text-align:center}
+.ex-panel h4{font-size:.78rem;color:var(--muted);font-weight:500;margin-bottom:.3rem}
+.ex-panel ul{list-style:none;padding:0}.ex-panel ul li{padding:.07rem 0}
+.ex-panel ul li::before{content:'• '}
+.ex-panel .tgt-label{font-size:.92rem;font-weight:700;margin-top:.3rem;color:var(--green-dk)}
+.arrow-sep{font-size:1.5rem;color:var(--muted)}
+.full-sec{margin:0 1.5rem 1.2rem}
+.full-sec .sbadge-wrap{display:flex;align-items:center;gap:.5rem;margin-bottom:0}
+.tbl-outer{border:1.5px solid var(--card-bd);border-radius:0 8px 8px 8px;overflow:hidden;margin-top:0}
+.ktbl{width:100%;border-collapse:collapse;font-size:.82rem}
+.ktbl th{background:var(--tbl-hd);color:var(--green-dk);font-weight:700;padding:.4rem .7rem;text-align:left;border-bottom:1.5px solid var(--card-bd);border-right:1px solid var(--card-bd)}
+.ktbl th:last-child{border-right:none}
+.ktbl td{padding:.35rem .7rem;border-bottom:1px solid var(--card-bd);border-right:1px solid var(--card-bd);vertical-align:top}
+.ktbl td:last-child{border-right:none}.ktbl tr:last-child td{border-bottom:none}
+.ktbl .kern-name{font-weight:700;color:var(--green-dk);white-space:nowrap}
+.ktbl .best{color:var(--green-dk);font-weight:600}
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:0 1.5rem 1.2rem}
+.pro-blk,.con-blk{border:1.5px solid var(--card-bd);border-radius:8px;overflow:hidden}
+.pro-hd{background:#3d8b52;color:#fff;padding:.3rem .75rem;font-size:.84rem;font-weight:700}
+.con-hd{background:var(--red-hd);color:#fff;padding:.3rem .75rem;font-size:.84rem;font-weight:700}
+.pro-body,.con-body{padding:.6rem .8rem;font-size:.84rem}
+.pro-body li,.con-body li{list-style:none;padding:.13rem 0;display:flex;gap:.35rem;align-items:flex-start}
+.pro-body li::before{content:'✅';font-size:.78rem;flex-shrink:0;margin-top:.12rem}
+.con-body li::before{content:'❌';font-size:.78rem;flex-shrink:0;margin-top:.12rem}
+.kw-when{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:0 1.5rem 1.2rem}
+.kw-blk,.wh-blk{border:1.5px solid var(--card-bd);border-radius:8px;overflow:hidden}
+.kw-hd{background:var(--blue-bg);color:var(--blue-tx);padding:.3rem .75rem;font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:.3rem}
+.wh-hd{background:var(--or-bg);color:var(--or-tx);padding:.3rem .75rem;font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:.3rem}
+.kw-body,.wh-body{padding:.6rem .8rem;font-size:.82rem}
+.kw-body ul,.wh-body ul{list-style:none;padding:0}
+.kw-body ul li,.wh-body ul li{padding:.1rem 0}
+.kw-body ul li::before{content:'• '}.wh-body ul li::before{content:'• '}
+.tip-row{margin:0 1.5rem 1.6rem;display:grid;grid-template-columns:1fr auto;gap:.9rem;align-items:start}
+.tip-box{background:var(--tip-bg);border:1.5px solid var(--tip-bd);border-radius:9px;padding:.85rem 1rem .85rem 3.1rem;position:relative;font-size:.85rem;line-height:1.72}
+.tip-box::before{content:'💡';position:absolute;left:.7rem;top:.82rem;font-size:1.1rem}
+.tip-box strong{display:block;color:var(--or-tx);font-weight:700;font-size:.9rem;margin-bottom:.4rem}
+.tip-box ol{padding-left:1.2rem;margin-top:.3rem}
+.tip-box ol li{margin-bottom:.18rem}
+.mini-pair{display:flex;flex-direction:column;gap:.5rem}
+.mini-item{text-align:center}
+.mini-item figcaption{font-size:.72rem;color:var(--muted);margin-top:.2rem}
+@media(max-width:560px){
+  .two-col,.pros-cons,.kw-when{grid-template-columns:1fr}
+  .tip-row{grid-template-columns:1fr}
+  .card-header{padding:1.1rem 1.25rem}
+  .title-block .en{font-size:1.4rem}
+  .purpose-band,.two-col,.full-sec,.pros-cons,.kw-when,.tip-row{margin-left:1rem;margin-right:1rem}
+}
+</style>
+
+<!-- ═══════════════════════════════════════════ CARD 15 ═══ -->
+<div class="card">
+  <div class="card-header">
+    <div class="num-badge bg-con">15</div>
+    <div class="title-block">
+      <div class="en">Overfitting / Underfitting</div>
+      <div class="zh">過擬合 / 欠擬合</div>
+    </div>
+  </div>
+
+  <div class="purpose-band">
+    <p><b>核心概念</b>：描述模型「泛化能力」好壞的兩個極端——過度學習訓練資料（過擬合）或學習不足（欠擬合）。</p>
+    <p><b>目標</b>：找到<b>剛好夠複雜</b>的模型，訓練誤差和測試誤差都低，具備良好泛化能力。</p>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">白話理解</div>
+      <div class="plain-box">
+        <span class="bulb">💡</span>
+        <span>
+          <span class="kterm">欠擬合（Underfitting）</span>：就像只背公式、不理解概念的學生，連基本題都做錯。模型太簡單，訓練誤差也高。<br><br>
+          <span class="kterm">過擬合（Overfitting）</span>：死背考古題的學生，換道新題就崩潰。模型記住了訓練資料的雜訊，在測試集誤差高。
+        </span>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">三種擬合狀況</div>
+      <div class="chart-box">
+        <svg viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          <rect width="300" height="195" fill="var(--card)"></rect>
+          <!-- Underfit panel -->
+          <rect x="5" y="10" width="88" height="170" rx="6" fill="#fef3c7"></rect>
+          <text x="49" y="25" text-anchor="middle" font-size="8.5" fill="#92400e" font-family="sans-serif" font-weight="700">欠擬合</text>
+          <!-- Scatter points (S-curve) -->
+          <circle cx="15" cy="155" r="3.5" fill="#374151"></circle><circle cx="22" cy="145" r="3.5" fill="#374151"></circle>
+          <circle cx="32" cy="130" r="3.5" fill="#374151"></circle><circle cx="42" cy="100" r="3.5" fill="#374151"></circle>
+          <circle cx="52" cy="80" r="3.5" fill="#374151"></circle><circle cx="60" cy="65" r="3.5" fill="#374151"></circle>
+          <circle cx="70" cy="50" r="3.5" fill="#374151"></circle><circle cx="80" cy="40" r="3.5" fill="#374151"></circle>
+          <!-- Underfit: straight line that doesn't fit -->
+          <line x1="10" y1="160" x2="88" y2="35" stroke="#f59e0b" stroke-width="2.5"></line>
+          <text x="49" y="180" text-anchor="middle" font-size="7.5" fill="#92400e" font-family="sans-serif">訓練誤差高↑</text>
+          <!-- Good fit panel -->
+          <rect x="105" y="10" width="88" height="170" rx="6" fill="#dcfce7"></rect>
+          <text x="149" y="25" text-anchor="middle" font-size="8.5" fill="#166534" font-family="sans-serif" font-weight="700">恰好（Good Fit）</text>
+          <circle cx="115" cy="155" r="3.5" fill="#374151"></circle><circle cx="122" cy="145" r="3.5" fill="#374151"></circle>
+          <circle cx="132" cy="125" r="3.5" fill="#374151"></circle><circle cx="142" cy="100" r="3.5" fill="#374151"></circle>
+          <circle cx="152" cy="80" r="3.5" fill="#374151"></circle><circle cx="160" cy="60" r="3.5" fill="#374151"></circle>
+          <circle cx="170" cy="48" r="3.5" fill="#374151"></circle><circle cx="180" cy="38" r="3.5" fill="#374151"></circle>
+          <!-- Good fit: smooth curve -->
+          <path d="M112,158 Q130,130 149,95 Q165,65 188,35" fill="none" stroke="#16a34a" stroke-width="2.5"></path>
+          <text x="149" y="180" text-anchor="middle" font-size="7.5" fill="#166534" font-family="sans-serif">✅ 兩者誤差都低</text>
+          <!-- Overfit panel -->
+          <rect x="205" y="10" width="88" height="170" rx="6" fill="#fee2e2"></rect>
+          <text x="249" y="25" text-anchor="middle" font-size="8.5" fill="#991b1b" font-family="sans-serif" font-weight="700">過擬合</text>
+          <circle cx="215" cy="155" r="3.5" fill="#374151"></circle><circle cx="222" cy="145" r="3.5" fill="#374151"></circle>
+          <circle cx="232" cy="125" r="3.5" fill="#374151"></circle><circle cx="242" cy="100" r="3.5" fill="#374151"></circle>
+          <circle cx="252" cy="80" r="3.5" fill="#374151"></circle><circle cx="260" cy="60" r="3.5" fill="#374151"></circle>
+          <circle cx="270" cy="48" r="3.5" fill="#374151"></circle><circle cx="280" cy="38" r="3.5" fill="#374151"></circle>
+          <!-- Overfit: wiggly curve through all points -->
+          <path d="M213,155 Q220,148 224,140 Q228,125 235,128 Q240,98 245,102 Q250,78 253,83 Q260,58 263,65 Q268,44 272,50 Q278,35 283,38" fill="none" stroke="#ef4444" stroke-width="2.5"></path>
+          <text x="249" y="180" text-anchor="middle" font-size="7.5" fill="#991b1b" font-family="sans-serif">測試誤差高↑</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">診斷方法</div>
+      <div class="formula-box">
+        <div class="frow"><span class="flabel">欠擬合：</span><code>Train Error ↑  Test Error ↑</code></div>
+        <div class="frow"><span class="flabel">正常：</span><code>Train Error ↓  Test Error ↓</code></div>
+        <div class="frow"><span class="flabel">過擬合：</span><code>Train Error ↓  Test Error ↑↑</code></div>
+        <div class="frow" style="margin-top:.4rem"><span class="flabel">Gap：</span><code>泛化誤差 = Test − Train</code></div>
+        <div style="margin-top:.5rem;font-size:.8rem;color:var(--muted)">
+          • 學習曲線（Learning Curve）是診斷最佳工具<br>
+          • 驗證集誤差持續高於訓練集 → 過擬合
+        </div>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">解決對策</div>
+      <div class="formula-box" style="font-size:.83rem;line-height:1.8">
+        <div style="margin-bottom:.2rem;font-weight:700;color:#92400e">欠擬合 → 增加複雜度</div>
+        <div>• 增加特徵 / 多項式特徵</div>
+        <div>• 加深加寬神經網路</div>
+        <div>• 減少正則化強度</div>
+        <div style="margin-top:.5rem;margin-bottom:.2rem;font-weight:700;color:#991b1b">過擬合 → 降低複雜度 / 增加資料</div>
+        <div>• 更多訓練資料 / 資料增強</div>
+        <div>• L1/L2 正則化 / Dropout</div>
+        <div>• Early Stopping / 交叉驗證</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kw-when">
+    <div class="kw-blk"><div class="kw-hd"><span>🔍</span> 考試關鍵字</div>
+      <div class="kw-body"><ul>
+        <li>泛化誤差（Generalization Error）</li>
+        <li>訓練誤差 / 測試誤差</li>
+        <li>學習曲線（Learning Curve）</li>
+        <li>模型複雜度（Model Complexity）</li>
+        <li>正則化 / Dropout / Early Stopping</li>
+      </ul></div>
+    </div>
+    <div class="wh-blk"><div class="wh-hd"><span>⭐</span> 必記口訣</div>
+      <div class="wh-body"><ul>
+        <li>訓練差 → 欠擬合（模型太弱）</li>
+        <li>訓練好 + 測試差 → 過擬合</li>
+        <li>資料少 → 容易過擬合</li>
+        <li>特徵多 → 容易過擬合</li>
+        <li>正則化降低 Variance，提高 Bias</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="tip-row">
+    <div class="tip-box">
+      <strong>小提醒</strong>
+      <ol>
+        <li><b>學習曲線</b>是最直觀的診斷工具：訓練集與驗證集誤差的差距就是過擬合程度。</li>
+        <li>神經網路中，<b>Dropout</b>（訓練時隨機關閉神經元）是最常用的過擬合對策。</li>
+        <li>過擬合不一定要減少層數，加 <b>L2 正則化</b>（Weight Decay）往往更有效。</li>
+      </ol>
+    </div>
+    <div class="mini-pair">
+      <div class="mini-item">
+        <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" width="110">
+          <rect width="110" height="80" rx="6" fill="var(--form-bg)" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <text x="55" y="12" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">學習曲線</text>
+          <line x1="10" y1="68" x2="100" y2="68" stroke="#aaa" stroke-width="1"></line>
+          <line x1="10" y1="68" x2="10" y2="18" stroke="#aaa" stroke-width="1"></line>
+          <!-- Train error (goes down) -->
+          <polyline points="12,60 30,45 50,35 70,28 90,25" fill="none" stroke="#3d8b52" stroke-width="2"></polyline>
+          <text x="92" y="27" font-size="7" fill="#3d8b52" font-family="sans-serif">Train</text>
+          <!-- Val error (goes down then up = overfitting) -->
+          <polyline points="12,62 30,50 50,45 70,48 90,55" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,2"></polyline>
+          <text x="92" y="57" font-size="7" fill="#ef4444" font-family="sans-serif">Val</text>
+        </svg>
+        <figcaption>Val 回升 = 過擬合</figcaption>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CARD 16 ═══ -->
+<div class="card">
+  <div class="card-header">
+    <div class="num-badge bg-con">16</div>
+    <div class="title-block">
+      <div class="en">Bias / Variance Tradeoff</div>
+      <div class="zh">偏差 / 變異數 權衡</div>
+    </div>
+  </div>
+
+  <div class="purpose-band">
+    <p><b>核心概念</b>：模型誤差的兩個來源——<b>偏差（Bias）</b>是模型本身的錯誤假設；<b>變異數（Variance）</b>是模型對訓練資料的敏感程度。</p>
+    <p><b>目標</b>：理解 Bias-Variance Tradeoff，找到最佳模型複雜度，讓總誤差最小。</p>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">白話理解</div>
+      <div class="plain-box">
+        <span class="bulb">💡</span>
+        <span>
+          用<span class="kterm">射箭靶</span>比喻：<br>
+          <b>High Bias</b>：每次都偏同一方向（系統性錯誤）<br>
+          <b>High Variance</b>：每次都落很散（不穩定）<br>
+          <b>最理想</b>：Low Bias + Low Variance（集中在靶心）<br><br>
+          增加模型複雜度→降 Bias、升 Variance；<br>
+          正則化/簡化模型→降 Variance、升 Bias。
+        </span>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">靶心示意</div>
+      <div class="chart-box">
+        <svg viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          <rect width="300" height="195" fill="var(--card)"></rect>
+          <!-- 4 target panels -->
+          <!-- High Bias, Low Variance -->
+          <g transform="translate(38,55)">
+            <circle r="30" fill="#fff" stroke="#d1d5db" stroke-width="1.2"></circle>
+            <circle r="20" fill="#fef3c7" stroke="#d1d5db" stroke-width="1"></circle>
+            <circle r="10" fill="#fde68a" stroke="#d1d5db" stroke-width="1"></circle>
+            <circle cx="14" cy="14" r="4" fill="#ef4444" opacity=".9"></circle>
+            <circle cx="16" cy="12" r="4" fill="#ef4444" opacity=".9"></circle>
+            <circle cx="13" cy="16" r="4" fill="#ef4444" opacity=".9"></circle>
+            <circle cx="15" cy="13" r="4" fill="#ef4444" opacity=".9"></circle>
+          </g>
+          <text x="38" y="97" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">High Bias</text>
+          <text x="38" y="108" text-anchor="middle" font-size="8" fill="#166534" font-family="sans-serif">Low Variance</text>
+          <text x="38" y="120" text-anchor="middle" font-size="7.5" fill="#5e7566" font-family="sans-serif">欠擬合</text>
+          <!-- Low Bias, Low Variance (ideal) -->
+          <g transform="translate(112,55)">
+            <circle r="30" fill="#fff" stroke="#d1d5db" stroke-width="1.2"></circle>
+            <circle r="20" fill="#fef3c7" stroke="#d1d5db" stroke-width="1"></circle>
+            <circle r="10" fill="#fde68a" stroke="#d1d5db" stroke-width="1"></circle>
+            <circle cx="2" cy="-2" r="4" fill="#16a34a" opacity=".9"></circle>
+            <circle cx="-2" cy="2" r="4" fill="#16a34a" opacity=".9"></circle>
+            <circle cx="3" cy="3" r="4" fill="#16a34a" opacity=".9"></circle>
+            <circle cx="-3" cy="-3" r="4" fill="#16a34a" opacity=".9"></circle>
+          </g>
+          <text x="112" y="97" text-anchor="middle" font-size="8" fill="#166534" font-family="sans-serif" font-weight="700">Low Bias</text>
+          <text x="112" y="108" text-anchor="middle" font-size="8" fill="#166534" font-family="sans-serif">Low Variance</text>
+          <text x="112" y="120" text-anchor="middle" font-size="7.5" fill="#1f5c33" font-family="sans-serif" font-weight="700">✅ 理想</text>
+          <!-- High Bias, High Variance -->
+          <g transform="translate(188,55)">
+            <circle r="30" fill="#fff" stroke="#d1d5db" stroke-width="1.2"></circle>
+            <circle r="20" fill="#fef3c7" stroke="#d1d5db" stroke-width="1"></circle>
+            <circle r="10" fill="#fde68a" stroke="#d1d5db" stroke-width="1"></circle>
+            <circle cx="-20" cy="15" r="4" fill="#9ca3af" opacity=".9"></circle>
+            <circle cx="18" cy="-18" r="4" fill="#9ca3af" opacity=".9"></circle>
+            <circle cx="-14" cy="-20" r="4" fill="#9ca3af" opacity=".9"></circle>
+            <circle cx="22" cy="16" r="4" fill="#9ca3af" opacity=".9"></circle>
+          </g>
+          <text x="188" y="97" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">High Bias</text>
+          <text x="188" y="108" text-anchor="middle" font-size="8" fill="#991b1b" font-family="sans-serif">High Variance</text>
+          <text x="188" y="120" text-anchor="middle" font-size="7.5" fill="#6b7280" font-family="sans-serif">最差狀況</text>
+          <!-- Low Bias, High Variance -->
+          <g transform="translate(262,55)">
+            <circle r="30" fill="#fff" stroke="#d1d5db" stroke-width="1.2"></circle>
+            <circle r="20" fill="#fef3c7" stroke="#d1d5db" stroke-width="1"></circle>
+            <circle r="10" fill="#fde68a" stroke="#d1d5db" stroke-width="1"></circle>
+            <circle cx="-18" cy="10" r="4" fill="#3b82f6" opacity=".9"></circle>
+            <circle cx="15" cy="-20" r="4" fill="#3b82f6" opacity=".9"></circle>
+            <circle cx="-8" cy="-22" r="4" fill="#3b82f6" opacity=".9"></circle>
+            <circle cx="20" cy="18" r="4" fill="#3b82f6" opacity=".9"></circle>
+          </g>
+          <text x="262" y="97" text-anchor="middle" font-size="8" fill="#166534" font-family="sans-serif" font-weight="700">Low Bias</text>
+          <text x="262" y="108" text-anchor="middle" font-size="8" fill="#991b1b" font-family="sans-serif">High Variance</text>
+          <text x="262" y="120" text-anchor="middle" font-size="7.5" fill="#5e7566" font-family="sans-serif">過擬合</text>
+          <!-- Total error U curve -->
+          <text x="150" y="140" text-anchor="middle" font-size="9" fill="#5e7566" font-family="sans-serif" font-weight="700">總誤差 = Bias² + Variance + 不可消除雜訊</text>
+          <line x1="10" y1="185" x2="290" y2="185" stroke="#ddd" stroke-width="1"></line>
+          <text x="10" y="193" font-size="8" fill="#92400e" font-family="sans-serif">簡單模型</text>
+          <text x="250" y="193" font-size="8" fill="#991b1b" font-family="sans-serif">複雜模型</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">數學分解</div>
+      <div class="formula-box">
+        <div class="frow"><span class="flabel">誤差：</span><code>E[(y−ŷ)²] = Bias² + Var + ε²</code></div>
+        <div class="frow"><span class="flabel">Bias²：</span><code>(E[ŷ]−f(x))²（系統性偏差）</code></div>
+        <div class="frow"><span class="flabel">Variance：</span><code>E[(ŷ−E[ŷ])²]（波動性）</code></div>
+        <div class="frow"><span class="flabel">ε²：</span><code>不可消除雜訊（Irreducible Error）</code></div>
+        <div style="margin-top:.5rem;font-size:.8rem;color:var(--muted)">
+          • Bias ↑ ↔ 欠擬合 / 模型太簡單<br>
+          • Variance ↑ ↔ 過擬合 / 模型太複雜
+        </div>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">常見模型 Bias-Variance</div>
+      <div class="formula-box" style="font-size:.83rem;line-height:1.9">
+        <div><b style="color:#92400e">High Bias</b>：線性迴歸、Naive Bayes、決策樹（淺）</div>
+        <div><b style="color:#991b1b">High Variance</b>：深度神經網路、決策樹（深）、KNN（k小）</div>
+        <div style="margin-top:.5rem"><b style="color:#1f5c33">中間平衡</b>：Random Forest（Bagging → 降Variance）</div>
+        <div><b style="color:#1f5c33">中間平衡</b>：Gradient Boosting（→ 降Bias）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kw-when">
+    <div class="kw-blk"><div class="kw-hd"><span>🔍</span> 考試關鍵字</div>
+      <div class="kw-body"><ul>
+        <li>Bias（偏差）/ Variance（變異數）</li>
+        <li>Bias-Variance Tradeoff</li>
+        <li>不可消除雜訊（Irreducible Error）</li>
+        <li>Bagging → 降 Variance</li>
+        <li>Boosting → 降 Bias</li>
+      </ul></div>
+    </div>
+    <div class="wh-blk"><div class="wh-hd"><span>⭐</span> 對應解法</div>
+      <div class="wh-body"><ul>
+        <li>High Bias → 增加特徵、複雜化模型</li>
+        <li>High Variance → 更多資料、正則化</li>
+        <li>Bagging（如 Random Forest）降低 Variance</li>
+        <li>Boosting（如 XGBoost）降低 Bias</li>
+        <li>交叉驗證診斷兩者哪個更嚴重</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="tip-row">
+    <div class="tip-box">
+      <strong>小提醒</strong>
+      <ol>
+        <li>這是 ML 最核心的概念。考試常問：「增加訓練資料能解決哪個問題？」→ <b>High Variance</b>（過擬合），無法解決 High Bias。</li>
+        <li>Ensemble 方法：<b>Bagging</b> 靠平均多個高 Variance 模型來降低 Variance；<b>Boosting</b> 靠逐步修正誤差降低 Bias。</li>
+      </ol>
+    </div>
+    <div class="mini-pair">
+      <div class="mini-item">
+        <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" width="110">
+          <rect width="110" height="80" rx="6" fill="var(--form-bg)" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <text x="55" y="12" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">誤差 vs 複雜度</text>
+          <line x1="10" y1="68" x2="100" y2="68" stroke="#aaa" stroke-width="1"></line>
+          <line x1="10" y1="68" x2="10" y2="18" stroke="#aaa" stroke-width="1"></line>
+          <!-- Bias² (decreasing) -->
+          <polyline points="12,65 30,55 50,42 70,35 90,32" fill="none" stroke="#f59e0b" stroke-width="2"></polyline>
+          <text x="92" y="34" font-size="7" fill="#92400e" font-family="sans-serif">Bias²</text>
+          <!-- Variance (increasing) -->
+          <polyline points="12,30 30,32 50,38 70,48 90,62" fill="none" stroke="#3b82f6" stroke-width="2"></polyline>
+          <text x="92" y="64" font-size="7" fill="#3b82f6" font-family="sans-serif">Var</text>
+          <!-- Total (U curve) -->
+          <polyline points="12,62 30,52 50,43 70,50 90,62" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="4,2"></polyline>
+          <!-- Min point -->
+          <circle cx="50" cy="43" r="5" fill="none" stroke="#ef4444" stroke-width="2"></circle>
+          <text x="50" y="27" text-anchor="middle" font-size="7" fill="#ef4444" font-family="sans-serif">最優點</text>
+        </svg>
+        <figcaption>總誤差 U 形曲線</figcaption>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CARD 17 ═══ -->
+<div class="card">
+  <div class="card-header">
+    <div class="num-badge bg-con">17</div>
+    <div class="title-block">
+      <div class="en">L1 / L2 Regularization</div>
+      <div class="zh">L1 / L2 正則化</div>
+    </div>
+  </div>
+
+  <div class="purpose-band">
+    <p><b>用途</b>：防止模型過擬合，約束模型權重，提升泛化能力</p>
+    <p><b>目標</b>：在損失函數中加入<b>懲罰項</b>，使模型偏好較小的權重值，降低模型複雜度。</p>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">白話理解</div>
+      <div class="plain-box">
+        <span class="bulb">💡</span>
+        <span>
+          <span class="kterm">L2（Ridge）</span>：像彈簧，把所有權重往 0 拉，但沒有一個會真正歸零——讓每個特徵都發揮一點作用。<br><br>
+          <span class="kterm">L1（Lasso）</span>：更激進，會把不重要的權重<b>直接歸零</b>——自動做特徵選擇！<br><br>
+          <span class="kterm">ElasticNet</span>：L1 + L2 兩者混合。
+        </span>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">幾何直觀（約束空間）</div>
+      <div class="chart-box">
+        <svg viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          <rect width="300" height="195" fill="var(--card)"></rect>
+          <!-- L1 panel (left) -->
+          <text x="75" y="22" text-anchor="middle" font-size="9.5" fill="#7c3aed" font-family="sans-serif" font-weight="700">L1（Lasso）</text>
+          <!-- Loss contours (ellipses) -->
+          <ellipse cx="95" cy="90" rx="40" ry="28" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,2"></ellipse>
+          <ellipse cx="95" cy="90" rx="55" ry="40" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,2"></ellipse>
+          <ellipse cx="95" cy="90" rx="70" ry="54" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,2"></ellipse>
+          <!-- L1 constraint (diamond) -->
+          <polygon points="50,90 75,60 100,90 75,120" fill="#ede9fe" stroke="#7c3aed" stroke-width="2.5" opacity=".85"></polygon>
+          <!-- Intersection at corner (sparse solution) -->
+          <circle cx="75" cy="60" r="6" fill="#7c3aed"></circle>
+          <text x="62" y="50" font-size="8.5" fill="#7c3aed" font-family="sans-serif" font-weight="700">w₂=0</text>
+          <!-- Axes labels -->
+          <text x="35" y="93" font-size="8" fill="#555" font-family="sans-serif">w₁</text>
+          <text x="95" y="150" font-size="8" fill="#555" font-family="sans-serif">w₂</text>
+          <text x="75" y="178" text-anchor="middle" font-size="8" fill="#7c3aed" font-family="sans-serif">角點=稀疏解（特徵歸零）</text>
+          <!-- Divider -->
+          <line x1="150" y1="20" x2="150" y2="170" stroke="var(--card-bd)" stroke-width="1.5" stroke-dasharray="5,3"></line>
+          <!-- L2 panel (right) -->
+          <text x="225" y="22" text-anchor="middle" font-size="9.5" fill="#1d4ed8" font-family="sans-serif" font-weight="700">L2（Ridge）</text>
+          <!-- Loss contours (ellipses) -->
+          <ellipse cx="225" cy="90" rx="40" ry="28" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,2"></ellipse>
+          <ellipse cx="225" cy="90" rx="55" ry="40" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,2"></ellipse>
+          <ellipse cx="225" cy="90" rx="70" ry="54" fill="none" stroke="#9ca3af" stroke-width="1" stroke-dasharray="3,2"></ellipse>
+          <!-- L2 constraint (circle) -->
+          <circle cx="225" cy="90" r="35" fill="#dbeafe" stroke="#3b82f6" stroke-width="2.5" opacity=".85"></circle>
+          <!-- Intersection on circle (non-sparse) -->
+          <circle cx="198" cy="68" r="6" fill="#3b82f6"></circle>
+          <text x="165" y="60" font-size="8.5" fill="#1d4ed8" font-family="sans-serif" font-weight="700">w₁,w₂均小</text>
+          <text x="225" y="178" text-anchor="middle" font-size="8" fill="#1d4ed8" font-family="sans-serif">圓形=均勻縮小（不歸零）</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-sec">
+    <div class="sbadge-wrap"><div class="sbadge">L1 vs L2 vs ElasticNet 比較</div></div>
+    <div class="tbl-outer">
+      <table class="ktbl">
+        <thead><tr><th>名稱</th><th>懲罰項</th><th>效果</th><th>適用場景</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kern-name">L1 / Lasso</span></td><td>λΣ|wᵢ|</td><td>稀疏解，部分 w=0</td><td><span class="best">特徵選擇、高維稀疏資料</span></td></tr>
+          <tr><td><span class="kern-name">L2 / Ridge</span></td><td>λΣwᵢ²</td><td>均勻縮小，w≠0</td><td><span class="best">多重共線性、通用首選</span></td></tr>
+          <tr><td><span class="kern-name">ElasticNet</span></td><td>λ₁Σ|wᵢ|+λ₂Σwᵢ²</td><td>兩者兼具</td><td>特徵多且相關時</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="kw-when">
+    <div class="kw-blk"><div class="kw-hd"><span>🔍</span> 考試關鍵字</div>
+      <div class="kw-body"><ul>
+        <li>L1 正則化 / Lasso / 稀疏解</li>
+        <li>L2 正則化 / Ridge / Weight Decay</li>
+        <li>懲罰項（Penalty Term）</li>
+        <li>超參數 λ（正則化強度）</li>
+        <li>ElasticNet</li>
+      </ul></div>
+    </div>
+    <div class="wh-blk"><div class="wh-hd"><span>⭐</span> 選哪個正則化？</div>
+      <div class="wh-body"><ul>
+        <li>需要特徵選擇 → L1 (Lasso)</li>
+        <li>特徵都有用，避免 Overfit → L2</li>
+        <li>特徵多且相關 → ElasticNet</li>
+        <li>深度學習 → L2（Weight Decay）</li>
+        <li>所有模型都適用，預設試 L2</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="tip-row">
+    <div class="tip-box">
+      <strong>小提醒</strong>
+      <ol>
+        <li><b>L1 → 特徵選擇</b>（稀疏解，部分係數歸零）；<b>L2 → 防止 Overfit</b>（不歸零，均勻縮小）。</li>
+        <li>正則化強度 λ 越大，懲罰越重，模型越簡單（Bias↑, Variance↓）。</li>
+        <li>Deep Learning 中的 L2 即 <b>Weight Decay</b>（在 optimizer 中設置 weight_decay 參數）。</li>
+      </ol>
+    </div>
+    <div class="mini-pair">
+      <div class="mini-item">
+        <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" width="110">
+          <rect width="110" height="80" rx="6" fill="var(--form-bg)" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <text x="55" y="12" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">正則化效果</text>
+          <!-- No reg -->
+          <rect x="8" y="20" width="14" height="40" rx="3" fill="#ef4444" opacity=".8"></rect>
+          <rect x="28" y="30" width="14" height="30" rx="3" fill="#ef4444" opacity=".8"></rect>
+          <rect x="48" y="18" width="14" height="42" rx="3" fill="#ef4444" opacity=".8"></rect>
+          <text x="34" y="68" text-anchor="middle" font-size="7" fill="#ef4444" font-family="sans-serif">無正則化</text>
+          <!-- L1 (sparse) -->
+          <rect x="75" y="28" width="14" height="32" rx="3" fill="#7c3aed" opacity=".8"></rect>
+          <rect x="95" y="55" width="14" height="5" rx="2" fill="#9ca3af" opacity=".5"></rect>
+          <text x="87" y="68" text-anchor="middle" font-size="7" fill="#7c3aed" font-family="sans-serif">L1: 稀疏</text>
+        </svg>
+        <figcaption>L1 讓部分係數=0</figcaption>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CARD 18 ═══ -->
+<div class="card">
+  <div class="card-header">
+    <div class="num-badge bg-con">18</div>
+    <div class="title-block">
+      <div class="en">Cross Validation</div>
+      <div class="zh">交叉驗證</div>
+    </div>
+  </div>
+
+  <div class="purpose-band">
+    <p><b>用途</b>：可靠評估模型效能、超參數調整、防止評估過度樂觀</p>
+    <p><b>目標</b>：充分利用有限資料，讓每一筆資料都當過<b>驗證集</b>，得到更穩健的效能估計。</p>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">白話理解</div>
+      <div class="plain-box">
+        <span class="bulb">💡</span>
+        <span>
+          想像輪班考試監考：<br>
+          把資料切成 K 等份，每次讓一份當「考官（驗證集）」，其餘 K-1 份當「訓練資料」。<br>
+          跑 K 次，每份都當過一次考官，最後<span class="kterm">平均 K 次結果</span>作為最終評分。<br><br>
+          比單次 train/test split 更可靠，減少評估的<span class="kterm">運氣成分</span>。
+        </span>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">K-Fold 示意（K=5）</div>
+      <div class="chart-box">
+        <svg viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          <rect width="300" height="195" fill="var(--card)"></rect>
+          <!-- 5 fold bars -->
+          <text x="150" y="20" text-anchor="middle" font-size="9.5" fill="#0b6475" font-family="sans-serif" font-weight="700">5-Fold Cross Validation</text>
+          <!-- Row labels -->
+          <text x="30" y="47" text-anchor="end" font-size="8.5" fill="#5e7566" font-family="sans-serif">Fold 1</text>
+          <text x="30" y="77" text-anchor="end" font-size="8.5" fill="#5e7566" font-family="sans-serif">Fold 2</text>
+          <text x="30" y="107" text-anchor="end" font-size="8.5" fill="#5e7566" font-family="sans-serif">Fold 3</text>
+          <text x="30" y="137" text-anchor="end" font-size="8.5" fill="#5e7566" font-family="sans-serif">Fold 4</text>
+          <text x="30" y="167" text-anchor="end" font-size="8.5" fill="#5e7566" font-family="sans-serif">Fold 5</text>
+          <!-- 5 segments for each fold -->
+          <!-- Fold 1: VAL=first, TRAIN=rest -->
+          <rect x="35" y="32" width="52" height="22" rx="3" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"></rect>
+          <text x="61" y="47" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">VAL</text>
+          <rect x="89" y="32" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="143" y="32" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="197" y="32" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="251" y="32" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <!-- Fold 2 -->
+          <rect x="35" y="62" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="89" y="62" width="52" height="22" rx="3" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"></rect>
+          <text x="115" y="77" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">VAL</text>
+          <rect x="143" y="62" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="197" y="62" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="251" y="62" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <!-- Fold 3 -->
+          <rect x="35" y="92" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="89" y="92" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="143" y="92" width="52" height="22" rx="3" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"></rect>
+          <text x="169" y="107" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">VAL</text>
+          <rect x="197" y="92" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="251" y="92" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <!-- Fold 4 -->
+          <rect x="35" y="122" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="89" y="122" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="143" y="122" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="197" y="122" width="52" height="22" rx="3" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"></rect>
+          <text x="223" y="137" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">VAL</text>
+          <rect x="251" y="122" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <!-- Fold 5 -->
+          <rect x="35" y="152" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="89" y="152" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="143" y="152" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="197" y="152" width="52" height="22" rx="3" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <rect x="251" y="152" width="52" height="22" rx="3" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"></rect>
+          <text x="277" y="167" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">VAL</text>
+          <!-- Legend -->
+          <rect x="55" y="183" width="16" height="8" rx="2" fill="#fbbf24" stroke="#f59e0b" stroke-width="1"></rect>
+          <text x="75" y="191" font-size="7.5" fill="#5e7566" font-family="sans-serif">驗證集</text>
+          <rect x="140" y="183" width="16" height="8" rx="2" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"></rect>
+          <text x="160" y="191" font-size="7.5" fill="#5e7566" font-family="sans-serif">訓練集</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-sec">
+    <div class="sbadge-wrap"><div class="sbadge">交叉驗證方法比較</div></div>
+    <div class="tbl-outer">
+      <table class="ktbl">
+        <thead><tr><th>方法</th><th>特點</th><th>適用場景</th></tr></thead>
+        <tbody>
+          <tr><td><span class="kern-name">K-Fold (K=5/10)</span></td><td>K 次訓練，均衡評估</td><td><span class="best">最常用，通用首選</span></td></tr>
+          <tr><td><span class="kern-name">Stratified K-Fold</span></td><td>每折保持類別比例</td><td>類別不平衡問題</td></tr>
+          <tr><td><span class="kern-name">Leave-One-Out (LOO)</span></td><td>每次只留一筆驗證，最精確</td><td>極小資料集（&lt;100筆）</td></tr>
+          <tr><td><span class="kern-name">Time Series Split</span></td><td>只用過去預測未來，不洩漏</td><td>時間序列資料</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="kw-when">
+    <div class="kw-blk"><div class="kw-hd"><span>🔍</span> 考試關鍵字</div>
+      <div class="kw-body"><ul>
+        <li>K-Fold Cross Validation</li>
+        <li>Stratified K-Fold（分層取樣）</li>
+        <li>Leave-One-Out (LOO/LOOCV)</li>
+        <li>資料洩漏（Data Leakage）</li>
+        <li>泛化估計（Generalization Estimate）</li>
+      </ul></div>
+    </div>
+    <div class="wh-blk"><div class="wh-hd"><span>⭐</span> 什麼情境適合用？</div>
+      <div class="wh-body"><ul>
+        <li>資料量有限（&lt;10,000筆）</li>
+        <li>超參數搜索（Grid Search + CV）</li>
+        <li>比較不同模型效能</li>
+        <li>類別不平衡 → Stratified</li>
+        <li>時間序列 → Time Series Split</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="tip-row">
+    <div class="tip-box">
+      <strong>小提醒</strong>
+      <ol>
+        <li><b>Preprocessing 必須在 CV 的 loop 內</b>，不能先對全資料 fit（否則測試集資訊洩漏）！用 sklearn 的 Pipeline 可以自動處理。</li>
+        <li>一般資料 K=5 或 K=10；類別不平衡一定用 <b>StratifiedKFold</b>。</li>
+        <li>時間序列<b>絕對不能</b>用隨機 K-Fold，要用 <b>TimeSeriesSplit</b>。</li>
+      </ol>
+    </div>
+    <div class="mini-pair">
+      <div class="mini-item">
+        <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" width="110">
+          <rect width="110" height="80" rx="6" fill="var(--form-bg)" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <text x="55" y="12" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif" font-weight="700">sklearn Pipeline</text>
+          <rect x="10" y="20" width="90" height="16" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"></rect>
+          <text x="55" y="32" text-anchor="middle" font-size="8" fill="#1d4ed8" font-family="sans-serif">① Scaler（在CV內fit）</text>
+          <line x1="55" y1="36" x2="55" y2="44" stroke="#555" stroke-width="1.5"></line>
+          <polygon points="51,42 59,42 55,48" fill="#555"></polygon>
+          <rect x="10" y="48" width="90" height="16" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1"></rect>
+          <text x="55" y="60" text-anchor="middle" font-size="8" fill="#166534" font-family="sans-serif">② Model（train→val）</text>
+          <text x="55" y="76" text-anchor="middle" font-size="7" fill="#5e7566" font-family="sans-serif">防止資料洩漏</text>
+        </svg>
+        <figcaption>Pipeline 封裝 CV</figcaption>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CARD 19 ═══ -->
+<div class="card">
+  <div class="card-header">
+    <div class="num-badge bg-met">19</div>
+    <div class="title-block">
+      <div class="en">Confusion Matrix</div>
+      <div class="zh">混淆矩陣</div>
+    </div>
+  </div>
+
+  <div class="purpose-band">
+    <p><b>用途</b>：分類模型評估，呈現預測結果與真實標籤的詳細對應關係</p>
+    <p><b>目標</b>：一目了然地看出模型<b>把哪些類別搞混</b>，以及各種錯誤的分布。</p>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">白話理解</div>
+      <div class="plain-box">
+        <span class="bulb">💡</span>
+        <span>
+          以疾病篩檢為例：<br>
+          <span class="kterm">TP（真陽性）</span>：有病，正確判為有病 ✅<br>
+          <span class="kterm">TN（真陰性）</span>：無病，正確判為無病 ✅<br>
+          <span class="kterm">FP（假陽性）</span>：無病，誤判為有病 😟<br>
+          <span class="kterm">FN（假陰性）</span>：有病，誤判為無病 ⚠️（最危險！）
+        </span>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">2×2 混淆矩陣</div>
+      <div class="chart-box">
+        <svg viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          <rect width="300" height="195" fill="var(--card)"></rect>
+          <!-- Header labels -->
+          <text x="170" y="22" text-anchor="middle" font-size="10" fill="#1e40af" font-family="sans-serif" font-weight="700">預測（Predicted）</text>
+          <text x="170" y="38" font-size="9" fill="#5e7566" font-family="sans-serif">陽性</text>
+          <text x="240" y="38" font-size="9" fill="#5e7566" font-family="sans-serif">陰性</text>
+          <!-- Vertical label -->
+          <text x="60" y="100" text-anchor="middle" font-size="10" fill="#1e40af" font-family="sans-serif" font-weight="700" transform="rotate(-90,60,100)">實際（Actual）</text>
+          <text x="100" y="82" text-anchor="middle" font-size="9" fill="#5e7566" font-family="sans-serif">陽性</text>
+          <text x="100" y="142" text-anchor="middle" font-size="9" fill="#5e7566" font-family="sans-serif">陰性</text>
+          <!-- TP (green) -->
+          <rect x="120" y="50" width="80" height="60" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="2"></rect>
+          <text x="160" y="77" text-anchor="middle" font-size="11" fill="#166534" font-family="sans-serif" font-weight="900">TP</text>
+          <text x="160" y="93" text-anchor="middle" font-size="8.5" fill="#166534" font-family="sans-serif">真陽性 ✅</text>
+          <text x="160" y="105" text-anchor="middle" font-size="8" fill="#1f5c33" font-family="sans-serif" font-weight="700">50</text>
+          <!-- FP (red) -->
+          <rect x="202" y="50" width="80" height="60" rx="5" fill="#fee2e2" stroke="#ef4444" stroke-width="2"></rect>
+          <text x="242" y="77" text-anchor="middle" font-size="11" fill="#991b1b" font-family="sans-serif" font-weight="900">FP</text>
+          <text x="242" y="93" text-anchor="middle" font-size="8.5" fill="#991b1b" font-family="sans-serif">假陽性 😟</text>
+          <text x="242" y="105" text-anchor="middle" font-size="8" fill="#991b1b" font-family="sans-serif" font-weight="700">5</text>
+          <!-- FN (orange) -->
+          <rect x="120" y="112" width="80" height="60" rx="5" fill="#ffedd5" stroke="#f97316" stroke-width="2"></rect>
+          <text x="160" y="139" text-anchor="middle" font-size="11" fill="#9a3412" font-family="sans-serif" font-weight="900">FN</text>
+          <text x="160" y="155" text-anchor="middle" font-size="8.5" fill="#9a3412" font-family="sans-serif">假陰性 ⚠️</text>
+          <text x="160" y="167" text-anchor="middle" font-size="8" fill="#9a3412" font-family="sans-serif" font-weight="700">10</text>
+          <!-- TN (green) -->
+          <rect x="202" y="112" width="80" height="60" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="2"></rect>
+          <text x="242" y="139" text-anchor="middle" font-size="11" fill="#166534" font-family="sans-serif" font-weight="900">TN</text>
+          <text x="242" y="155" text-anchor="middle" font-size="8.5" fill="#166534" font-family="sans-serif">真陰性 ✅</text>
+          <text x="242" y="167" text-anchor="middle" font-size="8" fill="#1f5c33" font-family="sans-serif" font-weight="700">135</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">衍生指標公式</div>
+      <div class="formula-box">
+        <div class="frow"><span class="flabel">Accuracy：</span><code>(TP+TN) / (TP+FP+FN+TN)</code></div>
+        <div class="frow"><span class="flabel">Precision：</span><code>TP / (TP + FP)</code></div>
+        <div class="frow"><span class="flabel">Recall：</span><code>TP / (TP + FN)</code></div>
+        <div class="frow"><span class="flabel">F1：</span><code>2×P×R / (P + R)</code></div>
+        <div class="frow"><span class="flabel">Specificity：</span><code>TN / (TN + FP)</code></div>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">FP vs FN 的成本取捨</div>
+      <div class="formula-box" style="font-size:.83rem;line-height:1.8">
+        <div><b style="color:#991b1b">假陰性（FN）代價高</b> → 提高 Recall</div>
+        <div style="color:var(--muted);margin-bottom:.4rem">例：癌症篩檢（漏掉患者最危險）</div>
+        <div><b style="color:#7c3aed">假陽性（FP）代價高</b> → 提高 Precision</div>
+        <div style="color:var(--muted);margin-bottom:.4rem">例：垃圾信（誤刪正常信件）</div>
+        <div><b style="color:#0b6475">兩者平衡</b> → 用 F1 Score</div>
+        <div style="color:var(--muted)">例：一般分類任務評估</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kw-when">
+    <div class="kw-blk"><div class="kw-hd"><span>🔍</span> 考試關鍵字</div>
+      <div class="kw-body"><ul>
+        <li>TP / TN / FP / FN 定義</li>
+        <li>Type I Error = FP（誤報）</li>
+        <li>Type II Error = FN（漏報）</li>
+        <li>ROC Curve / AUC</li>
+        <li>Precision-Recall Curve</li>
+      </ul></div>
+    </div>
+    <div class="wh-blk"><div class="wh-hd"><span>⭐</span> 使用時機</div>
+      <div class="wh-body"><ul>
+        <li>任何分類任務都應先看混淆矩陣</li>
+        <li>類別不平衡時比 Accuracy 更有意義</li>
+        <li>診斷模型哪些類別容易混淆</li>
+        <li>選擇最佳分類閾值（Threshold）</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="tip-row">
+    <div class="tip-box">
+      <strong>小提醒</strong>
+      <ol>
+        <li>類別不平衡（如 99% 負例）時，<b>Accuracy 沒有意義</b>！模型全猜負例 Acc=99% 但 Recall=0%。</li>
+        <li><b>AUC-ROC</b>：考慮所有閾值下的 TPR vs FPR，值越接近 1 越好（隨機猜測=0.5）。</li>
+        <li>醫療診斷首看 <b>Recall（靈敏度）</b>；刑事司法首看 <b>Precision（精確度）</b>。</li>
+      </ol>
+    </div>
+    <div class="mini-pair">
+      <div class="mini-item">
+        <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" width="110">
+          <rect width="110" height="80" rx="6" fill="var(--form-bg)" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <text x="55" y="12" text-anchor="middle" font-size="8" fill="#1e40af" font-family="sans-serif" font-weight="700">ROC Curve</text>
+          <line x1="10" y1="68" x2="100" y2="68" stroke="#aaa" stroke-width="1"></line>
+          <line x1="10" y1="68" x2="10" y2="18" stroke="#aaa" stroke-width="1"></line>
+          <!-- Diagonal (random) -->
+          <line x1="10" y1="68" x2="100" y2="18" stroke="#d1d5db" stroke-width="1" stroke-dasharray="3,2"></line>
+          <!-- ROC curve -->
+          <path d="M10,68 Q25,30 45,22 Q70,17 100,18" fill="none" stroke="#1e40af" stroke-width="2.5"></path>
+          <!-- AUC label -->
+          <text x="40" y="50" font-size="8.5" fill="#1e40af" font-family="sans-serif" font-weight="700">AUC</text>
+          <text x="40" y="62" font-size="8.5" fill="#1e40af" font-family="sans-serif" font-weight="700">=0.93</text>
+          <text x="10" y="78" font-size="7" fill="#888" font-family="sans-serif">FPR →</text>
+        </svg>
+        <figcaption>AUC 越大越好</figcaption>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CARD 20 ═══ -->
+<div class="card">
+  <div class="card-header">
+    <div class="num-badge bg-met">20</div>
+    <div class="title-block">
+      <div class="en">Accuracy / Precision / Recall / F1</div>
+      <div class="zh">準確率 / 精確率 / 召回率 / F1</div>
+    </div>
+  </div>
+
+  <div class="purpose-band">
+    <p><b>用途</b>：分類模型效能指標，衡量模型「預測對了多少」以及「找到了多少目標」</p>
+    <p><b>目標</b>：根據任務需求選擇最合適的指標，避免被不適合的指標誤導（如類別不平衡時的 Accuracy）。</p>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">白話理解（Venn 圖）</div>
+      <div class="chart-box">
+        <svg viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          <rect width="300" height="195" fill="var(--card)"></rect>
+          <!-- Predicted Positive circle -->
+          <circle cx="130" cy="98" r="60" fill="#dbeafe" stroke="#3b82f6" stroke-width="2" opacity=".8"></circle>
+          <!-- Actual Positive circle -->
+          <circle cx="175" cy="98" r="60" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" opacity=".8"></circle>
+          <!-- Intersection = TP -->
+          <text x="153" y="93" text-anchor="middle" font-size="9" fill="#166534" font-family="sans-serif" font-weight="700">TP</text>
+          <text x="153" y="107" text-anchor="middle" font-size="8" fill="#166534" font-family="sans-serif">真陽性</text>
+          <!-- FP (left only) -->
+          <text x="102" y="93" text-anchor="middle" font-size="9" fill="#991b1b" font-family="sans-serif" font-weight="700">FP</text>
+          <text x="102" y="107" text-anchor="middle" font-size="8" fill="#991b1b" font-family="sans-serif">假陽性</text>
+          <!-- FN (right only) -->
+          <text x="204" y="93" text-anchor="middle" font-size="9" fill="#9a3412" font-family="sans-serif" font-weight="700">FN</text>
+          <text x="204" y="107" text-anchor="middle" font-size="8" fill="#9a3412" font-family="sans-serif">假陰性</text>
+          <!-- Circle labels -->
+          <text x="105" y="52" text-anchor="middle" font-size="9" fill="#1d4ed8" font-family="sans-serif" font-weight="700">預測陽性</text>
+          <text x="105" y="63" text-anchor="middle" font-size="8" fill="#1d4ed8" font-family="sans-serif">TP + FP</text>
+          <text x="200" y="52" text-anchor="middle" font-size="9" fill="#92400e" font-family="sans-serif" font-weight="700">實際陽性</text>
+          <text x="200" y="63" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif">TP + FN</text>
+          <!-- Arrows with formulas -->
+          <line x1="130" y1="160" x2="112" y2="148" stroke="#1d4ed8" stroke-width="1.5"></line>
+          <text x="90" y="175" text-anchor="middle" font-size="8.5" fill="#1d4ed8" font-family="sans-serif" font-weight="700">Precision</text>
+          <text x="90" y="187" text-anchor="middle" font-size="8" fill="#1d4ed8" font-family="sans-serif">= TP/(TP+FP)</text>
+          <line x1="165" y1="160" x2="195" y2="148" stroke="#92400e" stroke-width="1.5"></line>
+          <text x="225" y="175" text-anchor="middle" font-size="8.5" fill="#92400e" font-family="sans-serif" font-weight="700">Recall</text>
+          <text x="225" y="187" text-anchor="middle" font-size="8" fill="#92400e" font-family="sans-serif">= TP/(TP+FN)</text>
+        </svg>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">指標定義與直覺</div>
+      <div class="formula-box">
+        <div class="frow"><span class="flabel">Accuracy：</span><code>(TP+TN) / All</code></div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:.4rem;padding-left:3.5rem">整體猜對比例，類別不平衡時慎用</div>
+        <div class="frow"><span class="flabel">Precision：</span><code>TP / (TP+FP)</code></div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:.4rem;padding-left:3.5rem">「預測為正的中，真的有多少是正的」</div>
+        <div class="frow"><span class="flabel">Recall：</span><code>TP / (TP+FN)</code></div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:.4rem;padding-left:3.5rem">「所有真正的正例中，找到了多少」</div>
+        <div class="frow"><span class="flabel">F1：</span><code>2PR / (P+R)（調和平均）</code></div>
+        <div style="font-size:.78rem;color:var(--muted);padding-left:3.5rem">Precision 和 Recall 的平衡指標</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-sec">
+    <div class="sbadge-wrap"><div class="sbadge">指標選擇指南</div></div>
+    <div class="tbl-outer">
+      <table class="ktbl">
+        <thead><tr><th>場景</th><th>最重要的指標</th><th>原因</th></tr></thead>
+        <tbody>
+          <tr><td>癌症 / 疾病篩檢</td><td><span class="kern-name best">Recall（召回率）</span></td><td>漏掉患者（FN）代價極高</td></tr>
+          <tr><td>垃圾信件過濾</td><td><span class="kern-name">Precision（精確率）</span></td><td>誤刪正常信（FP）代價高</td></tr>
+          <tr><td>類別不平衡</td><td><span class="kern-name best">F1 Score / AUC</span></td><td>Accuracy 失去意義</td></tr>
+          <tr><td>多類別分類</td><td><span class="kern-name">Macro/Weighted F1</span></td><td>平均各類別 F1，更全面</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="kw-when">
+    <div class="kw-blk"><div class="kw-hd"><span>🔍</span> 考試關鍵字</div>
+      <div class="kw-body"><ul>
+        <li>Precision = 查準率（精確率）</li>
+        <li>Recall = 查全率（靈敏度）</li>
+        <li>F1 = 調和平均（Harmonic Mean）</li>
+        <li>Macro / Micro / Weighted Average</li>
+        <li>Precision-Recall Tradeoff</li>
+      </ul></div>
+    </div>
+    <div class="wh-blk"><div class="wh-hd"><span>⭐</span> Precision-Recall 取捨</div>
+      <div class="wh-body"><ul>
+        <li>降低分類閾值 → Recall↑, Precision↓</li>
+        <li>提高分類閾值 → Precision↑, Recall↓</li>
+        <li>Fβ：β&gt;1 偏重 Recall（醫療）</li>
+        <li>Fβ：β&lt;1 偏重 Precision（搜尋）</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="tip-row">
+    <div class="tip-box">
+      <strong>小提醒</strong>
+      <ol>
+        <li><b>必考口訣</b>：Precision = 預測為正的命中率；Recall = 實際正例的找到率。</li>
+        <li><b>類別不平衡</b>時，不要看 Accuracy！看 F1 或 AUC-ROC。</li>
+        <li>多類別：<b>Macro F1</b>（各類別等權重）vs <b>Weighted F1</b>（按樣本數加權）——類別不平衡用 Weighted。</li>
+      </ol>
+    </div>
+    <div class="mini-pair">
+      <div class="mini-item">
+        <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" width="110">
+          <rect width="110" height="80" rx="6" fill="var(--form-bg)" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <text x="55" y="12" text-anchor="middle" font-size="7.5" fill="#1e40af" font-family="sans-serif" font-weight="700">Precision-Recall 曲線</text>
+          <line x1="10" y1="68" x2="100" y2="68" stroke="#aaa" stroke-width="1"></line>
+          <line x1="10" y1="68" x2="10" y2="18" stroke="#aaa" stroke-width="1"></line>
+          <!-- PR curve (starts high P, drops) -->
+          <path d="M12,20 Q25,22 40,28 Q60,38 75,52 Q88,62 100,68" fill="none" stroke="#1e40af" stroke-width="2.5"></path>
+          <text x="5" y="22" font-size="7" fill="#1e40af" font-family="sans-serif">P↑</text>
+          <text x="95" y="76" font-size="7" fill="#1e40af" font-family="sans-serif">R→</text>
+          <!-- F1 operating point -->
+          <circle cx="55" cy="40" r="4" fill="#ef4444"></circle>
+          <text x="65" y="38" font-size="7" fill="#ef4444" font-family="sans-serif">F1 最優</text>
+        </svg>
+        <figcaption>P-R 曲線找最佳閾值</figcaption>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ CARD 21 ═══ -->
+<div class="card">
+  <div class="card-header">
+    <div class="num-badge bg-met">21</div>
+    <div class="title-block">
+      <div class="en">MAE / MSE / RMSE / R²</div>
+      <div class="zh">迴歸評估指標</div>
+    </div>
+  </div>
+
+  <div class="purpose-band">
+    <p><b>用途</b>：評估迴歸模型預測連續數值的效能</p>
+    <p><b>目標</b>：量化預測值與真實值之間的差距，理解不同指標對<b>離群值</b>的敏感度差異。</p>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">白話理解</div>
+      <div class="plain-box">
+        <span class="bulb">💡</span>
+        <span>
+          用射箭比喻（連續距離）：<br>
+          <span class="kterm">MAE</span>：每次偏差的絕對值平均——「平均差多遠」<br>
+          <span class="kterm">MSE</span>：偏差的平方平均——大偏差懲罰更重<br>
+          <span class="kterm">RMSE</span>：MSE 開根號，單位與原本相同<br>
+          <span class="kterm">R²</span>：模型解釋了多少變異（0~1，越高越好）
+        </span>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">殘差示意</div>
+      <div class="chart-box">
+        <svg viewBox="0 0 300 195" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+          <rect width="300" height="195" fill="var(--card)"></rect>
+          <!-- Axes -->
+          <line x1="25" y1="170" x2="285" y2="170" stroke="#aab8ac" stroke-width="1.5"></line>
+          <line x1="25" y1="170" x2="25" y2="15" stroke="#aab8ac" stroke-width="1.5"></line>
+          <text x="278" y="178" font-size="9" fill="#8a9e90" font-family="sans-serif">x</text>
+          <text x="13" y="18" font-size="9" fill="#8a9e90" font-family="sans-serif">y</text>
+          <!-- Regression line -->
+          <line x1="30" y1="155" x2="280" y2="30" stroke="#1f5c33" stroke-width="2.5"></line>
+          <!-- Data points and residuals -->
+          <circle cx="55" cy="130" r="5" fill="#3b82f6"></circle>
+          <line x1="55" y1="130" x2="55" y2="148" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="3,2"></line>
+          <circle cx="100" cy="110" r="5" fill="#3b82f6"></circle>
+          <line x1="100" y1="110" x2="100" y2="127" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="3,2"></line>
+          <circle cx="140" cy="90" r="5" fill="#3b82f6"></circle>
+          <line x1="140" y1="90" x2="140" y2="107" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="3,2"></line>
+          <circle cx="180" cy="62" r="5" fill="#3b82f6"></circle>
+          <line x1="180" y1="62" x2="180" y2="83" stroke="#ef4444" stroke-width="3" stroke-dasharray="3,2"></line>
+          <circle cx="220" cy="50" r="5" fill="#3b82f6"></circle>
+          <line x1="220" y1="50" x2="220" y2="63" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="3,2"></line>
+          <circle cx="260" cy="25" r="5" fill="#3b82f6"></circle>
+          <line x1="260" y1="25" x2="260" y2="43" stroke="#ef4444" stroke-width="1.8" stroke-dasharray="3,2"></line>
+          <!-- Labels -->
+          <text x="170" y="140" font-size="9" fill="#ef4444" font-family="sans-serif" font-weight="700">│殘差│= |yᵢ−ŷᵢ|</text>
+          <text x="155" y="30" font-size="9" fill="#1f5c33" font-family="sans-serif" font-weight="700">迴歸線 ŷ</text>
+          <!-- R² note -->
+          <rect x="10" y="175" width="270" height="15" rx="3" fill="#e8f5ed"></rect>
+          <text x="145" y="186" text-anchor="middle" font-size="8" fill="#1f5c33" font-family="sans-serif" font-weight="700">R² = 1 − SS_res/SS_tot　解釋模型「有多好」</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-sec">
+    <div class="sbadge-wrap"><div class="sbadge">四大指標比較</div></div>
+    <div class="tbl-outer">
+      <table class="ktbl">
+        <thead><tr><th>指標</th><th>公式</th><th>單位</th><th>離群值敏感度</th><th>主要用途</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="kern-name">MAE</span></td>
+            <td>(1/n)Σ|yᵢ−ŷᵢ|</td><td>同 y</td><td>低（穩健）</td><td>離群值多時首選</td>
+          </tr>
+          <tr>
+            <td><span class="kern-name">MSE</span></td>
+            <td>(1/n)Σ(yᵢ−ŷᵢ)²</td><td>y²</td><td><b style="color:#991b1b">高</b></td><td>訓練損失函數</td>
+          </tr>
+          <tr>
+            <td><span class="kern-name">RMSE</span></td>
+            <td>√MSE</td><td>同 y</td><td><b style="color:#991b1b">高</b></td><td><span class="best">最常用評估指標</span></td>
+          </tr>
+          <tr>
+            <td><span class="kern-name">R²</span></td>
+            <td>1−SS_res/SS_tot</td><td>無（0~1）</td><td>中</td><td>模型解釋力（可比較）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="col-wrap">
+      <div class="sbadge">數學細節</div>
+      <div class="formula-box">
+        <div class="frow"><span class="flabel">MAE：</span><code>(1/n) Σᵢ|yᵢ − ŷᵢ|</code></div>
+        <div class="frow"><span class="flabel">MSE：</span><code>(1/n) Σᵢ(yᵢ − ŷᵢ)²</code></div>
+        <div class="frow"><span class="flabel">RMSE：</span><code>√[(1/n) Σᵢ(yᵢ − ŷᵢ)²]</code></div>
+        <div class="frow"><span class="flabel">R²：</span><code>1 − Σ(yᵢ−ŷᵢ)² / Σ(yᵢ−ȳ)²</code></div>
+        <div style="margin-top:.4rem;font-size:.8rem;color:var(--muted)">
+          • R²=1：完美預測；R²=0：與平均值一樣；R²&lt;0：比猜平均更差
+        </div>
+      </div>
+    </div>
+    <div class="col-wrap">
+      <div class="sbadge">例子：房價預測</div>
+      <div class="example-box">
+        <div class="ex-inner">
+          <div class="ex-panel feat">
+            <h4>預測 vs 實際</h4>
+            <ul>
+              <li>預測：800 萬</li>
+              <li>實際：750 萬</li>
+              <li>誤差：50 萬</li>
+            </ul>
+          </div>
+          <div class="arrow-sep">→</div>
+          <div class="ex-panel tgt">
+            <h4>指標</h4>
+            <div style="font-size:1.2rem;margin:.2rem 0">🏠</div>
+            <div class="tgt-label">RMSE<br>= 72 萬<br>R²= 0.87</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kw-when">
+    <div class="kw-blk"><div class="kw-hd"><span>🔍</span> 考試關鍵字</div>
+      <div class="kw-body"><ul>
+        <li>MAE（平均絕對誤差）</li>
+        <li>MSE（均方誤差）</li>
+        <li>RMSE（均方根誤差）</li>
+        <li>R²（決定係數 / 解釋變異比例）</li>
+        <li>SS_res（殘差平方和）/ SS_tot</li>
+      </ul></div>
+    </div>
+    <div class="wh-blk"><div class="wh-hd"><span>⭐</span> 如何選擇指標？</div>
+      <div class="wh-body"><ul>
+        <li>大誤差代價高 → RMSE（放大懲罰）</li>
+        <li>離群值多 → MAE（更穩健）</li>
+        <li>想知道解釋力 → R²</li>
+        <li>訓練損失用 MSE（可微分）</li>
+        <li>比較不同量綱模型 → R²（無單位）</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="tip-row">
+    <div class="tip-box">
+      <strong>小提醒</strong>
+      <ol>
+        <li><b>RMSE &gt; MAE</b> 代表資料中有大誤差的離群值；差距越大，離群值越嚴重。</li>
+        <li>R² 在多元迴歸中會隨特徵數增加而虛假升高，應改看 <b>Adjusted R²</b>。</li>
+        <li>R² 可為負值（若模型比猜平均更差），這表示模型選錯了。</li>
+        <li><b>Huber Loss</b>：MAE 與 MSE 的折衷，對離群值有部分抵抗力。</li>
+      </ol>
+    </div>
+    <div class="mini-pair">
+      <div class="mini-item">
+        <svg viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" width="110">
+          <rect width="110" height="80" rx="6" fill="var(--form-bg)" stroke="var(--card-bd)" stroke-width="1.2"></rect>
+          <text x="55" y="12" text-anchor="middle" font-size="8" fill="#1e40af" font-family="sans-serif" font-weight="700">離群值影響比較</text>
+          <!-- Points without outlier -->
+          <circle cx="15" cy="60" r="3" fill="#3b82f6"></circle>
+          <circle cx="30" cy="52" r="3" fill="#3b82f6"></circle>
+          <circle cx="45" cy="44" r="3" fill="#3b82f6"></circle>
+          <!-- Outlier -->
+          <circle cx="70" cy="20" r="4" fill="#ef4444"></circle>
+          <text x="74" y="17" font-size="7" fill="#ef4444" font-family="sans-serif">離群</text>
+          <!-- MAE line (less affected) -->
+          <line x1="10" y1="62" x2="100" y2="38" stroke="#16a34a" stroke-width="2"></line>
+          <text x="88" y="34" font-size="6.5" fill="#16a34a" font-family="sans-serif">MAE</text>
+          <!-- MSE line (pulled up by outlier) -->
+          <line x1="10" y1="65" x2="100" y2="22" stroke="#ef4444" stroke-width="2"></line>
+          <text x="88" y="55" font-size="6.5" fill="#ef4444" font-family="sans-serif">MSE</text>
+          <text x="55" y="75" text-anchor="middle" font-size="7" fill="#5e7566" font-family="sans-serif">MSE 被離群值拉偏更多</text>
+        </svg>
+        <figcaption>MSE 對離群值更敏感</figcaption>
+      </div>
+    </div>
+  </div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

@@ -1,0 +1,2088 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python 語法手冊</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --bg:#f7f4ee;
+  --surface:#ffffff;
+  --surface-2:#efe9db;
+  --ink:#211d18;
+  --muted:#736b5e;
+  --border:#e2dac8;
+  --accent:#b3691c;
+  --accent-ink:#ffffff;
+  --accent-soft:#f2e0bd;
+  --accent2:#2b5f73;
+  --accent2-soft:#dbeaef;
+  --code-bg:#1d2129;
+  --code-ink:#d7dce4;
+  --code-border:#30353f;
+  --code-kw:#e8a765;
+  --code-str:#9dcb8e;
+  --code-com:#77808f;
+  --code-num:#7fb3d9;
+  --code-fn:#d79bdd;
+  --code-dec:#e28c8c;
+  --shadow:0 1px 2px rgba(33,29,24,.04), 0 8px 24px -12px rgba(33,29,24,.12);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#13151a;
+    --surface:#1a1d24;
+    --surface-2:#20242c;
+    --ink:#e9e6de;
+    --muted:#9a9385;
+    --border:#2d313a;
+    --accent:#e2a35f;
+    --accent-ink:#1a1206;
+    --accent-soft:#3a2c17;
+    --accent2:#8ec3d8;
+    --accent2-soft:#1c2f36;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 28px -14px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13151a;
+  --surface:#1a1d24;
+  --surface-2:#20242c;
+  --ink:#e9e6de;
+  --muted:#9a9385;
+  --border:#2d313a;
+  --accent:#e2a35f;
+  --accent-ink:#1a1206;
+  --accent-soft:#3a2c17;
+  --accent2:#8ec3d8;
+  --accent2-soft:#1c2f36;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 28px -14px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding-inline:16px;
+}
+::selection{background:var(--accent-soft)}
+a{color:var(--accent2)}
+code, .mono{font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace}
+
+.wrap{max-width:1180px;margin:0 auto}
+
+/* header */
+header.top{
+  position:sticky;
+  top:env(safe-area-inset-top,0px);
+  z-index:20;
+  background:var(--bg);
+  padding-block:18px 14px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:24px;
+}
+.top-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:clamp(24px,3.4vw,32px);
+  margin:0;
+  letter-spacing:-.01em;
+}
+.eyebrow{
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 4px;
+}
+.tagline{color:var(--muted);font-size:14px;margin:6px 0 0;max-width:56ch}
+.search-box{position:relative;min-width:220px;flex:0 0 auto}
+.search-box input{
+  width:100%;
+  padding:9px 14px 9px 34px;
+  border-radius:9px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--ink);
+  font-size:14px;
+  font-family:inherit;
+}
+.search-box input:focus{outline:2px solid var(--accent2);outline-offset:1px}
+.search-box svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--muted);pointer-events:none}
+.result-note{font-size:12px;color:var(--muted);margin-top:6px;min-height:16px}
+
+/* layout */
+.layout{display:block}
+nav.side{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  padding-bottom:10px;
+  margin-bottom:22px;
+  border-bottom:1px solid var(--border);
+  scrollbar-width:thin;
+}
+nav.side a{
+  flex:0 0 auto;
+  display:block;
+  padding:7px 13px;
+  border-radius:999px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--ink);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:500;
+  white-space:nowrap;
+}
+nav.side a:hover{border-color:var(--accent)}
+/* Group labels are sidebar-only structure; the mobile nav is a flat pill
+   row, and an unstyled label there would sit in the flex row and wrap
+   character-by-character. Hide it until the sidebar layout kicks in. */
+nav.side .grp-label{display:none}
+
+@media (min-width:900px){
+  .layout{display:grid;grid-template-columns:230px 1fr;gap:36px;align-items:start}
+  nav.side{
+    display:block;
+    position:sticky;
+    top:calc(env(safe-area-inset-top,0px) + 96px);
+    border-bottom:none;
+    margin-bottom:0;
+    max-height:calc(100vh - 130px);
+    overflow-y:auto;
+    padding-right:6px;
+  }
+  nav.side a{margin-bottom:3px;border-radius:8px}
+  nav.side .grp-label{
+    display:block;
+    font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);margin:18px 0 6px;padding-left:2px;
+  }
+  nav.side .grp-label:first-child{margin-top:0}
+}
+
+main{min-width:0;padding-bottom:64px}
+
+section.category{margin-bottom:44px;scroll-margin-top:120px}
+.cat-head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;border-bottom:2px solid var(--accent-soft);padding-bottom:8px}
+.cat-num{font-family:'JetBrains Mono';font-size:13px;color:var(--accent);font-weight:600}
+.cat-title{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin:0}
+
+.cards{display:grid;grid-template-columns:1fr;gap:14px}
+@media (min-width:900px){.cards{grid-template-columns:1fr 1fr}}
+
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px 16px 14px;
+  box-shadow:var(--shadow);
+  scroll-margin-top:120px;
+}
+.card h3{
+  font-size:14.5px;
+  font-weight:600;
+  margin:0 0 5px;
+  display:flex;align-items:center;gap:8px;
+}
+.card h3 .tag{
+  font-family:'JetBrains Mono';font-size:10.5px;font-weight:500;
+  color:var(--accent2);background:var(--accent2-soft);
+  padding:2px 7px;border-radius:5px;letter-spacing:.01em;
+}
+.card p.desc{font-size:13px;color:var(--muted);margin:0 0 11px;line-height:1.5}
+pre{
+  margin:0;
+  background:var(--code-bg);
+  border:1px solid var(--code-border);
+  border-radius:8px;
+  padding:11px 13px;
+  overflow-x:auto;
+  font-size:12.5px;
+  line-height:1.62;
+  color:var(--code-ink);
+}
+pre code{font-family:'JetBrains Mono',monospace;white-space:pre}
+.tok-kw{color:var(--code-kw);font-weight:600}
+.tok-str{color:var(--code-str)}
+.tok-com{color:var(--code-com);font-style:italic}
+.tok-num{color:var(--code-num)}
+.tok-fn{color:var(--code-fn)}
+.tok-dec{color:var(--code-dec)}
+
+footer{
+  text-align:center;color:var(--muted);font-size:12.5px;
+  padding:28px 0 40px;border-top:1px solid var(--border);margin-top:12px;
+}
+
+[hidden]{display:none!important}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="top-row">
+      <div>
+        <p class="eyebrow">參考手冊</p>
+        <h1>Python 語法手冊</h1>
+        <p class="tagline">從基礎到進階,依主題分類的語法用法與範例速查表 — 點選左側分類或直接搜尋關鍵字。</p>
+      </div>
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <input id="search" type="text" placeholder="搜尋語法,例如 lambda、try、生成器…" autocomplete="off">
+        <div class="result-note" id="resultNote"></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="side" id="sideNav" aria-label="分類導覽"><div class="grp-label">基本語法與型別</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E5%9F%BA%E6%9C%AC%E8%AA%9E%E6%B3%95%E8%88%87%E5%9E%8B%E5%88%A5">1. 基本語法與型別</a><div class="grp-label">流程控制</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6">2. 流程控制</a><div class="grp-label">資料結構</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E8%B3%87%E6%96%99%E7%B5%90%E6%A7%8B">3. 資料結構</a><div class="grp-label">函式</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E5%87%BD%E5%BC%8F">4. 函式</a><div class="grp-label">物件導向</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E7%89%A9%E4%BB%B6%E5%B0%8E%E5%90%91">5. 物件導向</a><div class="grp-label">例外處理</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E4%BE%8B%E5%A4%96%E8%99%95%E7%90%86">6. 例外處理</a><div class="grp-label">檔案與模組</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E6%AA%94%E6%A1%88%E8%88%87%E6%A8%A1%E7%B5%84">7. 檔案與模組</a><div class="grp-label">進階語法</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E9%80%B2%E9%9A%8E%E8%AA%9E%E6%B3%95">8. 進階語法</a><div class="grp-label">常用標準函式庫速查</div><a href="https://97427f60-c87b-41ea-921d-2ebbb0182fb7.frame.claudeusercontent.com/_f/1790132861-0b11/#cat-%E5%B8%B8%E7%94%A8%E6%A8%99%E6%BA%96%E5%87%BD%E5%BC%8F%E5%BA%AB%E9%80%9F%E6%9F%A5">9. 常用標準函式庫速查</a></nav>
+    <main id="main"><section class="category" id="cat-基本語法與型別"><div class="cat-head"><span class="cat-num">01</span><h2 class="cat-title">基本語法與型別</h2></div><div class="cards"><article class="card" data-search="變數賦值與命名 python 為動態型別語言,變數不須宣告型別,賦值即建立。 name = &quot;gina&quot;          # 字串
+age = 28                # 整數
+height = 168.5          # 浮點數
+is_active = true        # 布林值
+
+# 多重賦值
+x, y, z = 1, 2, 3
+a = b = c = 0
+
+# 交換變數(不需暫存變數)
+x, y = y, x"><h3>變數賦值與命名 <span class="tag">variable</span></h3><p class="desc">Python 為動態型別語言,變數不須宣告型別,賦值即建立。</p><pre><code>name = <span class="tok-str">"Gina"</span>          <span class="tok-com"># 字串</span>
+age = <span class="tok-num">28</span>                <span class="tok-com"># 整數</span>
+height = <span class="tok-num">168.5</span>          <span class="tok-com"># 浮點數</span>
+is_active = <span class="tok-kw">True</span>        <span class="tok-com"># 布林值</span>
+
+<span class="tok-com"># 多重賦值</span>
+x, y, z = <span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>
+a = b = c = <span class="tok-num">0</span>
+
+<span class="tok-com"># 交換變數(不需暫存變數)</span>
+x, y = y, x</code></pre></article><article class="card" data-search="常見資料型別 python 的內建基礎型別:int、float、str、bool、none。 type(10)        # &lt;class 'int'&gt;
+type(3.14)      # &lt;class 'float'&gt;
+type(&quot;hi&quot;)      # &lt;class 'str'&gt;
+type(true)      # &lt;class 'bool'&gt;
+type(none)      # &lt;class 'nonetype'&gt;
+
+x = none        # 代表「沒有值」
+if x is none:
+    print(&quot;尚未賦值&quot;)"><h3>常見資料型別 <span class="tag">type</span></h3><p class="desc">Python 的內建基礎型別:int、float、str、bool、None。</p><pre><code><span class="tok-fn">type</span>(<span class="tok-num">10</span>)        <span class="tok-com"># &lt;class 'int'&gt;</span>
+<span class="tok-fn">type</span>(<span class="tok-num">3.14</span>)      <span class="tok-com"># &lt;class 'float'&gt;</span>
+<span class="tok-fn">type</span>(<span class="tok-str">"hi"</span>)      <span class="tok-com"># &lt;class 'str'&gt;</span>
+<span class="tok-fn">type</span>(<span class="tok-kw">True</span>)      <span class="tok-com"># &lt;class 'bool'&gt;</span>
+<span class="tok-fn">type</span>(<span class="tok-kw">None</span>)      <span class="tok-com"># &lt;class 'NoneType'&gt;</span>
+
+x = <span class="tok-kw">None</span>        <span class="tok-com"># 代表「沒有值」</span>
+<span class="tok-kw">if</span> x <span class="tok-kw">is</span> <span class="tok-kw">None</span>:
+    <span class="tok-fn">print</span>(<span class="tok-str">"尚未賦值"</span>)</code></pre></article><article class="card" data-search="型別轉換 使用 int()、float()、str()、bool() 等函式在型別間轉換。 int(&quot;42&quot;)        # 42
+float(&quot;3.14&quot;)    # 3.14
+str(100)         # &quot;100&quot;
+bool(0)          # false
+bool(&quot;&quot;)         # false
+bool(&quot;a&quot;)        # true
+list(&quot;abc&quot;)      # ['a', 'b', 'c']
+int(3.9)         # 3 (無條件捨去)"><h3>型別轉換 <span class="tag">cast</span></h3><p class="desc">使用 int()、float()、str()、bool() 等函式在型別間轉換。</p><pre><code><span class="tok-fn">int</span>(<span class="tok-str">"42"</span>)        <span class="tok-com"># 42</span>
+<span class="tok-fn">float</span>(<span class="tok-str">"3.14"</span>)    <span class="tok-com"># 3.14</span>
+<span class="tok-fn">str</span>(<span class="tok-num">100</span>)         <span class="tok-com"># "100"</span>
+<span class="tok-fn">bool</span>(<span class="tok-num">0</span>)          <span class="tok-com"># False</span>
+<span class="tok-fn">bool</span>(<span class="tok-str">""</span>)         <span class="tok-com"># False</span>
+<span class="tok-fn">bool</span>(<span class="tok-str">"a"</span>)        <span class="tok-com"># True</span>
+<span class="tok-fn">list</span>(<span class="tok-str">"abc"</span>)      <span class="tok-com"># ['a', 'b', 'c']</span>
+<span class="tok-fn">int</span>(<span class="tok-num">3.9</span>)         <span class="tok-com"># 3 (無條件捨去)</span></code></pre></article><article class="card" data-search="字串格式化 f-string f-string(f&quot;...&quot;)是目前最建議的字串格式化方式,可直接內嵌運算式。 name, score = &quot;gina&quot;, 92.567
+
+f&quot;{name} 得了 {score} 分&quot;
+# 'gina 得了 92.567 分'
+
+f&quot;{score:.1f}&quot;        # 保留一位小數 -&gt; '92.6'
+f&quot;{score:&gt;10.2f}&quot;     # 靠右對齊,寬度10
+f&quot;{name!r}&quot;           # 使用 repr() -&gt; &quot;'gina'&quot;
+f&quot;{1000000:,}&quot;        # 千分位 -&gt; '1,000,000'"><h3>字串格式化 f-string <span class="tag">str</span></h3><p class="desc">f-string(f"...")是目前最建議的字串格式化方式,可直接內嵌運算式。</p><pre><code>name, score = <span class="tok-str">"Gina"</span>, <span class="tok-num">92.567</span>
+
+<span class="tok-str">f"{name} 得了 {score} 分"</span>
+<span class="tok-com"># 'Gina 得了 92.567 分'</span>
+
+<span class="tok-str">f"{score:.1f}"</span>        <span class="tok-com"># 保留一位小數 -&gt; '92.6'</span>
+<span class="tok-str">f"{score:&gt;10.2f}"</span>     <span class="tok-com"># 靠右對齊,寬度10</span>
+<span class="tok-str">f"{name!r}"</span>           <span class="tok-com"># 使用 repr() -&gt; "'Gina'"</span>
+<span class="tok-str">f"{1000000:,}"</span>        <span class="tok-com"># 千分位 -&gt; '1,000,000'</span></code></pre></article><article class="card" data-search="字串常用方法 字串是不可變(immutable)物件,常用方法會回傳新字串。 s = &quot;  hello, python world  &quot;
+
+s.strip()              # 去除頭尾空白
+s.lower()               # 全小寫
+s.upper()               # 全大寫
+s.replace(&quot;python&quot;, &quot;ai&quot;)
+s.split(&quot;,&quot;)            # 依逗號切割成 list
+&quot;-&quot;.join([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]) # 'a-b-c'
+s.startswith(&quot;  he&quot;)    # true
+&quot;py&quot; in s.lower()       # true"><h3>字串常用方法 <span class="tag">str</span></h3><p class="desc">字串是不可變(immutable)物件,常用方法會回傳新字串。</p><pre><code>s = <span class="tok-str">"  Hello, Python World  "</span>
+
+s.strip()              <span class="tok-com"># 去除頭尾空白</span>
+s.lower()               <span class="tok-com"># 全小寫</span>
+s.upper()               <span class="tok-com"># 全大寫</span>
+s.replace(<span class="tok-str">"Python"</span>, <span class="tok-str">"AI"</span>)
+s.split(<span class="tok-str">","</span>)            <span class="tok-com"># 依逗號切割成 list</span>
+<span class="tok-str">"-"</span>.join([<span class="tok-str">"a"</span>,<span class="tok-str">"b"</span>,<span class="tok-str">"c"</span>]) <span class="tok-com"># 'a-b-c'</span>
+s.startswith(<span class="tok-str">"  He"</span>)    <span class="tok-com"># True</span>
+<span class="tok-str">"py"</span> <span class="tok-kw">in</span> s.lower()       <span class="tok-com"># True</span></code></pre></article><article class="card" data-search="字串切片 slicing 以 [起始:結束:步長] 取出序列的子集合,適用於 str、list、tuple。 s = &quot;python&quot;
+
+s[0]        # 'p'  第一個字元
+s[-1]       # 'n'  最後一個字元
+s[0:3]      # 'pyt' 索引0到2
+s[:3]       # 'pyt' 省略起始
+s[3:]       # 'hon' 省略結束
+s[::-1]     # 'nohtyp' 反轉字串
+s[::2]      # 'pto' 每隔一個取一次"><h3>字串切片 Slicing <span class="tag">str</span></h3><p class="desc">以 [起始:結束:步長] 取出序列的子集合,適用於 str、list、tuple。</p><pre><code>s = <span class="tok-str">"Python"</span>
+
+s[<span class="tok-num">0</span>]        <span class="tok-com"># 'P'  第一個字元</span>
+s[-<span class="tok-num">1</span>]       <span class="tok-com"># 'n'  最後一個字元</span>
+s[<span class="tok-num">0</span>:<span class="tok-num">3</span>]      <span class="tok-com"># 'Pyt' 索引0到2</span>
+s[:<span class="tok-num">3</span>]       <span class="tok-com"># 'Pyt' 省略起始</span>
+s[<span class="tok-num">3</span>:]       <span class="tok-com"># 'hon' 省略結束</span>
+s[::-<span class="tok-num">1</span>]     <span class="tok-com"># 'nohtyP' 反轉字串</span>
+s[::<span class="tok-num">2</span>]      <span class="tok-com"># 'Pto' 每隔一個取一次</span></code></pre></article><article class="card" data-search="運算子總覽 算術、比較、邏輯、指派運算子是撰寫條件與運算的基礎。 # 算術: +  -  *  /  //(整除)  %(餘數)  **(次方)
+7 // 2   # 3
+7 % 2    # 1
+2 ** 10  # 1024
+
+# 比較: ==  !=  &gt;  &lt;  &gt;=  &lt;=
+# 邏輯: and  or  not
+(3 &gt; 2) and (5 &gt; 1)   # true
+
+# 指派: +=  -=  *=  /=  //=  **=
+x = 10
+x += 5   # x = 15"><h3>運算子總覽 <span class="tag">operator</span></h3><p class="desc">算術、比較、邏輯、指派運算子是撰寫條件與運算的基礎。</p><pre><code><span class="tok-com"># 算術: +  -  *  /  //(整除)  %(餘數)  **(次方)</span>
+<span class="tok-num">7</span> // <span class="tok-num">2</span>   <span class="tok-com"># 3</span>
+<span class="tok-num">7</span> % <span class="tok-num">2</span>    <span class="tok-com"># 1</span>
+<span class="tok-num">2</span> ** <span class="tok-num">10</span>  <span class="tok-com"># 1024</span>
+
+<span class="tok-com"># 比較: ==  !=  &gt;  &lt;  &gt;=  &lt;=</span>
+<span class="tok-com"># 邏輯: and  or  not</span>
+(<span class="tok-num">3</span> &gt; <span class="tok-num">2</span>) <span class="tok-kw">and</span> (<span class="tok-num">5</span> &gt; <span class="tok-num">1</span>)   <span class="tok-com"># True</span>
+
+<span class="tok-com"># 指派: +=  -=  *=  /=  //=  **=</span>
+x = <span class="tok-num">10</span>
+x += <span class="tok-num">5</span>   <span class="tok-com"># x = 15</span></code></pre></article></div></section><section class="category" id="cat-流程控制"><div class="cat-head"><span class="cat-num">02</span><h2 class="cat-title">流程控制</h2></div><div class="cards"><article class="card" data-search="if / elif / else 依縮排(通常4個空白)決定程式碼區塊,不使用大括號。 score = 78
+
+if score &gt;= 90:
+    grade = &quot;a&quot;
+elif score &gt;= 80:
+    grade = &quot;b&quot;
+elif score &gt;= 70:
+    grade = &quot;c&quot;
+else:
+    grade = &quot;d&quot;
+
+print(grade)   # c"><h3>if / elif / else <span class="tag">control</span></h3><p class="desc">依縮排(通常4個空白)決定程式碼區塊,不使用大括號。</p><pre><code>score = <span class="tok-num">78</span>
+
+<span class="tok-kw">if</span> score &gt;= <span class="tok-num">90</span>:
+    grade = <span class="tok-str">"A"</span>
+<span class="tok-kw">elif</span> score &gt;= <span class="tok-num">80</span>:
+    grade = <span class="tok-str">"B"</span>
+<span class="tok-kw">elif</span> score &gt;= <span class="tok-num">70</span>:
+    grade = <span class="tok-str">"C"</span>
+<span class="tok-kw">else</span>:
+    grade = <span class="tok-str">"D"</span>
+
+<span class="tok-fn">print</span>(grade)   <span class="tok-com"># C</span></code></pre></article><article class="card" data-search="for 迴圈與 range for 走訪任何可迭代物件(iterable);range() 產生數字序列。 for i in range(5):        # 0,1,2,3,4
+    print(i)
+
+for i in range(2, 10, 2): # 2,4,6,8
+    print(i)
+
+fruits = [&quot;蘋果&quot;, &quot;香蕉&quot;, &quot;橘子&quot;]
+for fruit in fruits:
+    print(fruit)
+
+for i, fruit in enumerate(fruits, start=1):
+    print(i, fruit)"><h3>for 迴圈與 range <span class="tag">loop</span></h3><p class="desc">for 走訪任何可迭代物件(iterable);range() 產生數字序列。</p><pre><code><span class="tok-kw">for</span> i <span class="tok-kw">in</span> <span class="tok-fn">range</span>(<span class="tok-num">5</span>):        <span class="tok-com"># 0,1,2,3,4</span>
+    <span class="tok-fn">print</span>(i)
+
+<span class="tok-kw">for</span> i <span class="tok-kw">in</span> <span class="tok-fn">range</span>(<span class="tok-num">2</span>, <span class="tok-num">10</span>, <span class="tok-num">2</span>): <span class="tok-com"># 2,4,6,8</span>
+    <span class="tok-fn">print</span>(i)
+
+fruits = [<span class="tok-str">"蘋果"</span>, <span class="tok-str">"香蕉"</span>, <span class="tok-str">"橘子"</span>]
+<span class="tok-kw">for</span> fruit <span class="tok-kw">in</span> fruits:
+    <span class="tok-fn">print</span>(fruit)
+
+<span class="tok-kw">for</span> i, fruit <span class="tok-kw">in</span> <span class="tok-fn">enumerate</span>(fruits, start=<span class="tok-num">1</span>):
+    <span class="tok-fn">print</span>(i, fruit)</code></pre></article><article class="card" data-search="while 迴圈 只要條件為 true 就持續執行,常用於次數不確定的重複作業。 n = 5
+while n &gt; 0:
+    print(n)
+    n -= 1
+print(&quot;發射!&quot;)
+
+# 搭配 sentinel 值持續讀取輸入
+# while true:
+#     cmd = input(&quot;&gt; &quot;)
+#     if cmd == &quot;exit&quot;:
+#         break"><h3>while 迴圈 <span class="tag">loop</span></h3><p class="desc">只要條件為 True 就持續執行,常用於次數不確定的重複作業。</p><pre><code>n = <span class="tok-num">5</span>
+<span class="tok-kw">while</span> n &gt; <span class="tok-num">0</span>:
+    <span class="tok-fn">print</span>(n)
+    n -= <span class="tok-num">1</span>
+<span class="tok-fn">print</span>(<span class="tok-str">"發射!"</span>)
+
+<span class="tok-com"># 搭配 sentinel 值持續讀取輸入</span>
+<span class="tok-com"># while True:</span>
+<span class="tok-com">#     cmd = input("&gt; ")</span>
+<span class="tok-com">#     if cmd == "exit":</span>
+<span class="tok-com">#         break</span></code></pre></article><article class="card" data-search="break / continue / pass break 跳出整個迴圈;continue 跳過本次迭代;pass 為空語句佔位。 for i in range(10):
+    if i == 3:
+        continue     # 跳過3,不印出
+    if i == 6:
+        break        # 到6就整個結束
+    print(i)          # 0 1 2 4 5
+
+def todo():
+    pass   # 尚未實作,先佔位避免語法錯誤"><h3>break / continue / pass <span class="tag">control</span></h3><p class="desc">break 跳出整個迴圈;continue 跳過本次迭代;pass 為空語句佔位。</p><pre><code><span class="tok-kw">for</span> i <span class="tok-kw">in</span> <span class="tok-fn">range</span>(<span class="tok-num">10</span>):
+    <span class="tok-kw">if</span> i == <span class="tok-num">3</span>:
+        <span class="tok-kw">continue</span>     <span class="tok-com"># 跳過3,不印出</span>
+    <span class="tok-kw">if</span> i == <span class="tok-num">6</span>:
+        <span class="tok-kw">break</span>        <span class="tok-com"># 到6就整個結束</span>
+    <span class="tok-fn">print</span>(i)          <span class="tok-com"># 0 1 2 4 5</span>
+
+<span class="tok-kw">def</span> todo():
+    <span class="tok-kw">pass</span>   <span class="tok-com"># 尚未實作,先佔位避免語法錯誤</span></code></pre></article><article class="card" data-search="三元運算式 在單行內完成條件賦值,語法為「值a if 條件 else 值b」。 age = 20
+status = &quot;成年&quot; if age &gt;= 18 else &quot;未成年&quot;
+
+# 等同於
+if age &gt;= 18:
+    status = &quot;成年&quot;
+else:
+    status = &quot;未成年&quot;"><h3>三元運算式 <span class="tag">control</span></h3><p class="desc">在單行內完成條件賦值,語法為「值A if 條件 else 值B」。</p><pre><code>age = <span class="tok-num">20</span>
+status = <span class="tok-str">"成年"</span> <span class="tok-kw">if</span> age &gt;= <span class="tok-num">18</span> <span class="tok-kw">else</span> <span class="tok-str">"未成年"</span>
+
+<span class="tok-com"># 等同於</span>
+<span class="tok-kw">if</span> age &gt;= <span class="tok-num">18</span>:
+    status = <span class="tok-str">"成年"</span>
+<span class="tok-kw">else</span>:
+    status = <span class="tok-str">"未成年"</span></code></pre></article><article class="card" data-search="迴圈的 else 子句 for / while 的 else 會在迴圈「正常結束(未被 break)」時執行,常用於搜尋。 nums = [1, 3, 5, 7]
+
+for n in nums:
+    if n % 2 == 0:
+        print(&quot;找到偶數:&quot;, n)
+        break
+else:
+    print(&quot;沒有偶數&quot;)   # 沒被break就會執行"><h3>迴圈的 else 子句 <span class="tag">loop</span></h3><p class="desc">for / while 的 else 會在迴圈「正常結束(未被 break)」時執行,常用於搜尋。</p><pre><code>nums = [<span class="tok-num">1</span>, <span class="tok-num">3</span>, <span class="tok-num">5</span>, <span class="tok-num">7</span>]
+
+<span class="tok-kw">for</span> n <span class="tok-kw">in</span> nums:
+    <span class="tok-kw">if</span> n % <span class="tok-num">2</span> == <span class="tok-num">0</span>:
+        <span class="tok-fn">print</span>(<span class="tok-str">"找到偶數:"</span>, n)
+        <span class="tok-kw">break</span>
+<span class="tok-kw">else</span>:
+    <span class="tok-fn">print</span>(<span class="tok-str">"沒有偶數"</span>)   <span class="tok-com"># 沒被break就會執行</span></code></pre></article></div></section><section class="category" id="cat-資料結構"><div class="cat-head"><span class="cat-num">03</span><h2 class="cat-title">資料結構</h2></div><div class="cards"><article class="card" data-search="list 基本操作 list 是有序、可變(mutable)的序列,可放不同型別的元素。 nums = [3, 1, 4, 1, 5]
+
+nums.append(9)        # 尾端新增
+nums.insert(0, 0)     # 指定位置插入
+nums.remove(1)        # 移除第一個符合的值
+nums.pop()             # 移除並回傳最後一個
+nums.sort()             # 原地排序
+sorted(nums, reverse=true)  # 回傳新的排序 list
+len(nums)               # 長度
+3 in nums               # 是否存在"><h3>List 基本操作 <span class="tag">list</span></h3><p class="desc">list 是有序、可變(mutable)的序列,可放不同型別的元素。</p><pre><code>nums = [<span class="tok-num">3</span>, <span class="tok-num">1</span>, <span class="tok-num">4</span>, <span class="tok-num">1</span>, <span class="tok-num">5</span>]
+
+nums.append(<span class="tok-num">9</span>)        <span class="tok-com"># 尾端新增</span>
+nums.insert(<span class="tok-num">0</span>, <span class="tok-num">0</span>)     <span class="tok-com"># 指定位置插入</span>
+nums.remove(<span class="tok-num">1</span>)        <span class="tok-com"># 移除第一個符合的值</span>
+nums.pop()             <span class="tok-com"># 移除並回傳最後一個</span>
+nums.sort()             <span class="tok-com"># 原地排序</span>
+<span class="tok-fn">sorted</span>(nums, reverse=<span class="tok-kw">True</span>)  <span class="tok-com"># 回傳新的排序 list</span>
+<span class="tok-fn">len</span>(nums)               <span class="tok-com"># 長度</span>
+<span class="tok-num">3</span> <span class="tok-kw">in</span> nums               <span class="tok-com"># 是否存在</span></code></pre></article><article class="card" data-search="list comprehension 以簡潔的單行語法建立新 list,取代 for 迴圈 + append。 squares = [x**2 for x in range(10)]
+# [0,1,4,9,16,25,36,49,64,81]
+
+evens = [x for x in range(20) if x % 2 == 0]
+
+# 巢狀:攤平二維 list
+matrix = [[1,2],[3,4]]
+flat = [n for row in matrix for n in row]
+# [1, 2, 3, 4]"><h3>List Comprehension <span class="tag">list</span></h3><p class="desc">以簡潔的單行語法建立新 list,取代 for 迴圈 + append。</p><pre><code>squares = [x**<span class="tok-num">2</span> <span class="tok-kw">for</span> x <span class="tok-kw">in</span> <span class="tok-fn">range</span>(<span class="tok-num">10</span>)]
+<span class="tok-com"># [0,1,4,9,16,25,36,49,64,81]</span>
+
+evens = [x <span class="tok-kw">for</span> x <span class="tok-kw">in</span> <span class="tok-fn">range</span>(<span class="tok-num">20</span>) <span class="tok-kw">if</span> x % <span class="tok-num">2</span> == <span class="tok-num">0</span>]
+
+<span class="tok-com"># 巢狀:攤平二維 list</span>
+matrix = [[<span class="tok-num">1</span>,<span class="tok-num">2</span>],[<span class="tok-num">3</span>,<span class="tok-num">4</span>]]
+flat = [n <span class="tok-kw">for</span> row <span class="tok-kw">in</span> matrix <span class="tok-kw">for</span> n <span class="tok-kw">in</span> row]
+<span class="tok-com"># [1, 2, 3, 4]</span></code></pre></article><article class="card" data-search="tuple tuple 是有序但不可變(immutable)的序列,常用於固定不變的資料組合。 point = (3, 4)
+x, y = point          # 解包
+
+single = (5,)          # 只有一個元素時要加逗號
+t = 1, 2, 3             # 括號可省略
+
+def min_max(nums):
+    return min(nums), max(nums)   # 回傳 tuple
+
+lo, hi = min_max([4, 2, 9, 1])"><h3>Tuple <span class="tag">tuple</span></h3><p class="desc">tuple 是有序但不可變(immutable)的序列,常用於固定不變的資料組合。</p><pre><code>point = (<span class="tok-num">3</span>, <span class="tok-num">4</span>)
+x, y = point          <span class="tok-com"># 解包</span>
+
+single = (<span class="tok-num">5</span>,)          <span class="tok-com"># 只有一個元素時要加逗號</span>
+t = <span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>             <span class="tok-com"># 括號可省略</span>
+
+<span class="tok-kw">def</span> min_max(nums):
+    <span class="tok-kw">return</span> <span class="tok-fn">min</span>(nums), <span class="tok-fn">max</span>(nums)   <span class="tok-com"># 回傳 tuple</span>
+
+lo, hi = min_max([<span class="tok-num">4</span>, <span class="tok-num">2</span>, <span class="tok-num">9</span>, <span class="tok-num">1</span>])</code></pre></article><article class="card" data-search="dict 基本操作 dict 儲存 key-value 對應,python 3.7+ 會保留插入順序。 user = {&quot;name&quot;: &quot;gina&quot;, &quot;role&quot;: &quot;pm&quot;}
+
+user[&quot;email&quot;] = &quot;gina@example.com&quot;  # 新增/更新
+user.get(&quot;phone&quot;, &quot;未提供&quot;)          # 安全取值,無key不報錯
+del user[&quot;role&quot;]                     # 刪除
+&quot;name&quot; in user                        # 是否有此key
+
+for key, value in user.items():
+    print(key, value)"><h3>Dict 基本操作 <span class="tag">dict</span></h3><p class="desc">dict 儲存 key-value 對應,Python 3.7+ 會保留插入順序。</p><pre><code>user = {<span class="tok-str">"name"</span>: <span class="tok-str">"Gina"</span>, <span class="tok-str">"role"</span>: <span class="tok-str">"PM"</span>}
+
+user[<span class="tok-str">"email"</span>] = <span class="tok-str">"gina@example.com"</span>  <span class="tok-com"># 新增/更新</span>
+user.get(<span class="tok-str">"phone"</span>, <span class="tok-str">"未提供"</span>)          <span class="tok-com"># 安全取值,無key不報錯</span>
+<span class="tok-kw">del</span> user[<span class="tok-str">"role"</span>]                     <span class="tok-com"># 刪除</span>
+<span class="tok-str">"name"</span> <span class="tok-kw">in</span> user                        <span class="tok-com"># 是否有此key</span>
+
+<span class="tok-kw">for</span> key, value <span class="tok-kw">in</span> user.items():
+    <span class="tok-fn">print</span>(key, value)</code></pre></article><article class="card" data-search="dict comprehension 與 list comprehension 相同概念,快速建立字典。 nums = [1, 2, 3, 4]
+squared = {n: n**2 for n in nums}
+# {1:1, 2:4, 3:9, 4:16}
+
+words = [&quot;apple&quot;, &quot;kiwi&quot;, &quot;fig&quot;]
+lengths = {w: len(w) for w in words if len(w) &gt; 3}
+# {'apple': 5}"><h3>Dict Comprehension <span class="tag">dict</span></h3><p class="desc">與 list comprehension 相同概念,快速建立字典。</p><pre><code>nums = [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>, <span class="tok-num">4</span>]
+squared = {n: n**<span class="tok-num">2</span> <span class="tok-kw">for</span> n <span class="tok-kw">in</span> nums}
+<span class="tok-com"># {1:1, 2:4, 3:9, 4:16}</span>
+
+words = [<span class="tok-str">"apple"</span>, <span class="tok-str">"kiwi"</span>, <span class="tok-str">"fig"</span>]
+lengths = {w: <span class="tok-fn">len</span>(w) <span class="tok-kw">for</span> w <span class="tok-kw">in</span> words <span class="tok-kw">if</span> <span class="tok-fn">len</span>(w) &gt; <span class="tok-num">3</span>}
+<span class="tok-com"># {'apple': 5}</span></code></pre></article><article class="card" data-search="set 與集合運算 set 是無序、元素不重複的集合,適合去重與集合運算。 a = {1, 2, 3}
+b = {2, 3, 4}
+
+a | b     # 聯集 {1,2,3,4}
+a &amp; b     # 交集 {2,3}
+a - b     # 差集 {1}
+a ^ b     # 對稱差集 {1,4}
+
+nums = [1, 1, 2, 3, 3]
+unique = set(nums)   # 去重 -&gt; {1,2,3}"><h3>Set 與集合運算 <span class="tag">set</span></h3><p class="desc">set 是無序、元素不重複的集合,適合去重與集合運算。</p><pre><code>a = {<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>}
+b = {<span class="tok-num">2</span>, <span class="tok-num">3</span>, <span class="tok-num">4</span>}
+
+a | b     <span class="tok-com"># 聯集 {1,2,3,4}</span>
+a &amp; b     <span class="tok-com"># 交集 {2,3}</span>
+a - b     <span class="tok-com"># 差集 {1}</span>
+a ^ b     <span class="tok-com"># 對稱差集 {1,4}</span>
+
+nums = [<span class="tok-num">1</span>, <span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>, <span class="tok-num">3</span>]
+unique = <span class="tok-fn">set</span>(nums)   <span class="tok-com"># 去重 -&gt; {1,2,3}</span></code></pre></article><article class="card" data-search="序列解包 unpacking 以 * 收集多餘元素,快速拆解 list / tuple。 first, *rest = [1, 2, 3, 4]
+# first=1, rest=[2,3,4]
+
+*init, last = [1, 2, 3, 4]
+# init=[1,2,3], last=4
+
+a, (b, c) = (1, (2, 3))   # 巢狀解包
+
+def show(*args, **kwargs):
+    print(args, kwargs)
+show(1, 2, name=&quot;gina&quot;)"><h3>序列解包 Unpacking <span class="tag">unpack</span></h3><p class="desc">以 * 收集多餘元素,快速拆解 list / tuple。</p><pre><code>first, *rest = [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>, <span class="tok-num">4</span>]
+<span class="tok-com"># first=1, rest=[2,3,4]</span>
+
+*init, last = [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>, <span class="tok-num">4</span>]
+<span class="tok-com"># init=[1,2,3], last=4</span>
+
+a, (b, c) = (<span class="tok-num">1</span>, (<span class="tok-num">2</span>, <span class="tok-num">3</span>))   <span class="tok-com"># 巢狀解包</span>
+
+<span class="tok-kw">def</span> show(*args, **kwargs):
+    <span class="tok-fn">print</span>(args, kwargs)
+show(<span class="tok-num">1</span>, <span class="tok-num">2</span>, name=<span class="tok-str">"Gina"</span>)</code></pre></article></div></section><section class="category" id="cat-函式"><div class="cat-head"><span class="cat-num">04</span><h2 class="cat-title">函式</h2></div><div class="cards"><article class="card" data-search="定義與呼叫 以 def 定義函式,return 回傳結果;沒有 return 則回傳 none。 def greet(name):
+    &quot;&quot;&quot;回傳問候語(這是 docstring)&quot;&quot;&quot;
+    return f&quot;哈囉, {name}!&quot;
+
+message = greet(&quot;gina&quot;)
+print(message)
+
+def add(a, b):
+    return a + b, a - b   # 一次回傳多個值(其實是tuple)
+
+s, d = add(5, 3)"><h3>定義與呼叫 <span class="tag">def</span></h3><p class="desc">以 def 定義函式,return 回傳結果;沒有 return 則回傳 None。</p><pre><code><span class="tok-kw">def</span> greet(name):
+    <span class="tok-str">"""回傳問候語(這是 docstring)"""</span>
+    <span class="tok-kw">return</span> <span class="tok-str">f"哈囉, {name}!"</span>
+
+message = greet(<span class="tok-str">"Gina"</span>)
+<span class="tok-fn">print</span>(message)
+
+<span class="tok-kw">def</span> add(a, b):
+    <span class="tok-kw">return</span> a + b, a - b   <span class="tok-com"># 一次回傳多個值(其實是tuple)</span>
+
+s, d = add(<span class="tok-num">5</span>, <span class="tok-num">3</span>)</code></pre></article><article class="card" data-search="預設參數與關鍵字引數 參數可設定預設值;呼叫時可用「參數名=值」指定,不受順序限制。 def create_user(name, role=&quot;member&quot;, active=true):
+    return {&quot;name&quot;: name, &quot;role&quot;: role, &quot;active&quot;: active}
+
+create_user(&quot;gina&quot;)
+create_user(&quot;gina&quot;, role=&quot;admin&quot;)
+create_user(name=&quot;gina&quot;, active=false, role=&quot;editor&quot;)
+
+# 注意: 預設值不要用可變物件(如 [] 、 {})
+# 錯誤示範: def f(data=[]): ..."><h3>預設參數與關鍵字引數 <span class="tag">def</span></h3><p class="desc">參數可設定預設值;呼叫時可用「參數名=值」指定,不受順序限制。</p><pre><code><span class="tok-kw">def</span> create_user(name, role=<span class="tok-str">"member"</span>, active=<span class="tok-kw">True</span>):
+    <span class="tok-kw">return</span> {<span class="tok-str">"name"</span>: name, <span class="tok-str">"role"</span>: role, <span class="tok-str">"active"</span>: active}
+
+create_user(<span class="tok-str">"Gina"</span>)
+create_user(<span class="tok-str">"Gina"</span>, role=<span class="tok-str">"admin"</span>)
+create_user(name=<span class="tok-str">"Gina"</span>, active=<span class="tok-kw">False</span>, role=<span class="tok-str">"editor"</span>)
+
+<span class="tok-com"># 注意: 預設值不要用可變物件(如 [] 、 {})</span>
+<span class="tok-com"># 錯誤示範: def f(data=[]): ...</span></code></pre></article><article class="card" data-search="*args 與 **kwargs *args 收集多個位置參數為 tuple;**kwargs 收集多個關鍵字參數為 dict。 def summary(*args, **kwargs):
+    print(&quot;位置參數:&quot;, args)
+    print(&quot;關鍵字參數:&quot;, kwargs)
+
+summary(1, 2, 3, name=&quot;gina&quot;, role=&quot;pm&quot;)
+# 位置參數: (1, 2, 3)
+# 關鍵字參數: {'name': 'gina', 'role': 'pm'}
+
+def call_all(func, *args, **kwargs):
+    return func(*args, **kwargs)   # 展開呼叫"><h3>*args 與 **kwargs <span class="tag">def</span></h3><p class="desc">*args 收集多個位置參數為 tuple;**kwargs 收集多個關鍵字參數為 dict。</p><pre><code><span class="tok-kw">def</span> summary(*args, **kwargs):
+    <span class="tok-fn">print</span>(<span class="tok-str">"位置參數:"</span>, args)
+    <span class="tok-fn">print</span>(<span class="tok-str">"關鍵字參數:"</span>, kwargs)
+
+summary(<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>, name=<span class="tok-str">"Gina"</span>, role=<span class="tok-str">"PM"</span>)
+<span class="tok-com"># 位置參數: (1, 2, 3)</span>
+<span class="tok-com"># 關鍵字參數: {'name': 'Gina', 'role': 'PM'}</span>
+
+<span class="tok-kw">def</span> call_all(func, *args, **kwargs):
+    <span class="tok-kw">return</span> func(*args, **kwargs)   <span class="tok-com"># 展開呼叫</span></code></pre></article><article class="card" data-search="lambda 匿名函式 以 lambda 建立單行、無名稱的函式,常搭配 sorted、map、filter 使用。 square = lambda x: x ** 2
+square(5)   # 25
+
+people = [{&quot;name&quot;:&quot;gina&quot;,&quot;age&quot;:28}, {&quot;name&quot;:&quot;amy&quot;,&quot;age&quot;:24}]
+people.sort(key=lambda p: p[&quot;age&quot;])
+
+add = lambda a, b=10: a + b
+add(5)        # 15"><h3>Lambda 匿名函式 <span class="tag">lambda</span></h3><p class="desc">以 lambda 建立單行、無名稱的函式,常搭配 sorted、map、filter 使用。</p><pre><code>square = <span class="tok-kw">lambda</span> x: x ** <span class="tok-num">2</span>
+square(<span class="tok-num">5</span>)   <span class="tok-com"># 25</span>
+
+people = [{<span class="tok-str">"name"</span>:<span class="tok-str">"Gina"</span>,<span class="tok-str">"age"</span>:<span class="tok-num">28</span>}, {<span class="tok-str">"name"</span>:<span class="tok-str">"Amy"</span>,<span class="tok-str">"age"</span>:<span class="tok-num">24</span>}]
+people.sort(key=<span class="tok-kw">lambda</span> p: p[<span class="tok-str">"age"</span>])
+
+add = <span class="tok-kw">lambda</span> a, b=<span class="tok-num">10</span>: a + b
+add(<span class="tok-num">5</span>)        <span class="tok-com"># 15</span></code></pre></article><article class="card" data-search="作用域 global / nonlocal 函式內預設無法修改外部變數,需以 global / nonlocal 明確宣告。 count = 0
+
+def increment():
+    global count
+    count += 1
+
+def outer():
+    total = 0
+    def inner():
+        nonlocal total
+        total += 1
+    inner()
+    return total
+
+outer()   # 1"><h3>作用域 global / nonlocal <span class="tag">scope</span></h3><p class="desc">函式內預設無法修改外部變數,需以 global / nonlocal 明確宣告。</p><pre><code>count = <span class="tok-num">0</span>
+
+<span class="tok-kw">def</span> increment():
+    <span class="tok-kw">global</span> count
+    count += <span class="tok-num">1</span>
+
+<span class="tok-kw">def</span> outer():
+    total = <span class="tok-num">0</span>
+    <span class="tok-kw">def</span> inner():
+        <span class="tok-kw">nonlocal</span> total
+        total += <span class="tok-num">1</span>
+    inner()
+    <span class="tok-kw">return</span> total
+
+outer()   <span class="tok-com"># 1</span></code></pre></article><article class="card" data-search="遞迴函式 recursion 函式呼叫自己來解決問題,務必要有明確的終止條件(base case)。 def factorial(n):
+    if n &lt;= 1:          # 終止條件
+        return 1
+    return n * factorial(n - 1)
+
+factorial(5)   # 120
+
+def fib(n):
+    if n &lt; 2:
+        return n
+    return fib(n-1) + fib(n-2)"><h3>遞迴函式 Recursion <span class="tag">def</span></h3><p class="desc">函式呼叫自己來解決問題,務必要有明確的終止條件(base case)。</p><pre><code><span class="tok-kw">def</span> factorial(n):
+    <span class="tok-kw">if</span> n &lt;= <span class="tok-num">1</span>:          <span class="tok-com"># 終止條件</span>
+        <span class="tok-kw">return</span> <span class="tok-num">1</span>
+    <span class="tok-kw">return</span> n * factorial(n - <span class="tok-num">1</span>)
+
+factorial(<span class="tok-num">5</span>)   <span class="tok-com"># 120</span>
+
+<span class="tok-kw">def</span> fib(n):
+    <span class="tok-kw">if</span> n &lt; <span class="tok-num">2</span>:
+        <span class="tok-kw">return</span> n
+    <span class="tok-kw">return</span> fib(n-<span class="tok-num">1</span>) + fib(n-<span class="tok-num">2</span>)</code></pre></article></div></section><section class="category" id="cat-物件導向"><div class="cat-head"><span class="cat-num">05</span><h2 class="cat-title">物件導向</h2></div><div class="cards"><article class="card" data-search="class 定義與 __init__ __init__ 是建構子,在建立物件時自動呼叫,self 代表實例本身。 class dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        return f&quot;{self.name}: 汪!&quot;
+
+d = dog(&quot;小白&quot;, 3)
+print(d.bark())     # 小白: 汪!
+print(d.name)        # 小白"><h3>class 定義與 __init__ <span class="tag">class</span></h3><p class="desc">__init__ 是建構子,在建立物件時自動呼叫,self 代表實例本身。</p><pre><code><span class="tok-kw">class</span> Dog:
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, name, age):
+        <span class="tok-kw">self</span>.name = name
+        <span class="tok-kw">self</span>.age = age
+
+    <span class="tok-kw">def</span> bark(<span class="tok-kw">self</span>):
+        <span class="tok-kw">return</span> <span class="tok-str">f"{self.name}: 汪!"</span>
+
+d = Dog(<span class="tok-str">"小白"</span>, <span class="tok-num">3</span>)
+<span class="tok-fn">print</span>(d.bark())     <span class="tok-com"># 小白: 汪!</span>
+<span class="tok-fn">print</span>(d.name)        <span class="tok-com"># 小白</span></code></pre></article><article class="card" data-search="屬性與方法 實例屬性存於物件本身;類別屬性由所有實例共享。 class counter:
+    total = 0            # 類別屬性(共享)
+
+    def __init__(self):
+        self.value = 0     # 實例屬性(各自獨立)
+        counter.total += 1
+
+    def increment(self):
+        self.value += 1
+        return self.value
+
+c1, c2 = counter(), counter()
+counter.total   # 2"><h3>屬性與方法 <span class="tag">class</span></h3><p class="desc">實例屬性存於物件本身;類別屬性由所有實例共享。</p><pre><code><span class="tok-kw">class</span> Counter:
+    total = <span class="tok-num">0</span>            <span class="tok-com"># 類別屬性(共享)</span>
+
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>):
+        <span class="tok-kw">self</span>.value = <span class="tok-num">0</span>     <span class="tok-com"># 實例屬性(各自獨立)</span>
+        Counter.total += <span class="tok-num">1</span>
+
+    <span class="tok-kw">def</span> increment(<span class="tok-kw">self</span>):
+        <span class="tok-kw">self</span>.value += <span class="tok-num">1</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">self</span>.value
+
+c1, c2 = Counter(), Counter()
+Counter.total   <span class="tok-com"># 2</span></code></pre></article><article class="card" data-search="繼承與 super() 子類別繼承父類別的屬性與方法,super() 用於呼叫父類別的實作。 class animal:
+    def __init__(self, name):
+        self.name = name
+    def speak(self):
+        return &quot;...&quot;
+
+class cat(animal):
+    def __init__(self, name, breed):
+        super().__init__(name)   # 呼叫父類別__init__
+        self.breed = breed
+    def speak(self):
+        return f&quot;{self.name}: 喵~&quot;
+
+cat(&quot;咪咪&quot;, &quot;美短&quot;).speak()"><h3>繼承與 super() <span class="tag">class</span></h3><p class="desc">子類別繼承父類別的屬性與方法,super() 用於呼叫父類別的實作。</p><pre><code><span class="tok-kw">class</span> Animal:
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, name):
+        <span class="tok-kw">self</span>.name = name
+    <span class="tok-kw">def</span> speak(<span class="tok-kw">self</span>):
+        <span class="tok-kw">return</span> <span class="tok-str">"..."</span>
+
+<span class="tok-kw">class</span> Cat(Animal):
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, name, breed):
+        <span class="tok-fn">super</span>().__init__(name)   <span class="tok-com"># 呼叫父類別__init__</span>
+        <span class="tok-kw">self</span>.breed = breed
+    <span class="tok-kw">def</span> speak(<span class="tok-kw">self</span>):
+        <span class="tok-kw">return</span> <span class="tok-str">f"{self.name}: 喵~"</span>
+
+Cat(<span class="tok-str">"咪咪"</span>, <span class="tok-str">"美短"</span>).speak()</code></pre></article><article class="card" data-search="特殊方法(dunder) 以雙底線包圍的方法可自訂物件的內建行為,如印出、比較、長度。 class point:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+    def __repr__(self):
+        return f&quot;point({self.x}, {self.y})&quot;
+    def __eq__(self, other):
+        return (self.x, self.y) == (other.x, other.y)
+    def __add__(self, other):
+        return point(self.x + other.x, self.y + other.y)
+
+point(1,2) + point(3,4)   # point(4, 6)"><h3>特殊方法(Dunder) <span class="tag">class</span></h3><p class="desc">以雙底線包圍的方法可自訂物件的內建行為,如印出、比較、長度。</p><pre><code><span class="tok-kw">class</span> Point:
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, x, y):
+        <span class="tok-kw">self</span>.x, <span class="tok-kw">self</span>.y = x, y
+    <span class="tok-kw">def</span> __repr__(<span class="tok-kw">self</span>):
+        <span class="tok-kw">return</span> <span class="tok-str">f"Point({self.x}, {self.y})"</span>
+    <span class="tok-kw">def</span> __eq__(<span class="tok-kw">self</span>, other):
+        <span class="tok-kw">return</span> (<span class="tok-kw">self</span>.x, <span class="tok-kw">self</span>.y) == (other.x, other.y)
+    <span class="tok-kw">def</span> __add__(<span class="tok-kw">self</span>, other):
+        <span class="tok-kw">return</span> Point(<span class="tok-kw">self</span>.x + other.x, <span class="tok-kw">self</span>.y + other.y)
+
+Point(<span class="tok-num">1</span>,<span class="tok-num">2</span>) + Point(<span class="tok-num">3</span>,<span class="tok-num">4</span>)   <span class="tok-com"># Point(4, 6)</span></code></pre></article><article class="card" data-search="@property 讓方法像屬性一樣被存取,可在取值/設值時加入邏輯與驗證。 class circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def area(self):
+        return 3.14159 * self._radius ** 2
+
+    @property
+    def radius(self):
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        if value &lt; 0:
+            raise valueerror(&quot;半徑不可為負&quot;)
+        self._radius = value
+
+c = circle(5)
+c.area        # 78.53975(唯讀,無需加括號呼叫)"><h3>@property <span class="tag">class</span></h3><p class="desc">讓方法像屬性一樣被存取,可在取值/設值時加入邏輯與驗證。</p><pre><code><span class="tok-kw">class</span> Circle:
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, radius):
+        <span class="tok-kw">self</span>._radius = radius
+
+    <span class="tok-dec">@property</span>
+    <span class="tok-kw">def</span> area(<span class="tok-kw">self</span>):
+        <span class="tok-kw">return</span> <span class="tok-num">3.14159</span> * <span class="tok-kw">self</span>._radius ** <span class="tok-num">2</span>
+
+    <span class="tok-dec">@property</span>
+    <span class="tok-kw">def</span> radius(<span class="tok-kw">self</span>):
+        <span class="tok-kw">return</span> <span class="tok-kw">self</span>._radius
+
+    <span class="tok-dec">@radius</span>.setter
+    <span class="tok-kw">def</span> radius(<span class="tok-kw">self</span>, value):
+        <span class="tok-kw">if</span> value &lt; <span class="tok-num">0</span>:
+            <span class="tok-kw">raise</span> ValueError(<span class="tok-str">"半徑不可為負"</span>)
+        <span class="tok-kw">self</span>._radius = value
+
+c = Circle(<span class="tok-num">5</span>)
+c.area        <span class="tok-com"># 78.53975(唯讀,無需加括號呼叫)</span></code></pre></article><article class="card" data-search="@staticmethod 與 @classmethod staticmethod 不需存取實例或類別;classmethod 接收類別本身(cls)。 class temperature:
+    def __init__(self, celsius):
+        self.celsius = celsius
+
+    @staticmethod
+    def c_to_f(c):
+        return c * 9/5 + 32
+
+    @classmethod
+    def from_fahrenheit(cls, f):
+        return cls((f - 32) * 5/9)
+
+temperature.c_to_f(100)          # 212.0
+t = temperature.from_fahrenheit(98.6)"><h3>@staticmethod 與 @classmethod <span class="tag">class</span></h3><p class="desc">staticmethod 不需存取實例或類別;classmethod 接收類別本身(cls)。</p><pre><code><span class="tok-kw">class</span> Temperature:
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, celsius):
+        <span class="tok-kw">self</span>.celsius = celsius
+
+    <span class="tok-dec">@staticmethod</span>
+    <span class="tok-kw">def</span> c_to_f(c):
+        <span class="tok-kw">return</span> c * <span class="tok-num">9</span>/<span class="tok-num">5</span> + <span class="tok-num">32</span>
+
+    <span class="tok-dec">@classmethod</span>
+    <span class="tok-kw">def</span> from_fahrenheit(cls, f):
+        <span class="tok-kw">return</span> cls((f - <span class="tok-num">32</span>) * <span class="tok-num">5</span>/<span class="tok-num">9</span>)
+
+Temperature.c_to_f(<span class="tok-num">100</span>)          <span class="tok-com"># 212.0</span>
+t = Temperature.from_fahrenheit(<span class="tok-num">98.6</span>)</code></pre></article><article class="card" data-search="多型與方法覆寫 不同子類別可對同一方法有不同實作,呼叫時依實際物件型別決定行為。 class shape:
+    def area(self):
+        raise notimplementederror
+
+class square(shape):
+    def __init__(self, side): self.side = side
+    def area(self): return self.side ** 2
+
+class circle(shape):
+    def __init__(self, r): self.r = r
+    def area(self): return 3.14159 * self.r ** 2
+
+for shape in [square(4), circle(3)]:
+    print(shape.area())   # 依實際型別呼叫對應方法"><h3>多型與方法覆寫 <span class="tag">class</span></h3><p class="desc">不同子類別可對同一方法有不同實作,呼叫時依實際物件型別決定行為。</p><pre><code><span class="tok-kw">class</span> Shape:
+    <span class="tok-kw">def</span> area(<span class="tok-kw">self</span>):
+        <span class="tok-kw">raise</span> NotImplementedError
+
+<span class="tok-kw">class</span> Square(Shape):
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, side): <span class="tok-kw">self</span>.side = side
+    <span class="tok-kw">def</span> area(<span class="tok-kw">self</span>): <span class="tok-kw">return</span> <span class="tok-kw">self</span>.side ** <span class="tok-num">2</span>
+
+<span class="tok-kw">class</span> Circle(Shape):
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, r): <span class="tok-kw">self</span>.r = r
+    <span class="tok-kw">def</span> area(<span class="tok-kw">self</span>): <span class="tok-kw">return</span> <span class="tok-num">3.14159</span> * <span class="tok-kw">self</span>.r ** <span class="tok-num">2</span>
+
+<span class="tok-kw">for</span> shape <span class="tok-kw">in</span> [Square(<span class="tok-num">4</span>), Circle(<span class="tok-num">3</span>)]:
+    <span class="tok-fn">print</span>(shape.area())   <span class="tok-com"># 依實際型別呼叫對應方法</span></code></pre></article></div></section><section class="category" id="cat-例外處理"><div class="cat-head"><span class="cat-num">06</span><h2 class="cat-title">例外處理</h2></div><div class="cards"><article class="card" data-search="try / except / else / finally try 區塊出錯時執行 except;else 於「無錯誤」時執行;finally 一定會執行。 try:
+    result = 10 / 0
+except zerodivisionerror:
+    print(&quot;除數不可為零&quot;)
+else:
+    print(&quot;計算成功:&quot;, result)   # 沒出錯才執行
+finally:
+    print(&quot;清理資源(一定執行)&quot;)"><h3>try / except / else / finally <span class="tag">error</span></h3><p class="desc">try 區塊出錯時執行 except;else 於「無錯誤」時執行;finally 一定會執行。</p><pre><code><span class="tok-kw">try</span>:
+    result = <span class="tok-num">10</span> / <span class="tok-num">0</span>
+<span class="tok-kw">except</span> ZeroDivisionError:
+    <span class="tok-fn">print</span>(<span class="tok-str">"除數不可為零"</span>)
+<span class="tok-kw">else</span>:
+    <span class="tok-fn">print</span>(<span class="tok-str">"計算成功:"</span>, result)   <span class="tok-com"># 沒出錯才執行</span>
+<span class="tok-kw">finally</span>:
+    <span class="tok-fn">print</span>(<span class="tok-str">"清理資源(一定執行)"</span>)</code></pre></article><article class="card" data-search="攔截多種例外 可用 tuple 一次攔截多種例外類型,或用多個 except 分別處理。 try:
+    value = int(input(&quot;輸入數字: &quot;))
+    result = 10 / value
+except (valueerror, zerodivisionerror) as e:
+    print(&quot;輸入或計算錯誤:&quot;, e)
+except exception as e:
+    print(&quot;其他未預期錯誤:&quot;, e)"><h3>攔截多種例外 <span class="tag">error</span></h3><p class="desc">可用 tuple 一次攔截多種例外類型,或用多個 except 分別處理。</p><pre><code><span class="tok-kw">try</span>:
+    value = <span class="tok-fn">int</span>(<span class="tok-fn">input</span>(<span class="tok-str">"輸入數字: "</span>))
+    result = <span class="tok-num">10</span> / value
+<span class="tok-kw">except</span> (ValueError, ZeroDivisionError) <span class="tok-kw">as</span> e:
+    <span class="tok-fn">print</span>(<span class="tok-str">"輸入或計算錯誤:"</span>, e)
+<span class="tok-kw">except</span> Exception <span class="tok-kw">as</span> e:
+    <span class="tok-fn">print</span>(<span class="tok-str">"其他未預期錯誤:"</span>, e)</code></pre></article><article class="card" data-search="raise 主動拋出例外 可在條件不符合時主動拋出例外,中斷正常流程並提示錯誤原因。 def withdraw(balance, amount):
+    if amount &gt; balance:
+        raise valueerror(&quot;餘額不足&quot;)
+    return balance - amount
+
+try:
+    withdraw(100, 500)
+except valueerror as e:
+    print(&quot;交易失敗:&quot;, e)"><h3>raise 主動拋出例外 <span class="tag">error</span></h3><p class="desc">可在條件不符合時主動拋出例外,中斷正常流程並提示錯誤原因。</p><pre><code><span class="tok-kw">def</span> withdraw(balance, amount):
+    <span class="tok-kw">if</span> amount &gt; balance:
+        <span class="tok-kw">raise</span> ValueError(<span class="tok-str">"餘額不足"</span>)
+    <span class="tok-kw">return</span> balance - amount
+
+<span class="tok-kw">try</span>:
+    withdraw(<span class="tok-num">100</span>, <span class="tok-num">500</span>)
+<span class="tok-kw">except</span> ValueError <span class="tok-kw">as</span> e:
+    <span class="tok-fn">print</span>(<span class="tok-str">"交易失敗:"</span>, e)</code></pre></article><article class="card" data-search="自訂例外類別 繼承 exception 建立專屬的例外類型,讓錯誤訊息更明確、易於分類處理。 class insufficientfundserror(exception):
+    &quot;&quot;&quot;餘額不足時拋出的自訂例外&quot;&quot;&quot;
+    pass
+
+def withdraw(balance, amount):
+    if amount &gt; balance:
+        raise insufficientfundserror(f&quot;缺少 {amount - balance} 元&quot;)
+    return balance - amount
+
+try:
+    withdraw(100, 150)
+except insufficientfundserror as e:
+    print(e)"><h3>自訂例外類別 <span class="tag">error</span></h3><p class="desc">繼承 Exception 建立專屬的例外類型,讓錯誤訊息更明確、易於分類處理。</p><pre><code><span class="tok-kw">class</span> InsufficientFundsError(Exception):
+    <span class="tok-str">"""餘額不足時拋出的自訂例外"""</span>
+    <span class="tok-kw">pass</span>
+
+<span class="tok-kw">def</span> withdraw(balance, amount):
+    <span class="tok-kw">if</span> amount &gt; balance:
+        <span class="tok-kw">raise</span> InsufficientFundsError(<span class="tok-str">f"缺少 {amount - balance} 元"</span>)
+    <span class="tok-kw">return</span> balance - amount
+
+<span class="tok-kw">try</span>:
+    withdraw(<span class="tok-num">100</span>, <span class="tok-num">150</span>)
+<span class="tok-kw">except</span> InsufficientFundsError <span class="tok-kw">as</span> e:
+    <span class="tok-fn">print</span>(e)</code></pre></article></div></section><section class="category" id="cat-檔案與模組"><div class="cat-head"><span class="cat-num">07</span><h2 class="cat-title">檔案與模組</h2></div><div class="cards"><article class="card" data-search="open() 與 with 讀寫檔案 使用 with 開檔可確保檔案自動關閉,即使發生例外也不會造成資源洩漏。 with open(&quot;notes.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(&quot;第一行\n&quot;)
+    f.writelines([&quot;第二行\n&quot;, &quot;第三行\n&quot;])
+
+with open(&quot;notes.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    content = f.read()          # 讀取全部
+    # 或: for line in f: ...    # 逐行讀取"><h3>open() 與 with 讀寫檔案 <span class="tag">file</span></h3><p class="desc">使用 with 開檔可確保檔案自動關閉,即使發生例外也不會造成資源洩漏。</p><pre><code><span class="tok-kw">with</span> <span class="tok-fn">open</span>(<span class="tok-str">"notes.txt"</span>, <span class="tok-str">"w"</span>, encoding=<span class="tok-str">"utf-8"</span>) <span class="tok-kw">as</span> f:
+    f.write(<span class="tok-str">"第一行\n"</span>)
+    f.writelines([<span class="tok-str">"第二行\n"</span>, <span class="tok-str">"第三行\n"</span>])
+
+<span class="tok-kw">with</span> <span class="tok-fn">open</span>(<span class="tok-str">"notes.txt"</span>, <span class="tok-str">"r"</span>, encoding=<span class="tok-str">"utf-8"</span>) <span class="tok-kw">as</span> f:
+    content = f.read()          <span class="tok-com"># 讀取全部</span>
+    <span class="tok-com"># 或: for line in f: ...    # 逐行讀取</span></code></pre></article><article class="card" data-search="常見檔案模式 open() 第二個參數決定操作模式,常見如下。 # &quot;r&quot;  唯讀(預設,檔案不存在會報錯)
+# &quot;w&quot;  寫入(會覆蓋原內容,檔案不存在會建立)
+# &quot;a&quot;  附加(在檔案結尾繼續寫入)
+# &quot;r+&quot; 讀寫
+# &quot;b&quot;  二進位模式,如 &quot;rb&quot;、&quot;wb&quot;
+
+with open(&quot;data.bin&quot;, &quot;rb&quot;) as f:
+    raw = f.read()"><h3>常見檔案模式 <span class="tag">file</span></h3><p class="desc">open() 第二個參數決定操作模式,常見如下。</p><pre><code><span class="tok-com"># "r"  唯讀(預設,檔案不存在會報錯)</span>
+<span class="tok-com"># "w"  寫入(會覆蓋原內容,檔案不存在會建立)</span>
+<span class="tok-com"># "a"  附加(在檔案結尾繼續寫入)</span>
+<span class="tok-com"># "r+" 讀寫</span>
+<span class="tok-com"># "b"  二進位模式,如 "rb"、"wb"</span>
+
+<span class="tok-kw">with</span> <span class="tok-fn">open</span>(<span class="tok-str">"data.bin"</span>, <span class="tok-str">"rb"</span>) <span class="tok-kw">as</span> f:
+    raw = f.read()</code></pre></article><article class="card" data-search="import 與 from...import import 匯入整個模組;from 可只匯入特定成員或使用別名(as)。 import math
+math.sqrt(16)          # 4.0
+
+from datetime import datetime
+datetime.now()
+
+import numpy as np      # 常見別名慣例
+from collections import counter, defaultdict"><h3>import 與 from...import <span class="tag">module</span></h3><p class="desc">import 匯入整個模組;from 可只匯入特定成員或使用別名(as)。</p><pre><code><span class="tok-kw">import</span> math
+math.sqrt(<span class="tok-num">16</span>)          <span class="tok-com"># 4.0</span>
+
+<span class="tok-kw">from</span> datetime <span class="tok-kw">import</span> datetime
+datetime.now()
+
+<span class="tok-kw">import</span> numpy <span class="tok-kw">as</span> np      <span class="tok-com"># 常見別名慣例</span>
+<span class="tok-kw">from</span> collections <span class="tok-kw">import</span> Counter, defaultdict</code></pre></article><article class="card" data-search="if __name__ == &quot;__main__&quot; 判斷此檔案是「被直接執行」還是「被其他檔案匯入」,常用於放置測試或主程式進入點。 def main():
+    print(&quot;這是主程式邏輯&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    main()
+    # 只有直接執行 python this_file.py 時才會跑
+    # 被 import 進其他檔案時不會自動執行"><h3>if __name__ == "__main__" <span class="tag">module</span></h3><p class="desc">判斷此檔案是「被直接執行」還是「被其他檔案匯入」,常用於放置測試或主程式進入點。</p><pre><code><span class="tok-kw">def</span> main():
+    <span class="tok-fn">print</span>(<span class="tok-str">"這是主程式邏輯"</span>)
+
+<span class="tok-kw">if</span> __name__ == <span class="tok-str">"__main__"</span>:
+    main()
+    <span class="tok-com"># 只有直接執行 python this_file.py 時才會跑</span>
+    <span class="tok-com"># 被 import 進其他檔案時不會自動執行</span></code></pre></article><article class="card" data-search="套件與 __init__.py 含有 __init__.py 的資料夾會被視為一個套件(package),可用點記法匯入內部模組。 # 專案結構:
+# mypackage/
+#   __init__.py
+#   utils.py
+#   models.py
+
+from mypackage import utils
+from mypackage.models import user
+from mypackage import utils as u"><h3>套件與 __init__.py <span class="tag">module</span></h3><p class="desc">含有 __init__.py 的資料夾會被視為一個套件(package),可用點記法匯入內部模組。</p><pre><code><span class="tok-com"># 專案結構:</span>
+<span class="tok-com"># mypackage/</span>
+<span class="tok-com">#   __init__.py</span>
+<span class="tok-com">#   utils.py</span>
+<span class="tok-com">#   models.py</span>
+
+<span class="tok-kw">from</span> mypackage <span class="tok-kw">import</span> utils
+<span class="tok-kw">from</span> mypackage.models <span class="tok-kw">import</span> User
+<span class="tok-kw">from</span> mypackage <span class="tok-kw">import</span> utils <span class="tok-kw">as</span> u</code></pre></article></div></section><section class="category" id="cat-進階語法"><div class="cat-head"><span class="cat-num">08</span><h2 class="cat-title">進階語法</h2></div><div class="cards"><article class="card" data-search="裝飾器 decorator 裝飾器是「接收函式、回傳新函式」的函式,用於在不修改原函式的情況下增加功能。 import time
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        print(f&quot;{func.__name__} 耗時 {time.time()-start:.4f}s&quot;)
+        return result
+    return wrapper
+
+@timer
+def slow_task():
+    time.sleep(1)
+
+slow_task()"><h3>裝飾器 Decorator <span class="tag">advanced</span></h3><p class="desc">裝飾器是「接收函式、回傳新函式」的函式,用於在不修改原函式的情況下增加功能。</p><pre><code><span class="tok-kw">import</span> time
+
+<span class="tok-kw">def</span> timer(func):
+    <span class="tok-kw">def</span> wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        <span class="tok-fn">print</span>(<span class="tok-str">f"{func.__name__} 耗時 {time.time()-start:.4f}s"</span>)
+        <span class="tok-kw">return</span> result
+    <span class="tok-kw">return</span> wrapper
+
+<span class="tok-dec">@timer</span>
+<span class="tok-kw">def</span> slow_task():
+    time.sleep(<span class="tok-num">1</span>)
+
+slow_task()</code></pre></article><article class="card" data-search="生成器 generator / yield 使用 yield 的函式是生成器,每次呼叫 next() 才會執行到下一個 yield,節省記憶體。 def count_up_to(n):
+    i = 1
+    while i &lt;= n:
+        yield i
+        i += 1
+
+for num in count_up_to(5):
+    print(num)   # 1 2 3 4 5
+
+gen = (x**2 for x in range(5))  # 生成器表達式
+next(gen)   # 0
+next(gen)   # 1"><h3>生成器 Generator / yield <span class="tag">advanced</span></h3><p class="desc">使用 yield 的函式是生成器,每次呼叫 next() 才會執行到下一個 yield,節省記憶體。</p><pre><code><span class="tok-kw">def</span> count_up_to(n):
+    i = <span class="tok-num">1</span>
+    <span class="tok-kw">while</span> i &lt;= n:
+        <span class="tok-kw">yield</span> i
+        i += <span class="tok-num">1</span>
+
+<span class="tok-kw">for</span> num <span class="tok-kw">in</span> count_up_to(<span class="tok-num">5</span>):
+    <span class="tok-fn">print</span>(num)   <span class="tok-com"># 1 2 3 4 5</span>
+
+gen = (x**<span class="tok-num">2</span> <span class="tok-kw">for</span> x <span class="tok-kw">in</span> <span class="tok-fn">range</span>(<span class="tok-num">5</span>))  <span class="tok-com"># 生成器表達式</span>
+<span class="tok-fn">next</span>(gen)   <span class="tok-com"># 0</span>
+<span class="tok-fn">next</span>(gen)   <span class="tok-com"># 1</span></code></pre></article><article class="card" data-search="迭代器協定 iterator 實作 __iter__ 與 __next__ 即為自訂迭代器,for 迴圈底層即依此協定運作。 class countdown:
+    def __init__(self, start):
+        self.current = start
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.current &lt;= 0:
+            raise stopiteration
+        self.current -= 1
+        return self.current + 1
+
+for n in countdown(3):
+    print(n)   # 3 2 1"><h3>迭代器協定 Iterator <span class="tag">advanced</span></h3><p class="desc">實作 __iter__ 與 __next__ 即為自訂迭代器,for 迴圈底層即依此協定運作。</p><pre><code><span class="tok-kw">class</span> Countdown:
+    <span class="tok-kw">def</span> __init__(<span class="tok-kw">self</span>, start):
+        <span class="tok-kw">self</span>.current = start
+    <span class="tok-kw">def</span> __iter__(<span class="tok-kw">self</span>):
+        <span class="tok-kw">return</span> <span class="tok-kw">self</span>
+    <span class="tok-kw">def</span> __next__(<span class="tok-kw">self</span>):
+        <span class="tok-kw">if</span> <span class="tok-kw">self</span>.current &lt;= <span class="tok-num">0</span>:
+            <span class="tok-kw">raise</span> StopIteration
+        <span class="tok-kw">self</span>.current -= <span class="tok-num">1</span>
+        <span class="tok-kw">return</span> <span class="tok-kw">self</span>.current + <span class="tok-num">1</span>
+
+<span class="tok-kw">for</span> n <span class="tok-kw">in</span> Countdown(<span class="tok-num">3</span>):
+    <span class="tok-fn">print</span>(n)   <span class="tok-com"># 3 2 1</span></code></pre></article><article class="card" data-search="context manager (with) 實作 __enter__ / __exit__ 即可自訂 with 語法的行為,常用於資源的取得與釋放。 class timer:
+    def __enter__(self):
+        import time
+        self.start = time.time()
+        return self
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        import time
+        print(f&quot;耗時 {time.time()-self.start:.4f}s&quot;)
+
+with timer():
+    total = sum(range(1_000_000))
+
+# 也可用 contextlib.contextmanager 以生成器實作"><h3>Context Manager (with) <span class="tag">advanced</span></h3><p class="desc">實作 __enter__ / __exit__ 即可自訂 with 語法的行為,常用於資源的取得與釋放。</p><pre><code><span class="tok-kw">class</span> Timer:
+    <span class="tok-kw">def</span> __enter__(<span class="tok-kw">self</span>):
+        <span class="tok-kw">import</span> time
+        <span class="tok-kw">self</span>.start = time.time()
+        <span class="tok-kw">return</span> <span class="tok-kw">self</span>
+    <span class="tok-kw">def</span> __exit__(<span class="tok-kw">self</span>, exc_type, exc_val, exc_tb):
+        <span class="tok-kw">import</span> time
+        <span class="tok-fn">print</span>(<span class="tok-str">f"耗時 {time.time()-self.start:.4f}s"</span>)
+
+<span class="tok-kw">with</span> Timer():
+    total = <span class="tok-fn">sum</span>(<span class="tok-fn">range</span>(1_000_000))
+
+<span class="tok-com"># 也可用 contextlib.contextmanager 以生成器實作</span></code></pre></article><article class="card" data-search="map / filter / reduce 函數式風格的三劍客:map 轉換、filter 篩選、reduce 累積運算。 from functools import reduce
+
+nums = [1, 2, 3, 4, 5]
+
+list(map(lambda x: x*2, nums))       # [2,4,6,8,10]
+list(filter(lambda x: x%2==0, nums)) # [2,4]
+reduce(lambda a,b: a+b, nums)         # 15(累加)
+
+# 多數情況 list comprehension 更易讀:
+[x*2 for x in nums if x%2==0]"><h3>map / filter / reduce <span class="tag">functional</span></h3><p class="desc">函數式風格的三劍客:map 轉換、filter 篩選、reduce 累積運算。</p><pre><code><span class="tok-kw">from</span> functools <span class="tok-kw">import</span> reduce
+
+nums = [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>, <span class="tok-num">4</span>, <span class="tok-num">5</span>]
+
+<span class="tok-fn">list</span>(<span class="tok-fn">map</span>(<span class="tok-kw">lambda</span> x: x*<span class="tok-num">2</span>, nums))       <span class="tok-com"># [2,4,6,8,10]</span>
+<span class="tok-fn">list</span>(<span class="tok-fn">filter</span>(<span class="tok-kw">lambda</span> x: x%<span class="tok-num">2</span>==<span class="tok-num">0</span>, nums)) <span class="tok-com"># [2,4]</span>
+reduce(<span class="tok-kw">lambda</span> a,b: a+b, nums)         <span class="tok-com"># 15(累加)</span>
+
+<span class="tok-com"># 多數情況 list comprehension 更易讀:</span>
+[x*<span class="tok-num">2</span> <span class="tok-kw">for</span> x <span class="tok-kw">in</span> nums <span class="tok-kw">if</span> x%<span class="tok-num">2</span>==<span class="tok-num">0</span>]</code></pre></article><article class="card" data-search="正則表達式 re 模組 使用正則表達式(regex)比對、搜尋、取代字串樣式,原始字串前綴 r 可避免跳脫字元困擾。 import re
+
+text = &quot;聯絡我: gina@example.com 或 02-1234-5678&quot;
+
+re.search(r&quot;\w+@\w+\.\w+&quot;, text).group()   # 'gina@example.com'
+re.findall(r&quot;\d{2}-\d{4}-\d{4}&quot;, text)       # ['02-1234-5678']
+re.sub(r&quot;\d&quot;, &quot;*&quot;, text)                        # 數字替換成 *
+bool(re.match(r&quot;^聯絡&quot;, text))                    # true(開頭比對)"><h3>正則表達式 re 模組 <span class="tag">regex</span></h3><p class="desc">使用正則表達式(regex)比對、搜尋、取代字串樣式,原始字串前綴 r 可避免跳脫字元困擾。</p><pre><code><span class="tok-kw">import</span> re
+
+text = <span class="tok-str">"聯絡我: gina@example.com 或 02-1234-5678"</span>
+
+re.search(<span class="tok-str">r"\w+@\w+\.\w+"</span>, text).group()   <span class="tok-com"># 'gina@example.com'</span>
+re.findall(<span class="tok-str">r"\d{2}-\d{4}-\d{4}"</span>, text)       <span class="tok-com"># ['02-1234-5678']</span>
+re.sub(<span class="tok-str">r"\d"</span>, <span class="tok-str">"*"</span>, text)                        <span class="tok-com"># 數字替換成 *</span>
+<span class="tok-fn">bool</span>(re.match(<span class="tok-str">r"^聯絡"</span>, text))                    <span class="tok-com"># True(開頭比對)</span></code></pre></article><article class="card" data-search="海象運算子 := python 3.8+ 的指派運算式(walrus operator),可在運算式中同時賦值與判斷,減少重複計算。 # 傳統寫法
+data = get_data()
+if data:
+    process(data)
+
+# 使用海象運算子
+if (data := get_data()):
+    process(data)
+
+# 常見於while迴圈與comprehension
+while (line := input(&quot;輸入(q結束): &quot;)) != &quot;q&quot;:
+    print(&quot;你輸入了:&quot;, line)"><h3>海象運算子 := <span class="tag">advanced</span></h3><p class="desc">Python 3.8+ 的指派運算式(walrus operator),可在運算式中同時賦值與判斷,減少重複計算。</p><pre><code><span class="tok-com"># 傳統寫法</span>
+data = get_data()
+<span class="tok-kw">if</span> data:
+    process(data)
+
+<span class="tok-com"># 使用海象運算子</span>
+<span class="tok-kw">if</span> (data := get_data()):
+    process(data)
+
+<span class="tok-com"># 常見於while迴圈與comprehension</span>
+<span class="tok-kw">while</span> (line := <span class="tok-fn">input</span>(<span class="tok-str">"輸入(q結束): "</span>)) != <span class="tok-str">"q"</span>:
+    <span class="tok-fn">print</span>(<span class="tok-str">"你輸入了:"</span>, line)</code></pre></article><article class="card" data-search="enumerate / zip / sorted 進階 三個高頻內建函式:enumerate 帶索引走訪、zip 並行走訪多序列、sorted 可自訂排序鍵。 names = [&quot;amy&quot;, &quot;bob&quot;, &quot;cindy&quot;]
+scores = [88, 92, 79]
+
+for i, name in enumerate(names, start=1):
+    print(i, name)
+
+for name, score in zip(names, scores):
+    print(name, score)
+
+ranked = sorted(zip(names, scores), key=lambda p: -p[1])
+# 依分數由高到低排序: [('bob',92), ('amy',88), ('cindy',79)]"><h3>enumerate / zip / sorted 進階 <span class="tag">builtin</span></h3><p class="desc">三個高頻內建函式:enumerate 帶索引走訪、zip 並行走訪多序列、sorted 可自訂排序鍵。</p><pre><code>names = [<span class="tok-str">"Amy"</span>, <span class="tok-str">"Bob"</span>, <span class="tok-str">"Cindy"</span>]
+scores = [<span class="tok-num">88</span>, <span class="tok-num">92</span>, <span class="tok-num">79</span>]
+
+<span class="tok-kw">for</span> i, name <span class="tok-kw">in</span> <span class="tok-fn">enumerate</span>(names, start=<span class="tok-num">1</span>):
+    <span class="tok-fn">print</span>(i, name)
+
+<span class="tok-kw">for</span> name, score <span class="tok-kw">in</span> <span class="tok-fn">zip</span>(names, scores):
+    <span class="tok-fn">print</span>(name, score)
+
+ranked = <span class="tok-fn">sorted</span>(<span class="tok-fn">zip</span>(names, scores), key=<span class="tok-kw">lambda</span> p: -p[<span class="tok-num">1</span>])
+<span class="tok-com"># 依分數由高到低排序: [('Bob',92), ('Amy',88), ('Cindy',79)]</span></code></pre></article></div></section><section class="category" id="cat-常用標準函式庫速查"><div class="cat-head"><span class="cat-num">09</span><h2 class="cat-title">常用標準函式庫速查</h2></div><div class="cards"><article class="card" data-search="datetime 日期時間 處理日期與時間的標準模組,支援格式化、計算時間差。 from datetime import datetime, timedelta
+
+now = datetime.now()
+now.strftime(&quot;%y-%m-%d %h:%m&quot;)   # '2026-09-23 14:30'
+
+tomorrow = now + timedelta(days=1)
+diff = tomorrow - now             # timedelta物件
+diff.days                          # 1
+
+datetime.strptime(&quot;2026-09-23&quot;, &quot;%y-%m-%d&quot;)  # 字串轉日期"><h3>datetime 日期時間 <span class="tag">stdlib</span></h3><p class="desc">處理日期與時間的標準模組,支援格式化、計算時間差。</p><pre><code><span class="tok-kw">from</span> datetime <span class="tok-kw">import</span> datetime, timedelta
+
+now = datetime.now()
+now.strftime(<span class="tok-str">"%Y-%m-%d %H:%M"</span>)   <span class="tok-com"># '2026-09-23 14:30'</span>
+
+tomorrow = now + timedelta(days=<span class="tok-num">1</span>)
+diff = tomorrow - now             <span class="tok-com"># timedelta物件</span>
+diff.days                          <span class="tok-com"># 1</span>
+
+datetime.strptime(<span class="tok-str">"2026-09-23"</span>, <span class="tok-str">"%Y-%m-%d"</span>)  <span class="tok-com"># 字串轉日期</span></code></pre></article><article class="card" data-search="collections: counter / defaultdict counter 快速計數;defaultdict 為不存在的 key 提供預設值,避免 keyerror。 from collections import counter, defaultdict
+
+words = [&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;c&quot;, &quot;b&quot;, &quot;a&quot;]
+counter(words)
+# counter({'a': 3, 'b': 2, 'c': 1})
+counter(words).most_common(2)   # [('a',3), ('b',2)]
+
+groups = defaultdict(list)
+groups[&quot;fruit&quot;].append(&quot;apple&quot;)   # 不需先初始化 list"><h3>collections: Counter / defaultdict <span class="tag">stdlib</span></h3><p class="desc">Counter 快速計數;defaultdict 為不存在的 key 提供預設值,避免 KeyError。</p><pre><code><span class="tok-kw">from</span> collections <span class="tok-kw">import</span> Counter, defaultdict
+
+words = [<span class="tok-str">"a"</span>, <span class="tok-str">"b"</span>, <span class="tok-str">"a"</span>, <span class="tok-str">"c"</span>, <span class="tok-str">"b"</span>, <span class="tok-str">"a"</span>]
+Counter(words)
+<span class="tok-com"># Counter({'a': 3, 'b': 2, 'c': 1})</span>
+Counter(words).most_common(<span class="tok-num">2</span>)   <span class="tok-com"># [('a',3), ('b',2)]</span>
+
+groups = defaultdict(<span class="tok-fn">list</span>)
+groups[<span class="tok-str">"fruit"</span>].append(<span class="tok-str">"apple"</span>)   <span class="tok-com"># 不需先初始化 list</span></code></pre></article><article class="card" data-search="itertools 常用函式 高效處理迭代器的工具集,常用於排列組合、分組、無窮序列。 from itertools import combinations, permutations, chain, groupby
+
+list(combinations([1,2,3], 2))   # [(1,2),(1,3),(2,3)]
+list(permutations([1,2,3], 2))   # 排列(順序有差)
+list(chain([1,2], [3,4]))          # [1,2,3,4] 串接多個序列
+
+for key, group in groupby(sorted([&quot;a&quot;,&quot;ab&quot;,&quot;b&quot;,&quot;ba&quot;], key=len), key=len):
+    print(key, list(group))"><h3>itertools 常用函式 <span class="tag">stdlib</span></h3><p class="desc">高效處理迭代器的工具集,常用於排列組合、分組、無窮序列。</p><pre><code><span class="tok-kw">from</span> itertools <span class="tok-kw">import</span> combinations, permutations, chain, groupby
+
+<span class="tok-fn">list</span>(combinations([<span class="tok-num">1</span>,<span class="tok-num">2</span>,<span class="tok-num">3</span>], <span class="tok-num">2</span>))   <span class="tok-com"># [(1,2),(1,3),(2,3)]</span>
+<span class="tok-fn">list</span>(permutations([<span class="tok-num">1</span>,<span class="tok-num">2</span>,<span class="tok-num">3</span>], <span class="tok-num">2</span>))   <span class="tok-com"># 排列(順序有差)</span>
+<span class="tok-fn">list</span>(chain([<span class="tok-num">1</span>,<span class="tok-num">2</span>], [<span class="tok-num">3</span>,<span class="tok-num">4</span>]))          <span class="tok-com"># [1,2,3,4] 串接多個序列</span>
+
+<span class="tok-kw">for</span> key, group <span class="tok-kw">in</span> groupby(<span class="tok-fn">sorted</span>([<span class="tok-str">"a"</span>,<span class="tok-str">"ab"</span>,<span class="tok-str">"b"</span>,<span class="tok-str">"ba"</span>], key=<span class="tok-fn">len</span>), key=<span class="tok-fn">len</span>):
+    <span class="tok-fn">print</span>(key, <span class="tok-fn">list</span>(group))</code></pre></article><article class="card" data-search="json 讀寫 處理 json 格式資料,常用於 api 溝通與設定檔儲存。 import json
+
+data = {&quot;name&quot;: &quot;gina&quot;, &quot;tags&quot;: [&quot;pm&quot;, &quot;ai&quot;]}
+
+text = json.dumps(data, ensure_ascii=false, indent=2)  # dict -&gt; json字串
+parsed = json.loads(text)                                # json字串 -&gt; dict
+
+with open(&quot;config.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(data, f, ensure_ascii=false)
+with open(&quot;config.json&quot;, encoding=&quot;utf-8&quot;) as f:
+    loaded = json.load(f)"><h3>json 讀寫 <span class="tag">stdlib</span></h3><p class="desc">處理 JSON 格式資料,常用於 API 溝通與設定檔儲存。</p><pre><code><span class="tok-kw">import</span> json
+
+data = {<span class="tok-str">"name"</span>: <span class="tok-str">"Gina"</span>, <span class="tok-str">"tags"</span>: [<span class="tok-str">"PM"</span>, <span class="tok-str">"AI"</span>]}
+
+text = json.dumps(data, ensure_ascii=<span class="tok-kw">False</span>, indent=<span class="tok-num">2</span>)  <span class="tok-com"># dict -&gt; JSON字串</span>
+parsed = json.loads(text)                                <span class="tok-com"># JSON字串 -&gt; dict</span>
+
+<span class="tok-kw">with</span> <span class="tok-fn">open</span>(<span class="tok-str">"config.json"</span>, <span class="tok-str">"w"</span>, encoding=<span class="tok-str">"utf-8"</span>) <span class="tok-kw">as</span> f:
+    json.dump(data, f, ensure_ascii=<span class="tok-kw">False</span>)
+<span class="tok-kw">with</span> <span class="tok-fn">open</span>(<span class="tok-str">"config.json"</span>, encoding=<span class="tok-str">"utf-8"</span>) <span class="tok-kw">as</span> f:
+    loaded = json.load(f)</code></pre></article><article class="card" data-search="os / sys 常用操作 os 處理作業系統與檔案路徑;sys 處理直譯器相關的參數與環境。 import os, sys
+
+os.getcwd()                    # 目前工作目錄
+os.path.join(&quot;data&quot;, &quot;a.csv&quot;)  # 跨平台路徑組合
+os.path.exists(&quot;a.csv&quot;)         # 檔案是否存在
+os.listdir(&quot;.&quot;)                  # 列出目錄內容
+
+sys.argv                          # 命令列參數列表
+sys.exit(1)                        # 結束程式並回傳狀態碼"><h3>os / sys 常用操作 <span class="tag">stdlib</span></h3><p class="desc">os 處理作業系統與檔案路徑;sys 處理直譯器相關的參數與環境。</p><pre><code><span class="tok-kw">import</span> os, sys
+
+os.getcwd()                    <span class="tok-com"># 目前工作目錄</span>
+os.path.join(<span class="tok-str">"data"</span>, <span class="tok-str">"a.csv"</span>)  <span class="tok-com"># 跨平台路徑組合</span>
+os.path.exists(<span class="tok-str">"a.csv"</span>)         <span class="tok-com"># 檔案是否存在</span>
+os.listdir(<span class="tok-str">"."</span>)                  <span class="tok-com"># 列出目錄內容</span>
+
+sys.argv                          <span class="tok-com"># 命令列參數列表</span>
+sys.exit(<span class="tok-num">1</span>)                        <span class="tok-com"># 結束程式並回傳狀態碼</span></code></pre></article><article class="card" data-search="random 亂數 產生亂數、隨機抽樣、洗牌,適用於測試資料與遊戲邏輯。 import random
+
+random.random()             # 0.0 ~ 1.0 之間的浮點數
+random.randint(1, 6)         # 1~6 之間的整數(含頭尾)
+random.choice([&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]) # 隨機取一個
+random.sample(range(50), 6)   # 不重複抽樣6個(彩球)
+nums = [1,2,3,4,5]
+random.shuffle(nums)           # 原地洗牌"><h3>random 亂數 <span class="tag">stdlib</span></h3><p class="desc">產生亂數、隨機抽樣、洗牌,適用於測試資料與遊戲邏輯。</p><pre><code><span class="tok-kw">import</span> random
+
+random.random()             <span class="tok-com"># 0.0 ~ 1.0 之間的浮點數</span>
+random.randint(<span class="tok-num">1</span>, <span class="tok-num">6</span>)         <span class="tok-com"># 1~6 之間的整數(含頭尾)</span>
+random.choice([<span class="tok-str">"A"</span>,<span class="tok-str">"B"</span>,<span class="tok-str">"C"</span>]) <span class="tok-com"># 隨機取一個</span>
+random.sample(<span class="tok-fn">range</span>(<span class="tok-num">50</span>), <span class="tok-num">6</span>)   <span class="tok-com"># 不重複抽樣6個(彩球)</span>
+nums = [<span class="tok-num">1</span>,<span class="tok-num">2</span>,<span class="tok-num">3</span>,<span class="tok-num">4</span>,<span class="tok-num">5</span>]
+random.shuffle(nums)           <span class="tok-com"># 原地洗牌</span></code></pre></article></div></section></main>
+  </div>
+
+  <footer>共 <span id="totalCount">56</span> 個語法主題 · 內容僅供學習參考,實際行為請以 Python 官方文件為準</footer>
+</div>
+
+<script>
+const DATA = [
+{
+  group: "基本語法與型別",
+  topics: [
+    { title:"變數賦值與命名", tag:"variable", desc:"Python 為動態型別語言,變數不須宣告型別,賦值即建立。", code:
+`name = "Gina"          # 字串
+age = 28                # 整數
+height = 168.5          # 浮點數
+is_active = True        # 布林值
+
+# 多重賦值
+x, y, z = 1, 2, 3
+a = b = c = 0
+
+# 交換變數(不需暫存變數)
+x, y = y, x`},
+    { title:"常見資料型別", tag:"type", desc:"Python 的內建基礎型別:int、float、str、bool、None。", code:
+`type(10)        # <class 'int'>
+type(3.14)      # <class 'float'>
+type("hi")      # <class 'str'>
+type(True)      # <class 'bool'>
+type(None)      # <class 'NoneType'>
+
+x = None        # 代表「沒有值」
+if x is None:
+    print("尚未賦值")`},
+    { title:"型別轉換", tag:"cast", desc:"使用 int()、float()、str()、bool() 等函式在型別間轉換。", code:
+`int("42")        # 42
+float("3.14")    # 3.14
+str(100)         # "100"
+bool(0)          # False
+bool("")         # False
+bool("a")        # True
+list("abc")      # ['a', 'b', 'c']
+int(3.9)         # 3 (無條件捨去)`},
+    { title:"字串格式化 f-string", tag:"str", desc:"f-string(f\"...\")是目前最建議的字串格式化方式,可直接內嵌運算式。", code:
+`name, score = "Gina", 92.567
+
+f"{name} 得了 {score} 分"
+# 'Gina 得了 92.567 分'
+
+f"{score:.1f}"        # 保留一位小數 -> '92.6'
+f"{score:>10.2f}"     # 靠右對齊,寬度10
+f"{name!r}"           # 使用 repr() -> "'Gina'"
+f"{1000000:,}"        # 千分位 -> '1,000,000'`},
+    { title:"字串常用方法", tag:"str", desc:"字串是不可變(immutable)物件,常用方法會回傳新字串。", code:
+`s = "  Hello, Python World  "
+
+s.strip()              # 去除頭尾空白
+s.lower()               # 全小寫
+s.upper()               # 全大寫
+s.replace("Python", "AI")
+s.split(",")            # 依逗號切割成 list
+"-".join(["a","b","c"]) # 'a-b-c'
+s.startswith("  He")    # True
+"py" in s.lower()       # True`},
+    { title:"字串切片 Slicing", tag:"str", desc:"以 [起始:結束:步長] 取出序列的子集合,適用於 str、list、tuple。", code:
+`s = "Python"
+
+s[0]        # 'P'  第一個字元
+s[-1]       # 'n'  最後一個字元
+s[0:3]      # 'Pyt' 索引0到2
+s[:3]       # 'Pyt' 省略起始
+s[3:]       # 'hon' 省略結束
+s[::-1]     # 'nohtyP' 反轉字串
+s[::2]      # 'Pto' 每隔一個取一次`},
+    { title:"運算子總覽", tag:"operator", desc:"算術、比較、邏輯、指派運算子是撰寫條件與運算的基礎。", code:
+`# 算術: +  -  *  /  //(整除)  %(餘數)  **(次方)
+7 // 2   # 3
+7 % 2    # 1
+2 ** 10  # 1024
+
+# 比較: ==  !=  >  <  >=  <=
+# 邏輯: and  or  not
+(3 > 2) and (5 > 1)   # True
+
+# 指派: +=  -=  *=  /=  //=  **=
+x = 10
+x += 5   # x = 15`},
+  ]
+},
+{
+  group: "流程控制",
+  topics: [
+    { title:"if / elif / else", tag:"control", desc:"依縮排(通常4個空白)決定程式碼區塊,不使用大括號。", code:
+`score = 78
+
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+else:
+    grade = "D"
+
+print(grade)   # C`},
+    { title:"for 迴圈與 range", tag:"loop", desc:"for 走訪任何可迭代物件(iterable);range() 產生數字序列。", code:
+`for i in range(5):        # 0,1,2,3,4
+    print(i)
+
+for i in range(2, 10, 2): # 2,4,6,8
+    print(i)
+
+fruits = ["蘋果", "香蕉", "橘子"]
+for fruit in fruits:
+    print(fruit)
+
+for i, fruit in enumerate(fruits, start=1):
+    print(i, fruit)`},
+    { title:"while 迴圈", tag:"loop", desc:"只要條件為 True 就持續執行,常用於次數不確定的重複作業。", code:
+`n = 5
+while n > 0:
+    print(n)
+    n -= 1
+print("發射!")
+
+# 搭配 sentinel 值持續讀取輸入
+# while True:
+#     cmd = input("> ")
+#     if cmd == "exit":
+#         break`},
+    { title:"break / continue / pass", tag:"control", desc:"break 跳出整個迴圈;continue 跳過本次迭代;pass 為空語句佔位。", code:
+`for i in range(10):
+    if i == 3:
+        continue     # 跳過3,不印出
+    if i == 6:
+        break        # 到6就整個結束
+    print(i)          # 0 1 2 4 5
+
+def todo():
+    pass   # 尚未實作,先佔位避免語法錯誤`},
+    { title:"三元運算式", tag:"control", desc:"在單行內完成條件賦值,語法為「值A if 條件 else 值B」。", code:
+`age = 20
+status = "成年" if age >= 18 else "未成年"
+
+# 等同於
+if age >= 18:
+    status = "成年"
+else:
+    status = "未成年"`},
+    { title:"迴圈的 else 子句", tag:"loop", desc:"for / while 的 else 會在迴圈「正常結束(未被 break)」時執行,常用於搜尋。", code:
+`nums = [1, 3, 5, 7]
+
+for n in nums:
+    if n % 2 == 0:
+        print("找到偶數:", n)
+        break
+else:
+    print("沒有偶數")   # 沒被break就會執行`},
+  ]
+},
+{
+  group: "資料結構",
+  topics: [
+    { title:"List 基本操作", tag:"list", desc:"list 是有序、可變(mutable)的序列,可放不同型別的元素。", code:
+`nums = [3, 1, 4, 1, 5]
+
+nums.append(9)        # 尾端新增
+nums.insert(0, 0)     # 指定位置插入
+nums.remove(1)        # 移除第一個符合的值
+nums.pop()             # 移除並回傳最後一個
+nums.sort()             # 原地排序
+sorted(nums, reverse=True)  # 回傳新的排序 list
+len(nums)               # 長度
+3 in nums               # 是否存在`},
+    { title:"List Comprehension", tag:"list", desc:"以簡潔的單行語法建立新 list,取代 for 迴圈 + append。", code:
+`squares = [x**2 for x in range(10)]
+# [0,1,4,9,16,25,36,49,64,81]
+
+evens = [x for x in range(20) if x % 2 == 0]
+
+# 巢狀:攤平二維 list
+matrix = [[1,2],[3,4]]
+flat = [n for row in matrix for n in row]
+# [1, 2, 3, 4]`},
+    { title:"Tuple", tag:"tuple", desc:"tuple 是有序但不可變(immutable)的序列,常用於固定不變的資料組合。", code:
+`point = (3, 4)
+x, y = point          # 解包
+
+single = (5,)          # 只有一個元素時要加逗號
+t = 1, 2, 3             # 括號可省略
+
+def min_max(nums):
+    return min(nums), max(nums)   # 回傳 tuple
+
+lo, hi = min_max([4, 2, 9, 1])`},
+    { title:"Dict 基本操作", tag:"dict", desc:"dict 儲存 key-value 對應,Python 3.7+ 會保留插入順序。", code:
+`user = {"name": "Gina", "role": "PM"}
+
+user["email"] = "gina@example.com"  # 新增/更新
+user.get("phone", "未提供")          # 安全取值,無key不報錯
+del user["role"]                     # 刪除
+"name" in user                        # 是否有此key
+
+for key, value in user.items():
+    print(key, value)`},
+    { title:"Dict Comprehension", tag:"dict", desc:"與 list comprehension 相同概念,快速建立字典。", code:
+`nums = [1, 2, 3, 4]
+squared = {n: n**2 for n in nums}
+# {1:1, 2:4, 3:9, 4:16}
+
+words = ["apple", "kiwi", "fig"]
+lengths = {w: len(w) for w in words if len(w) > 3}
+# {'apple': 5}`},
+    { title:"Set 與集合運算", tag:"set", desc:"set 是無序、元素不重複的集合,適合去重與集合運算。", code:
+`a = {1, 2, 3}
+b = {2, 3, 4}
+
+a | b     # 聯集 {1,2,3,4}
+a & b     # 交集 {2,3}
+a - b     # 差集 {1}
+a ^ b     # 對稱差集 {1,4}
+
+nums = [1, 1, 2, 3, 3]
+unique = set(nums)   # 去重 -> {1,2,3}`},
+    { title:"序列解包 Unpacking", tag:"unpack", desc:"以 * 收集多餘元素,快速拆解 list / tuple。", code:
+`first, *rest = [1, 2, 3, 4]
+# first=1, rest=[2,3,4]
+
+*init, last = [1, 2, 3, 4]
+# init=[1,2,3], last=4
+
+a, (b, c) = (1, (2, 3))   # 巢狀解包
+
+def show(*args, **kwargs):
+    print(args, kwargs)
+show(1, 2, name="Gina")`},
+  ]
+},
+{
+  group: "函式",
+  topics: [
+    { title:"定義與呼叫", tag:"def", desc:"以 def 定義函式,return 回傳結果;沒有 return 則回傳 None。", code:
+`def greet(name):
+    """回傳問候語(這是 docstring)"""
+    return f"哈囉, {name}!"
+
+message = greet("Gina")
+print(message)
+
+def add(a, b):
+    return a + b, a - b   # 一次回傳多個值(其實是tuple)
+
+s, d = add(5, 3)`},
+    { title:"預設參數與關鍵字引數", tag:"def", desc:"參數可設定預設值;呼叫時可用「參數名=值」指定,不受順序限制。", code:
+`def create_user(name, role="member", active=True):
+    return {"name": name, "role": role, "active": active}
+
+create_user("Gina")
+create_user("Gina", role="admin")
+create_user(name="Gina", active=False, role="editor")
+
+# 注意: 預設值不要用可變物件(如 [] 、 {})
+# 錯誤示範: def f(data=[]): ...`},
+    { title:"*args 與 **kwargs", tag:"def", desc:"*args 收集多個位置參數為 tuple;**kwargs 收集多個關鍵字參數為 dict。", code:
+`def summary(*args, **kwargs):
+    print("位置參數:", args)
+    print("關鍵字參數:", kwargs)
+
+summary(1, 2, 3, name="Gina", role="PM")
+# 位置參數: (1, 2, 3)
+# 關鍵字參數: {'name': 'Gina', 'role': 'PM'}
+
+def call_all(func, *args, **kwargs):
+    return func(*args, **kwargs)   # 展開呼叫`},
+    { title:"Lambda 匿名函式", tag:"lambda", desc:"以 lambda 建立單行、無名稱的函式,常搭配 sorted、map、filter 使用。", code:
+`square = lambda x: x ** 2
+square(5)   # 25
+
+people = [{"name":"Gina","age":28}, {"name":"Amy","age":24}]
+people.sort(key=lambda p: p["age"])
+
+add = lambda a, b=10: a + b
+add(5)        # 15`},
+    { title:"作用域 global / nonlocal", tag:"scope", desc:"函式內預設無法修改外部變數,需以 global / nonlocal 明確宣告。", code:
+`count = 0
+
+def increment():
+    global count
+    count += 1
+
+def outer():
+    total = 0
+    def inner():
+        nonlocal total
+        total += 1
+    inner()
+    return total
+
+outer()   # 1`},
+    { title:"遞迴函式 Recursion", tag:"def", desc:"函式呼叫自己來解決問題,務必要有明確的終止條件(base case)。", code:
+`def factorial(n):
+    if n <= 1:          # 終止條件
+        return 1
+    return n * factorial(n - 1)
+
+factorial(5)   # 120
+
+def fib(n):
+    if n < 2:
+        return n
+    return fib(n-1) + fib(n-2)`},
+  ]
+},
+{
+  group: "物件導向",
+  topics: [
+    { title:"class 定義與 __init__", tag:"class", desc:"__init__ 是建構子,在建立物件時自動呼叫,self 代表實例本身。", code:
+`class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        return f"{self.name}: 汪!"
+
+d = Dog("小白", 3)
+print(d.bark())     # 小白: 汪!
+print(d.name)        # 小白`},
+    { title:"屬性與方法", tag:"class", desc:"實例屬性存於物件本身;類別屬性由所有實例共享。", code:
+`class Counter:
+    total = 0            # 類別屬性(共享)
+
+    def __init__(self):
+        self.value = 0     # 實例屬性(各自獨立)
+        Counter.total += 1
+
+    def increment(self):
+        self.value += 1
+        return self.value
+
+c1, c2 = Counter(), Counter()
+Counter.total   # 2`},
+    { title:"繼承與 super()", tag:"class", desc:"子類別繼承父類別的屬性與方法,super() 用於呼叫父類別的實作。", code:
+`class Animal:
+    def __init__(self, name):
+        self.name = name
+    def speak(self):
+        return "..."
+
+class Cat(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)   # 呼叫父類別__init__
+        self.breed = breed
+    def speak(self):
+        return f"{self.name}: 喵~"
+
+Cat("咪咪", "美短").speak()`},
+    { title:"特殊方法(Dunder)", tag:"class", desc:"以雙底線包圍的方法可自訂物件的內建行為,如印出、比較、長度。", code:
+`class Point:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
+    def __eq__(self, other):
+        return (self.x, self.y) == (other.x, other.y)
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+Point(1,2) + Point(3,4)   # Point(4, 6)`},
+    { title:"@property", tag:"class", desc:"讓方法像屬性一樣被存取,可在取值/設值時加入邏輯與驗證。", code:
+`class Circle:
+    def __init__(self, radius):
+        self._radius = radius
+
+    @property
+    def area(self):
+        return 3.14159 * self._radius ** 2
+
+    @property
+    def radius(self):
+        return self._radius
+
+    @radius.setter
+    def radius(self, value):
+        if value < 0:
+            raise ValueError("半徑不可為負")
+        self._radius = value
+
+c = Circle(5)
+c.area        # 78.53975(唯讀,無需加括號呼叫)`},
+    { title:"@staticmethod 與 @classmethod", tag:"class", desc:"staticmethod 不需存取實例或類別;classmethod 接收類別本身(cls)。", code:
+`class Temperature:
+    def __init__(self, celsius):
+        self.celsius = celsius
+
+    @staticmethod
+    def c_to_f(c):
+        return c * 9/5 + 32
+
+    @classmethod
+    def from_fahrenheit(cls, f):
+        return cls((f - 32) * 5/9)
+
+Temperature.c_to_f(100)          # 212.0
+t = Temperature.from_fahrenheit(98.6)`},
+    { title:"多型與方法覆寫", tag:"class", desc:"不同子類別可對同一方法有不同實作,呼叫時依實際物件型別決定行為。", code:
+`class Shape:
+    def area(self):
+        raise NotImplementedError
+
+class Square(Shape):
+    def __init__(self, side): self.side = side
+    def area(self): return self.side ** 2
+
+class Circle(Shape):
+    def __init__(self, r): self.r = r
+    def area(self): return 3.14159 * self.r ** 2
+
+for shape in [Square(4), Circle(3)]:
+    print(shape.area())   # 依實際型別呼叫對應方法`},
+  ]
+},
+{
+  group: "例外處理",
+  topics: [
+    { title:"try / except / else / finally", tag:"error", desc:"try 區塊出錯時執行 except;else 於「無錯誤」時執行;finally 一定會執行。", code:
+`try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("除數不可為零")
+else:
+    print("計算成功:", result)   # 沒出錯才執行
+finally:
+    print("清理資源(一定執行)")`},
+    { title:"攔截多種例外", tag:"error", desc:"可用 tuple 一次攔截多種例外類型,或用多個 except 分別處理。", code:
+`try:
+    value = int(input("輸入數字: "))
+    result = 10 / value
+except (ValueError, ZeroDivisionError) as e:
+    print("輸入或計算錯誤:", e)
+except Exception as e:
+    print("其他未預期錯誤:", e)`},
+    { title:"raise 主動拋出例外", tag:"error", desc:"可在條件不符合時主動拋出例外,中斷正常流程並提示錯誤原因。", code:
+`def withdraw(balance, amount):
+    if amount > balance:
+        raise ValueError("餘額不足")
+    return balance - amount
+
+try:
+    withdraw(100, 500)
+except ValueError as e:
+    print("交易失敗:", e)`},
+    { title:"自訂例外類別", tag:"error", desc:"繼承 Exception 建立專屬的例外類型,讓錯誤訊息更明確、易於分類處理。", code:
+`class InsufficientFundsError(Exception):
+    """餘額不足時拋出的自訂例外"""
+    pass
+
+def withdraw(balance, amount):
+    if amount > balance:
+        raise InsufficientFundsError(f"缺少 {amount - balance} 元")
+    return balance - amount
+
+try:
+    withdraw(100, 150)
+except InsufficientFundsError as e:
+    print(e)`},
+  ]
+},
+{
+  group: "檔案與模組",
+  topics: [
+    { title:"open() 與 with 讀寫檔案", tag:"file", desc:"使用 with 開檔可確保檔案自動關閉,即使發生例外也不會造成資源洩漏。", code:
+`with open("notes.txt", "w", encoding="utf-8") as f:
+    f.write("第一行\\n")
+    f.writelines(["第二行\\n", "第三行\\n"])
+
+with open("notes.txt", "r", encoding="utf-8") as f:
+    content = f.read()          # 讀取全部
+    # 或: for line in f: ...    # 逐行讀取`},
+    { title:"常見檔案模式", tag:"file", desc:"open() 第二個參數決定操作模式,常見如下。", code:
+`# "r"  唯讀(預設,檔案不存在會報錯)
+# "w"  寫入(會覆蓋原內容,檔案不存在會建立)
+# "a"  附加(在檔案結尾繼續寫入)
+# "r+" 讀寫
+# "b"  二進位模式,如 "rb"、"wb"
+
+with open("data.bin", "rb") as f:
+    raw = f.read()`},
+    { title:"import 與 from...import", tag:"module", desc:"import 匯入整個模組;from 可只匯入特定成員或使用別名(as)。", code:
+`import math
+math.sqrt(16)          # 4.0
+
+from datetime import datetime
+datetime.now()
+
+import numpy as np      # 常見別名慣例
+from collections import Counter, defaultdict`},
+    { title:"if __name__ == \"__main__\"", tag:"module", desc:"判斷此檔案是「被直接執行」還是「被其他檔案匯入」,常用於放置測試或主程式進入點。", code:
+`def main():
+    print("這是主程式邏輯")
+
+if __name__ == "__main__":
+    main()
+    # 只有直接執行 python this_file.py 時才會跑
+    # 被 import 進其他檔案時不會自動執行`},
+    { title:"套件與 __init__.py", tag:"module", desc:"含有 __init__.py 的資料夾會被視為一個套件(package),可用點記法匯入內部模組。", code:
+`# 專案結構:
+# mypackage/
+#   __init__.py
+#   utils.py
+#   models.py
+
+from mypackage import utils
+from mypackage.models import User
+from mypackage import utils as u`},
+  ]
+},
+{
+  group: "進階語法",
+  topics: [
+    { title:"裝飾器 Decorator", tag:"advanced", desc:"裝飾器是「接收函式、回傳新函式」的函式,用於在不修改原函式的情況下增加功能。", code:
+`import time
+
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        print(f"{func.__name__} 耗時 {time.time()-start:.4f}s")
+        return result
+    return wrapper
+
+@timer
+def slow_task():
+    time.sleep(1)
+
+slow_task()`},
+    { title:"生成器 Generator / yield", tag:"advanced", desc:"使用 yield 的函式是生成器,每次呼叫 next() 才會執行到下一個 yield,節省記憶體。", code:
+`def count_up_to(n):
+    i = 1
+    while i <= n:
+        yield i
+        i += 1
+
+for num in count_up_to(5):
+    print(num)   # 1 2 3 4 5
+
+gen = (x**2 for x in range(5))  # 生成器表達式
+next(gen)   # 0
+next(gen)   # 1`},
+    { title:"迭代器協定 Iterator", tag:"advanced", desc:"實作 __iter__ 與 __next__ 即為自訂迭代器,for 迴圈底層即依此協定運作。", code:
+`class Countdown:
+    def __init__(self, start):
+        self.current = start
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.current <= 0:
+            raise StopIteration
+        self.current -= 1
+        return self.current + 1
+
+for n in Countdown(3):
+    print(n)   # 3 2 1`},
+    { title:"Context Manager (with)", tag:"advanced", desc:"實作 __enter__ / __exit__ 即可自訂 with 語法的行為,常用於資源的取得與釋放。", code:
+`class Timer:
+    def __enter__(self):
+        import time
+        self.start = time.time()
+        return self
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        import time
+        print(f"耗時 {time.time()-self.start:.4f}s")
+
+with Timer():
+    total = sum(range(1_000_000))
+
+# 也可用 contextlib.contextmanager 以生成器實作`},
+    { title:"map / filter / reduce", tag:"functional", desc:"函數式風格的三劍客:map 轉換、filter 篩選、reduce 累積運算。", code:
+`from functools import reduce
+
+nums = [1, 2, 3, 4, 5]
+
+list(map(lambda x: x*2, nums))       # [2,4,6,8,10]
+list(filter(lambda x: x%2==0, nums)) # [2,4]
+reduce(lambda a,b: a+b, nums)         # 15(累加)
+
+# 多數情況 list comprehension 更易讀:
+[x*2 for x in nums if x%2==0]`},
+    { title:"正則表達式 re 模組", tag:"regex", desc:"使用正則表達式(regex)比對、搜尋、取代字串樣式,原始字串前綴 r 可避免跳脫字元困擾。", code:
+`import re
+
+text = "聯絡我: gina@example.com 或 02-1234-5678"
+
+re.search(r"\\w+@\\w+\\.\\w+", text).group()   # 'gina@example.com'
+re.findall(r"\\d{2}-\\d{4}-\\d{4}", text)       # ['02-1234-5678']
+re.sub(r"\\d", "*", text)                        # 數字替換成 *
+bool(re.match(r"^聯絡", text))                    # True(開頭比對)`},
+    { title:"海象運算子 :=", tag:"advanced", desc:"Python 3.8+ 的指派運算式(walrus operator),可在運算式中同時賦值與判斷,減少重複計算。", code:
+`# 傳統寫法
+data = get_data()
+if data:
+    process(data)
+
+# 使用海象運算子
+if (data := get_data()):
+    process(data)
+
+# 常見於while迴圈與comprehension
+while (line := input("輸入(q結束): ")) != "q":
+    print("你輸入了:", line)`},
+    { title:"enumerate / zip / sorted 進階", tag:"builtin", desc:"三個高頻內建函式:enumerate 帶索引走訪、zip 並行走訪多序列、sorted 可自訂排序鍵。", code:
+`names = ["Amy", "Bob", "Cindy"]
+scores = [88, 92, 79]
+
+for i, name in enumerate(names, start=1):
+    print(i, name)
+
+for name, score in zip(names, scores):
+    print(name, score)
+
+ranked = sorted(zip(names, scores), key=lambda p: -p[1])
+# 依分數由高到低排序: [('Bob',92), ('Amy',88), ('Cindy',79)]`},
+  ]
+},
+{
+  group: "常用標準函式庫速查",
+  topics: [
+    { title:"datetime 日期時間", tag:"stdlib", desc:"處理日期與時間的標準模組,支援格式化、計算時間差。", code:
+`from datetime import datetime, timedelta
+
+now = datetime.now()
+now.strftime("%Y-%m-%d %H:%M")   # '2026-09-23 14:30'
+
+tomorrow = now + timedelta(days=1)
+diff = tomorrow - now             # timedelta物件
+diff.days                          # 1
+
+datetime.strptime("2026-09-23", "%Y-%m-%d")  # 字串轉日期`},
+    { title:"collections: Counter / defaultdict", tag:"stdlib", desc:"Counter 快速計數;defaultdict 為不存在的 key 提供預設值,避免 KeyError。", code:
+`from collections import Counter, defaultdict
+
+words = ["a", "b", "a", "c", "b", "a"]
+Counter(words)
+# Counter({'a': 3, 'b': 2, 'c': 1})
+Counter(words).most_common(2)   # [('a',3), ('b',2)]
+
+groups = defaultdict(list)
+groups["fruit"].append("apple")   # 不需先初始化 list`},
+    { title:"itertools 常用函式", tag:"stdlib", desc:"高效處理迭代器的工具集,常用於排列組合、分組、無窮序列。", code:
+`from itertools import combinations, permutations, chain, groupby
+
+list(combinations([1,2,3], 2))   # [(1,2),(1,3),(2,3)]
+list(permutations([1,2,3], 2))   # 排列(順序有差)
+list(chain([1,2], [3,4]))          # [1,2,3,4] 串接多個序列
+
+for key, group in groupby(sorted(["a","ab","b","ba"], key=len), key=len):
+    print(key, list(group))`},
+    { title:"json 讀寫", tag:"stdlib", desc:"處理 JSON 格式資料,常用於 API 溝通與設定檔儲存。", code:
+`import json
+
+data = {"name": "Gina", "tags": ["PM", "AI"]}
+
+text = json.dumps(data, ensure_ascii=False, indent=2)  # dict -> JSON字串
+parsed = json.loads(text)                                # JSON字串 -> dict
+
+with open("config.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False)
+with open("config.json", encoding="utf-8") as f:
+    loaded = json.load(f)`},
+    { title:"os / sys 常用操作", tag:"stdlib", desc:"os 處理作業系統與檔案路徑;sys 處理直譯器相關的參數與環境。", code:
+`import os, sys
+
+os.getcwd()                    # 目前工作目錄
+os.path.join("data", "a.csv")  # 跨平台路徑組合
+os.path.exists("a.csv")         # 檔案是否存在
+os.listdir(".")                  # 列出目錄內容
+
+sys.argv                          # 命令列參數列表
+sys.exit(1)                        # 結束程式並回傳狀態碼`},
+    { title:"random 亂數", tag:"stdlib", desc:"產生亂數、隨機抽樣、洗牌,適用於測試資料與遊戲邏輯。", code:
+`import random
+
+random.random()             # 0.0 ~ 1.0 之間的浮點數
+random.randint(1, 6)         # 1~6 之間的整數(含頭尾)
+random.choice(["A","B","C"]) # 隨機取一個
+random.sample(range(50), 6)   # 不重複抽樣6個(彩球)
+nums = [1,2,3,4,5]
+random.shuffle(nums)           # 原地洗牌`},
+  ]
+},
+];
+
+/* ---------- render ---------- */
+function slug(s){ return s.toLowerCase().replace(/[^a-z0-9一-鿿]+/g,'-').replace(/(^-|-$)/g,''); }
+
+const KEYWORDS = new Set('and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield None True False self'.split(' '));
+const BUILTINS = new Set('print len range enumerate zip map filter sorted reversed sum min max abs isinstance issubclass super type input open str int float list dict set tuple bool frozenset round hasattr getattr setattr iter next property staticmethod classmethod'.split(' '));
+
+// Matches, in priority order: comments, triple-quoted strings, normal strings
+// (with optional f/r/b prefixes), decorators, numbers, and bare words.
+const TOKEN_RE = /(#.*$)|('''[\s\S]*?'''|"""[\s\S]*?""")|((?:[fFrRbB]{1,2})?'(?:\\.|[^'\\\n])*'|(?:[fFrRbB]{1,2})?"(?:\\.|[^"\\\n])*")|(@\w+)|(\b\d+\.?\d*\b)|(\b\w+\b)/gm;
+
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function highlight(code){
+  // Escape HTML entities first, then tokenize the escaped text — the
+  // quote/hash/word boundaries the regex relies on are unaffected by escaping.
+  const escaped = esc(code);
+  return escaped.replace(TOKEN_RE, (m, com, tstr, str, dec, num, word) => {
+    if(com) return '<span class="tok-com">'+com+'</span>';
+    if(tstr) return '<span class="tok-str">'+tstr+'</span>';
+    if(str) return '<span class="tok-str">'+str+'</span>';
+    if(dec) return '<span class="tok-dec">'+dec+'</span>';
+    if(num) return '<span class="tok-num">'+num+'</span>';
+    if(word){
+      if(KEYWORDS.has(word)) return '<span class="tok-kw">'+word+'</span>';
+      if(BUILTINS.has(word)) return '<span class="tok-fn">'+word+'</span>';
+      return word;
+    }
+    return m;
+  });
+}
+
+const nav = document.getElementById('sideNav');
+const main = document.getElementById('main');
+let total = 0;
+
+DATA.forEach((cat, ci) => {
+  const catId = 'cat-' + slug(cat.group);
+
+  const label = document.createElement('div');
+  label.className = 'grp-label';
+  label.textContent = cat.group;
+  nav.appendChild(label);
+
+  const catA = document.createElement('a');
+  catA.href = '#' + catId;
+  catA.textContent = (ci+1) + '. ' + cat.group;
+  nav.appendChild(catA);
+
+  const section = document.createElement('section');
+  section.className = 'category';
+  section.id = catId;
+
+  const head = document.createElement('div');
+  head.className = 'cat-head';
+  head.innerHTML = '<span class="cat-num">'+String(ci+1).padStart(2,'0')+'</span><h2 class="cat-title">'+cat.group+'</h2>';
+  section.appendChild(head);
+
+  const cardsWrap = document.createElement('div');
+  cardsWrap.className = 'cards';
+
+  cat.topics.forEach(t => {
+    total++;
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.dataset.search = (t.title + ' ' + t.desc + ' ' + t.code).toLowerCase();
+    card.innerHTML =
+      '<h3>' + t.title + ' <span class="tag">' + t.tag + '</span></h3>' +
+      '<p class="desc">' + t.desc + '</p>' +
+      '<pre><code>' + highlight(t.code) + '</code></pre>';
+    cardsWrap.appendChild(card);
+  });
+
+  section.appendChild(cardsWrap);
+  main.appendChild(section);
+});
+
+document.getElementById('totalCount').textContent = total;
+
+/* search */
+const searchInput = document.getElementById('search');
+const resultNote = document.getElementById('resultNote');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  let visible = 0;
+  document.querySelectorAll('section.category').forEach(sec => {
+    let anyVisible = false;
+    sec.querySelectorAll('.card').forEach(card => {
+      const match = !q || card.dataset.search.includes(q);
+      card.hidden = !match;
+      if (match) { anyVisible = true; visible++; }
+    });
+    sec.hidden = !anyVisible;
+  });
+  resultNote.textContent = q ? ('符合 ' + visible + ' 筆結果') : '';
+});
+</script>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

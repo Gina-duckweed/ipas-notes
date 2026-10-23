@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>科目一 Ch4｜AI 導入與風險管理</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap">
+<style>
+:root{
+  --C:#C0392B;--Clt:#FDECEA;--Cdk:#9B2D23;
+  --O:#E85D3A;--G:#3A9A6E;--A:#D4920A;--P:#7B5EA7;
+  --Alt:#FFF8E1;
+  --bg:#FDF5F5;--s:#FFFFFF;--s2:#FDECEA;--b:#F0C0B8;
+  --t:#3A0F0A;--t2:#5A2018;--t3:#8A4030;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#1F0A0A;--s:#2A1010;--s2:#361616;--b:#5A2020;
+  --t:#F5D0D0;--t2:#D4A0A0;--t3:#B07070;--Clt:#2A1010;--Alt:#2A2000;
+}}
+[data-theme=dark]{--bg:#1F0A0A;--s:#2A1010;--s2:#361616;--b:#5A2020;--t:#F5D0D0;--t2:#D4A0A0;--t3:#B07070;--Clt:#2A1010;--Alt:#2A2000;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--Cdk) 0%,var(--C) 60%,#E06050 100%);padding:36px 40px 30px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero-sub{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:8px}
+.hero-title{font-size:32px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px}
+.hero-desc{font-size:13px;color:rgba(255,255,255,.82);line-height:1.6;max-width:680px}
+.hero-badge{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:800;color:#fff;letter-spacing:.5px;margin-top:12px}
+.wrap{max-width:1100px;margin:0 auto;padding:32px 24px}
+.sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:28px}
+.sec-card{background:var(--s);border-radius:14px;border:1.5px solid var(--b);overflow:hidden}
+.sec-head{background:var(--Clt);padding:14px 16px 10px;border-bottom:2px solid var(--C)}
+.sec-num{font-size:10px;font-weight:800;color:var(--C);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px}
+.sec-name{font-size:16px;font-weight:900;color:var(--Cdk);line-height:1.2}
+.sec-en{font-size:10px;color:var(--t3);font-weight:600;margin-top:2px}
+.sec-body{padding:14px 16px}
+.item{margin-bottom:10px}
+.item-title{font-size:12px;font-weight:800;color:var(--C);margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.item-title::before{content:'▸';font-size:10px}
+.item-desc{font-size:11.5px;color:var(--t2);line-height:1.55}
+.tag{display:inline-block;background:var(--Clt);color:var(--Cdk);font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:10px;margin:2px 2px 0 0}
+.risk-strip{background:var(--s);border:1.5px solid var(--b);border-radius:12px;padding:18px 22px;margin-bottom:24px}
+.risk-strip h3{font-size:11px;font-weight:800;color:var(--C);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px}
+.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rsk{background:var(--s2);border-radius:8px;padding:10px 12px;border-left:3px solid var(--C)}
+.rsk-name{font-size:12px;font-weight:900;color:var(--Cdk);margin-bottom:4px}
+.rsk-sub{font-size:9.5px;font-weight:700;color:var(--C);margin-bottom:3px}
+.rsk-desc{font-size:10px;color:var(--t2);line-height:1.4}
+.exam-box{background:var(--Alt);border:2px solid var(--A);border-radius:12px;padding:18px 22px}
+.exam-box h3{font-size:11px;font-weight:800;color:var(--A);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.exam-list{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+.exam-item{font-size:11.5px;color:var(--t2);line-height:1.5;padding-left:14px;position:relative}
+.exam-item::before{content:'★';position:absolute;left:0;color:var(--A);font-size:10px}
+@media(max-width:700px){.sec-grid{grid-template-columns:1fr}.risk-grid{grid-template-columns:1fr}.exam-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-sub">科目一・第四章</div>
+  <div class="hero-title">AI 導入與風險管理</div>
+  <div class="hero-desc">從導入評估、專案規劃到風險管理與AI倫理，完整掌握AI應用落地的管理框架。</div>
+  <div class="hero-badge">iPAS 中級 AI 應用規劃師</div>
+</div>
+
+<div class="wrap">
+  <div class="sec-grid">
+    <div class="sec-card">
+      <div class="sec-head">
+        <div class="sec-num">4.1</div>
+        <div class="sec-name">AI 導入評估</div>
+        <div class="sec-en">AI Adoption Assessment</div>
+      </div>
+      <div class="sec-body">
+        <div class="item">
+          <div class="item-title">需求評估四維度</div>
+          <div class="item-desc"><b>業務目標</b>：AI 解決哪個業務問題，對應哪個 KPI。<b>資料可用性</b>：資料量、品質、標注成本。<b>技術可行性</b>：算力資源、技術門檻評估。<b>ROI 評估</b>：預期效益 vs 成本（人力/授權/基礎設施）。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">POC 概念驗證</div>
+          <div class="item-desc">POC（Proof of Concept）驗證技術可行性。成功條件：<b>範圍清晰</b>、代表性業務場景、資料技術已備、利害關係人支持。評估面向：技術適配性、預期效益驗證、組織接受度、問題瓶頸辨識。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">AI 導入成熟度</div>
+          <div class="item-desc">評估組織在資料治理、技術能力、人才儲備、流程整合四個面向的現況，確定導入路徑與優先序。</div>
+          <div><span class="tag">POC</span><span class="tag">ROI</span><span class="tag">KPI對齊</span><span class="tag">成熟度評估</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <div class="sec-num">4.2</div>
+        <div class="sec-name">AI 導入規劃</div>
+        <div class="sec-en">AI Implementation Planning</div>
+      </div>
+      <div class="sec-body">
+        <div class="item">
+          <div class="item-title">專案人力配置</div>
+          <div class="item-desc">PM（專案管理）、Data Engineer（資料管線）、AI Developer（模型開發）、UI/UX、Business Consultant（需求轉譯）、Architect（系統架構）、Test Engineer（品質保障）。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">任務分解工具</div>
+          <div class="item-desc"><b>甘特圖</b>：時間軸排程，識別關鍵路徑（Critical Path）。<b>WBS</b>（工作分解結構）：階層式任務拆解。<b>Scrum Sprint</b>：1-4週迭代，含 Product Owner / Scrum Master / Dev Team，追蹤工具：Trello / Jira / Asana。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">AI 導入模式</div>
+          <div class="item-desc"><b>A. 商業服務</b>（Low-code/No-code）：快速上線。<b>B. 內部開發</b>：高度客製但成本高。<b>C. 委外開發</b>：外部廠商負責，需明確 SLA 與智財權歸屬。</div>
+          <div><span class="tag">Scrum</span><span class="tag">WBS</span><span class="tag">甘特圖</span><span class="tag">SLA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-card">
+      <div class="sec-head">
+        <div class="sec-num">4.3</div>
+        <div class="sec-name">AI 風險管理與倫理</div>
+        <div class="sec-en">AI Risk Management & Ethics</div>
+      </div>
+      <div class="sec-body">
+        <div class="item">
+          <div class="item-title">偏誤類型</div>
+          <div class="item-desc"><b>資料不平衡偏誤</b>、<b>歷史偏誤</b>（訓練資料反映過去不公平）、<b>標注偏誤</b>（標注者主觀偏好）、<b>演算法偏誤</b>（模型決策系統性歧視）。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">AI 倫理原則</div>
+          <div class="item-desc"><b>透明性</b>（決策可被理解）、<b>可解釋性</b>（XAI：LIME/SHAP）、<b>公平性</b>（避免歧視）、<b>問責性</b>（明確責任歸屬）。國際框架：EU AI HLEG（2019）、OECD AI Principles、UNESCO、ISO/IEC 42001。</div>
+        </div>
+        <div class="item">
+          <div class="item-title">法規遵循</div>
+          <div class="item-desc">隱私法規：GDPR（歐盟）、台灣個資法（PDPA）、CDPA。行業：HIPAA（醫療）、PCI-DSS（支付）、金融科技沙盒。</div>
+          <div><span class="tag">GDPR</span><span class="tag">XAI</span><span class="tag">SHAP</span><span class="tag">ISO 42001</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="risk-strip">
+    <h3>風險類型與應對策略</h3>
+    <div class="risk-grid">
+      <div class="rsk">
+        <div class="rsk-name">技術風險</div>
+        <div class="rsk-sub">資料品質 · 模型穩定</div>
+        <div class="rsk-desc">遺漏值/資料偏誤/錯誤標注/資料漂移（Data Drift）；模型漂移（Model Drift）/過度擬合/概念漂移（Concept Drift）。應對：持續監控 + MLOps 自動再訓練。</div>
+      </div>
+      <div class="rsk">
+        <div class="rsk-name">組織風險</div>
+        <div class="rsk-sub">跨部門溝通 · 技能缺口</div>
+        <div class="rsk-desc">部門目標不一致、技術與業務斷層（Skill Gap）、變革阻力（Change Resistance）。應對：AI 產品經理橋接、組織培訓、高層承諾。</div>
+      </div>
+      <div class="rsk">
+        <div class="rsk-name">法律風險</div>
+        <div class="rsk-sub">隱私 · 合規 · 智財</div>
+        <div class="rsk-desc">個人資料保護（GDPR/PDPA）、行業合規（HIPAA/PCI-DSS）、AI生成內容智慧財產爭議、供應商鎖定風險（Vendor Lock-in）。應對：合約SLA + 法務審查。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="exam-box">
+    <h3>⭐ 考試重點</h3>
+    <div class="exam-list">
+      <div class="exam-item">POC 成功條件：業務範圍清晰 + 資料技術就緒 + 利害關係人支持</div>
+      <div class="exam-item">AI 導入三模式：商業服務（快）/ 內部開發（彈性）/ 委外（成本轉移）</div>
+      <div class="exam-item">Model Drift：預測分佈偏離訓練分佈；Data Drift：輸入資料統計特性改變</div>
+      <div class="exam-item">AI倫理四原則：透明性、可解釋性、公平性、問責性（OECD/EU HLEG框架）</div>
+      <div class="exam-item">SHAP/LIME：可解釋AI（XAI）工具，解釋模型對個別預測的特徵貢獻</div>
+      <div class="exam-item">風險應對四策略：規避（Avoidance）、轉移（Transfer）、緩解（Mitigation）、接受（Acceptance）</div>
+    </div>
+  </div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

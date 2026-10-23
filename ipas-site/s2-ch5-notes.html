@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第五章 大數據分析方法與工具</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+  :root {
+    --bg: #F9F8F4;
+    --surface: #FFFFFF;
+    --surface2: #F3F1EB;
+    --text: #2A2820;
+    --text-muted: #6B6860;
+    --border: #DDD9CF;
+    --blue: #2D5F9A;
+    --blue-lt: #EAF0F8;
+    --orange: #E85D3A;
+    --orange-lt: #FDF0EC;
+    --green: #3A9A6E;
+    --green-lt: #EAF5EF;
+    --amber: #D4920A;
+    --amber-lt: #FDF6E3;
+    --purple: #7B5EA7;
+    --purple-lt: #F2EEFA;
+    --teal: #2A8A8A;
+    --teal-lt: #E6F5F5;
+    --red: #C0392B;
+    --red-lt: #FDECEB;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1C1B18;
+      --surface: #252420;
+      --surface2: #2E2C27;
+      --text: #F0EDE4;
+      --text-muted: #9C9A90;
+      --border: #3A3830;
+      --blue-lt: #1A2C42;
+      --orange-lt: #3A1F17;
+      --green-lt: #1A3328;
+      --amber-lt: #332508;
+      --purple-lt: #2A2038;
+      --teal-lt: #142626;
+      --red-lt: #2A1210;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1C1B18; --surface: #252420; --surface2: #2E2C27;
+    --text: #F0EDE4; --text-muted: #9C9A90; --border: #3A3830;
+    --blue-lt: #1A2C42; --orange-lt: #3A1F17; --green-lt: #1A3328;
+    --amber-lt: #332508; --purple-lt: #2A2038; --teal-lt: #142626; --red-lt: #2A1210;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans TC', 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 20px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 18px;
+    padding: 14px 20px 12px;
+    background: var(--surface);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--blue) 0%, var(--green) 35%, var(--orange) 65%, var(--purple) 100%);
+  }
+  .chapter-tag {
+    display: inline-block;
+    background: var(--blue); color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 11px; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 20px; margin-bottom: 6px;
+  }
+  .header h1 {
+    font-size: 22px; font-weight: 900; color: var(--blue);
+    letter-spacing: -0.5px; line-height: 1.2;
+  }
+  .header .subtitle {
+    font-size: 12px; color: var(--text-muted); margin-top: 4px;
+  }
+  .header .tags {
+    display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 8px;
+  }
+  .header .tags span {
+    background: var(--surface2); border: 1px solid var(--border);
+    padding: 2px 10px; border-radius: 20px; font-size: 11px; color: var(--text-muted);
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 14px;
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 13px;
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px dashed var(--border);
+  }
+  .card-title .icon {
+    width: 22px; height: 22px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #fff; font-weight: 700; flex-shrink: 0;
+  }
+  .section-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 10px; font-weight: 800; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--text-muted);
+    margin: 8px 0 5px;
+  }
+
+  /* Highlight pill */
+  .pill {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px; margin: 2px 2px;
+  }
+  .pill-blue { background: var(--blue-lt); color: var(--blue); }
+  .pill-orange { background: var(--orange-lt); color: var(--orange); }
+  .pill-green { background: var(--green-lt); color: var(--green); }
+  .pill-amber { background: var(--amber-lt); color: var(--amber); }
+  .pill-purple { background: var(--purple-lt); color: var(--purple); }
+  .pill-teal { background: var(--teal-lt); color: var(--teal); }
+  .pill-red { background: var(--red-lt); color: var(--red); }
+
+  /* Kw highlight */
+  .kw { font-weight: 700; }
+  .kw-blue { color: var(--blue); }
+  .kw-orange { color: var(--orange); }
+  .kw-green { color: var(--green); }
+  .kw-amber { color: var(--amber); }
+  .kw-purple { color: var(--purple); }
+  .kw-teal { color: var(--teal); }
+
+  /* Challenge list */
+  .challenge-list { display: flex; flex-direction: column; gap: 5px; }
+  .challenge-item {
+    display: flex; gap: 7px; align-items: flex-start;
+    background: var(--surface2); border-radius: 7px; padding: 5px 8px;
+    font-size: 12px;
+  }
+  .challenge-num {
+    width: 18px; height: 18px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+
+  /* Table */
+  .mini-table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
+  .mini-table th {
+    background: var(--surface2); font-weight: 700;
+    padding: 4px 7px; text-align: left;
+    border: 1px solid var(--border);
+    font-size: 11px;
+  }
+  .mini-table td {
+    padding: 4px 7px; border: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .mini-table tr:nth-child(even) td { background: var(--surface2); }
+
+  /* Approx method rows */
+  .method-row {
+    display: grid; grid-template-columns: 1fr 1.4fr 1fr;
+    gap: 0; font-size: 11px; border-bottom: 1px solid var(--border);
+    padding: 4px 0;
+  }
+  .method-row:last-child { border-bottom: none; }
+  .method-name { font-weight: 700; color: var(--blue); }
+
+  /* Time series flow */
+  .ts-block {
+    border-left: 3px solid var(--green);
+    padding: 4px 8px; margin-bottom: 6px;
+    background: var(--green-lt); border-radius: 0 6px 6px 0;
+    font-size: 12px;
+  }
+  .ts-block.orange { border-color: var(--orange); background: var(--orange-lt); }
+  .ts-block.purple { border-color: var(--purple); background: var(--purple-lt); }
+  .ts-block.amber { border-color: var(--amber); background: var(--amber-lt); }
+
+  /* Network nodes SVG diagram */
+  .svg-container { text-align: center; margin: 8px 0; }
+
+  /* Centrality grid */
+  .centrality-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .centrality-item {
+    background: var(--surface2); border-radius: 6px;
+    padding: 5px 7px; font-size: 11px;
+  }
+  .centrality-item .name { font-weight: 700; color: var(--blue); font-size: 11px; }
+  .centrality-item .desc { color: var(--text-muted); font-size: 10.5px; }
+
+  /* Text pipeline */
+  .pipeline {
+    display: flex; align-items: center; gap: 4px;
+    flex-wrap: wrap; margin: 6px 0;
+  }
+  .pipeline-step {
+    background: var(--blue-lt); color: var(--blue);
+    font-size: 10.5px; font-weight: 700;
+    padding: 3px 8px; border-radius: 4px;
+    border: 1px solid var(--blue);
+  }
+  .pipeline-arrow {
+    color: var(--text-muted); font-size: 12px;
+  }
+
+  /* Viz chart types grid */
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .chart-item {
+    background: var(--surface2); border-radius: 6px;
+    padding: 5px 7px; font-size: 11px;
+    border-left: 3px solid transparent;
+  }
+  .chart-item .cname { font-weight: 700; font-size: 11px; }
+  .chart-item .cuse { color: var(--text-muted); font-size: 10px; }
+
+  /* Platform tiers */
+  .platform-tier {
+    margin-bottom: 7px; border-radius: 8px; padding: 6px 8px;
+    border: 1px solid var(--border);
+  }
+  .tier-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.8px;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  /* Design principles */
+  .principle-item {
+    display: flex; gap: 6px; align-items: flex-start;
+    margin-bottom: 5px; font-size: 12px;
+  }
+  .principle-num {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--blue); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; flex-shrink: 0;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  /* Case pills */
+  .cases { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+
+  /* Anomaly box */
+  .anomaly-box {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 6px;
+  }
+  .anomaly-method {
+    background: var(--surface2); border-radius: 6px;
+    padding: 5px 7px; font-size: 11px;
+    border-top: 3px solid var(--orange);
+  }
+  .anomaly-method .mname { font-weight: 700; color: var(--orange); font-size: 11px; }
+
+  /* Spatial grid */
+  .spatial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .spatial-item {
+    background: var(--teal-lt); border-radius: 6px;
+    padding: 5px 7px; font-size: 11px;
+    border-left: 3px solid var(--teal);
+  }
+  .spatial-item .sname { font-weight: 700; color: var(--teal); font-size: 11px; }
+</style>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="chapter-tag">CHAPTER 5 · 第五章</div>
+  <h1>大數據分析方法與工具</h1>
+  <div class="subtitle">Big Data Analytics Methods &amp; Tools</div>
+  <div class="tags">
+    <span>5.1 統計學應用</span>
+    <span>5.2 分析方法</span>
+    <span>5.3 可視化工具</span>
+  </div>
+</div>
+
+<!-- MAIN GRID -->
+<div class="grid">
+
+  <!-- ===== COLUMN 1: 5.1 統計學 ===== -->
+  <div class="col">
+
+    <!-- 5.1 title card -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--blue)">5.1</div>
+        統計學在大數據中的應用
+      </div>
+
+      <div class="section-label">敘述統計挑戰</div>
+      <div class="challenge-list">
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--blue)">1</div>
+          <span><span class="kw kw-blue">運算資源限制</span>：無法將全量資料載入記憶體</span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--blue)">2</div>
+          <span><span class="kw kw-blue">長尾分佈／偏態</span>：傳統均值失真，需分位數估算</span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--blue)">3</div>
+          <span><span class="kw kw-blue">多型態資料</span>：結構+非結構混合，難以統一計算</span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--blue)">4</div>
+          <span><span class="kw kw-blue">離群值掩蓋</span>：偵測敏感度下降</span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--blue)">5</div>
+          <span><span class="kw kw-blue">資料動態變化</span>：時間敏感性高</span>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:12px">統計推論挑戰</div>
+      <div class="challenge-list">
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--orange)">1</div>
+          <span><span class="kw kw-orange">樣本非隨機</span>：結構性偏誤</span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--orange)">2</div>
+          <span><span class="kw kw-orange">p值膨脹</span>：大樣本導致偽陽性</span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--orange)">3</div>
+          <span><span class="kw kw-orange">多重檢定</span>：Bonferroni / FDR 校正</span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--orange)">4</div>
+          <span><span class="kw kw-orange">樣本非獨立</span>：破壞推論基礎</span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--orange)">5</div>
+          <span><span class="kw kw-orange">母體定義不清</span></span>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-num" style="background:var(--orange)">6</div>
+          <span><span class="kw kw-orange">系統與資源限制</span></span>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:12px">實務應用案例</div>
+      <div class="cases">
+        <span class="pill pill-blue">市場行銷 K-means</span>
+        <span class="pill pill-orange">金融風險 ARIMA/蒙地卡羅</span>
+        <span class="pill pill-green">健康醫療 Kaplan-Meier</span>
+        <span class="pill pill-amber">製造品質 SPC控制圖</span>
+        <span class="pill pill-purple">網路安全 Z分數/KDE</span>
+        <span class="pill pill-teal">社會科學 多變量迴歸</span>
+        <span class="pill pill-red">智慧城市 t-digest/空間自迴歸</span>
+      </div>
+    </div>
+
+    <!-- 5.2 描述性近似計算 -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--green)">≈</div>
+        描述性分析：近似計算方法
+      </div>
+      <div class="section-label">大數據4特性：可擴展性・異質性・即時性・近似性</div>
+      <table class="mini-table">
+        <tbody><tr>
+          <th>方法</th><th>特性</th><th>應用</th>
+        </tr>
+        <tr>
+          <td><span class="kw kw-green">t-digest</span></td>
+          <td>高效估算中位數與任意分位數；串流</td>
+          <td>電商、網路監控</td>
+        </tr>
+        <tr>
+          <td><span class="kw kw-green">Histogram Sketch</span></td>
+          <td>近似直方圖，快速呈現密度</td>
+          <td>分佈快覽</td>
+        </tr>
+        <tr>
+          <td><span class="kw kw-green">Count-Min Sketch</span></td>
+          <td>估計項目出現頻率，記憶體極低</td>
+          <td>熱門排行 / IP攻擊</td>
+        </tr>
+        <tr>
+          <td><span class="kw kw-green">Welford's Method</span></td>
+          <td>逐筆更新均值和變異數（Online）</td>
+          <td>IoT / 金融交易</td>
+        </tr>
+      </tbody></table>
+      <div style="margin-top:8px; font-size:11.5px; color:var(--text-muted)">
+        平台支援：<span class="pill pill-green">Apache Spark approxQuantile</span>
+        <span class="pill pill-blue">BigQuery APPROX_QUANTILES</span>
+        <span class="pill pill-amber">PostgreSQL + tdigest</span>
+      </div>
+    </div>
+
+  </div><!-- col1 end -->
+
+  <!-- ===== COLUMN 2: 5.2 分析方法 ===== -->
+  <div class="col">
+
+    <!-- 時序數據分析 -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--amber)">📈</div>
+        時序數據分析
+      </div>
+
+      <div class="ts-block">
+        <div style="font-weight:700;margin-bottom:3px">趨勢與平滑</div>
+        <span class="pill pill-green">移動平均 Moving Average</span>
+        <span class="pill pill-green">指數平滑 Exponential Smoothing</span>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px">計算簡單、記憶體低、適串流；短期預測</div>
+      </div>
+
+      <div class="ts-block orange">
+        <div style="font-weight:700;margin-bottom:3px">統計建模</div>
+        <span class="pill pill-orange">ARIMA</span>
+        <span class="pill pill-orange">SARIMA（含季節性）</span>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px">模型解釋性強；適線性趨勢和穩定時序；可結合FDR避免顯著性膨脹</div>
+      </div>
+
+      <div class="ts-block purple">
+        <div style="font-weight:700;margin-bottom:3px">進階預測模型</div>
+        <span class="pill pill-purple">Prophet (Meta)</span>
+        <span class="pill pill-purple">LSTM</span>
+        <span class="pill pill-purple">Transformer</span>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Prophet自動處理節慶/缺失值；LSTM捕捉長期依賴；適複雜非線性</div>
+      </div>
+
+      <div class="section-label">主流平台</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        <span class="pill pill-amber">Spark + MLlib</span>
+        <span class="pill pill-amber">TimescaleDB</span>
+        <span class="pill pill-amber">Meta Prophet / Kats</span>
+      </div>
+    </div>
+
+    <!-- 網路分析 -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--teal)">🕸</div>
+        網路分析 (Graph/Network)
+      </div>
+
+      <!-- SVG network diagram -->
+      <div class="svg-container">
+        <svg width="200" height="80" viewBox="0 0 200 80">
+          <defs>
+            <marker id="arrow5" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L6,3 z" fill="#2A8A8A"></path>
+            </marker>
+          </defs>
+          <!-- Nodes -->
+          <circle cx="100" cy="20" r="10" fill="#2A8A8A" opacity="0.9"></circle>
+          <circle cx="40" cy="60" r="8" fill="#3A9A6E" opacity="0.9"></circle>
+          <circle cx="160" cy="60" r="8" fill="#3A9A6E" opacity="0.9"></circle>
+          <circle cx="70" cy="60" r="6" fill="#2D5F9A" opacity="0.8"></circle>
+          <circle cx="130" cy="60" r="6" fill="#2D5F9A" opacity="0.8"></circle>
+          <!-- Edges -->
+          <line x1="100" y1="30" x2="44" y2="53" stroke="#2A8A8A" stroke-width="1.5" opacity="0.6"></line>
+          <line x1="100" y1="30" x2="156" y2="53" stroke="#2A8A8A" stroke-width="1.5" opacity="0.6"></line>
+          <line x1="100" y1="30" x2="73" y2="55" stroke="#2D5F9A" stroke-width="1.5" opacity="0.6"></line>
+          <line x1="100" y1="30" x2="127" y2="55" stroke="#2D5F9A" stroke-width="1.5" opacity="0.6"></line>
+          <line x1="44" y1="60" x2="66" y2="60" stroke="#6B6860" stroke-width="1" opacity="0.5"></line>
+          <line x1="74" y1="60" x2="126" y2="60" stroke="#6B6860" stroke-width="1" opacity="0.5"></line>
+          <line x1="134" y1="60" x2="153" y2="60" stroke="#6B6860" stroke-width="1" opacity="0.5"></line>
+          <!-- Labels -->
+          <text x="100" y="23" text-anchor="middle" font-size="7" fill="white" font-weight="bold">Hub</text>
+          <text x="40" y="63" text-anchor="middle" font-size="6" fill="white">A</text>
+          <text x="160" y="63" text-anchor="middle" font-size="6" fill="white">B</text>
+          <text x="70" y="63" text-anchor="middle" font-size="6" fill="white">C</text>
+          <text x="130" y="63" text-anchor="middle" font-size="6" fill="white">D</text>
+          <text x="100" y="78" text-anchor="middle" font-size="8" fill="#6B6860">Node節點 · Edge邊 · 有向/加權/動態</text>
+        </svg>
+      </div>
+
+      <div class="section-label">中心性分析 Centrality</div>
+      <div class="centrality-grid">
+        <div class="centrality-item">
+          <div class="name">Degree</div>
+          <div class="desc">直接連接數（粉絲量）</div>
+        </div>
+        <div class="centrality-item">
+          <div class="name">Betweenness</div>
+          <div class="desc">資訊中介橋樑頻率</div>
+        </div>
+        <div class="centrality-item">
+          <div class="name">Closeness</div>
+          <div class="desc">平均最短路徑距離</div>
+        </div>
+        <div class="centrality-item">
+          <div class="name">PageRank</div>
+          <div class="desc">連結結構加權重要性</div>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:8px">社群偵測 Community Detection</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        <span class="pill pill-teal">Louvain（最大化模組度）</span>
+        <span class="pill pill-teal">Label Propagation</span>
+        <span class="pill pill-teal">Modularity Maximization</span>
+      </div>
+
+      <div class="section-label" style="margin-top:8px">處理工具</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        <span class="pill pill-amber">Spark GraphX/GraphFrames</span>
+        <span class="pill pill-blue">Neo4j (Cypher)</span>
+        <span class="pill pill-green">NetworkX / iGraph</span>
+        <span class="pill pill-purple">Gephi（視覺化）</span>
+      </div>
+
+      <div class="section-label" style="margin-top:8px">應用情境</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;font-size:11px">
+        <span class="pill pill-blue">社群媒體意見領袖</span>
+        <span class="pill pill-orange">推薦系統商品關聯</span>
+        <span class="pill pill-green">客戶關係分群</span>
+        <span class="pill pill-red">詐欺偵測異常關聯</span>
+      </div>
+    </div>
+
+  </div><!-- col2 end -->
+
+  <!-- ===== COLUMN 3: 文字/空間/異常 + 5.3 可視化 ===== -->
+  <div class="col">
+
+    <!-- 文字資料分析 -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--purple)">文</div>
+        文字資料分析 (NLP)
+      </div>
+
+      <div class="section-label">處理流程</div>
+      <div class="pipeline">
+        <div class="pipeline-step">斷詞 Tokenization</div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">去停用詞</div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">詞形還原 Lemma</div>
+        <div class="pipeline-arrow">→</div>
+        <div class="pipeline-step">特徵轉換</div>
+      </div>
+
+      <div class="section-label">特徵方法</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        <span class="pill pill-purple">TF / TF-IDF</span>
+        <span class="pill pill-purple">Word2Vec / GloVe</span>
+        <span class="pill pill-purple">FastText（子詞）</span>
+        <span class="pill pill-blue">BERT / RoBERTa</span>
+      </div>
+
+      <div class="section-label" style="margin-top:7px">任務類型</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        <span class="pill pill-orange">情感分析 正/負向</span>
+        <span class="pill pill-orange">主題分群 LDA</span>
+        <span class="pill pill-orange">NER 命名實體辨識</span>
+      </div>
+
+      <div class="section-label" style="margin-top:7px">工具</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px">
+        <span class="pill pill-green">Spark NLP</span>
+        <span class="pill pill-green">spaCy</span>
+        <span class="pill pill-green">HuggingFace Transformers</span>
+        <span class="pill pill-green">Gensim</span>
+      </div>
+    </div>
+
+    <!-- 地理空間 + 異常偵測 -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--teal)">🗺</div>
+        地理空間分析 &amp; 異常偵測
+      </div>
+
+      <div class="section-label">地理空間分析方法</div>
+      <div class="spatial-grid">
+        <div class="spatial-item">
+          <div class="sname">熱點分析</div>
+          KDE熱圖、Getis-Ord Gi*
+        </div>
+        <div class="spatial-item">
+          <div class="sname">空間群聚</div>
+          K-Means（座標）、DBSCAN
+        </div>
+        <div class="spatial-item">
+          <div class="sname">GWR 地理加權迴歸</div>
+          考慮位置的空間異質性
+        </div>
+        <div class="spatial-item">
+          <div class="sname">空間插值</div>
+          已知點預測未知點分佈
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:5px">
+        <span class="pill pill-teal">GeoPandas</span>
+        <span class="pill pill-teal">ArcGIS/QGIS</span>
+        <span class="pill pill-teal">Apache Sedona</span>
+        <span class="pill pill-teal">PostGIS</span>
+      </div>
+
+      <div class="section-label" style="margin-top:10px">異常偵測方法</div>
+      <div class="anomaly-box">
+        <div class="anomaly-method">
+          <div class="mname">Z-score / IQR</div>
+          統計閾值法；移動視窗指標
+        </div>
+        <div class="anomaly-method">
+          <div class="mname">LOF / KNN</div>
+          密度與距離方法
+        </div>
+        <div class="anomaly-method">
+          <div class="mname">Isolation Forest</div>
+          隨機切分樹（Amazon改進版 RCF）
+        </div>
+        <div class="anomaly-method">
+          <div class="mname">PyOD / Spark</div>
+          PyOD · Spark+MLLib · ES+ML · SageMaker
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">
+        <span class="pill pill-orange">金融詐欺偵測</span>
+        <span class="pill pill-orange">設備故障預警</span>
+        <span class="pill pill-orange">網路安全監控</span>
+        <span class="pill pill-orange">客戶行為異常</span>
+      </div>
+    </div>
+
+    <!-- 5.3 數據可視化工具 -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon" style="background:var(--blue)">5.3</div>
+        數據可視化工具
+      </div>
+
+      <div class="section-label">圖表類型選擇</div>
+      <div class="chart-grid">
+        <div class="chart-item" style="border-color:var(--blue)">
+          <div class="cname" style="color:var(--blue)">📊 數值型</div>
+          <div class="cuse">Histogram・Boxplot・KDE曲線</div>
+          <div class="cuse">→分佈形狀、集中趨勢、異常值</div>
+        </div>
+        <div class="chart-item" style="border-color:var(--green)">
+          <div class="cname" style="color:var(--green)">🔗 關聯性</div>
+          <div class="cuse">Scatter Plot・Correlation Matrix・Heatmap</div>
+          <div class="cuse">→共線性、強弱關係</div>
+        </div>
+        <div class="chart-item" style="border-color:var(--orange)">
+          <div class="cname" style="color:var(--orange)">📉 類別型</div>
+          <div class="cuse">Bar Chart・Stacked Bar・Pie Chart</div>
+          <div class="cuse">→群體差異、比例結構</div>
+        </div>
+        <div class="chart-item" style="border-color:var(--amber)">
+          <div class="cname" style="color:var(--amber)">📈 時間序列</div>
+          <div class="cuse">Line Chart・折線圖</div>
+          <div class="cuse">→趨勢、週期性、事件影響</div>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:10px">平台工具分層</div>
+
+      <div class="platform-tier" style="background:var(--surface2)">
+        <div class="tier-label" style="color:var(--green)">🟢 自行搭建 (Code-first)</div>
+        <div style="font-size:11px">
+          <span class="kw kw-blue">Python</span>：Matplotlib・Seaborn・<span class="kw kw-green">Plotly</span>・Altair<br>
+          <span class="kw kw-orange">R</span>：ggplot2・Shiny（互動Web）<br>
+          <span class="kw kw-purple">JS</span>：D3.js・Vega-Lite・Chart.js
+        </div>
+      </div>
+
+      <div class="platform-tier" style="background:var(--amber-lt)">
+        <div class="tier-label" style="color:var(--amber)">🟡 半商業化 (輕量BI)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span class="pill pill-amber">Metabase</span>
+          <span class="pill pill-amber">Redash</span>
+          <span class="pill pill-amber">Apache Superset</span>
+          <span class="pill pill-amber">Grafana（時序監控）</span>
+        </div>
+      </div>
+
+      <div class="platform-tier" style="background:var(--blue-lt)">
+        <div class="tier-label" style="color:var(--blue)">🔵 商業化平台 (Enterprise BI)</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span class="pill pill-blue">Tableau</span>
+          <span class="pill pill-blue">Power BI</span>
+          <span class="pill pill-blue">Google Looker</span>
+          <span class="pill pill-blue">Qlik Sense</span>
+          <span class="pill pill-blue">SAP Lumira</span>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:8px">5大設計原則</div>
+      <div class="principle-item"><div class="principle-num">1</div><span><span class="kw kw-blue">以閱讀者為中心</span>：聚焦KPI、避免細節過載</span></div>
+      <div class="principle-item"><div class="principle-num">2</div><span><span class="kw kw-blue">圖表符合資料型態</span>：比較→長條、趨勢→折線、比例→堆疊</span></div>
+      <div class="principle-item"><div class="principle-num">3</div><span><span class="kw kw-blue">簡化資訊去除冗餘</span>：避免3D效果和視覺雜訊</span></div>
+      <div class="principle-item"><div class="principle-num">4</div><span><span class="kw kw-blue">合理顏色與標示</span>：綠=成長、紅=下降、灰=不活躍</span></div>
+      <div class="principle-item"><div class="principle-num">5</div><span><span class="kw kw-blue">支援互動與探索</span>：篩選、點擊深入查詢、動態儀表板</span></div>
+    </div>
+
+  </div><!-- col3 end -->
+
+</div><!-- grid end -->
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

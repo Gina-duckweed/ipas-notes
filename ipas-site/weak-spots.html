@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iPAS 弱項衝刺筆記</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --P:#4A3FA0;--Plt:#EEEAFF;--Pdk:#2E2680;
+  --R:#C0392B;--Rlt:#FDECEA;--Rdk:#9B2D23;
+  --O:#D4720A;--Olt:#FFF3E0;
+  --Y:#257A58;--Ylt:#E6F4EE;
+  --Gr:#1A6B40;--Glt:#E0F4EA;
+  --A:#D4920A;--Alt:#FFF8E1;
+  --bg:#F6F4FB;--s:#FFF;--s2:#F0ECFF;--b:#D0CAEE;
+  --t:#1A1440;--t2:#3A3070;--t3:#7068A0;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;
+  --t:#E0D8FF;--t2:#A898D8;--t3:#6A5CA0;
+  --Plt:#221D40;--Rlt:#280A0A;--Olt:#2A1800;--Ylt:#0A1F14;--Glt:#0A1F14;--Alt:#2A2000;
+}}
+[data-theme=dark]{--bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;--t:#E0D8FF;--t2:#A898D8;--t3:#6A5CA0;--Plt:#221D40;--Rlt:#280A0A;--Olt:#2A1800;--Ylt:#0A1F14;--Glt:#0A1F14;--Alt:#2A2000;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);min-height:100vh}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--Pdk) 0%,var(--P) 55%,#7B6FD0 100%);padding:36px 40px 30px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero::after{content:'';position:absolute;left:-40px;bottom:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04)}
+.hero-eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:8px}
+.hero-title{font-size:30px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:6px}
+.hero-sub{font-size:13px;color:rgba(255,255,255,.82);line-height:1.6;max-width:640px;margin-bottom:14px}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;letter-spacing:.3px}
+.chip-r{background:rgba(192,57,43,.35);border:1px solid rgba(255,120,100,.4);color:#FFB0A0}
+.chip-o{background:rgba(212,114,10,.30);border:1px solid rgba(255,180,80,.35);color:#FFD08A}
+.chip-g{background:rgba(26,107,64,.30);border:1px solid rgba(80,200,130,.35);color:#80E0B0}
+
+/* Wrap */
+.wrap{max-width:1080px;margin:0 auto;padding:28px 24px}
+
+/* Score Map */
+.score-card{background:var(--s);border-radius:14px;border:1.5px solid var(--b);padding:20px 24px;margin-bottom:24px}
+.section-label{font-size:11px;font-weight:800;color:var(--P);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.score-row{margin-bottom:14px}
+.score-row:last-child{margin-bottom:0}
+.score-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.score-name{font-size:12px;font-weight:800;color:var(--t2);flex:1;min-width:140px}
+.score-vals{font-size:11px;color:var(--t3);font-weight:700}
+.score-self-num{color:var(--t);font-weight:900}
+.gap-tag{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:900}
+.gap-r{background:var(--Rlt);color:var(--R)}
+.gap-o{background:var(--Olt);color:var(--O)}
+.gap-y{background:var(--Ylt);color:var(--Y)}
+.gap-g{background:var(--Glt);color:var(--Gr)}
+.bar-track{height:10px;background:var(--s2);border-radius:6px;position:relative;overflow:visible;margin-bottom:3px}
+.bar-self{height:100%;border-radius:6px}
+.bar-nat{position:absolute;top:-3px;bottom:-3px;width:3px;border-radius:2px;background:var(--t3);opacity:.45}
+.bar-nat-label{position:absolute;top:-18px;font-size:8px;color:var(--t3);font-weight:700;white-space:nowrap;transform:translateX(-50%)}
+
+/* Priority header */
+.prio-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.prio-badge{padding:4px 14px;border-radius:20px;font-size:11px;font-weight:900;letter-spacing:.3px;flex-shrink:0}
+.prio-r{background:var(--R);color:#fff}
+.prio-o{background:var(--O);color:#fff}
+.prio-y{background:var(--Y);color:#fff}
+.prio-g{background:var(--Gr);color:#fff}
+.prio-title{font-size:16px;font-weight:900;color:var(--t)}
+.prio-section{margin-bottom:26px}
+
+/* Topic deep-dive */
+.topic-card{background:var(--s);border-radius:14px;border:1.5px solid var(--b);overflow:hidden;margin-bottom:16px}
+.topic-head{padding:13px 18px 11px;border-bottom:2px solid}
+.topic-head.hr{background:var(--Rlt);border-color:var(--R)}
+.topic-head.ho{background:var(--Olt);border-color:var(--O)}
+.topic-head.hy{background:var(--Ylt);border-color:var(--Y)}
+.topic-title{font-size:15px;font-weight:900;color:var(--t);margin-bottom:2px}
+.topic-score{font-size:11px;color:var(--t3);font-weight:700}
+.topic-score b{font-weight:900}
+.topic-body{padding:16px 18px}
+.topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.block-title{font-size:10px;font-weight:800;color:var(--P);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1.5px solid var(--Plt)}
+.cl{list-style:none;padding:0}
+.cl li{font-size:11.5px;color:var(--t2);line-height:1.6;padding:3px 0 3px 15px;position:relative;border-bottom:1px dotted var(--b)}
+.cl li:last-child{border-bottom:none}
+.cl li::before{content:'▸';position:absolute;left:0;color:var(--P);font-size:10px;top:5px}
+.cl b{color:var(--t);font-weight:800}
+.cl .hi{color:var(--R);font-weight:800}
+
+/* Comparison table */
+.cmp{width:100%;border-collapse:collapse;font-size:11px;margin-top:6px}
+.cmp th{background:var(--Plt);color:var(--Pdk);font-weight:800;font-size:10px;padding:6px 8px;border:1px solid var(--b);letter-spacing:.5px}
+.cmp td{padding:6px 8px;border:1px solid var(--b);color:var(--t2);line-height:1.45;vertical-align:top}
+.cmp tr:nth-child(even) td{background:var(--s2)}
+.cmp .kw{color:var(--P);font-weight:800}
+
+/* Exam trap box */
+.trap-box{background:var(--Alt);border:1.5px solid var(--A);border-radius:10px;padding:12px 14px;margin-top:14px}
+.trap-title{font-size:10px;font-weight:800;color:var(--A);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.tl{list-style:none;padding:0}
+.tl li{font-size:11.5px;color:var(--t2);line-height:1.55;padding:3px 0 3px 15px;position:relative}
+.tl li::before{content:'★';position:absolute;left:0;color:var(--A);font-size:10px;top:4px}
+.tl b{color:var(--t);font-weight:800}
+
+/* Duo layout */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* Strong section */
+.strong-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.strong-card{background:var(--s);border:1.5px solid var(--b);border-radius:12px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px}
+.strong-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+.strong-label{font-size:12px;font-weight:900;color:var(--t);margin-bottom:3px}
+.strong-score{font-size:11px;color:var(--t3);font-weight:700}
+.strong-tip{font-size:10.5px;color:var(--Gr);font-weight:700;margin-top:4px}
+
+/* Mnemonic pill */
+.mnemo{display:inline-block;background:var(--Plt);color:var(--Pdk);font-size:10px;font-weight:800;padding:2px 9px;border-radius:10px;margin:2px 2px 0 0}
+
+@media(max-width:680px){
+  .topic-grid,.duo,.strong-grid{grid-template-columns:1fr}
+  .hero{padding:24px 20px 20px}
+  .hero-title{font-size:24px}
+  .wrap{padding:18px 14px}
+}
+</style>
+
+<div class="hero">
+  <div class="hero-eyebrow">iPAS 中級 AI 應用規劃師 · 弱點分析</div>
+  <div class="hero-title">個人化弱項衝刺筆記</div>
+  <div class="hero-sub">根據你的答對率 vs 全國平均，鎖定最有投資報酬的補強方向，效率衝刺得分。</div>
+  <div class="hero-chips">
+    <span class="chip chip-r">🔴 資料處理與分析 &nbsp;個人 31% · 差距 −24%</span>
+    <span class="chip chip-r">🔴 機器學習概念 &nbsp;個人 40% · 差距 −22%</span>
+    <span class="chip chip-o">🟠 生成式AI應用工具 &nbsp;個人 55% · 差距 −8%</span>
+    <span class="chip chip-g">✅ No-code 75% · AI概念 60%（領先全國）</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ── Score Map ────────────────────────────────────── -->
+  <div class="score-card">
+    <div class="section-label">成績地圖 — 個人 vs 全國平均</div>
+
+    <!-- 資料處理與分析 -->
+    <div class="score-row">
+      <div class="score-meta">
+        <span class="score-name">資料處理與分析概念</span>
+        <span class="score-vals"><span class="score-self-num">31%</span> 個人 &nbsp;|&nbsp; 55% 全國</span>
+        <span class="gap-tag gap-r">−24%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-self" style="width:31%;background:#C0392B"></div>
+        <div class="bar-nat" style="left:55%"><span class="bar-nat-label">全國 55%</span></div>
+      </div>
+    </div>
+
+    <!-- 機器學習 -->
+    <div class="score-row">
+      <div class="score-meta">
+        <span class="score-name">機器學習概念</span>
+        <span class="score-vals"><span class="score-self-num">40%</span> 個人 &nbsp;|&nbsp; 62% 全國</span>
+        <span class="gap-tag gap-r">−22%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-self" style="width:40%;background:#C0392B"></div>
+        <div class="bar-nat" style="left:62%"><span class="bar-nat-label">全國 62%</span></div>
+      </div>
+    </div>
+
+    <!-- 生成式AI應用 -->
+    <div class="score-row">
+      <div class="score-meta">
+        <span class="score-name">生成式AI應用領域與工具使用</span>
+        <span class="score-vals"><span class="score-self-num">55%</span> 個人 &nbsp;|&nbsp; 63% 全國</span>
+        <span class="gap-tag gap-o">−8%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-self" style="width:55%;background:#D4720A"></div>
+        <div class="bar-nat" style="left:63%"><span class="bar-nat-label">全國 63%</span></div>
+      </div>
+    </div>
+
+    <!-- 鑑別式與生成式 -->
+    <div class="score-row">
+      <div class="score-meta">
+        <span class="score-name">鑑別式AI與生成式AI概念</span>
+        <span class="score-vals"><span class="score-self-num">57%</span> 個人 &nbsp;|&nbsp; 59% 全國</span>
+        <span class="gap-tag gap-y">−2%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-self" style="width:57%;background:#257A58"></div>
+        <div class="bar-nat" style="left:59%"><span class="bar-nat-label">全國 59%</span></div>
+      </div>
+    </div>
+
+    <!-- 生成式AI導入 -->
+    <div class="score-row">
+      <div class="score-meta">
+        <span class="score-name">生成式AI導入評估規劃</span>
+        <span class="score-vals"><span class="score-self-num">59%</span> 個人 &nbsp;|&nbsp; 62% 全國</span>
+        <span class="gap-tag gap-y">−3%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-self" style="width:59%;background:#257A58"></div>
+        <div class="bar-nat" style="left:62%"><span class="bar-nat-label">全國 62%</span></div>
+      </div>
+    </div>
+
+    <!-- No-code -->
+    <div class="score-row">
+      <div class="score-meta">
+        <span class="score-name">No code / Low code 概念</span>
+        <span class="score-vals"><span class="score-self-num">75%</span> 個人 &nbsp;|&nbsp; 72% 全國</span>
+        <span class="gap-tag gap-g">+3%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-self" style="width:75%;background:#1A6B40"></div>
+        <div class="bar-nat" style="left:72%"><span class="bar-nat-label">全國 72%</span></div>
+      </div>
+    </div>
+
+    <!-- AI概念 -->
+    <div class="score-row">
+      <div class="score-meta">
+        <span class="score-name">人工智慧概念</span>
+        <span class="score-vals"><span class="score-self-num">60%</span> 個人 &nbsp;|&nbsp; 50% 全國</span>
+        <span class="gap-tag gap-g">+10%</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-self" style="width:60%;background:#1A6B40"></div>
+        <div class="bar-nat" style="left:50%"><span class="bar-nat-label">全國 50%</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 🔴 PRIORITY 1 ─ 資料處理與分析                     -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="prio-section">
+    <div class="prio-header">
+      <span class="prio-badge prio-r">🔴 優先攻克 ①</span>
+      <span class="prio-title">資料處理與分析概念</span>
+      <span style="font-size:11px;color:var(--t3);margin-left:auto">個人 31% → 全國 55%，差距最大，得分潛力最高</span>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-head hr">
+        <div class="topic-title">資料類型 · 大數據特性 · 資料庫</div>
+        <div class="topic-score">最基礎、最高頻的考點群</div>
+      </div>
+      <div class="topic-body">
+        <div class="topic-grid">
+          <div>
+            <div class="block-title">資料三分類</div>
+            <ul class="cl">
+              <li><b>結構化</b>：關聯式資料庫表格（SQL），固定 Schema，易查詢</li>
+              <li><b>半結構化</b>：JSON / XML / CSV，有標籤但不固定格式</li>
+              <li><b>非結構化</b>：圖片、影片、音訊、自然語言，佔真實世界 80%+</li>
+            </ul>
+            <div class="block-title" style="margin-top:12px">大數據 5V</div>
+            <ul class="cl">
+              <li><b>Volume</b>（量）：資料規模大（TB/PB 級）</li>
+              <li><b>Velocity</b>（速）：產生與處理速度快（串流）</li>
+              <li><b>Variety</b>（類）：多種資料格式並存</li>
+              <li><b>Veracity</b>（真）：資料品質與可信度</li>
+              <li><b>Value</b>（值）：從資料中萃取商業價值</li>
+            </ul>
+          </div>
+          <div>
+            <div class="block-title">資料庫類型對比</div>
+            <table class="cmp">
+              <tbody><tr><th>類型</th><th>特性</th><th>代表</th></tr>
+              <tr><td class="kw">RDBMS</td><td>ACID、固定Schema、SQL查詢</td><td>MySQL, PostgreSQL</td></tr>
+              <tr><td class="kw">文件型</td><td>JSON彈性文件、水平擴展</td><td>MongoDB</td></tr>
+              <tr><td class="kw">KV Store</td><td>超低延遲、快取首選</td><td>Redis</td></tr>
+              <tr><td class="kw">列族型</td><td>寫入密集、時序適合</td><td>Cassandra, HBase</td></tr>
+              <tr><td class="kw">圖資料庫</td><td>關係網路、知識圖譜</td><td>Neo4j</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚡ 考試常見陷阱</div>
+          <ul class="tl">
+            <li><b>OLTP vs OLAP</b>：OLTP（線上交易處理，寫入頻繁，行式儲存）；OLAP（線上分析處理，讀取為主，列式儲存，適合 DW）</li>
+            <li><b>資料倉儲 vs 資料湖 vs 湖倉一體</b>：DW（結構化+歷史，慢但可靠）；Data Lake（原始資料，低成本）；Lakehouse（兩者優點，Delta Lake/Iceberg）</li>
+            <li><b>5V 中 Value 常被考</b>：不是資料本身的值，而是「能否從資料中萃取商業價值」</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-head hr">
+        <div class="topic-title">ETL / ELT · 資料清理 · 統計基礎</div>
+        <div class="topic-score">流程概念 + 技術名詞，考題偏選擇題場景判斷</div>
+      </div>
+      <div class="topic-body">
+        <div class="topic-grid">
+          <div>
+            <div class="block-title">ETL vs ELT</div>
+            <ul class="cl">
+              <li><b>ETL</b>（Extract→Transform→Load）：先轉換再入庫，適合傳統 DW，對目標資料庫壓力小</li>
+              <li><b>ELT</b>（Extract→Load→Transform）：先入庫再轉換，適合雲端 Data Lake，利用雲算力</li>
+              <li><b>Data Pipeline</b>：自動化的資料流程，涵蓋擷取、清理、轉換、存儲各步驟</li>
+              <li><b>Apache Kafka</b>：高吞吐量訊息佇列，適合即時串流資料管線</li>
+            </ul>
+            <div class="block-title" style="margin-top:12px">統計基礎</div>
+            <ul class="cl">
+              <li><b>描述統計</b>：平均數（受異常值影響）、中位數（穩健）、眾數、標準差、IQR</li>
+              <li><b>偏態</b>：右偏（長尾在右，均值＞中位數）；左偏（長尾在左）</li>
+              <li><b>相關係數</b>：Pearson（線性）；Spearman（非線性/順序）；−1~+1，0 表示無線性相關</li>
+              <li><b>常態分佈</b>：68-95-99.7 法則（1σ/2σ/3σ 範圍）</li>
+            </ul>
+          </div>
+          <div>
+            <div class="block-title">資料清理技術</div>
+            <ul class="cl">
+              <li><b>遺漏值</b>：均值填補（MCAR）、中位數（偏態分佈）、前後向填補（時序）、KNN填補、刪除（少量缺失）</li>
+              <li><b>異常值偵測</b>：Z-score（|Z|＞3 視為異常）、IQR 法（Q1−1.5×IQR ~ Q3+1.5×IQR）、Isolation Forest、LOF</li>
+              <li><b>重複值</b>：drop_duplicates，保留首筆或最新筆</li>
+              <li><b>資料一致性</b>：格式標準化（日期/電話）、單位統一（元/千元）</li>
+            </ul>
+            <div class="block-title" style="margin-top:12px">大數據框架</div>
+            <ul class="cl">
+              <li><b>Hadoop</b>：HDFS（分散式儲存）+ MapReduce（批次處理），適合大量離線分析</li>
+              <li><b>Apache Spark</b>：In-memory 計算，比 MapReduce 快 100×，支援批次+串流（Spark Streaming）</li>
+              <li><b>Kafka</b>：訊息佇列，Pub/Sub 模式，毫秒級延遲串流</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚡ 考試常見陷阱</div>
+          <ul class="tl">
+            <li><b>ETL vs ELT 選哪個？</b>場景：資料湖 + 雲端計算 → ELT；傳統企業 DW + 嚴格品質管控 → ETL</li>
+            <li><b>中位數 vs 均值</b>：資料有明顯異常值時，用中位數填補更穩健；薪資分佈、房價等右偏資料用中位數</li>
+            <li><b>Spark vs Hadoop</b>：Spark 是 Hadoop 的加速版，不取代 HDFS；Spark 需要更多記憶體</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 🔴 PRIORITY 2 ─ 機器學習概念                       -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="prio-section">
+    <div class="prio-header">
+      <span class="prio-badge prio-r">🔴 優先攻克 ②</span>
+      <span class="prio-title">機器學習概念</span>
+      <span style="font-size:11px;color:var(--t3);margin-left:auto">個人 40% → 全國 62%，差距 −22%</span>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-head hr">
+        <div class="topic-title">三大範式 · 偏差-變異數 · 正則化</div>
+        <div class="topic-score">概念理解題，考的是「選哪種方法」的判斷</div>
+      </div>
+      <div class="topic-body">
+        <div class="topic-grid">
+          <div>
+            <div class="block-title">三大學習範式</div>
+            <ul class="cl">
+              <li><b>監督式</b>：有標籤資料（X, y）→ 預測 y。迴歸（連續）/ 分類（離散）</li>
+              <li><b>非監督式</b>：無標籤 → 發現結構。聚類（K-means）/ 降維（PCA）/ 異常偵測</li>
+              <li><b>強化學習</b>：Agent 與環境互動，最大化累積獎勵。代表：AlphaGo、機器人控制</li>
+              <li><b>半監督</b>：少量標籤 + 大量無標籤，如 SSL（Self-supervised Learning）</li>
+            </ul>
+            <div class="block-title" style="margin-top:12px">偏差-變異數權衡</div>
+            <ul class="cl">
+              <li><span class="hi">高偏差（Bias）</span>＝ 欠擬合（Underfitting），模型太簡單，訓練/驗證誤差都高</li>
+              <li><span class="hi">高變異（Variance）</span>＝ 過擬合（Overfitting），訓練誤差低但驗證誤差高</li>
+              <li><b>改善欠擬合</b>：增加特徵、增加模型複雜度、減少正則化</li>
+              <li><b>改善過擬合</b>：更多資料、正則化、Dropout、早停（Early Stopping）、集成學習</li>
+            </ul>
+          </div>
+          <div>
+            <div class="block-title">正則化三兄弟</div>
+            <table class="cmp">
+              <tbody><tr><th>方法</th><th>懲罰項</th><th>效果</th><th>適用</th></tr>
+              <tr><td class="kw">L1（Lasso）</td><td>Σ|w|</td><td>稀疏解（特徵歸零）</td><td>特徵選擇</td></tr>
+              <tr><td class="kw">L2（Ridge）</td><td>Σw²</td><td>權重均勻縮小</td><td>多重共線性</td></tr>
+              <tr><td class="kw">Elastic Net</td><td>L1+L2</td><td>兩者折衷</td><td>高維稀疏</td></tr>
+              <tr><td class="kw">Dropout</td><td>隨機關閉神經元</td><td>降過擬合</td><td>深度學習</td></tr>
+            </tbody></table>
+            <div style="margin-top:12px">
+              <div class="block-title">集成學習</div>
+              <ul class="cl">
+                <li><b>Bagging</b>（並行）：多棵決策樹投票，代表：<b>Random Forest</b>，降低 Variance</li>
+                <li><b>Boosting</b>（串行）：後棵修正前棵錯誤，代表：<b>XGBoost / AdaBoost / LightGBM</b>，降低 Bias</li>
+                <li><b>Stacking</b>：用 meta-learner 整合多個基模型的預測</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-head hr">
+        <div class="topic-title">評估指標 · 混淆矩陣 · 超參數調優</div>
+        <div class="topic-score">計算題 + 場景判斷題，考試最高頻區域</div>
+      </div>
+      <div class="topic-body">
+        <div class="topic-grid">
+          <div>
+            <div class="block-title">混淆矩陣四象限</div>
+            <table class="cmp">
+              <tbody><tr><th></th><th>預測 Positive</th><th>預測 Negative</th></tr>
+              <tr><td class="kw">實際 Positive</td><td>TP（True Pos）</td><td>FN（漏報）</td></tr>
+              <tr><td class="kw">實際 Negative</td><td>FP（誤報）</td><td>TN（True Neg）</td></tr>
+            </tbody></table>
+            <ul class="cl" style="margin-top:8px">
+              <li><b>Accuracy</b> ＝ (TP+TN) / Total，類別不平衡時失真</li>
+              <li><b>Precision</b> ＝ TP/(TP+FP)，「預測為正中真正是正的比率」→ 重視 FP（詐欺偵測）</li>
+              <li><b>Recall</b> ＝ TP/(TP+FN)，「真正為正中被抓出的比率」→ 重視 FN（癌症篩查）</li>
+              <li><b>F1 Score</b> ＝ 2×P×R/(P+R)，Precision 與 Recall 的調和平均</li>
+              <li><b>AUC-ROC</b>：ROC 曲線（TPR vs FPR）下面積；AUC=1 完美，=0.5 等同隨機</li>
+            </ul>
+          </div>
+          <div>
+            <div class="block-title">超參數調優</div>
+            <ul class="cl">
+              <li><b>Grid Search</b>：窮舉所有參數組合，計算成本高但系統</li>
+              <li><b>Random Search</b>：隨機採樣，效率較高，大參數空間常用</li>
+              <li><b>Bayesian Optimization</b>：用代理模型預測最佳參數，最有效率</li>
+              <li><b>k-fold 交叉驗證</b>：資料切 k 份，輪流驗證，最終取平均，避免單次分割偏差</li>
+            </ul>
+            <div class="block-title" style="margin-top:12px">類別不平衡處理</div>
+            <ul class="cl">
+              <li><b>SMOTE</b>：過採樣（Oversampling），合成少數類新樣本</li>
+              <li><b>下採樣</b>（Undersampling）：減少多數類樣本</li>
+              <li><b>加權損失函數</b>：給少數類更高的損失權重</li>
+              <li><b>評估指標</b>：不平衡時用 F1 / AUC，不用 Accuracy</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚡ 考試最常混淆的地方</div>
+          <ul class="tl">
+            <li><b>Precision vs Recall 選哪個？</b> 癌症/疾病篩查（漏報代價高）→ Recall；垃圾郵件（誤判代價高）→ Precision</li>
+            <li><b>Random Forest vs XGBoost</b>：RF = Bagging（並行，抗過擬合）；XGB = Boosting（串行，準確率高但易過擬合）</li>
+            <li><b>L1 vs L2 選哪個？</b> 特徵多、可能有無關特徵 → L1（Lasso，稀疏）；特徵都有意義但多重共線性 → L2（Ridge）</li>
+            <li><b>訓練/驗證/測試集的角色</b>：驗證集調超參數；測試集是最終評估，不可用於任何訓練決策</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 🟠 MODERATE ─ 生成式AI應用領域與工具               -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="prio-section">
+    <div class="prio-header">
+      <span class="prio-badge prio-o">🟠 補強</span>
+      <span class="prio-title">生成式AI應用領域與工具使用</span>
+      <span style="font-size:11px;color:var(--t3);margin-left:auto">個人 55% → 全國 63%，差距 −8%</span>
+    </div>
+
+    <div class="topic-card">
+      <div class="topic-head ho">
+        <div class="topic-title">主流工具分類 · RAG · Agent 架構</div>
+        <div class="topic-score">工具辨識 + 架構理解，偏記憶型考題</div>
+      </div>
+      <div class="topic-body">
+        <div class="topic-grid">
+          <div>
+            <div class="block-title">生成式AI應用場景</div>
+            <table class="cmp">
+              <tbody><tr><th>場景</th><th>代表工具</th></tr>
+              <tr><td class="kw">對話/文字</td><td>ChatGPT, Claude, Gemini, Llama</td></tr>
+              <tr><td class="kw">圖像生成</td><td>Midjourney, DALL-E 3, Stable Diffusion</td></tr>
+              <tr><td class="kw">程式碼</td><td>GitHub Copilot, Cursor, Tabnine</td></tr>
+              <tr><td class="kw">影片生成</td><td>Sora (OpenAI), Runway, Pika</td></tr>
+              <tr><td class="kw">辦公整合</td><td>Microsoft Copilot for M365, Notion AI</td></tr>
+              <tr><td class="kw">音樂生成</td><td>Suno, Udio</td></tr>
+            </tbody></table>
+            <div class="block-title" style="margin-top:12px">No-code / Low-code AI 工具</div>
+            <ul class="cl">
+              <li><b>Make（Integromat）/ Zapier</b>：視覺化自動化工作流，整合 100+ 應用</li>
+              <li><b>Bubble / Webflow</b>：無代碼建構 Web App</li>
+              <li><b>Google AutoML / Azure ML Studio</b>：拖拉式模型訓練</li>
+              <li><b>特性</b>：快速上線、降低技術門檻、缺乏深度客製彈性</li>
+            </ul>
+          </div>
+          <div>
+            <div class="block-title">RAG 架構（Retrieval-Augmented Generation）</div>
+            <ul class="cl">
+              <li><b>問題</b>：LLM 知識截止日期（Knowledge Cutoff）、幻覺（Hallucination）</li>
+              <li><b>RAG 解法</b>：查詢 → 向量搜尋外部知識庫 → 取回相關文件 → LLM 整合生成</li>
+              <li><b>向量資料庫</b>：Pinecone, Weaviate, Chroma, Milvus（儲存文本嵌入向量）</li>
+              <li><b>優點</b>：無需重訓練即可更新知識、降低幻覺、可引用來源</li>
+            </ul>
+            <div class="block-title" style="margin-top:12px">AI Agent 框架</div>
+            <ul class="cl">
+              <li><b>LangChain</b>：LLM 應用開發框架，鏈式呼叫、工具整合</li>
+              <li><b>AutoGPT / CrewAI</b>：多 Agent 協作框架，任務分解與自動執行</li>
+              <li><b>Tool Use</b>：LLM 呼叫外部工具（搜尋引擎、計算機、API）完成任務</li>
+              <li><b>MCP（Model Context Protocol）</b>：標準化 Agent 與工具連接協議</li>
+            </ul>
+          </div>
+        </div>
+        <div class="trap-box">
+          <div class="trap-title">⚡ 考試提示</div>
+          <ul class="tl">
+            <li><b>RAG vs Fine-tuning 選哪個？</b> 知識需常更新 → RAG；需要特定語氣/風格 → Fine-tuning；兩者不互斥</li>
+            <li><b>Prompt Engineering 三層</b>：Zero-shot（直接問）→ Few-shot（給範例）→ Chain-of-Thought（要求逐步推理）</li>
+            <li><b>向量資料庫 ≠ 一般資料庫</b>：儲存 Embedding 向量，以相似度（cosine / 歐式距離）搜尋，非關鍵字比對</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- 🟡 MINOR ─ 鞏固區                                  -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="prio-section">
+    <div class="prio-header">
+      <span class="prio-badge prio-y">🟡 鞏固</span>
+      <span class="prio-title">接近全國水準，快速確認不失分</span>
+    </div>
+    <div class="duo">
+      <div class="topic-card" style="margin-bottom:0">
+        <div class="topic-head hy">
+          <div class="topic-title">鑑別式 vs 生成式 AI</div>
+          <div class="topic-score">個人 57% / 全國 59% · 差距 −2%</div>
+        </div>
+        <div class="topic-body">
+          <table class="cmp">
+            <tbody><tr><th></th><th>鑑別式（Discriminative）</th><th>生成式（Generative）</th></tr>
+            <tr><td class="kw">目標</td><td>學習 P(y|x)，分類邊界</td><td>學習 P(x)，資料分佈</td></tr>
+            <tr><td class="kw">輸出</td><td>標籤/類別</td><td>新內容（文字/圖像）</td></tr>
+            <tr><td class="kw">代表</td><td>SVM, Logistic, BERT分類</td><td>GPT, Diffusion, GAN</td></tr>
+            <tr><td class="kw">應用</td><td>垃圾郵件、詐欺偵測</td><td>文字生成、圖像合成</td></tr>
+          </tbody></table>
+          <ul class="cl" style="margin-top:10px">
+            <li><b>BERT</b>（雙向）：理解型，適合 NLU 任務（分類/NER/QA）</li>
+            <li><b>GPT</b>（單向自回歸）：生成型，適合文字生成、補全</li>
+            <li><b>Foundation Model</b>：大規模預訓練 → 下游任務微調，如 LLaMA、GPT-4</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="topic-card" style="margin-bottom:0">
+        <div class="topic-head hy">
+          <div class="topic-title">生成式AI導入評估規劃</div>
+          <div class="topic-score">個人 59% / 全國 62% · 差距 −3%</div>
+        </div>
+        <div class="topic-body">
+          <ul class="cl">
+            <li><b>POC 成功條件</b>：業務範圍清晰 + 資料就緒 + 利害關係人支持 + 技術可行性確認</li>
+            <li><b>ROI 公式</b>：(預期效益 − 總擁有成本TCO) / TCO × 100%</li>
+            <li><b>導入三模式</b>：商業服務（快速）/ 內部開發（彈性）/ 委外（成本轉移+SLA）</li>
+            <li><b>風險四策略</b>：規避（Avoidance）/ 轉移（Transfer, 保險/SLA）/ 緩解（Mitigation）/ 接受（Acceptance）</li>
+            <li><b>AI 成熟度四維</b>：資料治理 / 技術能力 / 人才儲備 / 流程整合</li>
+            <li><b>合規考量</b>：GDPR / 台灣個資法 / HIPAA（醫療）/ PCI-DSS（支付）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- ✅ STRONG ─ 保持                                   -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <div style="margin-bottom:8px">
+    <div class="prio-header">
+      <span class="prio-badge prio-g">✅ 保持優勢</span>
+      <span class="prio-title">領先全國，複習時維持即可</span>
+    </div>
+    <div class="strong-grid">
+      <div class="strong-card">
+        <div class="strong-icon">🤖</div>
+        <div>
+          <div class="strong-label">人工智慧概念</div>
+          <div class="strong-score">個人 60% · 全國 50% · 領先 +10%</div>
+          <div class="strong-tip">✓ 強項！AI 歷史、AI 類型、神經網路基礎、弱/強/超人工智慧概念掌握良好</div>
+        </div>
+      </div>
+      <div class="strong-card">
+        <div class="strong-icon">🧩</div>
+        <div>
+          <div class="strong-label">No code / Low code 概念</div>
+          <div class="strong-score">個人 75% · 全國 72% · 領先 +3%</div>
+          <div class="strong-tip">✓ 最高分項目！繼續保持，複習 Make/Zapier/AutoML 工具特性即可</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

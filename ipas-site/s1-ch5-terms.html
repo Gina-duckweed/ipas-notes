@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>科目一 Ch5｜AI技術應用與部署 詞彙卡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap">
+<style>
+:root{
+  --C:#2D5F9A;--Clt:#E8EEF8;--Cdk:#1E4070;
+  --A:#D4920A;--Alt:#FFF8E1;
+  --bg:#F4F6FC;--s:#FFFFFF;--s2:#E8EEF8;--b:#B0C0E0;
+  --card:#FFFFFF;
+  --t:#0F2040;--t2:#1E3A60;--t3:#3A5A80;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0A1428;--s:#101E38;--s2:#162848;--b:#2A4070;--card:#101E38;
+  --t:#D0E4F8;--t2:#8AADD8;--t3:#5070A0;--Clt:#162848;--Alt:#2A2000;
+}}
+[data-theme=dark]{--bg:#0A1428;--s:#101E38;--s2:#162848;--b:#2A4070;--card:#101E38;--t:#D0E4F8;--t2:#8AADD8;--t3:#5070A0;--Clt:#162848;--Alt:#2A2000;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--Cdk) 0%,var(--C) 60%,#4D7FBA 100%);padding:28px 40px 22px}
+.hero-sub{font-size:10px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:5px}
+.hero-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:4px}
+.hero-desc{font-size:12px;color:rgba(255,255,255,.8)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px}
+.sdiv{display:flex;align-items:center;gap:10px;margin:22px 0 12px}
+.sdiv-label{font-size:10px;font-weight:800;color:var(--C);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap}
+.sdiv-line{flex:1;height:1.5px;background:var(--b)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.card{background:var(--card);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b);border-left:4px solid var(--C)}
+.ctop{padding:9px 10px 7px;background:var(--Clt)}
+.ctop .en{font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--Cdk);text-transform:uppercase;opacity:.85}
+.ctop .zh{font-size:14px;font-weight:900;color:var(--Cdk);line-height:1.2;margin:2px 0}
+.ctop .abbr{display:inline-block;background:var(--C);color:#fff;font-size:8.5px;font-weight:800;padding:1px 7px;border-radius:10px;margin-top:2px}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1;color:var(--t2)}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2)}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px;color:var(--C)}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2);border:1.5px solid var(--A);background:var(--Alt)}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-sub">科目一・第五章・詞彙卡</div>
+  <div class="hero-title">AI 技術應用與系統部署 — 30 核心詞彙</div>
+  <div class="hero-desc">數據準備・模型選擇・系統集成・MLOps・部署模式 共 30 組關鍵術語</div>
+</div>
+
+<div class="wrap">
+  <div class="sdiv"><div class="sdiv-label">5.1 數據準備與模型選擇</div><div class="sdiv-line"></div></div>
+  <div class="grid">
+    <div class="card">
+      <div class="ctop"><div class="en">Feature Engineering</div><div class="zh">特徵工程</div></div>
+      <div class="cdef">透過對原始資料進行轉換、組合、選擇與生成，創造出更有助於機器學習模型預測的輸入特徵的過程。包括編碼、標準化、特徵選擇與降維。</div>
+      <div class="cscene"><b>🔍 應用場景</b>建模前資料預處理，提升模型準確率；時序特徵、交叉特徵創建。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>特徵工程品質往往比演算法選擇更影響模型表現；「垃圾進，垃圾出」（GIGO）原則。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Principal Component Analysis</div><div class="zh">主成分分析</div><div class="abbr">PCA</div></div>
+      <div class="cdef">透過找出資料中方差最大的方向（主成分），將高維資料投影至低維空間的線性降維方法。各主成分相互正交，保留原始資料最多資訊量。</div>
+      <div class="cscene"><b>🔍 應用場景</b>高維資料視覺化、特徵壓縮、去除共線性特徵、降低計算負擔。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>PCA 適合後續建模；t-SNE/UMAP 只適合視覺化（非線性，無法用於預測）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Logistic Regression</div><div class="zh">邏輯迴歸</div></div>
+      <div class="cdef">用於二元或多元分類的監督式學習模型，透過 Sigmoid 函數將線性組合輸出轉換為 [0,1] 機率值。適用於特徵與類別之間具線性可分性的場景。</div>
+      <div class="cscene"><b>🔍 應用場景</b>信用評分（高/低風險）、疾病診斷、客戶流失二元分類。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>「迴歸」名稱誤導，實為分類模型；多元分類用 Softmax 延伸（Multinomial LR）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Support Vector Machine</div><div class="zh">支持向量機</div><div class="abbr">SVM</div></div>
+      <div class="cdef">尋找使不同類別資料點之間間隔（Margin）最大化的超平面分類器。透過核函數（Kernel Trick）可處理非線性分類問題，適合高維資料。</div>
+      <div class="cscene"><b>🔍 應用場景</b>文本分類、圖像分類、生物資訊學（基因組資料分析）。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>SVM 對高維稀疏資料表現良好；大型資料集訓練慢；支持向量（Support Vectors）是最靠近決策邊界的樣本點。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Random Forest</div><div class="zh">隨機森林</div></div>
+      <div class="cdef">集成多棵決策樹的 Bagging（自助聚合）方法，每棵樹用隨機子樣本與隨機子特徵訓練，最終以投票（分類）或平均（迴歸）整合預測，有效降低過擬合。</div>
+      <div class="cscene"><b>🔍 應用場景</b>信用風險、醫療診斷、股市預測、特徵重要性評估。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Random Forest 提供 Feature Importance 分數，可用於特徵選擇；抗噪聲與過擬合能力強。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Gradient Boosting</div><div class="zh">梯度提升</div></div>
+      <div class="cdef">集成學習方法，透過序列地訓練多棵弱分類器（通常是決策樹），每棵新樹修正前一棵樹的殘差（Residual），逐步提升模型準確率。代表：XGBoost、LightGBM、CatBoost。</div>
+      <div class="cscene"><b>🔍 應用場景</b>結構化資料競賽冠軍解法、金融風控評分、點擊率預測。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Gradient Boosting 序列訓練（不可並行）；Random Forest 可並行訓練。XGBoost 是 Gradient Boosting 的優化實作。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">K-means Clustering</div><div class="zh">K 均值分群</div></div>
+      <div class="cdef">將資料點分配到 K 個群集（Cluster）的非監督式學習演算法，透過最小化每個點到所屬群集中心點（Centroid）的距離，迭代更新群集劃分直到收斂。</div>
+      <div class="cscene"><b>🔍 應用場景</b>顧客市場分群、文件主題分類、圖像色彩量化、異常偵測前處理。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>K-means 需預先指定 K 值（用 Elbow Method 選擇）；對初始點敏感；不適合非球形群集。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">DBSCAN</div><div class="zh">基於密度的分群演算法</div></div>
+      <div class="cdef">Density-Based Spatial Clustering of Applications with Noise，基於密度的分群方法，能識別任意形狀的群集，並自動將低密度區域的離群點標記為「雜訊（Noise）」。</div>
+      <div class="cscene"><b>🔍 應用場景</b>地理資料分析、異常點偵測、任意形狀群集發現。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>DBSCAN 無需預設群集數（K-means 需要）；能自動處理異常點；對高維資料效果較差。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">AutoML</div><div class="zh">自動化機器學習</div></div>
+      <div class="cdef">自動執行機器學習流程（特徵工程、模型選擇、超參數調優）的技術與工具。代表平台：Google AutoML、H2O.ai、AutoKeras、TPOT。降低 AI 開發的技術門檻。</div>
+      <div class="cscene"><b>🔍 應用場景</b>非專業資料科學家快速建模、企業快速原型驗證、AutoML 輔助特徵創建。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>AutoML 優勢：加速流程、降低門檻、高模型效能；局限：黑盒缺乏可解釋性、計算資源消耗大。</div>
+    </div>
+
+    <div class="card">
+      <div class="ctop"><div class="en">One-hot Encoding</div><div class="zh">獨熱編碼</div></div>
+      <div class="cdef">將類別型特徵（Categorical Feature）轉換為二進位向量的編碼方式。每個類別對應一個位置，該類別為 1、其餘為 0。適用於無序類別（如顏色、城市）。缺點：高基數類別導致維度爆炸（Curse of Dimensionality）。</div>
+      <div class="cscene"><b>🔍 應用場景</b>城市名稱、產品類別、用戶職業等無序類別特徵的前處理；搭配 Logistic Regression、SVM 等模型。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>One-hot vs Label Encoding：Label Encoding 適用有序類別（如評分1-5）；One-hot 適用無序類別（避免模型誤判數值大小的意義）；Target Encoding 用類別的目標均值替代，避免維度膨脹。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Imputation</div><div class="zh">遺漏值填補</div></div>
+      <div class="cdef">處理資料集中缺失值（Missing Values）的技術。常見方法：均值/中位數/眾數填補（適合 MCAR 隨機缺失）、前向/後向填補（適合時序資料）、線性插補、KNN 填補（依相似樣本填補）、MICE 多重插補（多次迭代建模）。</div>
+      <div class="cscene"><b>🔍 應用場景</b>感測器資料斷訊填補、用戶問卷部分填答處理、醫療記錄缺失欄位補全。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>填補策略選擇依缺失機制：MCAR（完全隨機缺失）用均值；MAR（隨機缺失）用模型預測；MNAR（非隨機缺失）需謹慎；刪除策略（listwise deletion）在資料量夠大且缺失比例低時可用。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Cross-validation</div><div class="zh">交叉驗證</div>
+      <div class="abbr">CV</div></div>
+      <div class="cdef">將資料集切分為 k 份（k-fold），輪流以一份為驗證集、其餘訓練，最終平均 k 次結果作為模型效能估計。避免單次分割的隨機偏差，更可靠地評估模型泛化能力。常見：5-fold、10-fold、留一法（LOOCV）。</div>
+      <div class="cscene"><b>🔍 應用場景</b>模型選擇與超參數調優時的評估標準；資料量少時（如醫療小樣本）的穩健評估方案。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Cross-validation 用於模型選擇，最終以全部訓練資料重新訓練；避免 Data Leakage（資料洩漏）：前處理（標準化、填補）應在每折訓練集內計算，不能在整體資料上先做。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">t-SNE / UMAP</div><div class="zh">高維降維視覺化</div>
+      <div class="abbr">t-SNE</div></div>
+      <div class="cdef">t-SNE（t-distributed Stochastic Neighbor Embedding）與 UMAP（Uniform Manifold Approximation and Projection）是非線性降維技術，將高維資料投影至 2D/3D 空間以視覺化聚類結構。t-SNE 保留局部結構；UMAP 速度更快且保留全局結構。</div>
+      <div class="cscene"><b>🔍 應用場景</b>深度學習特徵向量視覺化、顧客分群結果呈現、生物資訊（單細胞 RNA 分析）。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>t-SNE/UMAP 僅用於視覺化，不適合作為後續建模的特徵（因非線性轉換無法反向映射）；PCA 適合保留最大變異方向的線性降維，可用於後續建模；考試三者對比必記。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Data Augmentation</div><div class="zh">資料增強</div></div>
+      <div class="cdef">透過對現有訓練資料進行變換（翻轉、旋轉、裁剪、亮度調整、加噪聲等）人工擴增資料集規模，減少過擬合、提升模型泛化能力。NLP 場景包括同義詞替換、回譯（Back-translation）。</div>
+      <div class="cscene"><b>🔍 應用場景</b>醫療影像分類（資料量不足場景）、工業缺陷偵測、CV 模型訓練；NLP 中資料稀少的低資源語言任務。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Data Augmentation 是解決資料不足問題的核心手段（另有 Transfer Learning、GAN 生成合成資料）；增強策略需保留語義（如語義分割任務中 mask 需同步轉換）；過度增強可能引入雜訊。</div>
+    </div>
+    <div class="sdiv" style="grid-column:1/-1"><div class="sdiv-label">5.2 AI 系統集成與部署</div><div class="sdiv-line"></div></div>
+    <div class="card">
+      <div class="ctop"><div class="en">Data Pipeline</div><div class="zh">資料管線</div></div>
+      <div class="cdef">自動化的資料處理流程，涵蓋資料擷取（Extract）、格式轉換（Transform）、清理與入庫（Load），即 ETL 流程。確保資料持續穩定流入模型推論或訓練環境。</div>
+      <div class="cscene"><b>🔍 應用場景</b>AI 系統實時推論所需的特徵計算、批次訓練資料準備。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Data Pipeline = ETL 流程自動化；需考慮資料品質監控、缺失資料處理和延遲容忍度設計。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">RESTful API</div><div class="zh">REST 風格 API</div></div>
+      <div class="cdef">基於 HTTP 協議的應用程式介面設計風格，使用標準動詞（GET/POST/PUT/DELETE）和 URL 資源路徑，讓 AI 模型推論結果能被前端應用或其他服務呼叫。</div>
+      <div class="cscene"><b>🔍 應用場景</b>AI 推論服務封裝（Flask/FastAPI）、模型 API 供前端/APP 呼叫。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>REST 適合一般請求；gRPC 適合高效能雙向通訊；Webhook 用於事件驅動的非同步通知。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Docker / Kubernetes</div><div class="zh">容器化與容器編排</div></div>
+      <div class="cdef">Docker 將應用程式與依賴環境封裝為容器映像，確保跨環境一致性。Kubernetes（K8s）管理大量容器的部署、擴縮、負載平衡與故障恢復，是雲端原生 AI 部署標準架構。</div>
+      <div class="cscene"><b>🔍 應用場景</b>AI 模型跨平台部署、微服務架構、高可用性推論服務。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Docker 解決「在我機器上能跑」問題；K8s 解決「大規模管理」問題；Rolling Update 零停機更新。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Microservices Architecture</div><div class="zh">微服務架構</div></div>
+      <div class="cdef">將單一應用程式拆分為多個小型、獨立的服務，每個服務實作單一功能，可獨立部署、擴展與更新。各服務透過 API 相互溝通，具備高容錯性與彈性。</div>
+      <div class="cscene"><b>🔍 應用場景</b>大型 AI 系統拆分（推論服務/特徵計算/資料管線分離）、跨團隊並行開發。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>微服務優點：單一模組故障不影響全系統；挑戰：模組間 API 設計複雜、分散式管理難度高。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">CI/CD</div><div class="zh">持續整合與持續部署</div></div>
+      <div class="cdef">CI（Continuous Integration）：程式碼/資料變動自動觸發訓練和測試流程。CD（Continuous Deployment）：通過測試門檻後自動部署至生產環境，降低人為錯誤。</div>
+      <div class="cscene"><b>🔍 應用場景</b>MLOps 模型迭代更新、AI 產品持續交付、避免人工部署失誤。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>MLOps = DevOps + ML；CI/CD 是 MLOps 的核心實踐，搭配 MLflow 實現模型版本追蹤。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">MLflow</div><div class="zh">機器學習實驗管理平台</div></div>
+      <div class="cdef">開源 MLOps 平台，提供實驗追蹤（Experiment Tracking）、模型版本管理（Model Registry）、模型部署與專案管理四大核心功能，記錄每次訓練的參數、指標與模型工件。</div>
+      <div class="cscene"><b>🔍 應用場景</b>資料科學團隊實驗管理、模型版本比較、模型上線審核。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>MLflow 追蹤「模型版本」；DVC 追蹤「資料集版本」；兩者互補，共同實現 ML 可重現性。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Blue-Green Deployment</div><div class="zh">藍綠部署</div></div>
+      <div class="cdef">維護兩個完全相同的生產環境（藍色：當前版本，綠色：新版本），部署時將流量切換至綠色環境，若發生問題可立即切回藍色，實現零停機更新與快速回滾。</div>
+      <div class="cscene"><b>🔍 應用場景</b>AI 模型重大版本更新、零停機服務切換、快速回滾保障。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Blue-Green：瞬間切換全量流量（低風險）；Canary：逐步灰度發布，小比例驗證後再全量。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Canary Deployment</div><div class="zh">金絲雀部署</div></div>
+      <div class="cdef">將新版本模型先部署至一小部分用戶（如 5% 流量），監控效能指標無異常後再逐步擴大比例，最終全量切換。降低新版本問題的影響範圍。</div>
+      <div class="cscene"><b>🔍 應用場景</b>AI 推薦系統更新、LLM 新版本灰度測試、A/B 測試整合。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Canary 名稱源自「礦坑金絲雀」預警概念；與 A/B Test 相比，Canary 更注重風險控制而非統計比較。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Edge Computing</div><div class="zh">邊緣運算</div></div>
+      <div class="cdef">在靠近資料產生端的裝置（IoT 感測器、手機、車載系統）上進行模型推論的運算模式，將計算從雲端中心移至邊緣，大幅降低延遲並保護資料隱私。</div>
+      <div class="cscene"><b>🔍 應用場景</b>工廠即時品質檢測、自動駕駛感知決策、智慧城市監控、行動裝置 AI。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>邊緣推論特點：低延遲（Latency）、低頻寬消耗、高隱私保護；挑戰：算力有限（需模型量化/剪枝）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Model Monitoring</div><div class="zh">模型監控</div></div>
+      <div class="cdef">部署後持續追蹤 AI 模型在生產環境中的效能表現，偵測 Model Drift（預測分佈偏移）、Data Drift（輸入統計特性改變）及效能指標異常，及時觸發再訓練。</div>
+      <div class="cscene"><b>🔍 應用場景</b>金融風控模型維護、推薦系統效能追蹤、醫療 AI 持續品質保障。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>監控三層：系統層（延遲/吞吐量）、模型層（準確率/F1）、業務層（ROI/轉換率）；常用工具：Prometheus + Grafana。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Inference Latency</div><div class="zh">推論延遲</div></div>
+      <div class="cdef">AI 模型從接收輸入到返回預測結果所需的時間，是衡量 AI 系統回應速度的核心指標。高延遲影響用戶體驗，邊緣運算和模型輕量化是降低延遲的主要手段。</div>
+      <div class="cscene"><b>🔍 應用場景</b>即時推薦系統 SLA 要求（&lt;100ms）、自動駕駛感知決策、即時詐欺偵測。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>降低 Inference Latency 方法：模型量化（INT8）、知識蒸餾、邊緣部署、GPU加速、批次推論（Batching）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Model Versioning</div><div class="zh">模型版本管理</div></div>
+      <div class="cdef">追蹤並管理 AI 模型不同版本（包括訓練參數、資料集版本、評估指標、部署狀態）的系統性方法，確保模型可重現性、回滾能力與稽核追蹤。</div>
+      <div class="cscene"><b>🔍 應用場景</b>模型迭代更新管理、A/B 測試版本比較、合規稽核要求。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>MLflow Model Registry 提供模型版本管理（Staging→Production→Archived 狀態機）；DVC 管理訓練資料版本。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">API Gateway</div><div class="zh">API 閘道</div></div>
+      <div class="cdef">位於客戶端與後端 AI 服務之間的中間層，統一處理 API 路由、身份驗證（OAuth2/JWT）、流量控制（Rate Limiting）、負載均衡與監控日誌。AWS API Gateway、Kong、Nginx 是常見實作。</div>
+      <div class="cscene"><b>🔍 應用場景</b>AI 推論服務的統一入口管理；多模型 A/B 路由；防止 API 被惡意超量請求（DDoS 防護）。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>API Gateway vs Load Balancer：Gateway 側重請求路由與安全控制；Load Balancer 側重流量分發；AI 系統整合中，API Gateway 是暴露 ML 模型推論端點（RESTful/gRPC）的標準架構。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Data Drift</div><div class="zh">資料漂移</div></div>
+      <div class="cdef">模型部署後，生產環境輸入資料的統計分佈發生顯著偏移（與訓練資料分佈不一致），導致模型效能下降。分為協變數漂移（輸入特徵分佈改變）與概念漂移（輸入-輸出關係改變）。需持續監控並觸發再訓練。</div>
+      <div class="cscene"><b>🔍 應用場景</b>電商推薦系統因季節性消費習慣改變導致效果下滑；詐欺偵測模型因詐騙手法演進失效。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Data Drift（輸入分佈改變）vs Model Drift（預測輸出分佈改變）vs Concept Drift（底層關係改變）三者區分是必考重點；偵測方法：KS 統計量、PSI（Population Stability Index）、特徵統計監控。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">A/B Testing</div><div class="zh">A/B 測試</div></div>
+      <div class="cdef">將用戶隨機分為對照組（A：現有模型）與實驗組（B：新模型），在真實流量下比較兩組的業務指標差異，以統計顯著性判斷新模型是否優於舊版本。是 AI 模型上線決策的黃金標準。</div>
+      <div class="cscene"><b>🔍 應用場景</b>推薦系統新演算法驗證、廣告投放模型優化、LLM 回答品質比較評估。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>A/B Test vs Canary Deployment：A/B 強調統計比較（找更好的模型）；Canary 強調風險控制（安全切換）；A/B 需要足夠樣本量（統計功效 80%+）才能獲得可靠結論。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Feature Store</div><div class="zh">特徵儲存庫</div></div>
+      <div class="cdef">集中管理、存儲和提供 ML 特徵的平台，支援特徵定義、計算、離線訓練（批次）與線上推論（即時）的一致性存取，避免訓練-服務偏差（Training-Serving Skew）。代表工具：Feast、Tecton、Hopsworks。</div>
+      <div class="cscene"><b>🔍 應用場景</b>金融風控即時特徵計算、推薦系統用戶行為特徵復用、多個 ML 模型共享同一套特徵管線。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Feature Store 解決的核心問題：Training-Serving Skew（訓練時特徵計算邏輯與線上推論不一致）；離線 Store 供批次訓練（如 Parquet/Hive）；線上 Store 供低延遲查詢（如 Redis）。</div>
+    </div>
+  </div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

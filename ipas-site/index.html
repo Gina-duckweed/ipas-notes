@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>iPAS 中級筆記庫</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+/* 學習地圖：三科目分欄，每章一列「重點筆記 / 名詞解釋」，下方是專題與練習 */
+:root{
+  --bg:#F4F6FA;--card:#FFFFFF;--ink:#16243A;--muted:#5A6880;--line:#DCE3EE;
+  --s1:#1F8A8A;--s2:#3B5BDB;--s3:#7B4FC4;--ex:#C77D0A;--focus:#F6AD55;
+  --f:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--n:"Nunito","Noto Sans TC",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0F1726;--card:#172236;--ink:#E7EDF7;--muted:#9AA9C2;--line:#2A3A55;
+  --s1:#43C2C2;--s2:#7C95FF;--s3:#B293F0;--ex:#F0B048;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-family:var(--n);font-weight:800;letter-spacing:.14em;font-size:12px;color:var(--muted);text-transform:uppercase}
+h1{margin:4px 0 6px;font-size:clamp(28px,4.6vw,42px);line-height:1.15;font-weight:900;text-wrap:balance}
+.sub{margin:0;color:var(--muted);max-width:36em}
+.search{display:flex;flex-direction:column;gap:6px;min-width:min(100%,280px)}
+.search label{font-size:13px;color:var(--muted)}
+.search input{font:inherit;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:100%}
+.search input:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+.subj{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 10px;display:flex;flex-direction:column;gap:4px;min-width:0;border-top:6px solid var(--c)}
+.subj h2{margin:0;font-size:13px;font-family:var(--n);font-weight:800;letter-spacing:.1em;color:var(--c)}
+.subj h3{margin:0 0 8px;font-size:19px;font-weight:900;line-height:1.35}
+.ch{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:12px 0;border-top:1px solid var(--line)}
+.ch .name{font-weight:700}
+.ch .name b{font-family:var(--n);color:var(--c);margin-right:6px}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+a.btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;color:var(--c);border:1.5px solid var(--c);background:transparent}
+a.btn.solid{background:var(--c);color:#fff}
+@media (prefers-color-scheme:dark){a.btn.solid{color:#0F1726}}
+a.btn:hover{transform:translateY(-1px)}
+a.btn:focus-visible,a.card:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.extra h2{margin:0 0 12px;font-size:20px;font-weight:900}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+a.card{--c:var(--ex);display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+a.card:hover{border-color:var(--c)}
+a.card .k{align-self:flex-start;font-size:12px;font-weight:700;color:#fff;background:var(--c);padding:1px 10px;border-radius:999px}
+@media (prefers-color-scheme:dark){a.card .k{color:#0F1726}}
+a.card .t{font-weight:900;font-size:16.5px}
+a.card .d{color:var(--muted);font-size:13.5px}
+.none{color:var(--muted)}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">iPAS · AI 應用規劃師 · 中級</div>
+      <h1>iPAS 中級筆記庫</h1>
+      <p class="sub">三個考科的章節重點筆記與名詞解釋，加上演算法學習卡、實作分析與 Python 練習。每章都有「重點筆記」與「名詞解釋 30 詞」兩份。</p>
+    </div>
+    <div class="search">
+      <label for="q">搜尋章節或主題</label>
+      <input id="q" type="search" placeholder="例如：機率、SVM、MLOps" autocomplete="off">
+    </div>
+  </header>
+
+  <section class="grid" id="grid"></section>
+
+  <section class="extra">
+    <h2>專題學習卡與練習</h2>
+    <div class="cards" id="extras"></div>
+  </section>
+  <p class="none" id="none" hidden>找不到符合的章節。</p>
+
+  <footer>個人讀書筆記，內容依 iPAS 中級 AI 應用規劃師考試範圍整理，僅供學習參考。</footer>
+</div>
+<script>
+const SUBJ=[
+ {id:"s1",c:"--s1",no:"科目一",name:"人工智慧技術應用與規劃",ch:[["3","AI 核心技術","NLP・電腦視覺・生成式 AI・多模態"],["4","AI 導入與風險管理","導入評估・專案規劃・風險與倫理"],["5","AI 技術應用與系統部署","資料準備・模型選擇・MLOps・部署"]]},
+ {id:"s2",c:"--s2",no:"科目二",name:"大數據處理分析與應用",ch:[["3","機率統計基礎","敘述統計・機率分佈・假設檢定"],["4","大數據處理技術","收集清理・儲存管理・處理工具"],["5","大數據分析方法與工具","統計應用・分析方法・可視化"],["6","大數據在人工智慧之應用","鑑別式 AI・生成式 AI・分散式訓練"]]},
+ {id:"s3",c:"--s3",no:"科目三",name:"機器學習技術與應用",ch:[["3","機器學習基礎數學","機率統計・線性代數・數值優化"],["4","機器學習與深度學習","學習典範・主流演算法・CNN／RNN／Transformer"],["5","機器學習建模與參數調校","特徵工程・模型選擇・超參數調校"],["6","機器學習治理","隱私合規・匿名化・偏見與公平性"]]}
+];
+const EXTRA=[
+ ["weak-spots","衝刺","iPAS 弱項衝刺筆記","依答對率鎖定最值得補強的主題"],
+ ["ml-cards-15-21","學習卡","ML 學習卡 Cards 15–21","過擬合／欠擬合等核心概念"],
+ ["svm","學習卡","SVM 支援向量機","最大間隔、核函數與白話理解"],
+ ["iris-logistic","實作","Iris 羅吉斯迴歸分析","資料載入到評估的完整流程與圖表"],
+ ["python-exercises","練習題","Python 大數據與機器學習應用題","分主題練習，附完整程式碼"],
+ ["python-handbook","速查","Python 語法手冊","依主題分類的語法與範例，可搜尋"]
+];
+const N="零一二三四五六七";
+const grid=document.getElementById("grid"), extras=document.getElementById("extras");
+grid.innerHTML=SUBJ.map(s=>`<article class="subj" style="--c:var(${s.c})"><h2>${s.no}</h2><h3>${s.name}</h3>${
+  s.ch.map(([n,t,d])=>`<div class="ch" data-s="${s.no} ${s.name} 第${N[n]}章 ${t} ${d}"><div class="name"><b>CH${n}</b>${t}</div><div class="links"><a class="btn solid" href="${s.id}-ch${n}-notes.html">重點筆記</a><a class="btn" href="${s.id}-ch${n}-terms.html">名詞解釋 30 詞</a></div></div>`).join("")}</article>`).join("");
+extras.innerHTML=EXTRA.map(([f,k,t,d])=>`<a class="card" href="${f}.html" data-s="${k} ${t} ${d}"><span class="k">${k}</span><span class="t">${t}</span><span class="d">${d}</span></a>`).join("");
+document.getElementById("q").addEventListener("input",e=>{
+  const q=e.target.value.trim().toLowerCase(); let any=false;
+  document.querySelectorAll("[data-s]").forEach(el=>{const m=!q||el.dataset.s.toLowerCase().includes(q);el.hidden=!m;if(m)any=true;});
+  document.querySelectorAll(".subj").forEach(s=>s.hidden=![...s.querySelectorAll(".ch")].some(c=>!c.hidden));
+  document.getElementById("none").hidden=any;
+});
+</script>
+</body>
+</html>

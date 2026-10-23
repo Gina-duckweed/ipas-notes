@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第五章名詞解釋：大數據分析方法與工具</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+:root{
+  --bg:#F9F8F4;--s:#fff;--s2:#F3F1EB;--t:#2A2820;--m:#6B6860;--b:#DDD9CF;
+  --B:#2D5F9A;--Blt:#EAF0F8;--O:#E85D3A;--Olt:#FDF0EC;
+  --G:#3A9A6E;--Glt:#EAF5EF;--A:#D4920A;--Alt:#FDF6E3;
+  --P:#7B5EA7;--Plt:#F2EEFA;--T:#2A8A8A;--Tlt:#E6F5F5;--R:#C0392B;--Rlt:#FDECEB;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A1916;--s:#252320;--s2:#2E2C28;--t:#EDE9E0;--m:#A09D95;--b:#3D3A34;
+  --B:#6B9FD4;--Blt:#1A2535;--O:#F08060;--Olt:#2D1E18;--G:#5CC490;--Glt:#142A1F;
+  --A:#F0B840;--Alt:#2A2008;--P:#A888D8;--Plt:#221630;--T:#50B8B8;--Tlt:#102222;--R:#E05040;--Rlt:#2A1210;
+}}
+:root[data-theme="dark"]{
+  --bg:#1A1916;--s:#252320;--s2:#2E2C28;--t:#EDE9E0;--m:#A09D95;--b:#3D3A34;
+  --B:#6B9FD4;--Blt:#1A2535;--O:#F08060;--Olt:#2D1E18;--G:#5CC490;--Glt:#142A1F;
+  --A:#F0B840;--Alt:#2A2008;--P:#A888D8;--Plt:#221630;--T:#50B8B8;--Tlt:#102222;--R:#E05040;--Rlt:#2A1210;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito','Noto Sans TC',sans-serif;background:var(--bg);color:var(--t);padding:14px;line-height:1.5}
+.hdr{text-align:center;background:var(--s);border:2px solid var(--b);border-radius:12px;padding:14px;margin-bottom:14px}
+.badge{display:inline-block;background:var(--P);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.htitle{font-family:'Noto Sans TC',sans-serif;font-size:20px;font-weight:900}.htitle span{color:var(--P)}
+.hsub{font-size:11px;color:var(--m);margin-top:3px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.card{background:var(--s);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b)}
+.ctop{padding:9px 10px 8px}
+.cnum{font-size:9px;font-weight:800;letter-spacing:1px;color:var(--m);margin-bottom:2px}
+.crow{display:flex;align-items:center;gap:8px}
+.cico{font-size:20px;line-height:1}
+.cname{font-family:'Noto Sans TC',sans-serif;font-size:13px;font-weight:900}
+.cen{font-size:9.5px;font-weight:700;letter-spacing:.3px;opacity:.7}
+.cdiag{padding:4px 10px;display:flex;justify-content:center}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;line-height:1.5}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;line-height:1.5;border:1.5px solid var(--A);background:var(--Alt)}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+</style>
+<div class="hdr">
+  <div class="badge">iPAS 科目二 · CH5</div>
+  <div class="htitle">第五章：<span>大數據分析方法與工具</span></div>
+  <div class="hsub">30個核心名詞 · Sketchnote圖文說明 · 情境分析 · 考題方向</div>
+</div>
+<div class="grid">
+
+<!-- 01 敘述統計 -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">01 / 30</div>
+<div class="crow"><span class="cico">📊</span><div><div class="cname">敘述統計</div><div class="cen">Descriptive Statistics</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="8" width="38" height="54" rx="3" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="24" y="22" text-anchor="middle" font-size="7" fill="#2D5F9A" font-weight="700">集中</text>
+  <text x="24" y="33" text-anchor="middle" font-size="6.5" fill="#2D5F9A">均值μ</text>
+  <text x="24" y="43" text-anchor="middle" font-size="6.5" fill="#2D5F9A">中位數</text>
+  <text x="24" y="53" text-anchor="middle" font-size="6.5" fill="#2D5F9A">眾數</text>
+  <rect x="48" y="8" width="38" height="54" rx="3" fill="#2D5F9A" opacity=".3" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="67" y="22" text-anchor="middle" font-size="7" fill="#2D5F9A" font-weight="700">離散</text>
+  <text x="67" y="33" text-anchor="middle" font-size="6.5" fill="#2D5F9A">標準差σ</text>
+  <text x="67" y="43" text-anchor="middle" font-size="6.5" fill="#2D5F9A">變異數</text>
+  <text x="67" y="53" text-anchor="middle" font-size="6.5" fill="#2D5F9A">IQR</text>
+  <rect x="91" y="8" width="38" height="54" rx="3" fill="#2D5F9A" opacity=".45" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="110" y="22" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">形狀</text>
+  <text x="110" y="33" text-anchor="middle" font-size="6.5" fill="#fff">偏態</text>
+  <text x="110" y="43" text-anchor="middle" font-size="6.5" fill="#fff">峰態</text>
+  <text x="110" y="53" text-anchor="middle" font-size="6.5" fill="#fff">分佈圖</text>
+  <rect x="134" y="8" width="40" height="54" rx="3" fill="#2D5F9A" opacity=".6" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="154" y="22" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">關聯</text>
+  <text x="154" y="33" text-anchor="middle" font-size="6.5" fill="#fff">相關係數</text>
+  <text x="154" y="43" text-anchor="middle" font-size="6.5" fill="#fff">共變數</text>
+  <text x="154" y="53" text-anchor="middle" font-size="6.5" fill="#fff">交叉表</text>
+</svg>
+</div>
+<div class="cdef">對<strong>已知資料集</strong>進行摘要描述，不做推論。涵蓋三大面向：<strong>集中趨勢</strong>（均值/中位數/眾數）、<strong>離散程度</strong>（標準差/IQR）、<strong>分佈形狀</strong>（偏態/峰態）。是資料探索（EDA）的起點。</div>
+<div class="cscene"><b>📍 適用情境</b>分析10萬筆訂單金額：均值$1200、中位數$800（正偏分佈），標準差$950，說明高額訂單拉高均值。</div>
+<div class="cexam"><b>🎯 考題方向</b>考敘述vs推論統計差異（描述已有vs推論母體）、偏態對均值vs中位數的影響、EDA流程。</div>
+</div>
+
+<!-- 02 推論統計 -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">02 / 30</div>
+<div class="crow"><span class="cico">🔭</span><div><div class="cname">推論統計</div><div class="cen">Inferential Statistics</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <ellipse cx="130" cy="38" rx="42" ry="25" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1.5" stroke-dasharray="4,2"></ellipse>
+  <text x="130" y="35" text-anchor="middle" font-size="8" fill="#2D5F9A">母體 Population</text>
+  <text x="130" y="46" text-anchor="middle" font-size="7" fill="#2D5F9A">（未知參數μ,σ）</text>
+  <rect x="5" y="24" width="55" height="26" rx="4" fill="#2D5F9A" opacity=".6"></rect>
+  <text x="32" y="35" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">樣本 Sample</text>
+  <text x="32" y="45" text-anchor="middle" font-size="7" fill="#fff">→ 估計/檢定</text>
+  <path d="M62,37 Q90,10 108,30" stroke="#2D5F9A" stroke-width="1.5" fill="none" marker-end="url(#a)"></path>
+  <text x="80" y="18" text-anchor="middle" font-size="7" fill="#2D5F9A">推論</text>
+</svg>
+</div>
+<div class="cdef">從<strong>樣本資料</strong>推論<strong>母體特性</strong>的統計方法。兩大分支：<strong>估計</strong>（點估計/區間估計）和<strong>假設檢定</strong>（H₀/H₁，p值決策）。是科學研究與商業決策的核心統計工具。</div>
+<div class="cscene"><b>📍 適用情境</b>調查1000位用戶滿意度，以95%信賴區間推估全體百萬用戶的滿意度範圍（如72%±3%）。</div>
+<div class="cexam"><b>🎯 考題方向</b>考推論統計前提（隨機抽樣）、估計vs檢定差異、樣本量對推論精確度的影響。</div>
+</div>
+
+<!-- 03 t-digest -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">03 / 30</div>
+<div class="crow"><span class="cico">📐</span><div><div class="cname">t-digest</div><div class="cen">Approximate Quantile Algorithm</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="90" y="12" text-anchor="middle" font-size="7.5" fill="#2A8A8A" font-weight="700">分位數近似結構</text>
+  <rect x="10" y="18" width="16" height="30" rx="2" fill="#2A8A8A" opacity=".3"></rect>
+  <rect x="28" y="14" width="16" height="34" rx="2" fill="#2A8A8A" opacity=".4"></rect>
+  <rect x="46" y="22" width="16" height="26" rx="2" fill="#2A8A8A" opacity=".5"></rect>
+  <rect x="64" y="28" width="20" height="20" rx="2" fill="#2A8A8A" opacity=".65"></rect>
+  <rect x="86" y="32" width="20" height="16" rx="2" fill="#2A8A8A" opacity=".7"></rect>
+  <rect x="108" y="28" width="20" height="20" rx="2" fill="#2A8A8A" opacity=".55"></rect>
+  <rect x="130" y="22" width="16" height="26" rx="2" fill="#2A8A8A" opacity=".4"></rect>
+  <rect x="148" y="14" width="16" height="34" rx="2" fill="#2A8A8A" opacity=".3"></rect>
+  <text x="90" y="62" text-anchor="middle" font-size="7" fill="#2A8A8A">尾部精確・中段近似・記憶體O(1/ε)</text>
+</svg>
+</div>
+<div class="cdef">用於<strong>大規模串流資料近似計算分位數</strong>（百分位數）的算法。以少量「質心（Centroid）」近似整體分佈，在<strong>分佈尾部精確度高</strong>（如P99），適合計算系統延遲的P95/P99而不需儲存全量資料。</div>
+<div class="cscene"><b>📍 適用情境</b>監控系統即時計算API延遲P99，每秒百萬筆請求無法全存，t-digest以極小記憶體給出準確尾部分位數。</div>
+<div class="cexam"><b>🎯 考題方向</b>考t-digest適用場景（串流分位數）、與精確排序算法比較（記憶體效率）、尾部精確的意義。</div>
+</div>
+
+<!-- 04 Count-Min Sketch -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">04 / 30</div>
+<div class="crow"><span class="cico">🎛️</span><div><div class="cname">Count-Min Sketch</div><div class="cen">Frequency Estimation</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="30" y="12" text-anchor="middle" font-size="7" fill="#2A8A8A">h₁("apple")=2</text>
+  <text x="30" y="22" text-anchor="middle" font-size="7" fill="#2A8A8A">h₂("apple")=1</text>
+  <text x="30" y="32" text-anchor="middle" font-size="7" fill="#2A8A8A">h₃("apple")=3</text>
+  <polygon points="70,22 82,16 82,28" fill="#2A8A8A" opacity=".6"></polygon>
+  <rect x="83" y="5" width="92" height="60" rx="3" fill="#2A8A8A" opacity=".1" stroke="#2A8A8A" stroke-width="1"></rect>
+  <text x="129" y="15" text-anchor="middle" font-size="7" fill="#2A8A8A" font-weight="700">2D計數矩陣</text>
+  <rect x="88" y="20" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".3"></rect><rect x="101" y="20" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".7"></rect><rect x="114" y="20" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".3"></rect><rect x="127" y="20" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".3"></rect><rect x="140" y="20" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".3"></rect><rect x="153" y="20" width="16" height="10" rx="1" fill="#2A8A8A" opacity=".3"></rect>
+  <rect x="88" y="33" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".7"></rect><rect x="101" y="33" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".3"></rect>
+  <rect x="88" y="46" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".3"></rect><rect x="101" y="46" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".3"></rect><rect x="114" y="46" width="12" height="10" rx="1" fill="#2A8A8A" opacity=".7"></rect>
+  <text x="129" y="65" text-anchor="middle" font-size="6.5" fill="#2A8A8A">取最小值=頻率估計</text>
+</svg>
+</div>
+<div class="cdef">以<strong>機率性資料結構</strong>近似估計元素出現頻率的算法。使用多個雜湊函數建立二維計數矩陣，查詢時取各雜湊位置的<strong>最小計數</strong>。記憶體極省（固定大小），允許<strong>過估（Over-count）</strong>不會低估。</div>
+<div class="cscene"><b>📍 適用情境</b>流量分析：即時統計億級訪問日誌中各URL的熱門程度，不需儲存原始資料，固定記憶體完成估計。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Count-Min Sketch特性（機率性/只過估不低估）、vs精確計數差異、適合大規模串流頻率估計。</div>
+</div>
+
+<!-- 05 ARIMA -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">05 / 30</div>
+<div class="crow"><span class="cico">📈</span><div><div class="cname">ARIMA</div><div class="cen">AutoRegressive Integrated Moving Average</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <polyline points="10,55 30,45 50,50 70,30 90,38 110,25 130,32 150,20 170,28" stroke="#E85D3A" stroke-width="2" fill="none"></polyline>
+  <polyline points="130,32 150,22 170,18" stroke="#E85D3A" stroke-width="2" fill="none" stroke-dasharray="4,2"></polyline>
+  <circle cx="150" cy="22" r="3.5" fill="#E85D3A" opacity=".5"></circle>
+  <circle cx="170" cy="18" r="3.5" fill="#E85D3A" opacity=".5"></circle>
+  <text x="155" y="12" text-anchor="middle" font-size="7" fill="#E85D3A">預測</text>
+  <rect x="5" y="58" width="24" height="10" rx="2" fill="#E85D3A" opacity=".6"></rect>
+  <text x="17" y="66" text-anchor="middle" font-size="6.5" fill="#fff">AR(p)</text>
+  <rect x="34" y="58" width="24" height="10" rx="2" fill="#E85D3A" opacity=".4"></rect>
+  <text x="46" y="66" text-anchor="middle" font-size="6.5" fill="#fff">I(d)</text>
+  <rect x="63" y="58" width="26" height="10" rx="2" fill="#E85D3A" opacity=".7"></rect>
+  <text x="76" y="66" text-anchor="middle" font-size="6.5" fill="#fff">MA(q)</text>
+</svg>
+</div>
+<div class="cdef">時間序列預測的經典統計模型，由三部分組成：<strong>AR(p)</strong>（自迴歸：過去p期自身影響）、<strong>I(d)</strong>（整合：差分d次使序列平穩）、<strong>MA(q)</strong>（移動平均：過去q期誤差）。前提：時間序列需<strong>平穩</strong>。</div>
+<div class="cscene"><b>📍 適用情境</b>零售商用ARIMA(2,1,2)預測下個月各品類銷售量，基於歷史銷售序列的自迴歸關係。</div>
+<div class="cexam"><b>🎯 考題方向</b>考AR/I/MA三成分意義、差分的目的（平穩化）、p/d/q參數選擇（ACF/PACF圖）。</div>
+</div>
+
+<!-- 06 Prophet -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">06 / 30</div>
+<div class="crow"><span class="cico">🌤️</span><div><div class="cname">Prophet</div><div class="cen">Facebook Time Series Model</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="90" y="10" text-anchor="middle" font-size="7.5" fill="#E85D3A" font-weight="700">y(t) = trend + seasonal + holiday + ε</text>
+  <polyline points="10,50 40,48 70,42 90,36 120,32 150,28 170,25" stroke="#E85D3A" stroke-width="1.5" fill="none"></polyline>
+  <polyline points="10,50 25,45 40,52 55,44 70,50 85,43 100,49 115,42 130,48 145,40 160,46 170,40" stroke="#2D5F9A" stroke-width="1" fill="none" stroke-dasharray="3,1" opacity=".7"></polyline>
+  <text x="130" y="62" text-anchor="middle" font-size="6.5" fill="#E85D3A">趨勢</text>
+  <text x="50" y="62" text-anchor="middle" font-size="6.5" fill="#2D5F9A">季節性</text>
+  <rect x="85" y="28" width="8" height="20" rx="1" fill="#3A9A6E" opacity=".5"></rect>
+  <text x="89" y="58" text-anchor="middle" font-size="6.5" fill="#3A9A6E">假日</text>
+</svg>
+</div>
+<div class="cdef">Meta（Facebook）開源的時間序列預測工具，加法模型：<strong>趨勢（Trend）+ 季節性（Seasonal）+ 假日效應（Holiday）</strong>。對缺失值、異常值、節假日有良好處理，無需手動平穩化，適合非技術人員使用。</div>
+<div class="cscene"><b>📍 適用情境</b>電商平台預測未來30天訂單量，Prophet自動捕捉週末波動、雙11效應、春節寒假季節性。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Prophet vs ARIMA差異（自動vs手動、可處理假日）、加法vs乘法季節性、適用場景。</div>
+</div>
+
+<!-- 07 LSTM -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">07 / 30</div>
+<div class="crow"><span class="cico">🧠</span><div><div class="cname">LSTM</div><div class="cen">Long Short-Term Memory</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="50" y="10" width="80" height="48" rx="6" fill="#E85D3A" opacity=".1" stroke="#E85D3A" stroke-width="1.5"></rect>
+  <text x="90" y="22" text-anchor="middle" font-size="7.5" fill="#E85D3A" font-weight="700">LSTM Cell</text>
+  <rect x="58" y="28" width="18" height="12" rx="2" fill="#E85D3A" opacity=".5"></rect>
+  <text x="67" y="37" text-anchor="middle" font-size="6" fill="#fff">遺忘</text>
+  <rect x="80" y="28" width="18" height="12" rx="2" fill="#E85D3A" opacity=".65"></rect>
+  <text x="89" y="37" text-anchor="middle" font-size="6" fill="#fff">輸入</text>
+  <rect x="102" y="28" width="18" height="12" rx="2" fill="#E85D3A" opacity=".8"></rect>
+  <text x="111" y="37" text-anchor="middle" font-size="6" fill="#fff">輸出</text>
+  <line x1="10" y1="34" x2="48" y2="34" stroke="#E85D3A" stroke-width="1.5" marker-end="url(#a)"></line>
+  <text x="28" y="28" text-anchor="middle" font-size="6.5" fill="#E85D3A">xₜ</text>
+  <line x1="132" y1="34" x2="168" y2="34" stroke="#E85D3A" stroke-width="1.5"></line>
+  <text x="155" y="28" text-anchor="middle" font-size="6.5" fill="#E85D3A">hₜ</text>
+  <line x1="90" y1="8" x2="90" y2="10" stroke="#E85D3A" stroke-width="1.5"></line>
+  <text x="90" y="6" text-anchor="middle" font-size="6.5" fill="#E85D3A">Cₜ（記憶流）</text>
+</svg>
+</div>
+<div class="cdef">遞迴神經網路（RNN）的改進版，透過<strong>遺忘門、輸入門、輸出門</strong>控制記憶的保留與遺忘，解決RNN的<strong>長距離依賴消失梯度</strong>問題。適合序列資料：時間序列、NLP、語音辨識。</div>
+<div class="cscene"><b>📍 適用情境</b>股票價格預測：LSTM記住60天前的趨勢資訊，比ARIMA更能捕捉非線性的長期依賴關係。</div>
+<div class="cexam"><b>🎯 考題方向</b>考LSTM三個門的功能、解決的問題（梯度消失）、vs傳統RNN差異、時間序列應用。</div>
+</div>
+
+<!-- 08 移動平均 -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">08 / 30</div>
+<div class="crow"><span class="cico">〰️</span><div><div class="cname">移動平均</div><div class="cen">Moving Average</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <polyline points="10,50 25,35 40,55 55,25 70,48 85,20 100,45 115,22 130,40 145,15 160,35 175,20" stroke="#A09D95" stroke-width="1.2" fill="none" opacity=".6"></polyline>
+  <polyline points="40,44 55,36 70,38 85,33 100,30 115,30 130,28 145,26 160,30" stroke="#3A9A6E" stroke-width="2.5" fill="none"></polyline>
+  <text x="90" y="65" text-anchor="middle" font-size="7" fill="#A09D95">原始波動</text>
+  <text x="140" y="20" text-anchor="middle" font-size="7" fill="#3A9A6E">SMA(5) 平滑</text>
+</svg>
+</div>
+<div class="cdef">通過對<strong>滑動時間窗口</strong>內數值取平均，平滑時間序列噪音的方法。<strong>簡單移動平均（SMA）</strong>等權重；<strong>指數移動平均（EMA）</strong>近期資料權重較高，反應更快。廣泛用於趨勢分析與技術指標（MA5/MA20）。</div>
+<div class="cscene"><b>📍 適用情境</b>股票技術分析：20日SMA判斷中期趨勢，5日EMA判斷短期動能；工廠設備監控的滑動窗口均值偵測異常。</div>
+<div class="cexam"><b>🎯 考題方向</b>考SMA vs EMA差異（等權vs指數衰減）、窗口大小對平滑程度影響、滯後性問題。</div>
+</div>
+
+<!-- 09 季節性分解 -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">09 / 30</div>
+<div class="crow"><span class="cico">🌊</span><div><div class="cname">季節性分解</div><div class="cen">Seasonal Decomposition</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="16" y="12" text-anchor="middle" font-size="7" fill="#3A9A6E">原始</text>
+  <polyline points="5,18 25,12 45,22 65,8 85,16 105,6 125,14 145,5 165,12" stroke="#3A9A6E" stroke-width="1.5" fill="none"></polyline>
+  <text x="16" y="32" text-anchor="middle" font-size="7" fill="#2D5F9A">趨勢</text>
+  <polyline points="5,38 45,35 85,32 125,29 165,27" stroke="#2D5F9A" stroke-width="1.5" fill="none"></polyline>
+  <text x="16" y="50" text-anchor="middle" font-size="7" fill="#E85D3A">季節</text>
+  <polyline points="5,53 25,48 45,57 65,47 85,56 105,46 125,55 145,46 165,55" stroke="#E85D3A" stroke-width="1.5" fill="none"></polyline>
+  <text x="16" y="67" text-anchor="middle" font-size="7" fill="#A09D95">殘差</text>
+  <polyline points="5,65 25,63 45,67 65,64 85,66 105,63 125,65 145,64 165,66" stroke="#A09D95" stroke-width="1" fill="none"></polyline>
+</svg>
+</div>
+<div class="cdef">將時間序列分解為三部分：<strong>趨勢（Trend）</strong>長期方向、<strong>季節性（Seasonal）</strong>周期性波動、<strong>殘差（Residual）</strong>隨機噪音。方法：STL（Seasonal-Trend Loess）、X-13-ARIMA-SEATS。便於分別建模預測。</div>
+<div class="cscene"><b>📍 適用情境</b>零售銷售分解後：趨勢項顯示年成長15%；季節項揭露每年Q4銷售是Q2的2.3倍；殘差用於異常偵測。</div>
+<div class="cexam"><b>🎯 考題方向</b>考三成分定義、加法vs乘法分解（振幅是否隨趨勢放大）、STL優點（處理異常值）。</div>
+</div>
+
+<!-- 10 網路分析 -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">10 / 30</div>
+<div class="crow"><span class="cico">🕸️</span><div><div class="cname">網路分析</div><div class="cen">Network / Graph Analysis</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <circle cx="90" cy="35" r="8" fill="#7B5EA7" opacity=".8"></circle>
+  <circle cx="50" cy="20" r="6" fill="#7B5EA7" opacity=".6"></circle>
+  <circle cx="50" cy="50" r="6" fill="#7B5EA7" opacity=".6"></circle>
+  <circle cx="130" cy="20" r="6" fill="#7B5EA7" opacity=".5"></circle>
+  <circle cx="130" cy="50" r="6" fill="#7B5EA7" opacity=".5"></circle>
+  <circle cx="20" cy="35" r="5" fill="#7B5EA7" opacity=".4"></circle>
+  <circle cx="160" cy="35" r="5" fill="#7B5EA7" opacity=".4"></circle>
+  <line x1="90" y1="35" x2="50" y2="20" stroke="#7B5EA7" stroke-width="1.5"></line>
+  <line x1="90" y1="35" x2="50" y2="50" stroke="#7B5EA7" stroke-width="1.5"></line>
+  <line x1="90" y1="35" x2="130" y2="20" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <line x1="90" y1="35" x2="130" y2="50" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <line x1="50" y1="20" x2="20" y2="35" stroke="#7B5EA7" stroke-width="1"></line>
+  <line x1="130" y1="20" x2="160" y2="35" stroke="#7B5EA7" stroke-width="1"></line>
+  <line x1="50" y1="20" x2="50" y2="50" stroke="#7B5EA7" stroke-width="1"></line>
+  <text x="90" y="38" text-anchor="middle" font-size="6.5" fill="#fff" font-weight="700">Hub</text>
+</svg>
+</div>
+<div class="cdef">以<strong>節點（Node）和邊（Edge）</strong>建模實體關係，分析網路的結構與動態。指標包含：<strong>中心性</strong>（誰最重要）、<strong>社群</strong>（群體劃分）、<strong>路徑</strong>（最短路徑）。應用：社交網路、知識圖譜、供應鏈。</div>
+<div class="cscene"><b>📍 適用情境</b>詐騙偵測：分析金融交易網路，找出高度中心性的帳戶（資金中轉節點），識別洗錢環狀結構。</div>
+<div class="cexam"><b>🎯 考題方向</b>考網路基本元素（節點/邊/權重）、中心性類型、社群偵測算法（Louvain）、知識圖譜應用。</div>
+</div>
+
+<!-- 11 度中心性 -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">11 / 30</div>
+<div class="crow"><span class="cico">⭐</span><div><div class="cname">度中心性</div><div class="cen">Degree Centrality</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <circle cx="55" cy="35" r="14" fill="#7B5EA7" opacity=".7"></circle>
+  <text x="55" y="32" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">A</text>
+  <text x="55" y="42" text-anchor="middle" font-size="6" fill="#fff">度=5</text>
+  <circle cx="120" cy="20" r="8" fill="#7B5EA7" opacity=".4"></circle>
+  <text x="120" y="23" text-anchor="middle" font-size="6.5" fill="#fff">B,度2</text>
+  <circle cx="150" cy="40" r="8" fill="#7B5EA7" opacity=".4"></circle>
+  <text x="150" y="43" text-anchor="middle" font-size="6.5" fill="#fff">C,度2</text>
+  <circle cx="120" cy="58" r="8" fill="#7B5EA7" opacity=".4"></circle>
+  <text x="120" y="61" text-anchor="middle" font-size="6.5" fill="#fff">D,度1</text>
+  <line x1="69" y1="29" x2="112" y2="22" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <line x1="69" y1="38" x2="142" y2="40" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <line x1="69" y1="42" x2="112" y2="55" stroke="#7B5EA7" stroke-width="1.2"></line>
+  <line x1="120" y1="28" x2="142" y2="34" stroke="#7B5EA7" stroke-width="1"></line>
+  <text x="20" y="35" text-anchor="middle" font-size="7" fill="#7B5EA7" font-weight="700">DC(A)</text>
+  <text x="20" y="45" text-anchor="middle" font-size="7" fill="#7B5EA7">= 5/(N-1)</text>
+</svg>
+</div>
+<div class="cdef">衡量節點<strong>直接連接數（邊數）</strong>的中心性指標。一個節點的度越高，代表它與越多節點直接相連，影響力越大。<strong>有向圖</strong>中分為入度（In-degree）和出度（Out-degree）。計算簡單，是最基礎的中心性量度。</div>
+<div class="cscene"><b>📍 適用情境</b>Twitter用度中心性找意見領袖：追蹤人數多（高入度）= 資訊傳播範圍廣 = 廣告投放首選。</div>
+<div class="cexam"><b>🎯 考題方向</b>考度中心性vs介數中心性差異（直接連接vs橋接）、有向vs無向圖的度定義。</div>
+</div>
+
+<!-- 12 介數中心性 -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">12 / 30</div>
+<div class="crow"><span class="cico">🌉</span><div><div class="cname">介數中心性</div><div class="cen">Betweenness Centrality</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <circle cx="30" cy="20" r="7" fill="#7B5EA7" opacity=".4"></circle>
+  <circle cx="30" cy="50" r="7" fill="#7B5EA7" opacity=".4"></circle>
+  <circle cx="90" cy="35" r="10" fill="#7B5EA7" opacity=".85"></circle>
+  <circle cx="150" cy="20" r="7" fill="#7B5EA7" opacity=".4"></circle>
+  <circle cx="150" cy="50" r="7" fill="#7B5EA7" opacity=".4"></circle>
+  <line x1="37" y1="20" x2="80" y2="32" stroke="#7B5EA7" stroke-width="1.5"></line>
+  <line x1="37" y1="50" x2="80" y2="38" stroke="#7B5EA7" stroke-width="1.5"></line>
+  <line x1="100" y1="32" x2="143" y2="22" stroke="#7B5EA7" stroke-width="1.5"></line>
+  <line x1="100" y1="38" x2="143" y2="48" stroke="#7B5EA7" stroke-width="1.5"></line>
+  <text x="90" y="33" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">Bridge</text>
+  <text x="90" y="42" text-anchor="middle" font-size="6" fill="#fff">介數高</text>
+  <text x="90" y="65" text-anchor="middle" font-size="7" fill="#7B5EA7">所有最短路徑中，通過此節點的比例</text>
+</svg>
+</div>
+<div class="cdef">衡量節點作為<strong>其他節點間最短路徑橋梁</strong>的程度。計算所有節點對間的最短路徑中，有多少條通過該節點。介數中心性高的節點是<strong>資訊橋接者（Broker）</strong>，移除它會導致網路分裂。</div>
+<div class="cscene"><b>📍 適用情境</b>組織社交圖分析：找出介數中心性高的員工（跨部門橋接者），他們離職對知識流通影響最大。</div>
+<div class="cexam"><b>🎯 考題方向</b>考介數vs度中心性差異（橋接vs連接）、高介數節點對網路韌性的影響、應用場景（基礎設施、物流）。</div>
+</div>
+
+<!-- 13 社群偵測 -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">13 / 30</div>
+<div class="crow"><span class="cico">👥</span><div><div class="cname">社群偵測</div><div class="cen">Community Detection</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <circle cx="35" cy="25" r="20" fill="#2D5F9A" opacity=".15" stroke="#2D5F9A" stroke-width="1.2"></circle>
+  <circle cx="30" cy="22" r="5" fill="#2D5F9A" opacity=".6"></circle>
+  <circle cx="42" cy="18" r="5" fill="#2D5F9A" opacity=".6"></circle>
+  <circle cx="38" cy="32" r="5" fill="#2D5F9A" opacity=".6"></circle>
+  <line x1="35" y1="22" x2="42" y2="18" stroke="#2D5F9A" stroke-width="1.5"></line>
+  <line x1="35" y1="22" x2="38" y2="32" stroke="#2D5F9A" stroke-width="1.5"></line>
+  <circle cx="100" cy="35" r="22" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1.2"></circle>
+  <circle cx="93" cy="28" r="5" fill="#3A9A6E" opacity=".6"></circle>
+  <circle cx="108" cy="28" r="5" fill="#3A9A6E" opacity=".6"></circle>
+  <circle cx="100" cy="42" r="5" fill="#3A9A6E" opacity=".6"></circle>
+  <line x1="93" y1="28" x2="108" y2="28" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <line x1="100" y1="33" x2="100" y2="42" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <circle cx="155" cy="30" r="18" fill="#7B5EA7" opacity=".15" stroke="#7B5EA7" stroke-width="1.2"></circle>
+  <circle cx="148" cy="25" r="5" fill="#7B5EA7" opacity=".6"></circle>
+  <circle cx="163" cy="30" r="5" fill="#7B5EA7" opacity=".6"></circle>
+  <line x1="148" y1="25" x2="163" y2="30" stroke="#7B5EA7" stroke-width="1.5"></line>
+  <line x1="55" y1="30" x2="70" y2="32" stroke="#A09D95" stroke-width="1" stroke-dasharray="3,2"></line>
+  <line x1="122" y1="32" x2="137" y2="30" stroke="#A09D95" stroke-width="1" stroke-dasharray="3,2"></line>
+</svg>
+</div>
+<div class="cdef">在複雜網路中自動識別<strong>內部連接緊密、對外連接稀疏</strong>的節點群組（社群）的算法。代表算法：<strong>Louvain算法</strong>（最大化模組度Modularity）、Girvan-Newman（邊介數分割）。</div>
+<div class="cscene"><b>📍 適用情境</b>社群媒體分析：Louvain算法識別用戶興趣社群（電競/美妝/財經），針對各社群精準投放廣告。</div>
+<div class="cexam"><b>🎯 考題方向</b>考社群偵測定義（模組度）、Louvain算法優點（速度快、可處理大規模網路）、應用場景。</div>
+</div>
+
+<!-- 14 PageRank -->
+<div class="card" style="border-left:4px solid var(--P)">
+<div class="ctop" style="background:var(--Plt)">
+<div class="cnum">14 / 30</div>
+<div class="crow"><span class="cico">🔗</span><div><div class="cname">PageRank</div><div class="cen">Link-based Authority Score</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <circle cx="90" cy="35" r="12" fill="#7B5EA7" opacity=".85"></circle>
+  <text x="90" y="32" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">PR=0.8</text>
+  <text x="90" y="42" text-anchor="middle" font-size="6" fill="#fff">高權威</text>
+  <circle cx="30" cy="20" r="8" fill="#7B5EA7" opacity=".4"></circle>
+  <text x="30" y="23" text-anchor="middle" font-size="6" fill="#fff">PR=0.3</text>
+  <circle cx="160" cy="20" r="8" fill="#7B5EA7" opacity=".4"></circle>
+  <text x="160" y="23" text-anchor="middle" font-size="6" fill="#fff">PR=0.4</text>
+  <circle cx="30" cy="58" r="8" fill="#7B5EA7" opacity=".3"></circle>
+  <text x="30" y="61" text-anchor="middle" font-size="6" fill="#fff">PR=0.2</text>
+  <line x1="38" y1="22" x2="78" y2="32" stroke="#7B5EA7" stroke-width="1.5" marker-end="url(#a)"></line>
+  <line x1="152" y1="22" x2="102" y2="30" stroke="#7B5EA7" stroke-width="1.5" marker-end="url(#a)"></line>
+  <line x1="38" y1="55" x2="78" y2="40" stroke="#7B5EA7" stroke-width="1" marker-end="url(#a)"></line>
+  <text x="90" y="65" text-anchor="middle" font-size="6.5" fill="#7B5EA7">被高PR節點引用→PR提升</text>
+</svg>
+</div>
+<div class="cdef">Google創始人開發的網頁重要性算法，以<strong>被引用的數量和品質</strong>計算節點權威分數。被高PageRank節點指向的節點PR提升更多。基於<strong>隨機漫遊（Random Walk）</strong>概念，也廣泛用於引用網路、知識圖譜排名。</div>
+<div class="cscene"><b>📍 適用情境</b>搜尋引擎排名：學術論文被Nature引用（高PR期刊）比被小型期刊引用獲得更高的PR提升。</div>
+<div class="cexam"><b>🎯 考題方向</b>考PageRank計算公式（阻尼因子d=0.85）、解決的問題（量vs質）、知識圖譜/社交網路應用。</div>
+</div>
+
+<!-- 15 TF-IDF -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">15 / 30</div>
+<div class="crow"><span class="cico">📝</span><div><div class="cname">TF-IDF</div><div class="cen">Term Frequency · Inverse Document Frequency</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="10" width="78" height="50" rx="4" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="44" y="22" text-anchor="middle" font-size="7.5" fill="#2D5F9A" font-weight="700">TF</text>
+  <text x="44" y="33" text-anchor="middle" font-size="7" fill="#2D5F9A">詞在本文出現</text>
+  <text x="44" y="43" text-anchor="middle" font-size="7" fill="#2D5F9A">次數比例</text>
+  <text x="44" y="53" text-anchor="middle" font-size="7" fill="#2D5F9A">↑高=重要</text>
+  <text x="90" y="38" text-anchor="middle" font-size="12" fill="#2D5F9A" font-weight="700">×</text>
+  <rect x="97" y="10" width="78" height="50" rx="4" fill="#2D5F9A" opacity=".2" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="136" y="22" text-anchor="middle" font-size="7.5" fill="#2D5F9A" font-weight="700">IDF</text>
+  <text x="136" y="33" text-anchor="middle" font-size="7" fill="#2D5F9A">包含詞的文件</text>
+  <text x="136" y="43" text-anchor="middle" font-size="7" fill="#2D5F9A">數比例的log倒數</text>
+  <text x="136" y="53" text-anchor="middle" font-size="7" fill="#2D5F9A">↑罕見=重要</text>
+</svg>
+</div>
+<div class="cdef">衡量詞語在文件集中<strong>重要性</strong>的統計指標。<strong>TF</strong>（詞頻）：詞在單篇文件出現的頻率；<strong>IDF</strong>（逆文件頻率）：詞在整個語料庫中的罕見程度（log(總文件數/含詞文件數)）。常見詞（的/是）IDF低；領域關鍵詞IDF高。</div>
+<div class="cscene"><b>📍 適用情境</b>搜尋引擎：「機器學習」在AI文章中TF高、IDF也高→重要關鍵詞；「的」TF高但IDF趨近0→忽略。</div>
+<div class="cexam"><b>🎯 考題方向</b>考TF/IDF各自公式與意義、常見詞為何IDF低、vs詞嵌入（Word2Vec）差異（無上下文語意）。</div>
+</div>
+
+<!-- 16 詞嵌入 -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">16 / 30</div>
+<div class="crow"><span class="cico">🧩</span><div><div class="cname">詞嵌入</div><div class="cen">Word Embedding</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="18" y="22" text-anchor="middle" font-size="8" fill="#2D5F9A" font-weight="700">王</text>
+  <text x="18" y="38" text-anchor="middle" font-size="8" fill="#2D5F9A" font-weight="700">男人</text>
+  <text x="18" y="54" text-anchor="middle" font-size="8" fill="#2D5F9A" font-weight="700">女人</text>
+  <polygon points="40,35 52,29 52,41" fill="#2D5F9A" opacity=".5"></polygon>
+  <rect x="53" y="10" width="68" height="50" rx="3" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="87" y="22" text-anchor="middle" font-size="7" fill="#2D5F9A" font-weight="700">向量空間</text>
+  <text x="87" y="32" text-anchor="middle" font-size="6.5" fill="#2D5F9A">[0.8, 0.2, 0.9]</text>
+  <text x="87" y="42" text-anchor="middle" font-size="6.5" fill="#2D5F9A">[0.7, 0.1, 0.8]</text>
+  <text x="87" y="52" text-anchor="middle" font-size="6.5" fill="#2D5F9A">[0.1, 0.9, 0.8]</text>
+  <text x="155" y="35" text-anchor="middle" font-size="7" fill="#2D5F9A">王-男+女</text>
+  <text x="155" y="45" text-anchor="middle" font-size="7" fill="#2D5F9A">≈ 女王</text>
+  <text x="155" y="55" text-anchor="middle" font-size="7" fill="#2D5F9A">（語意）</text>
+</svg>
+</div>
+<div class="cdef">將文字映射為<strong>低維稠密向量</strong>，使語意相近的詞在向量空間距離近。代表模型：<strong>Word2Vec</strong>（CBOW/Skip-gram）、GloVe、FastText。語意關係可透過向量運算表達：「王-男人+女人≈女王」。</div>
+<div class="cscene"><b>📍 適用情境</b>電商商品搜尋：「跑鞋」查詢可召回「運動鞋/慢跑鞋」（向量相近），改善精確匹配的召回率不足。</div>
+<div class="cexam"><b>🎯 考題方向</b>考詞嵌入vs One-hot優勢（稠密/語意/泛化）、Word2Vec兩種訓練方式、vs Transformer嵌入（上下文相關）。</div>
+</div>
+
+<!-- 17 情感分析 -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">17 / 30</div>
+<div class="crow"><span class="cico">😊</span><div><div class="cname">情感分析</div><div class="cen">Sentiment Analysis</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="15" width="90" height="22" rx="4" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="50" y="30" text-anchor="middle" font-size="8" fill="#2D5F9A">「這產品真的很棒！」</text>
+  <polygon points="100,26 112,20 112,32" fill="#2D5F9A" opacity=".5"></polygon>
+  <rect x="114" y="15" width="60" height="22" rx="4" fill="#3A9A6E" opacity=".7"></rect>
+  <text x="144" y="29" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">😊 正面 0.92</text>
+  <rect x="5" y="45" width="90" height="22" rx="4" fill="#2D5F9A" opacity=".1" stroke="#2D5F9A" stroke-width="1"></rect>
+  <text x="50" y="60" text-anchor="middle" font-size="8" fill="#2D5F9A">「等了三週還沒到」</text>
+  <polygon points="100,56 112,50 112,62" fill="#2D5F9A" opacity=".5"></polygon>
+  <rect x="114" y="45" width="60" height="22" rx="4" fill="#C0392B" opacity=".7"></rect>
+  <text x="144" y="59" text-anchor="middle" font-size="9" fill="#fff" font-weight="700">😤 負面 0.88</text>
+</svg>
+</div>
+<div class="cdef">利用NLP技術自動識別文本中<strong>情感傾向</strong>（正面/負面/中性）的技術。方法：<strong>詞典法</strong>（VADER/SentimentDict）、<strong>機器學習</strong>（SVM/BERT微調）。可延伸至細粒度分析（面向情感，如「服務好但價格貴」）。</div>
+<div class="cscene"><b>📍 適用情境</b>品牌監測：即時分析社群媒體和電商評論的情感，生成每日情感分數儀表板，及時發現危機。</div>
+<div class="cexam"><b>🎯 考題方向</b>考詞典法vs ML法差異、細粒度/面向情感分析、中文NLP挑戰（分詞/語境/反諷）。</div>
+</div>
+
+<!-- 18 地理空間分析 -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">18 / 30</div>
+<div class="crow"><span class="cico">🗺️</span><div><div class="cname">地理空間分析</div><div class="cen">Geospatial Analysis</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="10" y="8" width="160" height="55" rx="5" fill="#3A9A6E" opacity=".08" stroke="#3A9A6E" stroke-width="1"></rect>
+  <circle cx="60" cy="35" r="18" fill="#3A9A6E" opacity=".2" stroke="#3A9A6E" stroke-width="1"></circle>
+  <circle cx="60" cy="35" r="10" fill="#3A9A6E" opacity=".3"></circle>
+  <circle cx="60" cy="35" r="4" fill="#3A9A6E" opacity=".8"></circle>
+  <text x="60" y="58" text-anchor="middle" font-size="7" fill="#3A9A6E">緩衝區分析</text>
+  <circle cx="120" cy="25" r="4" fill="#E85D3A" opacity=".8"></circle>
+  <circle cx="140" cy="30" r="4" fill="#E85D3A" opacity=".8"></circle>
+  <circle cx="130" cy="45" r="4" fill="#E85D3A" opacity=".8"></circle>
+  <circle cx="150" cy="40" r="4" fill="#E85D3A" opacity=".8"></circle>
+  <circle cx="115" cy="45" r="4" fill="#E85D3A" opacity=".8"></circle>
+  <text x="133" y="58" text-anchor="middle" font-size="7" fill="#E85D3A">空間聚類</text>
+</svg>
+</div>
+<div class="cdef">對具有<strong>地理位置屬性</strong>的資料進行分析，包含：<strong>空間聚類</strong>（DBSCAN/K-means）、<strong>緩衝區分析</strong>（指定半徑範圍）、<strong>路徑優化</strong>、<strong>熱點分析</strong>。工具：GIS（QGIS/ArcGIS）、GeoPandas、H3（Uber六邊形格網）。</div>
+<div class="cscene"><b>📍 適用情境</b>便利商店選址：以競爭對手為圓心做1km緩衝區，空間聚類找人流熱點，結合人口密度選最佳店址。</div>
+<div class="cexam"><b>🎯 考題方向</b>考空間資料類型（點/線/面）、常用分析方法、H3格網優勢、地理資訊系統（GIS）工具。</div>
+</div>
+
+<!-- 19 異常偵測 -->
+<div class="card" style="border-left:4px solid var(--R)">
+<div class="ctop" style="background:var(--Rlt)">
+<div class="cnum">19 / 30</div>
+<div class="crow"><span class="cico">🚨</span><div><div class="cname">異常偵測</div><div class="cen">Anomaly Detection</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <circle cx="30" cy="40" r="4" fill="#A09D95" opacity=".6"></circle>
+  <circle cx="50" cy="38" r="4" fill="#A09D95" opacity=".6"></circle>
+  <circle cx="70" cy="36" r="4" fill="#A09D95" opacity=".6"></circle>
+  <circle cx="90" cy="40" r="4" fill="#A09D95" opacity=".6"></circle>
+  <circle cx="110" cy="37" r="4" fill="#A09D95" opacity=".6"></circle>
+  <circle cx="130" cy="39" r="4" fill="#A09D95" opacity=".6"></circle>
+  <circle cx="150" cy="38" r="4" fill="#A09D95" opacity=".6"></circle>
+  <circle cx="170" cy="40" r="4" fill="#A09D95" opacity=".6"></circle>
+  <circle cx="155" cy="12" r="7" fill="#C0392B" opacity=".9"></circle>
+  <text x="155" y="9" text-anchor="middle" font-size="9">⚠️</text>
+  <circle cx="45" cy="60" r="7" fill="#C0392B" opacity=".9"></circle>
+  <text x="45" y="57" text-anchor="middle" font-size="9">⚠️</text>
+  <text x="90" y="68" text-anchor="middle" font-size="7" fill="#C0392B">點異常 / 上下文異常 / 集體異常</text>
+</svg>
+</div>
+<div class="cdef">自動識別資料中<strong>顯著偏離正常模式</strong>的樣本。三類型：<strong>點異常</strong>（單一資料點異常）、<strong>上下文異常</strong>（在特定情境下異常）、<strong>集體異常</strong>（一組資料異常）。方法：統計法、機器學習（Isolation Forest/OCSVM）、深度學習（Autoencoder）。</div>
+<div class="cscene"><b>📍 適用情境</b>工廠設備振動感測器：正常範圍30-50Hz，突然出現95Hz為點異常，觸發預測性維護工單。</div>
+<div class="cexam"><b>🎯 考題方向</b>考三類異常型態定義、監督式vs非監督式異常偵測差異、假陽性率控制策略。</div>
+</div>
+
+<!-- 20 Isolation Forest -->
+<div class="card" style="border-left:4px solid var(--R)">
+<div class="ctop" style="background:var(--Rlt)">
+<div class="cnum">20 / 30</div>
+<div class="crow"><span class="cico">🌲</span><div><div class="cname">Isolation Forest</div><div class="cen">Anomaly Detection Algorithm</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <line x1="90" y1="5" x2="90" y2="65" stroke="#C0392B" stroke-width="1" opacity=".3"></line>
+  <line x1="5" y1="35" x2="175" y2="35" stroke="#C0392B" stroke-width="1" opacity=".3"></line>
+  <circle cx="60" cy="45" r="4" fill="#A09D95" opacity=".7"></circle>
+  <circle cx="80" cy="40" r="4" fill="#A09D95" opacity=".7"></circle>
+  <circle cx="100" cy="42" r="4" fill="#A09D95" opacity=".7"></circle>
+  <circle cx="70" cy="50" r="4" fill="#A09D95" opacity=".7"></circle>
+  <circle cx="90" cy="48" r="4" fill="#A09D95" opacity=".7"></circle>
+  <circle cx="155" cy="12" r="7" fill="#C0392B" opacity=".9"></circle>
+  <text x="155" y="9" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">!</text>
+  <text x="30" y="20" text-anchor="middle" font-size="7" fill="#C0392B">少切割次數</text>
+  <text x="30" y="30" text-anchor="middle" font-size="7" fill="#C0392B">→ 異常點</text>
+  <text x="30" y="55" text-anchor="middle" font-size="7" fill="#A09D95">多切割次數</text>
+  <text x="30" y="65" text-anchor="middle" font-size="7" fill="#A09D95">→ 正常點</text>
+</svg>
+</div>
+<div class="cdef">基於<strong>隨機分割</strong>的非監督式異常偵測算法。核心思想：異常點因孤立，<strong>需要更少的隨機切割</strong>即可被「隔離」，路徑長度短於正常點。優點：無需標記資料、高維有效、計算快，支援線上學習。</div>
+<div class="cscene"><b>📍 適用情境</b>信用卡詐騙偵測：交易金額、地點、時間三維空間中，異常交易少量切割即被孤立，快速標記為高風險。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Isolation Forest核心原理（路徑長度短=異常）、vs Z-Score差異（無分佈假設）、適合高維場景。</div>
+</div>
+
+<!-- 21 Z-Score 異常偵測 -->
+<div class="card" style="border-left:4px solid var(--R)">
+<div class="ctop" style="background:var(--Rlt)">
+<div class="cnum">21 / 30</div>
+<div class="crow"><span class="cico">📏</span><div><div class="cname">Z-Score 偵測</div><div class="cen">Statistical Anomaly Detection</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <path d="M10,58 Q45,5 90,5 Q135,5 170,58" stroke="#C0392B" stroke-width="2" fill="none"></path>
+  <line x1="90" y1="5" x2="90" y2="62" stroke="#C0392B" stroke-width="1" stroke-dasharray="3,2" opacity=".5"></line>
+  <text x="90" y="68" text-anchor="middle" font-size="7.5" fill="#C0392B">μ</text>
+  <line x1="50" y1="20" x2="50" y2="62" stroke="#A09D95" stroke-width="1" stroke-dasharray="3,2" opacity=".5"></line>
+  <text x="50" y="68" text-anchor="middle" font-size="7.5" fill="#A09D95">-2σ</text>
+  <line x1="130" y1="20" x2="130" y2="62" stroke="#A09D95" stroke-width="1" stroke-dasharray="3,2" opacity=".5"></line>
+  <text x="130" y="68" text-anchor="middle" font-size="7.5" fill="#A09D95">+2σ</text>
+  <line x1="20" y1="48" x2="20" y2="62" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="2,1"></line>
+  <text x="20" y="68" text-anchor="middle" font-size="7.5" fill="#C0392B">-3σ⚠️</text>
+  <line x1="160" y1="48" x2="160" y2="62" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="2,1"></line>
+  <text x="160" y="68" text-anchor="middle" font-size="7.5" fill="#C0392B">+3σ⚠️</text>
+</svg>
+</div>
+<div class="cdef">基於<strong>標準化分數（Z=(x-μ)/σ）</strong>的統計異常偵測方法。|Z|&gt;2: 約5%罕見；|Z|&gt;3: 約0.3%異常。假設資料服從<strong>常態分佈</strong>；對非常態資料效果差。計算簡單、可解釋性強，適合單變量穩定分佈資料。</div>
+<div class="cscene"><b>📍 適用情境</b>監控伺服器CPU使用率：正常均值40%、σ=8%，當CPU=90%(Z=6.25)時觸發告警。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Z-Score公式、閾值選擇（2/3σ）、常態分佈假設限制、vs IQR法（不假設分佈）。</div>
+</div>
+
+<!-- 22 Tableau -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">22 / 30</div>
+<div class="crow"><span class="cico">📊</span><div><div class="cname">Tableau</div><div class="cen">Visual Analytics Platform</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="5" width="170" height="60" rx="5" fill="#2D5F9A" opacity=".08" stroke="#2D5F9A" stroke-width="1"></rect>
+  <rect x="12" y="12" width="55" height="35" rx="3" fill="#2D5F9A" opacity=".6"></rect>
+  <rect x="15" y="30" width="8" height="14" rx="1" fill="#fff" opacity=".7"></rect>
+  <rect x="26" y="22" width="8" height="22" rx="1" fill="#fff" opacity=".7"></rect>
+  <rect x="37" y="26" width="8" height="18" rx="1" fill="#fff" opacity=".7"></rect>
+  <rect x="48" y="18" width="8" height="26" rx="1" fill="#fff" opacity=".7"></rect>
+  <rect x="72" y="12" width="55" height="35" rx="3" fill="#3A9A6E" opacity=".6"></rect>
+  <circle cx="100" cy="30" r="12" fill="#fff" opacity=".3"></circle>
+  <circle cx="100" cy="30" r="7" fill="#fff" opacity=".5"></circle>
+  <text x="100" y="33" text-anchor="middle" font-size="7" fill="#3A9A6E" font-weight="700">73%</text>
+  <rect x="132" y="12" width="40" height="35" rx="3" fill="#E85D3A" opacity=".5"></rect>
+  <text x="152" y="33" text-anchor="middle" font-size="7" fill="#fff">散點圖</text>
+  <text x="90" y="58" text-anchor="middle" font-size="7.5" fill="#2D5F9A">拖拉式操作 · 即時視覺化 · 儀表板</text>
+</svg>
+</div>
+<div class="cdef">主流<strong>商業智慧（BI）視覺化</strong>工具，以<strong>拖拉式（Drag-and-Drop）</strong>介面建立互動式儀表板。支援多種資料來源連接，VizQL技術自動推薦圖表類型。適合業務人員自助式分析，無需編寫程式碼。</div>
+<div class="cscene"><b>📍 適用情境</b>業務主管用Tableau連接資料倉儲，拖拉維度建立銷售儀表板，下鑽至各區域、各業務員的即時績效。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Tableau vs Power BI適用場景差異、VizQL特性、自助BI（Self-service BI）概念、連接到大數據平台的方式。</div>
+</div>
+
+<!-- 23 Power BI -->
+<div class="card" style="border-left:4px solid var(--B)">
+<div class="ctop" style="background:var(--Blt)">
+<div class="cnum">23 / 30</div>
+<div class="crow"><span class="cico">⚡</span><div><div class="cname">Power BI</div><div class="cen">Microsoft BI Platform</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="8" width="42" height="54" rx="4" fill="#2D5F9A" opacity=".7"></rect>
+  <text x="26" y="22" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Power</text>
+  <text x="26" y="32" text-anchor="middle" font-size="7" fill="#fff">Query</text>
+  <text x="26" y="42" text-anchor="middle" font-size="6.5" fill="#fff">ETL</text>
+  <text x="26" y="52" text-anchor="middle" font-size="6.5" fill="#fff">清洗</text>
+  <polygon points="50,35 62,29 62,41" fill="#2D5F9A" opacity=".5"></polygon>
+  <rect x="63" y="8" width="42" height="54" rx="4" fill="#2D5F9A" opacity=".85"></rect>
+  <text x="84" y="22" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Power</text>
+  <text x="84" y="32" text-anchor="middle" font-size="7" fill="#fff">Pivot</text>
+  <text x="84" y="42" text-anchor="middle" font-size="6.5" fill="#fff">DAX</text>
+  <text x="84" y="52" text-anchor="middle" font-size="6.5" fill="#fff">資料模型</text>
+  <polygon points="108,35 120,29 120,41" fill="#2D5F9A" opacity=".5"></polygon>
+  <rect x="121" y="8" width="54" height="54" rx="4" fill="#3A9A6E" opacity=".7"></rect>
+  <text x="148" y="22" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">Power BI</text>
+  <text x="148" y="33" text-anchor="middle" font-size="7" fill="#fff">互動報表</text>
+  <text x="148" y="43" text-anchor="middle" font-size="7" fill="#fff">雲端發佈</text>
+  <text x="148" y="53" text-anchor="middle" font-size="7" fill="#fff">M365整合</text>
+</svg>
+</div>
+<div class="cdef">Microsoft推出的BI平台，整合<strong>Power Query</strong>（ETL）、<strong>Power Pivot</strong>（DAX建模）、<strong>Power BI Desktop/Service</strong>（報表/發佈）。與Microsoft 365（Teams/SharePoint）深度整合，DAX語言強大彈性，適合企業Microsoft生態。</div>
+<div class="cscene"><b>📍 適用情境</b>製造業從ERP擷取資料，Power Query清洗後建立DAX計算量值，Power BI報表嵌入Teams供生產主管即時監看。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Power BI三大元件、DAX vs M語言（計算vs轉換）、與Tableau比較（Microsoft生態vs跨平台）。</div>
+</div>
+
+<!-- 24 D3.js -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">24 / 30</div>
+<div class="crow"><span class="cico">🎨</span><div><div class="cname">D3.js</div><div class="cen">Data-Driven Documents</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="20" y="15" text-anchor="middle" font-size="7" fill="#E85D3A" font-weight="700">資料</text>
+  <polygon points="35,14 47,8 47,20" fill="#E85D3A" opacity=".6"></polygon>
+  <rect x="49" y="5" width="42" height="22" rx="3" fill="#E85D3A" opacity=".7"></rect>
+  <text x="70" y="19" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">D3 Bind</text>
+  <polygon points="94,16 106,10 106,22" fill="#E85D3A" opacity=".6"></polygon>
+  <rect x="108" y="5" width="65" height="22" rx="3" fill="#E85D3A" opacity=".85"></rect>
+  <text x="140" y="19" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">SVG/Canvas</text>
+  <text x="30" y="50" text-anchor="middle" font-size="7" fill="#E85D3A">選擇集</text>
+  <text x="75" y="50" text-anchor="middle" font-size="7" fill="#E85D3A">Enter/Exit</text>
+  <text x="125" y="50" text-anchor="middle" font-size="7" fill="#E85D3A">Transition</text>
+  <text x="165" y="50" text-anchor="middle" font-size="7" fill="#E85D3A">Scale</text>
+  <text x="90" y="65" text-anchor="middle" font-size="7" fill="#E85D3A">極高自由度・陡峭學習曲線</text>
+</svg>
+</div>
+<div class="cdef">JavaScript資料視覺化函式庫，以<strong>資料驅動</strong>方式操控SVG/Canvas。核心：<strong>資料綁定（Data Binding）</strong>、<strong>Enter/Update/Exit</strong>模式、<strong>比例尺（Scale）</strong>、過渡動畫。靈活度最高但學習成本高，適合客製化互動視覺化。</div>
+<div class="cscene"><b>📍 適用情境</b>新聞媒體的資料新聞報導：用D3.js製作可互動的選舉結果地圖，讀者可點擊縣市查看詳細票數。</div>
+<div class="cexam"><b>🎯 考題方向</b>考D3 vs Tableau/Power BI差異（程式vs低程式碼）、Enter/Exit模式、適用場景（高度客製化）。</div>
+</div>
+
+<!-- 25 熱力圖 -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">25 / 30</div>
+<div class="crow"><span class="cico">🌡️</span><div><div class="cname">熱力圖</div><div class="cen">Heatmap</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="20" y="12" text-anchor="middle" font-size="7" fill="#E85D3A">週一</text>
+  <text x="50" y="12" text-anchor="middle" font-size="7" fill="#E85D3A">週二</text>
+  <text x="80" y="12" text-anchor="middle" font-size="7" fill="#E85D3A">週三</text>
+  <text x="110" y="12" text-anchor="middle" font-size="7" fill="#E85D3A">週四</text>
+  <text x="140" y="12" text-anchor="middle" font-size="7" fill="#E85D3A">週五</text>
+  <rect x="5" y="16" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".3"></rect>
+  <rect x="35" y="16" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".6"></rect>
+  <rect x="65" y="16" width="30" height="14" rx="2" fill="#E85D3A" opacity=".9"></rect>
+  <rect x="95" y="16" width="30" height="14" rx="2" fill="#E85D3A" opacity=".7"></rect>
+  <rect x="125" y="16" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".4"></rect>
+  <text x="5" y="46" font-size="7" fill="#6B6860">上午</text>
+  <rect x="5" y="34" width="30" height="14" rx="2" fill="#E85D3A" opacity=".6"></rect>
+  <rect x="35" y="34" width="30" height="14" rx="2" fill="#E85D3A" opacity=".8"></rect>
+  <rect x="65" y="34" width="30" height="14" rx="2" fill="#C0392B" opacity=".9"></rect>
+  <rect x="95" y="34" width="30" height="14" rx="2" fill="#E85D3A" opacity=".9"></rect>
+  <rect x="125" y="34" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".3"></rect>
+  <rect x="5" y="52" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".2"></rect>
+  <rect x="35" y="52" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".3"></rect>
+  <rect x="65" y="52" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".5"></rect>
+  <rect x="95" y="52" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".4"></rect>
+  <rect x="125" y="52" width="30" height="14" rx="2" fill="#3A9A6E" opacity=".2"></rect>
+  <text x="163" y="25" text-anchor="middle" font-size="6.5" fill="#C0392B">高</text>
+  <text x="163" y="42" text-anchor="middle" font-size="6.5" fill="#E85D3A">中</text>
+  <text x="163" y="59" text-anchor="middle" font-size="6.5" fill="#3A9A6E">低</text>
+</svg>
+</div>
+<div class="cdef">以<strong>顏色深淺</strong>呈現二維矩陣中數值大小的視覺化圖表。行列交叉點的色彩代表數值。適合：<strong>時間×類別</strong>的模式分析、相關矩陣視覺化、網站點擊行為。顏色漸層（如綠→黃→紅）直覺呈現高低。</div>
+<div class="cscene"><b>📍 適用情境</b>客服中心用熱力圖分析每小時×每天的來電量，識別週三上午10點為尖峰，據此排班調配。</div>
+<div class="cexam"><b>🎯 考題方向</b>考熱力圖適用場景（2D模式/相關矩陣）、色彩選擇（連續漸層）、vs其他圖表比較。</div>
+</div>
+
+<!-- 26 桑基圖 -->
+<div class="card" style="border-left:4px solid var(--O)">
+<div class="ctop" style="background:var(--Olt)">
+<div class="cnum">26 / 30</div>
+<div class="crow"><span class="cico">🌊</span><div><div class="cname">桑基圖</div><div class="cen">Sankey Diagram</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="8" y="10" width="12" height="50" rx="2" fill="#2D5F9A" opacity=".7"></rect>
+  <path d="M20,12 Q70,12 80,18" stroke="#2D5F9A" stroke-width="10" fill="none" opacity=".4" stroke-linecap="butt"></path>
+  <path d="M20,40" stroke="#E85D3A" stroke-width="6" fill="none" opacity=".4"></path>
+  <path d="M20,42 Q70,45 80,50" stroke="#E85D3A" stroke-width="8" fill="none" opacity=".4" stroke-linecap="butt"></path>
+  <path d="M20,55 Q70,58 80,62" stroke="#3A9A6E" stroke-width="6" fill="none" opacity=".4" stroke-linecap="butt"></path>
+  <rect x="80" y="12" width="12" height="14" rx="2" fill="#2D5F9A" opacity=".7"></rect>
+  <rect x="80" y="42" width="12" height="10" rx="2" fill="#E85D3A" opacity=".7"></rect>
+  <rect x="80" y="56" width="12" height="8" rx="2" fill="#3A9A6E" opacity=".7"></rect>
+  <path d="M92,14 Q130,14 140,20" stroke="#2D5F9A" stroke-width="6" fill="none" opacity=".4" stroke-linecap="butt"></path>
+  <path d="M92,46 Q130,46 140,42" stroke="#E85D3A" stroke-width="5" fill="none" opacity=".4" stroke-linecap="butt"></path>
+  <rect x="140" y="16" width="12" height="10" rx="2" fill="#7B5EA7" opacity=".7"></rect>
+  <rect x="140" y="38" width="12" height="10" rx="2" fill="#2A8A8A" opacity=".7"></rect>
+  <text x="90" y="68" text-anchor="middle" font-size="7" fill="#E85D3A">流量寬度=數值大小</text>
+</svg>
+</div>
+<div class="cdef">以<strong>流動帶寬代表數量關係</strong>的流向視覺化圖。帶寬與流量成正比，直覺呈現各環節的量的分配與流向。適合：<strong>用戶轉換漏斗</strong>、能源/物料流動、預算分配流向分析。</div>
+<div class="cscene"><b>📍 適用情境</b>電商轉換分析：桑基圖顯示「瀏覽→加購→付款→完成」各環節流失率，識別加購到付款流失最大（60%）。</div>
+<div class="cexam"><b>🎯 考題方向</b>考桑基圖適用場景（流向分析）、帶寬的意義（代表量）、vs漏斗圖差異（多源多目標vs線性）。</div>
+</div>
+
+<!-- 27 資料視覺化設計原則 -->
+<div class="card" style="border-left:4px solid var(--G)">
+<div class="ctop" style="background:var(--Glt)">
+<div class="cnum">27 / 30</div>
+<div class="crow"><span class="cico">🎯</span><div><div class="cname">視覺化設計原則</div><div class="cen">Data Viz Design Principles</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="8" width="38" height="54" rx="3" fill="#3A9A6E" opacity=".15" stroke="#3A9A6E" stroke-width="1"></rect>
+  <text x="24" y="22" text-anchor="middle" font-size="7" fill="#3A9A6E" font-weight="700">資料墨水</text>
+  <text x="24" y="32" text-anchor="middle" font-size="6.5" fill="#3A9A6E">最大化</text>
+  <text x="24" y="42" text-anchor="middle" font-size="6.5" fill="#3A9A6E">去除</text>
+  <text x="24" y="52" text-anchor="middle" font-size="6.5" fill="#3A9A6E">chartjunk</text>
+  <rect x="48" y="8" width="38" height="54" rx="3" fill="#3A9A6E" opacity=".3" stroke="#3A9A6E" stroke-width="1"></rect>
+  <text x="67" y="22" text-anchor="middle" font-size="7" fill="#3A9A6E" font-weight="700">圖表選擇</text>
+  <text x="67" y="32" text-anchor="middle" font-size="6.5" fill="#3A9A6E">比較→長條</text>
+  <text x="67" y="42" text-anchor="middle" font-size="6.5" fill="#3A9A6E">趨勢→折線</text>
+  <text x="67" y="52" text-anchor="middle" font-size="6.5" fill="#3A9A6E">佔比→圓餅</text>
+  <rect x="91" y="8" width="38" height="54" rx="3" fill="#3A9A6E" opacity=".45" stroke="#3A9A6E" stroke-width="1"></rect>
+  <text x="110" y="22" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">色彩</text>
+  <text x="110" y="32" text-anchor="middle" font-size="6.5" fill="#fff">語義顏色</text>
+  <text x="110" y="42" text-anchor="middle" font-size="6.5" fill="#fff">色盲友善</text>
+  <text x="110" y="52" text-anchor="middle" font-size="6.5" fill="#fff">&lt;7種顏色</text>
+  <rect x="134" y="8" width="40" height="54" rx="3" fill="#3A9A6E" opacity=".65" stroke="#3A9A6E" stroke-width="1"></rect>
+  <text x="154" y="22" text-anchor="middle" font-size="7" fill="#fff" font-weight="700">故事線</text>
+  <text x="154" y="32" text-anchor="middle" font-size="6.5" fill="#fff">標題即洞見</text>
+  <text x="154" y="42" text-anchor="middle" font-size="6.5" fill="#fff">訊息層次</text>
+  <text x="154" y="52" text-anchor="middle" font-size="6.5" fill="#fff">受眾思維</text>
+</svg>
+</div>
+<div class="cdef">有效視覺化的核心原則：①<strong>資料墨水比（Tufte）</strong>最大化資料密度、去除非必要裝飾；②<strong>圖表類型</strong>配對資料關係（比較/趨勢/分佈）；③<strong>色彩語義</strong>（紅=警告）與色盲友善；④<strong>標題即洞見</strong>。</div>
+<div class="cscene"><b>📍 適用情境</b>製作管理層報告：移除圖表格線、去除3D效果，標題改為「Q3東區業績下滑23%」，直接傳達洞見。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Tufte資料墨水比原則、圖表誤導手法（截斷Y軸/3D圖）、前置注意力屬性（色彩/大小/位置）。</div>
+</div>
+
+<!-- 28 近似計算 -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">28 / 30</div>
+<div class="crow"><span class="cico">⚡</span><div><div class="cname">近似計算</div><div class="cen">Approximate Computing</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="10" width="75" height="50" rx="4" fill="#A09D95" opacity=".15" stroke="#A09D95" stroke-width="1"></rect>
+  <text x="42" y="28" text-anchor="middle" font-size="7.5" fill="#6B6860" font-weight="700">精確計算</text>
+  <text x="42" y="40" text-anchor="middle" font-size="7" fill="#6B6860">100% 準確</text>
+  <text x="42" y="50" text-anchor="middle" font-size="7" fill="#6B6860">時間長 / 資源多</text>
+  <text x="91" y="37" text-anchor="middle" font-size="14" fill="#2A8A8A">⇄</text>
+  <rect x="100" y="10" width="75" height="50" rx="4" fill="#2A8A8A" opacity=".15" stroke="#2A8A8A" stroke-width="1"></rect>
+  <text x="137" y="28" text-anchor="middle" font-size="7.5" fill="#2A8A8A" font-weight="700">近似計算</text>
+  <text x="137" y="38" text-anchor="middle" font-size="7" fill="#2A8A8A">誤差可接受</text>
+  <text x="137" y="48" text-anchor="middle" font-size="7" fill="#2A8A8A">速度快 / 省資源</text>
+  <text x="90" y="68" text-anchor="middle" font-size="7" fill="#2A8A8A">速度/精確 tradeoff</text>
+</svg>
+</div>
+<div class="cdef">用<strong>可接受的誤差換取速度或資源節省</strong>的計算策略。大數據中精確計算成本極高，近似計算在誤差可控的情況下更實際。代表算法：<strong>Bloom Filter</strong>（成員查詢）、<strong>Count-Min Sketch</strong>（頻率）、<strong>HyperLogLog</strong>（基數）、t-digest（分位數）。</div>
+<div class="cscene"><b>📍 適用情境</b>社群平台統計「日活用戶數」：HyperLogLog在記憶體12KB內估計1億用戶，誤差&lt;1%，比精確計算省99.99%資源。</div>
+<div class="cexam"><b>🎯 考題方向</b>考近似計算的核心tradeoff（精確vs速度）、各算法的使用場景、誤差界定與控制。</div>
+</div>
+
+<!-- 29 HyperLogLog -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">29 / 30</div>
+<div class="crow"><span class="cico">🔢</span><div><div class="cname">HyperLogLog</div><div class="cen">Cardinality Estimation</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <text x="28" y="18" text-anchor="middle" font-size="7.5" fill="#2A8A8A" font-weight="700">十億筆UUID</text>
+  <polygon points="68,18 80,12 80,24" fill="#2A8A8A" opacity=".6"></polygon>
+  <rect x="81" y="8" width="50" height="30" rx="4" fill="#2A8A8A" opacity=".7"></rect>
+  <text x="106" y="21" text-anchor="middle" font-size="7.5" fill="#fff" font-weight="700">HyperLogLog</text>
+  <text x="106" y="31" text-anchor="middle" font-size="7" fill="#fff">雜湊+前導零計數</text>
+  <polygon points="134,23 146,17 146,29" fill="#2A8A8A" opacity=".6"></polygon>
+  <rect x="148" y="13" width="27" height="20" rx="3" fill="#3A9A6E" opacity=".8"></rect>
+  <text x="161" y="26" text-anchor="middle" font-size="7.5" fill="#fff">~1B</text>
+  <text x="90" y="52" text-anchor="middle" font-size="8" fill="#2A8A8A" font-weight="700">記憶體：12KB</text>
+  <text x="90" y="63" text-anchor="middle" font-size="7.5" fill="#2A8A8A">誤差：±0.81%（標準誤差）</text>
+</svg>
+</div>
+<div class="cdef">以極少記憶體近似估計<strong>集合基數（Cardinality，去重後元素數量）</strong>的算法。利用雜湊函數輸出中<strong>最長前導零</strong>估計集合大小。典型配置：12KB記憶體，最大基數 2^64，誤差約0.81%。Redis內建支援。</div>
+<div class="cscene"><b>📍 適用情境</b>廣告平台統計活動的「觸及不重複用戶數（Reach）」：億級曝光日誌，HyperLogLog 12KB給出精確估計，精確set需數GB。</div>
+<div class="cexam"><b>🎯 考題方向</b>考HyperLogLog解決的問題（基數估計）、記憶體效率（固定12KB）、誤差率、Redis應用。</div>
+</div>
+
+<!-- 30 Welford算法 -->
+<div class="card" style="border-left:4px solid var(--T)">
+<div class="ctop" style="background:var(--Tlt)">
+<div class="cnum">30 / 30</div>
+<div class="crow"><span class="cico">🔄</span><div><div class="cname">Welford 算法</div><div class="cen">Online Variance Computation</div></div></div>
+</div>
+<div class="cdiag">
+<svg width="180" height="70" viewBox="0 0 180 70">
+  <rect x="5" y="8" width="170" height="22" rx="4" fill="#2A8A8A" opacity=".1" stroke="#2A8A8A" stroke-width="1"></rect>
+  <text x="90" y="22" text-anchor="middle" font-size="7.5" fill="#2A8A8A" font-weight="700">每到一個新資料點xₙ，即時更新均值和變異數</text>
+  <rect x="5" y="36" width="78" height="28" rx="4" fill="#2A8A8A" opacity=".2" stroke="#2A8A8A" stroke-width="1"></rect>
+  <text x="44" y="48" text-anchor="middle" font-size="7" fill="#2A8A8A" font-weight="700">μₙ = μₙ₋₁ + (xₙ-μₙ₋₁)/n</text>
+  <text x="44" y="58" text-anchor="middle" font-size="7" fill="#2A8A8A">均值遞推更新</text>
+  <rect x="92" y="36" width="83" height="28" rx="4" fill="#2A8A8A" opacity=".35" stroke="#2A8A8A" stroke-width="1"></rect>
+  <text x="133" y="48" text-anchor="middle" font-size="7" fill="#2A8A8A" font-weight="700">Mₙ = Mₙ₋₁ + (xₙ-μₙ₋₁)(xₙ-μₙ)</text>
+  <text x="133" y="58" text-anchor="middle" font-size="7" fill="#2A8A8A">變異數穩定遞推</text>
+</svg>
+</div>
+<div class="cdef">一種<strong>單趟（Single-pass）線上計算均值和變異數</strong>的算法，無需儲存所有資料。每次新增資料點即更新統計量，數值穩定性佳（避免大數減大數的浮點誤差）。適合<strong>串流資料、記憶體受限</strong>的即時統計。</div>
+<div class="cscene"><b>📍 適用情境</b>IoT感測器資料流：每秒1000筆溫度資料，Welford算法即時維護全局均值和標準差，無需存儲所有歷史資料。</div>
+<div class="cexam"><b>🎯 考題方向</b>考Welford算法解決的問題（串流方差計算）、vs批次計算差異（記憶體效率）、數值穩定性優勢。</div>
+</div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

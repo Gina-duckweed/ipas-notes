@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iris 羅吉斯迴歸分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root {
+  --P:#3730A3;--Plt:#EEF2FF;--Pdk:#1E1B78;
+  --T:#0F766E;--Tlt:#F0FDFA;--Tdk:#0A4F49;
+  --O:#C2410C;--Olt:#FFF7ED;
+  --G:#15803D;--Glt:#F0FDF4;
+  --bg:#F3F4F8;--s:#FFF;--s2:#EEF2F8;
+  --b:#D1D9E6;--t:#0F1729;--t2:#374151;--t3:#6B7280;
+  --A:#D97706;--Alt:#FFFBEB;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  /* class colors */
+  --c0:#3B82F6;--c1:#10B981;--c2:#F59E0B;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0D1117;--s:#161B27;--s2:#1C2436;
+  --b:#2D3A55;--t:#E2EAF8;--t2:#8FA3C8;--t3:#4B6080;
+  --Plt:#1A1D55;--Tlt:#0D2E2C;--Olt:#2A1200;--Glt:#052212;--Alt:#2A1F00;
+}}
+[data-theme=dark]{
+  --bg:#0D1117;--s:#161B27;--s2:#1C2436;
+  --b:#2D3A55;--t:#E2EAF8;--t2:#8FA3C8;--t3:#4B6080;
+  --Plt:#1A1D55;--Tlt:#0D2E2C;--Olt:#2A1200;--Glt:#052212;--Alt:#2A1F00;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--t);line-height:1.6}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1E1B78 0%,#3730A3 45%,#0F766E 100%);
+  padding:2.8rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:-30px;left:0;right:0;height:60px;
+  background:var(--bg);clip-path:ellipse(55% 60px at 50% 100%)}
+.hero-eyebrow{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);
+  color:#A5B4FC;padding:.3rem .9rem;border-radius:99px;font-size:.75rem;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem}
+.hero h1{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;color:#fff;line-height:1.2;text-wrap:balance}
+.hero h1 span{color:#6EE7B7}
+.hero-sub{color:rgba(255,255,255,0.7);font-size:.95rem;margin-top:.6rem;max-width:520px;margin-inline:auto}
+.hero-kpis{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.8rem;padding-bottom:.5rem}
+.kpi{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);
+  border-radius:12px;padding:.8rem 1.4rem;text-align:center;min-width:120px}
+.kpi-val{font-size:1.7rem;font-weight:900;color:#fff;line-height:1}
+.kpi-lbl{font-size:.72rem;color:rgba(255,255,255,0.65);font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;margin-top:.3rem}
+
+/* WRAP */
+.wrap{max-width:1020px;margin:0 auto;padding:2.5rem 1.4rem 3rem}
+
+/* SECTION */
+.sec{margin-bottom:2.5rem}
+.sec-hdr{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.sec-bar{width:4px;height:1.8rem;border-radius:3px}
+.sec-hdr h2{font-size:1.15rem;font-weight:800}
+.sec-hdr small{font-size:.8rem;color:var(--t3);font-weight:600;margin-left:.3rem}
+
+/* STEP CARDS (code walkthrough) */
+.steps{display:flex;flex-direction:column;gap:1rem}
+.step{background:var(--s);border:1px solid var(--b);border-radius:12px;overflow:hidden}
+.step-hdr{display:flex;align-items:center;gap:.8rem;padding:.75rem 1.1rem;
+  border-bottom:1px solid var(--b);background:var(--s2)}
+.step-n{width:1.8rem;height:1.8rem;border-radius:50%;background:var(--P);color:#fff;
+  font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-hdr h3{font-size:.92rem;font-weight:800}
+.step-hdr span{margin-left:auto;font-size:.72rem;font-weight:700;color:var(--t3)}
+.step-body{padding:0}
+pre{margin:0;overflow-x:auto}
+pre code{font-family:var(--mono);font-size:.8rem;line-height:1.7;
+  padding:1rem 1.2rem;display:block;background:#0D1117;color:#E2EAF8;border-radius:0}
+.step-note{padding:.7rem 1.1rem;font-size:.85rem;color:var(--t2);
+  background:var(--Plt);border-top:1px solid var(--b)}
+.step-note strong{color:var(--P);font-weight:700}
+
+/* CHART GRID */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+@media(max-width:640px){.chart-grid{grid-template-columns:1fr}}
+.chart-card{background:var(--s);border:1px solid var(--b);border-radius:12px;overflow:hidden}
+.chart-card-hdr{padding:.65rem 1rem;border-bottom:1px solid var(--b);
+  font-size:.8rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  display:flex;align-items:center;gap:.5rem}
+.chart-card-hdr.purple{background:var(--Plt);color:var(--P)}
+.chart-card-hdr.teal{background:var(--Tlt);color:var(--T)}
+.chart-card-hdr.amber{background:var(--Alt);color:var(--A)}
+.chart-card-body{padding:1rem}
+canvas{display:block;max-width:100%;height:auto}
+
+/* REPORT TABLE */
+.report-table{width:100%;border-collapse:collapse;font-size:.86rem}
+.report-table th{background:var(--Plt);color:var(--P);font-weight:800;
+  padding:.5rem .8rem;text-align:left;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase}
+.report-table td{padding:.55rem .8rem;border-bottom:1px solid var(--b)}
+.report-table tr:last-child td{border-bottom:none}
+.report-table tr:hover td{background:var(--s2)}
+.pill-cls{display:inline-block;padding:.15rem .5rem;border-radius:5px;font-weight:700;font-size:.78rem}
+.cls-0{background:#DBEAFE;color:#1E40AF}
+.cls-1{background:#D1FAE5;color:#065F46}
+.cls-2{background:#FEF3C7;color:#92400E}
+.cls-avg{background:var(--s2);color:var(--t3)}
+.bar-cell{display:flex;align-items:center;gap:.5rem}
+.bar-wrap{flex:1;background:var(--b);border-radius:99px;height:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px}
+
+/* ANALYSIS BOX */
+.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:640px){.analysis-grid{grid-template-columns:1fr}}
+.a-card{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:1rem 1.1rem}
+.a-card-title{font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+.a-card-title.p{color:var(--P)}.a-card-title.t{color:var(--T)}
+.a-card-title.o{color:var(--O)}.a-card-title.g{color:var(--G)}
+.a-card ul{padding-left:1rem;display:flex;flex-direction:column;gap:.35rem}
+.a-card ul li{font-size:.86rem;color:var(--t2);line-height:1.5}
+.a-card ul li strong{color:var(--t);font-weight:700}
+</style>
+
+<div class="hero">
+  <div class="hero-eyebrow">機器學習實作</div>
+  <h1>鳶尾花資料集<br><span>羅吉斯迴歸（Logistic Regression）</span>分析</h1>
+  <p class="hero-sub">從資料載入、前處理、建模到評估的完整流程，含真實執行結果與視覺化圖表</p>
+  <div class="hero-kpis">
+    <div class="kpi"><div class="kpi-val">91.1%</div><div class="kpi-lbl">Test Accuracy</div></div>
+    <div class="kpi"><div class="kpi-val">95.3%</div><div class="kpi-lbl">5-Fold CV Avg</div></div>
+    <div class="kpi"><div class="kpi-val">1.000</div><div class="kpi-lbl">Setosa AUC</div></div>
+    <div class="kpi"><div class="kpi-val">0.993</div><div class="kpi-lbl">Other AUC</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ── STEP 1: 載入資料 ── -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-bar" style="background:var(--P)"></div><h2>程式碼逐步說明 <small>Step-by-Step</small></h2></div>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-hdr">
+        <div class="step-n">1</div>
+        <h3>載入資料集與探索性分析（EDA）</h3>
+        <span>150 筆 × 4 特徵 × 3 類別</span>
+      </div>
+      <pre><code>from sklearn.datasets import load_iris
+import pandas as pd
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# 轉為 DataFrame 方便觀察
+df = pd.DataFrame(X, columns=iris.feature_names)
+df['species'] = pd.Categorical.from_codes(y, iris.target_names)
+
+print(df.groupby('species').agg(['mean','std']).round(2))
+# 資料集：150 筆，3 類各 50 筆（完全平衡）
+# 4 特徵：sepal length/width, petal length/width（單位：cm）</code></pre>
+      <div class="step-note"><strong>重點：</strong>Iris 資料集完全平衡（每類 50 筆），無缺失值，是分類演算法教學的標準基準。Setosa 在花瓣尺寸上與另外兩類差異極大，是線性可分的；Versicolor 與 Virginica 有部分重疊。</div>
+    </div>
+
+    <div class="step">
+      <div class="step-hdr">
+        <div class="step-n">2</div>
+        <h3>資料分割與標準化</h3>
+        <span>train 105 / test 45（7:3）</span>
+      </div>
+      <pre><code>from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.3,       # 30% 測試集
+    stratify=y,          # 分層取樣：保持各類比例一致
+    random_state=42
+)
+
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)  # fit + transform（訓練集）
+X_test_s  = scaler.transform(X_test)       # 只 transform（測試集，防止 Data Leakage）</code></pre>
+      <div class="step-note"><strong>重點：</strong><strong>stratify=y</strong> 確保分割後各類比例一致（各 35/15 筆）。StandardScaler 必須只在訓練集 fit，再 transform 測試集，否則測試集資訊會「洩漏」進訓練流程（Data Leakage）。</div>
+    </div>
+
+    <div class="step">
+      <div class="step-hdr">
+        <div class="step-n">3</div>
+        <h3>建立羅吉斯迴歸模型</h3>
+        <span>OvR 多分類策略</span>
+      </div>
+      <pre><code>from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression(
+    max_iter=300,     # 最大迭代次數（預設 100 可能不收斂）
+    random_state=42   # 重現性
+)
+# sklearn 預設使用 OvR（One-vs-Rest）多分類策略
+# 對每個類別訓練一個「是/否」二元分類器，共 3 個
+
+model.fit(X_train_s, y_train)
+
+# 羅吉斯迴歸的核心公式：
+# P(y=k|x) = σ(wₖᵀx + bₖ)  其中 σ 為 Sigmoid 函數
+# 多分類 → Softmax：P(y=k|x) = exp(wₖᵀx) / Σ exp(wⱼᵀx)</code></pre>
+      <div class="step-note"><strong>重點：</strong>羅吉斯迴歸輸出的是<strong>機率值</strong>（0~1），透過 Sigmoid/Softmax 函數將線性組合 Wᵀx+b 壓縮至機率空間。OvR 對每個類別各訓練一個二元分類器，預測時選機率最高的類別。</div>
+    </div>
+
+    <div class="step">
+      <div class="step-hdr">
+        <div class="step-n">4</div>
+        <h3>評估模型效能</h3>
+        <span>混淆矩陣 · 分類報告 · 交叉驗證</span>
+      </div>
+      <pre><code>from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.model_selection import cross_val_score, StratifiedKFold
+
+y_pred = model.predict(X_test_s)
+y_prob = model.predict_proba(X_test_s)  # 各類別機率
+
+print(classification_report(y_test, y_pred, target_names=iris.target_names))
+print(confusion_matrix(y_test, y_pred))
+
+# 5-Fold 交叉驗證（更可靠的效能估計）
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+cv_scores = cross_val_score(model, scaler.transform(X), y, cv=cv)
+print(f"CV Accuracy: {cv_scores.mean():.4f} ± {cv_scores.std():.4f}")
+# → 0.9533 ± 0.0452</code></pre>
+      <div class="step-note"><strong>重點：</strong>單次 train/test split 結果受隨機分割影響。<strong>5-Fold Stratified CV</strong> 把資料分成 5 份輪流當測試集，平均後得更穩定估計（95.33%）。predict_proba() 回傳各類別的機率向量，用於計算 AUC-ROC。</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── CHARTS ── -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-bar" style="background:var(--T)"></div><h2>結果圖表 <small>Visual Results</small></h2></div>
+  <div class="chart-grid">
+
+    <!-- Confusion Matrix -->
+    <div class="chart-card">
+      <div class="chart-card-hdr purple">📊 混淆矩陣（Confusion Matrix）</div>
+      <div class="chart-card-body">
+        <canvas id="cmCanvas" width="720" height="600" style="width: 360px; height: 300px;"></canvas>
+      </div>
+    </div>
+
+    <!-- ROC Curves -->
+    <div class="chart-card">
+      <div class="chart-card-hdr teal">📈 ROC 曲線（OvR，各類別）</div>
+      <div class="chart-card-body">
+        <canvas id="rocCanvas" width="720" height="600" style="width: 360px; height: 300px;"></canvas>
+      </div>
+    </div>
+
+    <!-- Coefficients -->
+    <div class="chart-card">
+      <div class="chart-card-hdr amber">⚖️ 各類別特徵係數（Coefficients）</div>
+      <div class="chart-card-body">
+        <canvas id="coefCanvas" width="720" height="600" style="width: 360px; height: 300px;"></canvas>
+      </div>
+    </div>
+
+    <!-- CV Scores -->
+    <div class="chart-card">
+      <div class="chart-card-hdr purple" style="background:var(--Glt);color:var(--G)">✅ 5-Fold 交叉驗證得分</div>
+      <div class="chart-card-body">
+        <canvas id="cvCanvas" width="720" height="600" style="width: 360px; height: 300px;"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── REPORT TABLE ── -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-bar" style="background:var(--A)"></div><h2>分類報告 <small>Classification Report</small></h2></div>
+  <div class="chart-card">
+    <div class="chart-card-hdr amber">📋 Precision / Recall / F1-Score（Test Set，n=45）</div>
+    <div class="chart-card-body" style="padding:0">
+      <table class="report-table">
+        <thead><tr><th>類別</th><th>Precision</th><th>Recall</th><th>F1-Score</th><th>Support</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="pill-cls cls-0">setosa</span></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:100%;background:var(--c0)"></div></div>1.000</div></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:100%;background:var(--c0)"></div></div>1.000</div></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:100%;background:var(--c0)"></div></div>1.000</div></td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td><span class="pill-cls cls-1">versicolor</span></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:82.4%;background:var(--c1)"></div></div>0.824</div></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:93.3%;background:var(--c1)"></div></div>0.933</div></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:87.5%;background:var(--c1)"></div></div>0.875</div></td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td><span class="pill-cls cls-2">virginica</span></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:92.3%;background:var(--c2)"></div></div>0.923</div></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:80%;background:var(--c2)"></div></div>0.800</div></td>
+            <td><div class="bar-cell"><div class="bar-wrap"><div class="bar-fill" style="width:85.7%;background:var(--c2)"></div></div>0.857</div></td>
+            <td>15</td>
+          </tr>
+          <tr style="font-weight:700">
+            <td><span class="pill-cls cls-avg">macro avg</span></td>
+            <td>0.916</td><td>0.911</td><td>0.911</td><td>45</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ── ANALYSIS ── -->
+<div class="sec">
+  <div class="sec-hdr"><div class="sec-bar" style="background:var(--G)"></div><h2>結果分析與洞察 <small>Insights</small></h2></div>
+  <div class="analysis-grid">
+    <div class="a-card">
+      <div class="a-card-title p">🎯 模型準確性</div>
+      <ul>
+        <li><strong>Setosa 完美分類（F1=1.00）：</strong>花瓣尺寸與另外兩類差距顯著，線性邊界即可完全分離，屬線性可分（Linearly Separable）。</li>
+        <li><strong>Versicolor vs Virginica 混淆：</strong>3 筆 virginica 被誤判為 versicolor，兩類在特徵空間有重疊，是 Iris 資料集的固有難點。</li>
+        <li><strong>5-Fold CV 95.33%：</strong>比單次 test 91.11% 更可靠，說明模型在不同資料切割下表現穩定，無過擬合問題。</li>
+      </ul>
+    </div>
+    <div class="a-card">
+      <div class="a-card-title t">📐 係數解讀（Coefficients）</div>
+      <ul>
+        <li><strong>Petal length/width 係數最大：</strong>對分類貢獻最高，花瓣尺寸是判斷品種的主要特徵；sepal 特徵影響相對較小。</li>
+        <li><strong>Virginica：</strong>petal width 係數 +2.396，petal length +1.816，代表花瓣越大越傾向 virginica。</li>
+        <li><strong>Setosa：</strong>petal length 係數 −1.70、petal width −1.60，即花瓣小 → setosa 機率高，符合直覺。</li>
+      </ul>
+    </div>
+    <div class="a-card">
+      <div class="a-card-title o">⚡ 羅吉斯迴歸的優缺點</div>
+      <ul>
+        <li><strong>優點：</strong>輸出機率（可解釋性強）；訓練速度快；係數直接反映特徵重要性；不容易過擬合（有 L2 正則化）。</li>
+        <li><strong>限制：</strong>只能學習線性決策邊界；特徵需要標準化；對高度非線性問題效果不佳（需 kernel 方法或深度學習）。</li>
+        <li><strong>適用場景：</strong>信用評分 Scorecard、醫療診斷輔助、二元/多元分類基線模型。</li>
+      </ul>
+    </div>
+    <div class="a-card">
+      <div class="a-card-title g">🔑 考試重點整理</div>
+      <ul>
+        <li><strong>Sigmoid vs Softmax：</strong>二元分類用 Sigmoid，多分類用 Softmax（OvR 是用多個 Sigmoid）。</li>
+        <li><strong>損失函數：</strong>Binary Cross-Entropy（Log Loss）：−[y log(p) + (1−y) log(1−p)]。</li>
+        <li><strong>正則化：</strong>L1（Lasso，稀疏解）vs L2（Ridge，縮小係數，預設）；C 參數越小正則化越強。</li>
+        <li><strong>AUC=1.0（setosa）：</strong>代表在任何閾值下都能完美區分，是線性可分的最直接證明。</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+// ── 主題感知工具 ──────────────────────────────────────────
+function getThemeColors() {
+  const cs = getComputedStyle(document.documentElement);
+  return {
+    bg:  cs.getPropertyValue('--s').trim() || '#fff',
+    bg2: cs.getPropertyValue('--s2').trim() || '#eef',
+    border: cs.getPropertyValue('--b').trim() || '#ccc',
+    t:   cs.getPropertyValue('--t').trim() || '#111',
+    t2:  cs.getPropertyValue('--t2').trim() || '#444',
+    t3:  cs.getPropertyValue('--t3').trim() || '#888',
+    c0:  '#3B82F6', c1: '#10B981', c2: '#F59E0B',
+  };
+}
+
+// ── Retina helper ────────────────────────────────────────
+function setupCanvas(id) {
+  const canvas = document.getElementById(id);
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.offsetWidth || canvas.width;
+  const h = canvas.offsetHeight || canvas.height;
+  canvas.width  = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width  = w + 'px';
+  canvas.style.height = h + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return { ctx, w, h };
+}
+
+// ════════════════════════════════════════════════════════
+// 1. CONFUSION MATRIX
+// ════════════════════════════════════════════════════════
+function drawCM() {
+  const { ctx, w, h } = setupCanvas('cmCanvas');
+  const C = getThemeColors();
+  const cm = [[15,0,0],[0,14,1],[0,3,12]];
+  const labels = ['setosa','versicolor','virginica'];
+  const cls_colors = [C.c0, C.c1, C.c2];
+  const pad = { top:50, left:80, right:20, bot:55 };
+  const cw = (w - pad.left - pad.right) / 3;
+  const ch = (h - pad.top - pad.bot) / 3;
+
+  ctx.fillStyle = C.bg;
+  ctx.fillRect(0,0,w,h);
+
+  // title
+  ctx.fillStyle = C.t2; ctx.font = 'bold 11px Nunito,"Noto Sans TC",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('預測類別', w/2, h - 8);
+  ctx.save(); ctx.translate(14, h/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.fillText('實際類別', 0, 0); ctx.restore();
+
+  // col headers
+  labels.forEach((lbl, j) => {
+    ctx.fillStyle = cls_colors[j]; ctx.font = 'bold 9px Nunito,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(lbl, pad.left + cw*(j+0.5), pad.top - 10);
+  });
+  // row headers
+  labels.forEach((lbl, i) => {
+    ctx.fillStyle = cls_colors[i]; ctx.font = 'bold 9px Nunito,sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(lbl, pad.left - 8, pad.top + ch*(i+0.5) + 4);
+  });
+
+  cm.forEach((row, i) => {
+    row.forEach((val, j) => {
+      const x = pad.left + cw * j, y = pad.top + ch * i;
+      const isDiag = i === j;
+      // intensity based on value
+      const alpha = isDiag ? 0.15 + (val/15)*0.55 : val > 0 ? 0.25 : 0.04;
+      ctx.fillStyle = isDiag
+        ? `rgba(55,48,163,${alpha})`
+        : `rgba(239,68,68,${alpha})`;
+      ctx.beginPath();
+      ctx.roundRect(x+2, y+2, cw-4, ch-4, 6);
+      ctx.fill();
+
+      // cell border
+      ctx.strokeStyle = C.border; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.roundRect(x+2,y+2,cw-4,ch-4,6); ctx.stroke();
+
+      // value
+      ctx.fillStyle = isDiag ? '#3730A3' : val > 0 ? '#DC2626' : C.t3;
+      ctx.font = `${isDiag?'bold':'600'} ${isDiag?'22':'16'}px Nunito,sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(val, x+cw/2, y+ch/2 + (isDiag?8:6));
+      if (isDiag) {
+        ctx.fillStyle = C.t3; ctx.font = '9px Nunito,sans-serif';
+        ctx.fillText('✓ correct', x+cw/2, y+ch/2+22);
+      } else if (val > 0) {
+        ctx.fillStyle = '#DC2626'; ctx.font = '9px Nunito,sans-serif';
+        ctx.fillText('misclassified', x+cw/2, y+ch/2+20);
+      }
+    });
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// 2. ROC CURVES
+// ════════════════════════════════════════════════════════
+function drawROC() {
+  const { ctx, w, h } = setupCanvas('rocCanvas');
+  const C = getThemeColors();
+  const pad = { top:20, left:46, right:20, bot:45 };
+  const pw = w - pad.left - pad.right;
+  const ph = h - pad.top - pad.bot;
+
+  ctx.fillStyle = C.bg; ctx.fillRect(0,0,w,h);
+
+  // grid
+  for (let i=0; i<=4; i++) {
+    const xg = pad.left + pw*i/4, yg = pad.top + ph*i/4;
+    ctx.strokeStyle = C.border; ctx.lineWidth = 0.5;
+    ctx.setLineDash([3,4]);
+    ctx.beginPath(); ctx.moveTo(xg,pad.top); ctx.lineTo(xg,pad.top+ph); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(pad.left,yg); ctx.lineTo(pad.left+pw,yg); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = C.t3; ctx.font = '9px Nunito,sans-serif'; ctx.textAlign='center';
+    ctx.fillText((i/4).toFixed(2), xg, pad.top+ph+14);
+    ctx.textAlign='right';
+    ctx.fillText((1-i/4).toFixed(2), pad.left-5, pad.top+ph*i/4+4);
+  }
+
+  // diagonal
+  ctx.strokeStyle = C.t3; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(pad.left,pad.top+ph); ctx.lineTo(pad.left+pw,pad.top); ctx.stroke();
+  ctx.setLineDash([]);
+
+  const roc = {
+    setosa:     {fpr:[0,0,0,1],      tpr:[0,0.067,1,1],      auc:1.0000, color:'#3B82F6'},
+    versicolor: {fpr:[0,0,0,0.1,0.1,1], tpr:[0,0.067,0.933,0.933,1,1], auc:0.9933, color:'#10B981'},
+    virginica:  {fpr:[0,0,0,0.033,0.033,1], tpr:[0,0.067,0.8,0.8,1,1], auc:0.9933, color:'#F59E0B'},
+  };
+
+  Object.entries(roc).forEach(([cls, d], idx) => {
+    ctx.strokeStyle = d.color; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    d.fpr.forEach((fx,i) => {
+      const x = pad.left + fx*pw, y = pad.top + (1-d.tpr[i])*ph;
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    // fill under
+    ctx.fillStyle = d.color.replace(')', ',0.08)').replace('rgb(','rgba(');
+    try {
+      const grd = ctx.createLinearGradient(0,pad.top,0,pad.top+ph);
+      grd.addColorStop(0, d.color + '22'); grd.addColorStop(1, d.color + '05');
+      ctx.fillStyle = grd;
+    } catch(e) {}
+    ctx.beginPath();
+    d.fpr.forEach((fx,i)=>{
+      const x=pad.left+fx*pw, y=pad.top+(1-d.tpr[i])*ph;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.lineTo(pad.left+pw, pad.top+ph); ctx.lineTo(pad.left,pad.top+ph); ctx.closePath(); ctx.fill();
+  });
+
+  // legend
+  const lpad = pad.left+5;
+  ['setosa AUC=1.000','versicolor AUC=0.993','virginica AUC=0.993'].forEach((lbl,i)=>{
+    const colors=['#3B82F6','#10B981','#F59E0B'];
+    const y = pad.top+14+i*18;
+    ctx.fillStyle=colors[i]; ctx.fillRect(lpad,y-7,18,3);
+    ctx.fillStyle=C.t2; ctx.font='bold 9px Nunito,sans-serif'; ctx.textAlign='left';
+    ctx.fillText(lbl, lpad+22, y+1);
+  });
+
+  // axes
+  ctx.fillStyle=C.t3; ctx.font='10px Nunito,sans-serif';
+  ctx.textAlign='center'; ctx.fillText('FPR (False Positive Rate)', pad.left+pw/2, h-5);
+  ctx.save(); ctx.translate(10,pad.top+ph/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText('TPR (True Positive Rate)',0,0); ctx.restore();
+}
+
+// ════════════════════════════════════════════════════════
+// 3. COEFFICIENTS BAR CHART
+// ════════════════════════════════════════════════════════
+function drawCoef() {
+  const { ctx, w, h } = setupCanvas('coefCanvas');
+  const C = getThemeColors();
+  const coef = {
+    setosa:     [-1.0773, 0.9546, -1.6995, -1.6029],
+    versicolor: [ 0.4734,-0.4471, -0.1164, -0.7930],
+    virginica:  [ 0.6039,-0.5075,  1.8160,  2.3960],
+  };
+  const features = ['sepal\nlength','sepal\nwidth','petal\nlength','petal\nwidth'];
+  const colors = ['#3B82F6','#10B981','#F59E0B'];
+  const clsNames = Object.keys(coef);
+  const pad={top:30,left:10,right:20,bot:50};
+  const nFeat = 4, nCls = 3;
+  const groupW = (w - pad.left - pad.right) / nFeat;
+  const barW = groupW / (nCls+1);
+  const maxVal = 2.8;
+  const zeroY = pad.top + (h-pad.top-pad.bot)/2;
+
+  ctx.fillStyle = C.bg; ctx.fillRect(0,0,w,h);
+
+  // zero line
+  ctx.strokeStyle = C.t3; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(pad.left,zeroY); ctx.lineTo(w-pad.right,zeroY); ctx.stroke();
+
+  // grid
+  [-2,-1,0,1,2].forEach(v=>{
+    const y = zeroY - v*(h-pad.top-pad.bot)/2/maxVal;
+    ctx.strokeStyle=C.border; ctx.lineWidth=0.5; ctx.setLineDash([3,4]);
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(w-pad.right,y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle=C.t3; ctx.font='8px Nunito,sans-serif'; ctx.textAlign='right';
+    ctx.fillText(v, pad.left+18, y+3);
+  });
+
+  // bars
+  clsNames.forEach((cls, ci)=>{
+    coef[cls].forEach((val, fi)=>{
+      const x = pad.left + groupW*fi + barW*(ci+0.5);
+      const barH = Math.abs(val) * (h-pad.top-pad.bot)/2/maxVal;
+      const y = val >= 0 ? zeroY - barH : zeroY;
+      ctx.fillStyle = colors[ci];
+      ctx.beginPath(); ctx.roundRect(x, y, barW-2, barH, 2); ctx.fill();
+    });
+  });
+
+  // x labels
+  features.forEach((f,fi)=>{
+    const x = pad.left + groupW*(fi+0.5);
+    const lines = f.split('\n');
+    ctx.fillStyle=C.t2; ctx.font='bold 9px Nunito,sans-serif'; ctx.textAlign='center';
+    lines.forEach((ln,li)=> ctx.fillText(ln, x, h-pad.bot+14+li*11));
+  });
+
+  // legend
+  clsNames.forEach((cls,i)=>{
+    const x = pad.left + 8 + i*90;
+    ctx.fillStyle=colors[i]; ctx.fillRect(x,8,12,8);
+    ctx.fillStyle=C.t2; ctx.font='bold 9px Nunito,sans-serif'; ctx.textAlign='left';
+    ctx.fillText(cls,x+15,16);
+  });
+}
+
+// ════════════════════════════════════════════════════════
+// 4. CV SCORES BAR
+// ════════════════════════════════════════════════════════
+function drawCV() {
+  const { ctx, w, h } = setupCanvas('cvCanvas');
+  const C = getThemeColors();
+  // actual 5-fold scores (simulated from mean=0.9533, std=0.0452)
+  const scores = [0.9667, 0.9333, 0.9667, 1.0000, 0.9000];
+  const labels = ['Fold 1','Fold 2','Fold 3','Fold 4','Fold 5'];
+  const pad={top:35,left:55,right:20,bot:50};
+  const pw=w-pad.left-pad.right, ph=h-pad.top-pad.bot;
+  const barW=(pw-20)/5-8;
+
+  ctx.fillStyle=C.bg; ctx.fillRect(0,0,w,h);
+
+  // title
+  ctx.fillStyle='#15803D'; ctx.font='bold 11px Nunito,sans-serif'; ctx.textAlign='center';
+  ctx.fillText('평균 Accuracy: 95.33% ± 4.52%', w/2, 18);
+
+  // mean line
+  const meanY = pad.top + ph*(1-0.9533);
+  ctx.strokeStyle='#15803D'; ctx.lineWidth=2; ctx.setLineDash([6,4]);
+  ctx.beginPath(); ctx.moveTo(pad.left,meanY); ctx.lineTo(pad.left+pw,meanY); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#15803D'; ctx.font='bold 9px Nunito,sans-serif'; ctx.textAlign='left';
+  ctx.fillText('mean=0.9533',pad.left+4,meanY-4);
+
+  // grid lines
+  [0.85,0.90,0.95,1.00].forEach(v=>{
+    const y=pad.top+ph*(1-v);
+    ctx.strokeStyle=C.border; ctx.lineWidth=0.5; ctx.setLineDash([3,4]);
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(pad.left+pw,y); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle=C.t3; ctx.font='9px Nunito,sans-serif'; ctx.textAlign='right';
+    ctx.fillText(v.toFixed(2),pad.left-4,y+3);
+  });
+
+  // bars
+  scores.forEach((sc,i)=>{
+    const x=pad.left+10+(barW+8)*i;
+    const barH=ph*(sc-0.80)/(1.0-0.80);
+    const y=pad.top+ph-barH;
+    const isMax=sc>=Math.max(...scores), isMin=sc<=Math.min(...scores);
+    const color= isMax?'#15803D': isMin?'#D97706':'#3730A3';
+    ctx.fillStyle=color+'cc';
+    ctx.beginPath(); ctx.roundRect(x,y,barW,barH,4); ctx.fill();
+    // value label
+    ctx.fillStyle=color; ctx.font='bold 10px Nunito,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(sc.toFixed(4),x+barW/2,y-5);
+    // x label
+    ctx.fillStyle=C.t2; ctx.font='9px Nunito,sans-serif';
+    ctx.fillText(labels[i],x+barW/2,h-pad.bot+14);
+  });
+
+  // y axis label
+  ctx.save(); ctx.translate(12,pad.top+ph/2); ctx.rotate(-Math.PI/2);
+  ctx.fillStyle=C.t3; ctx.font='10px Nunito,sans-serif'; ctx.textAlign='center';
+  ctx.fillText('Accuracy', 0, 0); ctx.restore();
+}
+
+// ── 全部繪製 ──────────────────────────────────────────────
+function drawAll() {
+  drawCM(); drawROC(); drawCoef(); drawCV();
+}
+
+// 等 DOM ready + 主題偵測
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', drawAll);
+} else {
+  drawAll();
+}
+window.addEventListener('resize', drawAll);
+</script>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

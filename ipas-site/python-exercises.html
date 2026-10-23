@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python 大數據與機器學習應用題</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root {
+  --BD:#0F766E; --BDlt:#E6F7F5; --BDdk:#0A4F49;
+  --ML:#6D28D9; --MLlt:#EDE9FE; --MLdk:#4C1D95;
+  --bg:#F3F4F8; --s:#FFFFFF; --s2:#EEF1F8;
+  --b:#D1D9E6; --t:#0F1729; --t2:#374151; --t3:#6B7280;
+  --A:#D97706; --Alt:#FFFBEB;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0D1117; --s:#161B27; --s2:#1C2436;
+  --b:#2D3A55; --t:#E2EAF8; --t2:#8FA3C8; --t3:#4B6080;
+  --BDlt:#0D2E2C; --MLlt:#1E1040; --Alt:#2A1F00;
+}}
+[data-theme=dark]{
+  --bg:#0D1117; --s:#161B27; --s2:#1C2436;
+  --b:#2D3A55; --t:#E2EAF8; --t2:#8FA3C8; --t3:#4B6080;
+  --BDlt:#0D2E2C; --MLlt:#1E1040; --Alt:#2A1F00;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--t);line-height:1.6}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0F4C3A 0%,#1A3A6E 50%,#3B1E6E 100%);padding:3rem 2rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.hero-tag{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:.3rem .9rem;border-radius:99px;font-size:.8rem;font-weight:700;letter-spacing:.08em;margin-bottom:1rem;text-transform:uppercase}
+.hero h1{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:900;color:#fff;line-height:1.25;text-wrap:balance}
+.hero h1 span{color:#5EEAD4}
+.hero p{color:rgba(255,255,255,0.75);margin-top:.75rem;font-size:1rem;max-width:600px;margin-inline:auto}
+.hero-tags{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.hero-tags span{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:.25rem .75rem;border-radius:6px;font-size:.8rem;font-weight:600}
+
+/* CONTAINER */
+.wrap{max-width:1000px;margin:0 auto;padding:2.5rem 1.5rem}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;margin-top:1rem}
+.sec-hdr-bar{width:5px;height:2.5rem;border-radius:3px}
+.sec-hdr-bar.bd{background:var(--BD)}
+.sec-hdr-bar.ml{background:var(--ML)}
+.sec-hdr h2{font-size:1.5rem;font-weight:900}
+.sec-hdr h2 em{font-style:normal;font-size:.85rem;font-weight:600;color:var(--t3);margin-left:.5rem}
+.sec-hdr .badge{padding:.2rem .6rem;border-radius:6px;font-size:.75rem;font-weight:800;margin-left:auto}
+.badge.bd{background:var(--BDlt);color:var(--BD)}
+.badge.ml{background:var(--MLlt);color:var(--ML)}
+
+/* QUESTION CARD */
+.qcard{background:var(--s);border-radius:14px;margin-bottom:2rem;box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;border:1px solid var(--b)}
+.qcard-hdr{padding:1rem 1.4rem;display:flex;align-items:center;gap:.9rem;border-bottom:1px solid var(--b)}
+.qnum{width:2.2rem;height:2.2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:900;flex-shrink:0;color:#fff}
+.qnum.bd{background:var(--BD)}
+.qnum.ml{background:var(--ML)}
+.qcard-hdr h3{font-size:1.05rem;font-weight:800;flex:1}
+.diff{padding:.15rem .5rem;border-radius:5px;font-size:.7rem;font-weight:700}
+.diff-M{background:#FEF3C7;color:#92400E}
+.diff-H{background:#FEE2E2;color:#991B1B}
+.diff-E{background:#D1FAE5;color:#065F46}
+
+.qcard-body{padding:1.2rem 1.4rem}
+.q-stmt{background:var(--s2);border-left:4px solid var(--b);border-radius:0 8px 8px 0;padding:.9rem 1.1rem;margin-bottom:1.1rem;font-size:.95rem;color:var(--t2)}
+.q-stmt strong{color:var(--t);display:block;margin-bottom:.3rem;font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;opacity:.7}
+
+/* CODE BLOCK */
+.code-wrap{margin-bottom:1rem}
+.code-label{font-size:.75rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:.5rem 1rem;border-radius:8px 8px 0 0;display:flex;align-items:center;gap:.5rem}
+.code-label.bd{background:var(--BDdk);color:#5EEAD4}
+.code-label.ml{background:var(--MLdk);color:#C4B5FD}
+.code-label::before{content:'⌨';font-style:normal}
+pre{margin:0;border-radius:0 0 8px 8px;overflow-x:auto}
+pre code.hljs{font-family:var(--mono);font-size:.82rem;line-height:1.7;padding:1.1rem 1.2rem;border-radius:0 0 8px 8px}
+
+/* ANALYSIS PANEL */
+.analysis{background:var(--s2);border-radius:10px;padding:1rem 1.2rem;border:1px solid var(--b)}
+.analysis-hdr{font-size:.78rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.5rem}
+.analysis-hdr.bd{color:var(--BD)}
+.analysis-hdr.ml{color:var(--ML)}
+.analysis ul{padding-left:1.1rem;display:flex;flex-direction:column;gap:.45rem}
+.analysis ul li{font-size:.88rem;color:var(--t2);line-height:1.55}
+.analysis ul li strong{color:var(--t);font-weight:700}
+
+/* SCENE CHIP */
+.scene-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--b)}
+.chip{padding:.2rem .65rem;border-radius:99px;font-size:.72rem;font-weight:700}
+.chip.bd{background:var(--BDlt);color:var(--BDdk)}
+.chip.ml{background:var(--MLlt);color:var(--MLdk)}
+
+.divider{height:1px;background:var(--b);margin:2.5rem 0}
+</style>
+
+<div class="hero">
+  <div class="hero-tag">iPAS 應用練習</div>
+  <h1>Python <span>大數據 &amp; 機器學習</span><br>應用題庫</h1>
+  <p>每部分 5 題，含完整程式碼範例與應用場景分析，對應考試核心知識點</p>
+  <div class="hero-tags">
+    <span>🐍 Python 3.x</span>
+    <span>📦 pandas · PySpark · sklearn</span>
+    <span>📊 大數據處理</span>
+    <span>🤖 機器學習建模</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ═══════════════════════════════════════
+     SECTION A — BIG DATA
+════════════════════════════════════════ -->
+<div class="sec-hdr">
+  <div class="sec-hdr-bar bd"></div>
+  <h2>大數據應用 <em>Big Data with Python</em></h2>
+  <span class="badge bd">5 題</span>
+</div>
+
+<!-- Q1 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum bd">1</div>
+    <h3>資料清洗與缺失值處理</h3>
+    <span class="diff diff-E">基礎</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      現有一份電商訂單 CSV（含 order_id, customer_id, amount, date, region 欄位），其中 amount 有 15% 缺失，date 格式不一致（混用 "2024-01" 與 "Jan 2024"）。請用 pandas 完成：① 缺失值以各地區中位數填補；② 統一日期格式為 datetime；③ 篩選 amount &gt; 500 的訂單；④ 匯出清洗後的 CSV。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label bd">Python — pandas 資料清洗</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+
+<span class="hljs-comment"># 載入資料</span>
+df = pd.read_csv(<span class="hljs-string">'orders.csv'</span>)
+
+<span class="hljs-comment"># ① 缺失值填補：以各 region 的 amount 中位數填入</span>
+df[<span class="hljs-string">'amount'</span>] = df.groupby(<span class="hljs-string">'region'</span>)[<span class="hljs-string">'amount'</span>].transform(
+    <span class="hljs-keyword">lambda</span> x: x.fillna(x.median())
+)
+
+<span class="hljs-comment"># ② 統一日期格式（混合格式用 infer_datetime_format 或手動 format list）</span>
+df[<span class="hljs-string">'date'</span>] = pd.to_datetime(df[<span class="hljs-string">'date'</span>], infer_datetime_format=<span class="hljs-literal">True</span>, errors=<span class="hljs-string">'coerce'</span>)
+
+<span class="hljs-comment"># 無法解析的日期 → 以眾數填補（或刪除）</span>
+mode_date = df[<span class="hljs-string">'date'</span>].mode()[<span class="hljs-number">0</span>]
+df[<span class="hljs-string">'date'</span>] = df[<span class="hljs-string">'date'</span>].fillna(mode_date)
+
+<span class="hljs-comment"># ③ 篩選高額訂單</span>
+high_value = df[df[<span class="hljs-string">'amount'</span>] &gt; <span class="hljs-number">500</span>].copy()
+
+<span class="hljs-comment"># ④ 統計摘要 &amp; 匯出</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f"原始筆數: <span class="hljs-subst">{<span class="hljs-built_in">len</span>(df)}</span>，高額訂單: <span class="hljs-subst">{<span class="hljs-built_in">len</span>(high_value)}</span>"</span>)
+<span class="hljs-built_in">print</span>(high_value.groupby(<span class="hljs-string">'region'</span>)[<span class="hljs-string">'amount'</span>].agg([<span class="hljs-string">'mean'</span>,<span class="hljs-string">'count'</span>]).<span class="hljs-built_in">round</span>(<span class="hljs-number">2</span>))
+
+high_value.to_csv(<span class="hljs-string">'orders_cleaned.csv'</span>, index=<span class="hljs-literal">False</span>, encoding=<span class="hljs-string">'utf-8-sig'</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"✓ 清洗完成，已匯出 orders_cleaned.csv"</span>)</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr bd">📊 應用分析</div>
+      <ul>
+        <li><strong>groupby + transform：</strong>依分組填補缺失值，保持 DataFrame 原始索引，是生產環境最常用的缺失值策略，避免跨地區數據污染。</li>
+        <li><strong>pd.to_datetime + errors='coerce'：</strong>無法解析的日期自動轉為 NaT，再進行後處理，比 try/except 迴圈快 100 倍以上（底層為 C 實作）。</li>
+        <li><strong>實際應用：</strong>零售、電商的訂單分析前處理；CRM 系統資料整合；BI Dashboard 的 ETL 上游環節。</li>
+        <li><strong>考試重點：</strong>fillna() vs interpolate() 的使用時機；groupby().transform() 與 apply() 的差異；encoding='utf-8-sig' 解決 Excel 開啟中文亂碼。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip bd">電商分析</span><span class="chip bd">ETL 管線</span><span class="chip bd">資料品質</span><span class="chip bd">BI 報表</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum bd">2</div>
+    <h3>PySpark 分散式資料處理</h3>
+    <span class="diff diff-H">進階</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      使用 PySpark 處理一份 10GB 的使用者行為日誌（user_id, event_type, timestamp, product_id），計算每位使用者的：① 活躍天數；② 最常點擊的 Top-3 商品；③ 最後一次互動時間。最終輸出為 Parquet 格式。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label bd">Python — PySpark 分散式聚合</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">from</span> pyspark.sql <span class="hljs-keyword">import</span> SparkSession
+<span class="hljs-keyword">from</span> pyspark.sql <span class="hljs-keyword">import</span> functions <span class="hljs-keyword">as</span> F
+<span class="hljs-keyword">from</span> pyspark.sql.window <span class="hljs-keyword">import</span> Window
+
+spark = SparkSession.builder \
+    .appName(<span class="hljs-string">"UserBehaviorAnalysis"</span>) \
+    .config(<span class="hljs-string">"spark.sql.shuffle.partitions"</span>, <span class="hljs-string">"200"</span>) \
+    .getOrCreate()
+
+<span class="hljs-comment"># 讀取大規模日誌</span>
+df = spark.read.json(<span class="hljs-string">"s3://bucket/logs/*.json"</span>) \
+    .withColumn(<span class="hljs-string">"ts"</span>, F.to_timestamp(<span class="hljs-string">"timestamp"</span>)) \
+    .withColumn(<span class="hljs-string">"date"</span>, F.to_date(<span class="hljs-string">"ts"</span>))
+
+<span class="hljs-comment"># ① 每位使用者的活躍天數</span>
+active_days = df.groupBy(<span class="hljs-string">"user_id"</span>) \
+    .agg(F.countDistinct(<span class="hljs-string">"date"</span>).alias(<span class="hljs-string">"active_days"</span>))
+
+<span class="hljs-comment"># ② Top-3 商品（使用 Window + rank）</span>
+click_df = df.<span class="hljs-built_in">filter</span>(F.col(<span class="hljs-string">"event_type"</span>) == <span class="hljs-string">"click"</span>)
+product_counts = click_df.groupBy(<span class="hljs-string">"user_id"</span>, <span class="hljs-string">"product_id"</span>) \
+    .agg(F.count(<span class="hljs-string">"*"</span>).alias(<span class="hljs-string">"click_count"</span>))
+
+w = Window.partitionBy(<span class="hljs-string">"user_id"</span>).orderBy(F.desc(<span class="hljs-string">"click_count"</span>))
+top3 = product_counts \
+    .withColumn(<span class="hljs-string">"rank"</span>, F.rank().over(w)) \
+    .<span class="hljs-built_in">filter</span>(F.col(<span class="hljs-string">"rank"</span>) &lt;= <span class="hljs-number">3</span>) \
+    .groupBy(<span class="hljs-string">"user_id"</span>) \
+    .agg(F.collect_list(<span class="hljs-string">"product_id"</span>).alias(<span class="hljs-string">"top3_products"</span>))
+
+<span class="hljs-comment"># ③ 最後互動時間</span>
+last_active = df.groupBy(<span class="hljs-string">"user_id"</span>) \
+    .agg(F.<span class="hljs-built_in">max</span>(<span class="hljs-string">"ts"</span>).alias(<span class="hljs-string">"last_seen"</span>))
+
+<span class="hljs-comment"># 合併三個指標</span>
+result = active_days \
+    .join(top3, <span class="hljs-string">"user_id"</span>, <span class="hljs-string">"left"</span>) \
+    .join(last_active, <span class="hljs-string">"user_id"</span>, <span class="hljs-string">"left"</span>)
+
+<span class="hljs-comment"># 輸出 Parquet（分區儲存，支援後續快速查詢）</span>
+result.write \
+    .mode(<span class="hljs-string">"overwrite"</span>) \
+    .partitionBy(<span class="hljs-string">"last_seen"</span>) \
+    .parquet(<span class="hljs-string">"s3://bucket/output/user_profile/"</span>)
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f"處理完成，共 <span class="hljs-subst">{result.count():,}</span> 位使用者"</span>)
+spark.stop()</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr bd">📊 應用分析</div>
+      <ul>
+        <li><strong>Window Function：</strong>rank().over(Window.partitionBy) 在分散式環境中實作 SQL 的 ROW_NUMBER / RANK，避免將資料拉回 Driver 處理，維持水平擴展能力。</li>
+        <li><strong>Parquet 格式優勢：</strong>欄式儲存（Columnar）使查詢特定欄位速度比 CSV 快 10x；原生支援 Snappy/Gzip 壓縮；Spark/Hive/Presto 原生相容。</li>
+        <li><strong>shuffle.partitions：</strong>預設 200，應依資料量調整（一般建議每個 partition 約 128MB），過多造成 task 排程開銷，過少造成記憶體壓力。</li>
+        <li><strong>實際應用：</strong>用戶畫像系統（User Profiling）；推薦系統的特徵工程上游；電商的 RFM（Recency/Frequency/Monetary）分析。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip bd">Hadoop 生態系</span><span class="chip bd">Data Lake</span><span class="chip bd">使用者畫像</span><span class="chip bd">S3/HDFS</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum bd">3</div>
+    <h3>ETL 管線設計：多源整合</h3>
+    <span class="diff diff-M">中級</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      設計一個 ETL 管線，從 ① MySQL 訂單表、② REST API（庫存查詢）、③ CSV 客戶資料 三個來源整合資料，進行去重與欄位標準化後，寫入資料倉儲（BigQuery / PostgreSQL）。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label bd">Python — ETL 管線整合</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> requests
+<span class="hljs-keyword">import</span> sqlalchemy
+<span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+
+<span class="hljs-comment"># ─── Extract ───────────────────────────────</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_mysql</span>(<span class="hljs-params">engine, table, date_col, since</span>):
+    <span class="hljs-string">"""增量抽取：只取今日更新資料"""</span>
+    query = <span class="hljs-string">f"SELECT * FROM <span class="hljs-subst">{table}</span> WHERE <span class="hljs-subst">{date_col}</span> &gt;= '<span class="hljs-subst">{since}</span>'"</span>
+    <span class="hljs-keyword">return</span> pd.read_sql(query, engine)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_api</span>(<span class="hljs-params">sku_list, api_url, token</span>):
+    <span class="hljs-string">"""批次呼叫 REST API，回傳庫存 DataFrame"""</span>
+    results = []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(sku_list), <span class="hljs-number">100</span>):   <span class="hljs-comment"># 每批 100 個 SKU</span>
+        batch = sku_list[i:i+<span class="hljs-number">100</span>]
+        resp = requests.post(
+            api_url,
+            json={<span class="hljs-string">"skus"</span>: batch},
+            headers={<span class="hljs-string">"Authorization"</span>: <span class="hljs-string">f"Bearer <span class="hljs-subst">{token}</span>"</span>},
+            timeout=<span class="hljs-number">10</span>
+        )
+        resp.raise_for_status()
+        results.extend(resp.json()[<span class="hljs-string">"items"</span>])
+    <span class="hljs-keyword">return</span> pd.DataFrame(results)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">extract_csv</span>(<span class="hljs-params">path</span>):
+    <span class="hljs-keyword">return</span> pd.read_csv(path, dtype=<span class="hljs-built_in">str</span>)   <span class="hljs-comment"># 全部讀為字串，Transform 再處理類型</span>
+
+<span class="hljs-comment"># ─── Transform ─────────────────────────────</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">transform</span>(<span class="hljs-params">orders, inventory, customers</span>):
+    <span class="hljs-comment"># 標準化欄位名稱</span>
+    customers.columns = customers.columns.<span class="hljs-built_in">str</span>.lower().<span class="hljs-built_in">str</span>.replace(<span class="hljs-string">' '</span>, <span class="hljs-string">'_'</span>)
+
+    <span class="hljs-comment"># 去重（以 order_id 為主鍵）</span>
+    orders = orders.drop_duplicates(subset=<span class="hljs-string">'order_id'</span>)
+
+    <span class="hljs-comment"># JOIN 三表</span>
+    df = orders \
+        .merge(inventory[[<span class="hljs-string">'sku'</span>,<span class="hljs-string">'stock_qty'</span>,<span class="hljs-string">'warehouse'</span>]], on=<span class="hljs-string">'sku'</span>, how=<span class="hljs-string">'left'</span>) \
+        .merge(customers[[<span class="hljs-string">'customer_id'</span>,<span class="hljs-string">'tier'</span>,<span class="hljs-string">'region'</span>]], on=<span class="hljs-string">'customer_id'</span>, how=<span class="hljs-string">'left'</span>)
+
+    <span class="hljs-comment"># 欄位清洗：金額轉數值、日期統一</span>
+    df[<span class="hljs-string">'amount'</span>] = pd.to_numeric(df[<span class="hljs-string">'amount'</span>], errors=<span class="hljs-string">'coerce'</span>).fillna(<span class="hljs-number">0</span>)
+    df[<span class="hljs-string">'order_date'</span>] = pd.to_datetime(df[<span class="hljs-string">'order_date'</span>])
+    df[<span class="hljs-string">'etl_ts'</span>] = datetime.utcnow()   <span class="hljs-comment"># 寫入 ETL 時間戳</span>
+
+    <span class="hljs-keyword">return</span> df
+
+<span class="hljs-comment"># ─── Load ──────────────────────────────────</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">load_to_dw</span>(<span class="hljs-params">df, engine, table, mode=<span class="hljs-string">'append'</span></span>):
+    df.to_sql(table, engine, if_exists=mode, index=<span class="hljs-literal">False</span>, chunksize=<span class="hljs-number">5000</span>,
+              method=<span class="hljs-string">'multi'</span>)   <span class="hljs-comment"># multi 模式用 INSERT 批次，比逐行快 20x</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"✓ Loaded <span class="hljs-subst">{<span class="hljs-built_in">len</span>(df):,}</span> rows → <span class="hljs-subst">{table}</span>"</span>)
+
+<span class="hljs-comment"># ─── 執行 ──────────────────────────────────</span>
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    src_engine = sqlalchemy.create_engine(<span class="hljs-string">"mysql+pymysql://user:pw@host/db"</span>)
+    dw_engine  = sqlalchemy.create_engine(<span class="hljs-string">"postgresql://user:pw@dw-host/warehouse"</span>)
+
+    since = <span class="hljs-string">"2024-01-01"</span>
+    orders    = extract_mysql(src_engine, <span class="hljs-string">"orders"</span>, <span class="hljs-string">"updated_at"</span>, since)
+    inventory = extract_api(orders[<span class="hljs-string">'sku'</span>].unique().tolist(), <span class="hljs-string">"https://api.example.com/inventory"</span>, <span class="hljs-string">"TOKEN"</span>)
+    customers = extract_csv(<span class="hljs-string">"customers.csv"</span>)
+
+    final = transform(orders, inventory, customers)
+    load_to_dw(final, dw_engine, <span class="hljs-string">"fact_orders"</span>)</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr bd">📊 應用分析</div>
+      <ul>
+        <li><strong>增量抽取（Incremental Extract）：</strong>只抽取自上次執行後更新的資料，減少資料庫負載，是生產 ETL 的標準模式，對應 Change Data Capture（CDC）概念。</li>
+        <li><strong>批次 API 呼叫：</strong>避免 N+1 問題（逐筆查詢），每批 100 個 SKU 平衡 API 限流（Rate Limit）與效率；加上 timeout 防止管線卡死。</li>
+        <li><strong>chunksize + method='multi'：</strong>大量寫入 SQL 時，分批次使用 multi-row INSERT 語法，比預設逐行 INSERT 快 10~20 倍。</li>
+        <li><strong>實際應用：</strong>企業資料倉儲建置；每日業務報表自動化；電商庫存與訂單的跨系統整合；Apache Airflow DAG 中的個別 Task。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip bd">資料倉儲</span><span class="chip bd">ETL/ELT</span><span class="chip bd">Airflow</span><span class="chip bd">多源整合</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum bd">4</div>
+    <h3>串流資料處理（Kafka + Python）</h3>
+    <span class="diff diff-H">進階</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      使用 kafka-python 實作一個即時異常偵測系統：Producer 模擬感測器每秒發送溫度資料；Consumer 以滑動視窗（30秒）計算移動平均，超過閾值時觸發告警並寫入 Redis。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label bd">Python — Kafka 串流 + 異常偵測</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> json, time, random
+<span class="hljs-keyword">from</span> kafka <span class="hljs-keyword">import</span> KafkaProducer, KafkaConsumer
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> deque
+<span class="hljs-keyword">import</span> redis
+
+TOPIC = <span class="hljs-string">"sensor_temp"</span>
+BROKER = <span class="hljs-string">"localhost:9092"</span>
+THRESHOLD = <span class="hljs-number">80.0</span>   <span class="hljs-comment"># 超過 80°C 告警</span>
+
+<span class="hljs-comment"># ─── Producer：模擬感測器 ────────────────────</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">producer</span>():
+    prod = KafkaProducer(
+        bootstrap_servers=BROKER,
+        value_serializer=<span class="hljs-keyword">lambda</span> v: json.dumps(v).encode(<span class="hljs-string">'utf-8'</span>)
+    )
+    sensor_id = <span class="hljs-string">"sensor_01"</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+        temp = <span class="hljs-built_in">round</span>(random.gauss(<span class="hljs-number">60</span>, <span class="hljs-number">15</span>), <span class="hljs-number">2</span>)   <span class="hljs-comment"># 均值 60°C，標準差 15</span>
+        msg = {<span class="hljs-string">"sensor_id"</span>: sensor_id, <span class="hljs-string">"temp"</span>: temp, <span class="hljs-string">"ts"</span>: time.time()}
+        prod.send(TOPIC, msg)
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"[PROD] sent: <span class="hljs-subst">{temp}</span>°C"</span>)
+        time.sleep(<span class="hljs-number">1</span>)
+
+<span class="hljs-comment"># ─── Consumer：滑動視窗 + 告警 ───────────────</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">consumer</span>():
+    cons = KafkaConsumer(
+        TOPIC,
+        bootstrap_servers=BROKER,
+        auto_offset_reset=<span class="hljs-string">'latest'</span>,
+        value_deserializer=<span class="hljs-keyword">lambda</span> v: json.loads(v.decode(<span class="hljs-string">'utf-8'</span>))
+    )
+    r = redis.Redis(host=<span class="hljs-string">'localhost'</span>, port=<span class="hljs-number">6379</span>, decode_responses=<span class="hljs-literal">True</span>)
+
+    window = deque(maxlen=<span class="hljs-number">30</span>)   <span class="hljs-comment"># 保留最近 30 筆（≈ 30 秒）</span>
+
+    <span class="hljs-keyword">for</span> msg <span class="hljs-keyword">in</span> cons:
+        data = msg.value
+        temp = data[<span class="hljs-string">'temp'</span>]
+        window.append(temp)
+
+        moving_avg = <span class="hljs-built_in">sum</span>(window) / <span class="hljs-built_in">len</span>(window)
+        status = <span class="hljs-string">"ALERT 🚨"</span> <span class="hljs-keyword">if</span> moving_avg &gt; THRESHOLD <span class="hljs-keyword">else</span> <span class="hljs-string">"OK"</span>
+
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"[CONS] temp=<span class="hljs-subst">{temp:<span class="hljs-number">.1</span>f}</span>°C  avg=<span class="hljs-subst">{moving_avg:<span class="hljs-number">.1</span>f}</span>°C  <span class="hljs-subst">{status}</span>"</span>)
+
+        <span class="hljs-comment"># 寫入 Redis（TTL 5 分鐘）</span>
+        r.setex(<span class="hljs-string">f"sensor:<span class="hljs-subst">{data[<span class="hljs-string">'sensor_id'</span>]}</span>:avg"</span>, <span class="hljs-number">300</span>, moving_avg)
+        <span class="hljs-keyword">if</span> status.startswith(<span class="hljs-string">"ALERT"</span>):
+            r.lpush(<span class="hljs-string">"alerts"</span>, json.dumps({
+                <span class="hljs-string">"sensor"</span>: data[<span class="hljs-string">'sensor_id'</span>],
+                <span class="hljs-string">"avg"</span>: moving_avg,
+                <span class="hljs-string">"ts"</span>: data[<span class="hljs-string">'ts'</span>]
+            }))
+            r.ltrim(<span class="hljs-string">"alerts"</span>, <span class="hljs-number">0</span>, <span class="hljs-number">999</span>)   <span class="hljs-comment"># 只保留最新 1000 筆告警</span>
+
+<span class="hljs-comment"># 實際使用時以 multiprocessing 或 Docker 分別啟動 producer / consumer</span>
+<span class="hljs-comment"># if __name__ == "__main__":</span>
+<span class="hljs-comment">#     from multiprocessing import Process</span>
+<span class="hljs-comment">#     Process(target=producer).start()</span>
+<span class="hljs-comment">#     Process(target=consumer).start()</span></code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr bd">📊 應用分析</div>
+      <ul>
+        <li><strong>Kafka 的角色：</strong>作為訊息佇列（Message Queue），解耦 Producer 與 Consumer；支援 Topic 分區（Partition）實現水平擴展；訊息可持久化重播（Replay）。</li>
+        <li><strong>deque(maxlen=N)：</strong>Python 標準庫的雙端佇列，自動丟棄超過長度的舊資料，是實作滑動視窗最輕量的方式，O(1) append/pop。</li>
+        <li><strong>Redis 的角色：</strong>作為即時狀態儲存（Stateful Cache）；lpush + ltrim 維護固定長度的告警清單；setex 設定 TTL 自動過期，適合暫存即時指標。</li>
+        <li><strong>實際應用：</strong>IoT 工廠感測器監控；金融交易異常偵測；電商即時庫存告警；網路設備健康監控（SNMP traps）。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip bd">IoT 監控</span><span class="chip bd">串流處理</span><span class="chip bd">Kafka</span><span class="chip bd">Redis</span><span class="chip bd">即時告警</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q5 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum bd">5</div>
+    <h3>資料視覺化：多維銷售分析</h3>
+    <span class="diff diff-M">中級</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      給定月度銷售資料（region, category, month, revenue, units），用 matplotlib + seaborn 製作：① 各區域月趨勢折線圖；② 品類收益熱力圖；③ 相關性矩陣。並解釋各圖的商業洞察。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label bd">Python — 多維視覺化分析</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns
+
+<span class="hljs-comment"># 模擬資料</span>
+np.random.seed(<span class="hljs-number">42</span>)
+regions = [<span class="hljs-string">'North'</span>,<span class="hljs-string">'South'</span>,<span class="hljs-string">'East'</span>,<span class="hljs-string">'West'</span>]
+cats    = [<span class="hljs-string">'Electronics'</span>,<span class="hljs-string">'Clothing'</span>,<span class="hljs-string">'Food'</span>,<span class="hljs-string">'Sports'</span>]
+months  = pd.date_range(<span class="hljs-string">'2024-01'</span>,<span class="hljs-string">'2024-12'</span>,freq=<span class="hljs-string">'MS'</span>).strftime(<span class="hljs-string">'%b'</span>)
+
+rows = []
+<span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> regions:
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> cats:
+        <span class="hljs-keyword">for</span> i, m <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(months):
+            base = np.random.randint(<span class="hljs-number">50000</span>, <span class="hljs-number">200000</span>)
+            trend = base + i * np.random.randint(-<span class="hljs-number">2000</span>, <span class="hljs-number">5000</span>)
+            rows.append({<span class="hljs-string">'region'</span>:r,<span class="hljs-string">'category'</span>:c,<span class="hljs-string">'month'</span>:m,
+                         <span class="hljs-string">'revenue'</span>:<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>,trend),
+                         <span class="hljs-string">'units'</span>:<span class="hljs-built_in">max</span>(<span class="hljs-number">0</span>,<span class="hljs-built_in">int</span>(trend/np.random.randint(<span class="hljs-number">50</span>,<span class="hljs-number">200</span>)))})
+df = pd.DataFrame(rows)
+
+fig, axes = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, figsize=(<span class="hljs-number">18</span>, <span class="hljs-number">5</span>))
+fig.suptitle(<span class="hljs-string">'2024 多維銷售分析報告'</span>, fontsize=<span class="hljs-number">14</span>, fontweight=<span class="hljs-string">'bold'</span>, y=<span class="hljs-number">1.01</span>)
+
+<span class="hljs-comment"># ① 各區域月趨勢</span>
+monthly = df.groupby([<span class="hljs-string">'region'</span>,<span class="hljs-string">'month'</span>])[<span class="hljs-string">'revenue'</span>].<span class="hljs-built_in">sum</span>().reset_index()
+monthly[<span class="hljs-string">'month_n'</span>] = pd.Categorical(monthly[<span class="hljs-string">'month'</span>],categories=months,ordered=<span class="hljs-literal">True</span>)
+monthly = monthly.sort_values(<span class="hljs-string">'month_n'</span>)
+
+ax1 = axes[<span class="hljs-number">0</span>]
+<span class="hljs-keyword">for</span> region <span class="hljs-keyword">in</span> regions:
+    sub = monthly[monthly[<span class="hljs-string">'region'</span>]==region]
+    ax1.plot(sub[<span class="hljs-string">'month'</span>], sub[<span class="hljs-string">'revenue'</span>]/<span class="hljs-number">1e6</span>, marker=<span class="hljs-string">'o'</span>, label=region, linewidth=<span class="hljs-number">2</span>)
+ax1.set_title(<span class="hljs-string">'各區域月度營收趨勢'</span>)
+ax1.set_ylabel(<span class="hljs-string">'Revenue (百萬)'</span>)
+ax1.tick_params(axis=<span class="hljs-string">'x'</span>, rotation=<span class="hljs-number">45</span>)
+ax1.legend(fontsize=<span class="hljs-number">8</span>)
+ax1.grid(alpha=<span class="hljs-number">0.3</span>)
+
+<span class="hljs-comment"># ② 品類 × 月份 熱力圖</span>
+pivot = df.groupby([<span class="hljs-string">'category'</span>,<span class="hljs-string">'month'</span>])[<span class="hljs-string">'revenue'</span>].<span class="hljs-built_in">sum</span>().unstack()
+pivot = pivot[months]   <span class="hljs-comment"># 確保月份順序</span>
+ax2 = axes[<span class="hljs-number">1</span>]
+sns.heatmap(pivot/<span class="hljs-number">1e6</span>, ax=ax2, cmap=<span class="hljs-string">'YlOrRd'</span>, annot=<span class="hljs-literal">True</span>, fmt=<span class="hljs-string">'.0f'</span>,
+            linewidths=<span class="hljs-number">.5</span>, cbar_kws={<span class="hljs-string">'label'</span>:<span class="hljs-string">'Revenue (M)'</span>})
+ax2.set_title(<span class="hljs-string">'品類 × 月份 收益熱力圖'</span>)
+ax2.tick_params(axis=<span class="hljs-string">'x'</span>, rotation=<span class="hljs-number">45</span>)
+
+<span class="hljs-comment"># ③ 相關性矩陣（數值欄位）</span>
+num_df = df.groupby([<span class="hljs-string">'region'</span>,<span class="hljs-string">'category'</span>])[[<span class="hljs-string">'revenue'</span>,<span class="hljs-string">'units'</span>]].mean().reset_index()
+num_df[<span class="hljs-string">'avg_price'</span>] = num_df[<span class="hljs-string">'revenue'</span>] / num_df[<span class="hljs-string">'units'</span>]
+corr = num_df[[<span class="hljs-string">'revenue'</span>,<span class="hljs-string">'units'</span>,<span class="hljs-string">'avg_price'</span>]].corr()
+ax3 = axes[<span class="hljs-number">2</span>]
+sns.heatmap(corr, ax=ax3, annot=<span class="hljs-literal">True</span>, fmt=<span class="hljs-string">'.2f'</span>, cmap=<span class="hljs-string">'coolwarm'</span>,
+            vmin=-<span class="hljs-number">1</span>, vmax=<span class="hljs-number">1</span>, square=<span class="hljs-literal">True</span>, linewidths=<span class="hljs-number">.5</span>)
+ax3.set_title(<span class="hljs-string">'指標相關性矩陣'</span>)
+
+plt.tight_layout()
+plt.savefig(<span class="hljs-string">'sales_analysis.png'</span>, dpi=<span class="hljs-number">150</span>, bbox_inches=<span class="hljs-string">'tight'</span>)
+plt.show()
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"✓ 圖表已儲存為 sales_analysis.png"</span>)</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr bd">📊 應用分析</div>
+      <ul>
+        <li><strong>折線圖洞察：</strong>識別各區域的季節性波動與成長趨勢；斜率差異反映區域業務健康度；可用於銷售預測的視覺化驗證。</li>
+        <li><strong>熱力圖洞察：</strong>品類 × 月份的交叉分析快速定位高收益組合；顏色深淺替代數字，適合高管簡報；識別品類的淡旺季規律。</li>
+        <li><strong>相關性矩陣：</strong>revenue 與 units 高度正相關符合預期；avg_price 與 units 呈負相關（Price Elasticity 現象）是行銷策略調整的依據。</li>
+        <li><strong>實際應用：</strong>月度業務報告自動化；Jupyter Notebook 探索性分析（EDA）；Power BI / Tableau 的前期資料驗證；A/B Test 結果視覺化。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip bd">EDA 分析</span><span class="chip bd">商業報告</span><span class="chip bd">視覺化</span><span class="chip bd">KPI 監控</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════
+     SECTION B — MACHINE LEARNING
+════════════════════════════════════════ -->
+<div class="sec-hdr">
+  <div class="sec-hdr-bar ml"></div>
+  <h2>機器學習應用 <em>Machine Learning with Python</em></h2>
+  <span class="badge ml">5 題</span>
+</div>
+
+<!-- Q6 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum ml">1</div>
+    <h3>分類模型建立與混淆矩陣分析</h3>
+    <span class="diff diff-M">中級</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      使用信用卡詐欺偵測資料集（特徵：交易金額、時間、地點特徵；標籤：0=正常, 1=詐欺），建立 Logistic Regression 與 Random Forest 兩個分類模型，比較混淆矩陣與 Precision / Recall / F1，說明在詐欺偵測情境中哪個指標最重要。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label ml">Python — 分類模型比較</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_classification
+<span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split
+<span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler
+<span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression
+<span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier
+<span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> (classification_report, confusion_matrix,
+                              ConfusionMatrixDisplay, roc_auc_score)
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+<span class="hljs-comment"># 模擬不平衡資料集（詐欺僅佔 2%）</span>
+X, y = make_classification(
+    n_samples=<span class="hljs-number">50000</span>, n_features=<span class="hljs-number">20</span>, n_informative=<span class="hljs-number">10</span>,
+    weights=[<span class="hljs-number">0.98</span>, <span class="hljs-number">0.02</span>], random_state=<span class="hljs-number">42</span>   <span class="hljs-comment"># 98% 正常, 2% 詐欺</span>
+)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="hljs-number">0.2</span>,
+                                                     stratify=y, random_state=<span class="hljs-number">42</span>)
+
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)
+X_test_s  = scaler.transform(X_test)
+
+<span class="hljs-comment"># 模型訓練</span>
+models = {
+    <span class="hljs-string">'Logistic Regression'</span>: LogisticRegression(class_weight=<span class="hljs-string">'balanced'</span>, max_iter=<span class="hljs-number">500</span>),
+    <span class="hljs-string">'Random Forest'</span>:        RandomForestClassifier(n_estimators=<span class="hljs-number">100</span>, class_weight=<span class="hljs-string">'balanced'</span>,
+                                                   random_state=<span class="hljs-number">42</span>, n_jobs=-<span class="hljs-number">1</span>)
+}
+
+fig, axes = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">4</span>))
+<span class="hljs-keyword">for</span> ax, (name, model) <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(axes, models.items()):
+    model.fit(X_train_s, y_train)
+    y_pred = model.predict(X_test_s)
+    y_prob = model.predict_proba(X_test_s)[:, <span class="hljs-number">1</span>]
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"\n<span class="hljs-subst">{<span class="hljs-string">'='</span>*<span class="hljs-number">50</span>}</span>\n<span class="hljs-subst">{name}</span>"</span>)
+    <span class="hljs-built_in">print</span>(classification_report(y_test, y_pred, target_names=[<span class="hljs-string">'正常'</span>,<span class="hljs-string">'詐欺'</span>]))
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"AUC-ROC: <span class="hljs-subst">{roc_auc_score(y_test, y_prob):<span class="hljs-number">.4</span>f}</span>"</span>)
+
+    cm = confusion_matrix(y_test, y_pred)
+    ConfusionMatrixDisplay(cm, display_labels=[<span class="hljs-string">'正常'</span>,<span class="hljs-string">'詐欺'</span>]).plot(ax=ax, cmap=<span class="hljs-string">'Blues'</span>)
+    ax.set_title(<span class="hljs-string">f'<span class="hljs-subst">{name}</span>\nAUC=<span class="hljs-subst">{roc_auc_score(y_test,y_prob):<span class="hljs-number">.3</span>f}</span>'</span>)
+
+plt.tight_layout()
+plt.savefig(<span class="hljs-string">'confusion_matrices.png'</span>, dpi=<span class="hljs-number">120</span>)</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr ml">📊 應用分析</div>
+      <ul>
+        <li><strong>詐欺偵測優先 Recall（召回率）：</strong>False Negative（漏偵詐欺）的代價遠高於 False Positive（誤報）。Recall = TP/(TP+FN)，代表「實際詐欺中有多少被抓到」；F1 是 Precision 和 Recall 的調和平均，適合不平衡資料集。</li>
+        <li><strong>class_weight='balanced'：</strong>自動計算類別權重補償不平衡（Imbalanced）資料，等效於對少數類重複取樣，比直接 SMOTE 更快且適合 Logistic Regression。</li>
+        <li><strong>AUC-ROC：</strong>不受閾值影響的綜合評估指標；值 &gt; 0.9 為優秀；詐欺場景常搭配 Precision-Recall Curve（更適合極度不平衡資料）。</li>
+        <li><strong>實際應用：</strong>銀行詐欺偵測；網路資安異常行為偵測；醫療疾病篩查（False Negative 代價高）；保險理賠異常審核。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip ml">詐欺偵測</span><span class="chip ml">不平衡資料</span><span class="chip ml">混淆矩陣</span><span class="chip ml">AUC-ROC</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q7 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum ml">2</div>
+    <h3>特徵工程：選取與轉換</h3>
+    <span class="diff diff-M">中級</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      給定房價預測資料集，包含數值型（面積、屋齡）與類別型（地區、建材）特徵。請完成：① One-Hot Encoding；② 特徵重要性排序（Random Forest）；③ 利用 Pipeline 整合前處理與模型；④ 比較特徵選取前後的 RMSE。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label ml">Python — 特徵工程 + Pipeline</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> sklearn.pipeline <span class="hljs-keyword">import</span> Pipeline
+<span class="hljs-keyword">from</span> sklearn.compose <span class="hljs-keyword">import</span> ColumnTransformer
+<span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler, OneHotEncoder
+<span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestRegressor, GradientBoostingRegressor
+<span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> SelectFromModel
+<span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> cross_val_score
+<span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mean_squared_error
+
+<span class="hljs-comment"># 模擬房價資料</span>
+np.random.seed(<span class="hljs-number">0</span>)
+n = <span class="hljs-number">1000</span>
+df = pd.DataFrame({
+    <span class="hljs-string">'area'</span>:      np.random.randint(<span class="hljs-number">20</span>, <span class="hljs-number">200</span>, n),
+    <span class="hljs-string">'age'</span>:       np.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">50</span>, n),
+    <span class="hljs-string">'floors'</span>:    np.random.randint(<span class="hljs-number">1</span>, <span class="hljs-number">30</span>, n),
+    <span class="hljs-string">'district'</span>:  np.random.choice([<span class="hljs-string">'A'</span>,<span class="hljs-string">'B'</span>,<span class="hljs-string">'C'</span>,<span class="hljs-string">'D'</span>], n),
+    <span class="hljs-string">'material'</span>:  np.random.choice([<span class="hljs-string">'RC'</span>,<span class="hljs-string">'Steel'</span>,<span class="hljs-string">'Wood'</span>], n),
+})
+df[<span class="hljs-string">'price'</span>] = (df[<span class="hljs-string">'area'</span>]*<span class="hljs-number">5000</span> + (<span class="hljs-number">50</span>-df[<span class="hljs-string">'age'</span>])*<span class="hljs-number">1000</span> +
+               df[<span class="hljs-string">'floors'</span>]*<span class="hljs-number">500</span> + df[<span class="hljs-string">'district'</span>].<span class="hljs-built_in">map</span>({<span class="hljs-string">'A'</span>:<span class="hljs-number">2e5</span>,<span class="hljs-string">'B'</span>:<span class="hljs-number">1.5e5</span>,<span class="hljs-string">'C'</span>:<span class="hljs-number">1e5</span>,<span class="hljs-string">'D'</span>:<span class="hljs-number">5e4</span>}) +
+               np.random.normal(<span class="hljs-number">0</span>, <span class="hljs-number">20000</span>, n))
+
+X = df.drop(<span class="hljs-string">'price'</span>, axis=<span class="hljs-number">1</span>)
+y = df[<span class="hljs-string">'price'</span>]
+
+num_feats = [<span class="hljs-string">'area'</span>,<span class="hljs-string">'age'</span>,<span class="hljs-string">'floors'</span>]
+cat_feats  = [<span class="hljs-string">'district'</span>,<span class="hljs-string">'material'</span>]
+
+<span class="hljs-comment"># ① ColumnTransformer：數值標準化 + 類別 OHE</span>
+preprocessor = ColumnTransformer([
+    (<span class="hljs-string">'num'</span>, StandardScaler(), num_feats),
+    (<span class="hljs-string">'cat'</span>, OneHotEncoder(handle_unknown=<span class="hljs-string">'ignore'</span>, sparse_output=<span class="hljs-literal">False</span>), cat_feats)
+])
+
+<span class="hljs-comment"># ② Pipeline with Random Forest（取得特徵重要性）</span>
+rf_pipe = Pipeline([
+    (<span class="hljs-string">'prep'</span>, preprocessor),
+    (<span class="hljs-string">'model'</span>, RandomForestRegressor(n_estimators=<span class="hljs-number">200</span>, random_state=<span class="hljs-number">42</span>, n_jobs=-<span class="hljs-number">1</span>))
+])
+rf_pipe.fit(X, y)
+
+<span class="hljs-comment"># 特徵名稱（OHE 展開後）</span>
+ohe_names = rf_pipe[<span class="hljs-string">'prep'</span>].named_transformers_[<span class="hljs-string">'cat'</span>].get_feature_names_out(cat_feats)
+feat_names = num_feats + <span class="hljs-built_in">list</span>(ohe_names)
+importances = pd.Series(rf_pipe[<span class="hljs-string">'model'</span>].feature_importances_, index=feat_names).sort_values(ascending=<span class="hljs-literal">False</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"特徵重要性:\n"</span>, importances.head(<span class="hljs-number">8</span>).<span class="hljs-built_in">round</span>(<span class="hljs-number">4</span>))
+
+<span class="hljs-comment"># ③ 加入特徵選取（閾值：大於平均重要性才保留）</span>
+full_pipe = Pipeline([
+    (<span class="hljs-string">'prep'</span>, preprocessor),
+    (<span class="hljs-string">'select'</span>, SelectFromModel(RandomForestRegressor(<span class="hljs-number">100</span>, random_state=<span class="hljs-number">42</span>), threshold=<span class="hljs-string">'mean'</span>)),
+    (<span class="hljs-string">'model'</span>, GradientBoostingRegressor(n_estimators=<span class="hljs-number">200</span>, learning_rate=<span class="hljs-number">0.05</span>, random_state=<span class="hljs-number">42</span>))
+])
+
+<span class="hljs-comment"># ④ Cross-validation 比較 RMSE</span>
+<span class="hljs-keyword">for</span> name, pipe <span class="hljs-keyword">in</span> [(<span class="hljs-string">'全特徵 RF'</span>, rf_pipe), (<span class="hljs-string">'特徵選取 GBM'</span>, full_pipe)]:
+    scores = cross_val_score(pipe, X, y, cv=<span class="hljs-number">5</span>, scoring=<span class="hljs-string">'neg_root_mean_squared_error'</span>)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"<span class="hljs-subst">{name}</span> RMSE: <span class="hljs-subst">{-scores.mean():,<span class="hljs-number">.0</span>f}</span> ± <span class="hljs-subst">{scores.std():,<span class="hljs-number">.0</span>f}</span>"</span>)</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr ml">📊 應用分析</div>
+      <ul>
+        <li><strong>ColumnTransformer + Pipeline：</strong>將前處理步驟封裝進管線，確保 Train/Test 的 fit/transform 不會資料洩漏（Data Leakage）；部署時只需序列化一個 Pipeline 物件（pickle/joblib）。</li>
+        <li><strong>OneHotEncoder vs Label Encoding：</strong>OHE 適合無序類別（地區、材料），避免模型誤解為有序關係；Label Encoding 只適合有序類別（低/中/高）。</li>
+        <li><strong>SelectFromModel：</strong>用模型的 feature_importances_ 進行過濾，去除雜訊特徵可減少過擬合並加快推論速度；threshold='mean' 保留重要性高於平均的特徵。</li>
+        <li><strong>實際應用：</strong>房地產估價系統；保險費率精算；信貸評分（Credit Scoring）；HR 離職預測（Employee Churn）。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip ml">特徵工程</span><span class="chip ml">Pipeline</span><span class="chip ml">OHE</span><span class="chip ml">特徵選取</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q8 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum ml">3</div>
+    <h3>交叉驗證與超參數調整</h3>
+    <span class="diff diff-M">中級</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      對客戶流失（Churn）預測模型進行超參數調整：使用 GridSearchCV 與 RandomizedSearchCV 分別搜尋 Random Forest 的最佳參數（n_estimators, max_depth, min_samples_split），比較搜尋效率與最終 F1 分數。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label ml">Python — 超參數搜尋比較</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_classification
+<span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier
+<span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> (GridSearchCV, RandomizedSearchCV,
+                                     StratifiedKFold)
+<span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> classification_report
+
+X, y = make_classification(n_samples=<span class="hljs-number">5000</span>, n_features=<span class="hljs-number">20</span>, n_informative=<span class="hljs-number">12</span>,
+                            weights=[<span class="hljs-number">0.8</span>, <span class="hljs-number">0.2</span>], random_state=<span class="hljs-number">42</span>)
+
+cv = StratifiedKFold(n_splits=<span class="hljs-number">5</span>, shuffle=<span class="hljs-literal">True</span>, random_state=<span class="hljs-number">42</span>)
+
+<span class="hljs-comment"># ─── Grid Search ────────────────────────────</span>
+grid_params = {
+    <span class="hljs-string">'n_estimators'</span>: [<span class="hljs-number">50</span>, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>],
+    <span class="hljs-string">'max_depth'</span>:    [<span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-literal">None</span>],
+    <span class="hljs-string">'min_samples_split'</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">10</span>]
+}   <span class="hljs-comment"># 3×3×3 = 27 組 × 5-fold = 135 次訓練</span>
+
+t0 = time.time()
+grid_search = GridSearchCV(
+    RandomForestClassifier(random_state=<span class="hljs-number">42</span>, n_jobs=-<span class="hljs-number">1</span>),
+    grid_params, cv=cv, scoring=<span class="hljs-string">'f1'</span>, n_jobs=-<span class="hljs-number">1</span>, verbose=<span class="hljs-number">0</span>
+)
+grid_search.fit(X, y)
+grid_time = time.time() - t0
+
+<span class="hljs-comment"># ─── Randomized Search ───────────────────────</span>
+<span class="hljs-keyword">from</span> scipy.stats <span class="hljs-keyword">import</span> randint
+random_params = {
+    <span class="hljs-string">'n_estimators'</span>: randint(<span class="hljs-number">50</span>, <span class="hljs-number">300</span>),
+    <span class="hljs-string">'max_depth'</span>:    [<span class="hljs-number">5</span>, <span class="hljs-number">10</span>, <span class="hljs-number">15</span>, <span class="hljs-number">20</span>, <span class="hljs-literal">None</span>],
+    <span class="hljs-string">'min_samples_split'</span>: randint(<span class="hljs-number">2</span>, <span class="hljs-number">15</span>)
+}   <span class="hljs-comment"># 隨機抽樣 20 組 × 5-fold = 100 次訓練（搜尋空間更大）</span>
+
+t0 = time.time()
+rand_search = RandomizedSearchCV(
+    RandomForestClassifier(random_state=<span class="hljs-number">42</span>, n_jobs=-<span class="hljs-number">1</span>),
+    random_params, n_iter=<span class="hljs-number">20</span>, cv=cv, scoring=<span class="hljs-string">'f1'</span>,
+    n_jobs=-<span class="hljs-number">1</span>, random_state=<span class="hljs-number">42</span>, verbose=<span class="hljs-number">0</span>
+)
+rand_search.fit(X, y)
+rand_time = time.time() - t0
+
+<span class="hljs-comment"># 結果比較</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f"<span class="hljs-subst">{<span class="hljs-string">'方法'</span>:&lt;<span class="hljs-number">20</span>}</span> <span class="hljs-subst">{<span class="hljs-string">'最佳 F1'</span>:&gt;<span class="hljs-number">8</span>}</span> <span class="hljs-subst">{<span class="hljs-string">'耗時(s)'</span>:&gt;<span class="hljs-number">8</span>}</span> <span class="hljs-subst">{<span class="hljs-string">'最佳參數'</span>}</span>"</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">'-'</span>*<span class="hljs-number">70</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f"<span class="hljs-subst">{<span class="hljs-string">'GridSearchCV'</span>:&lt;<span class="hljs-number">20</span>}</span> <span class="hljs-subst">{grid_search.best_score_:<span class="hljs-number">.4</span>f}</span> <span class="hljs-subst">{grid_time:&gt;<span class="hljs-number">8.1</span>f}</span>  <span class="hljs-subst">{grid_search.best_params_}</span>"</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f"<span class="hljs-subst">{<span class="hljs-string">'RandomizedSearchCV'</span>:&lt;<span class="hljs-number">20</span>}</span> <span class="hljs-subst">{rand_search.best_score_:<span class="hljs-number">.4</span>f}</span> <span class="hljs-subst">{rand_time:&gt;<span class="hljs-number">8.1</span>f}</span>  <span class="hljs-subst">{rand_search.best_params_}</span>"</span>)
+
+<span class="hljs-comment"># 最終模型評估（使用最佳參數）</span>
+best_model = rand_search.best_estimator_
+<span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> cross_val_predict
+y_pred = cross_val_predict(best_model, X, y, cv=cv)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"\n最終模型報告："</span>)
+<span class="hljs-built_in">print</span>(classification_report(y, y_pred, target_names=[<span class="hljs-string">'留存'</span>,<span class="hljs-string">'流失'</span>]))</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr ml">📊 應用分析</div>
+      <ul>
+        <li><strong>Grid vs Random 的選擇：</strong>Grid Search 窮舉所有組合，適合參數少且範圍小；Randomized Search 隨機抽樣，相同預算下能探索更大搜尋空間，論文顯示隨機搜尋在高維參數空間中通常表現更佳。</li>
+        <li><strong>StratifiedKFold：</strong>不平衡資料集（如流失率 20%）必須使用分層 CV，確保每個 Fold 中正負樣本比例一致，避免某個 Fold 中流失樣本不足導致評估失真。</li>
+        <li><strong>Scoring='f1'：</strong>不平衡資料集避免使用 accuracy（準確率可能因多數類偏高而誤導），F1 是 Precision-Recall 的調和平均，更能反映少數類的預測效果。</li>
+        <li><strong>實際應用：</strong>電信用戶流失預測；訂閱制服務的續約模型；銀行信用違約預測；零售會員活躍度分析。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip ml">超參數調整</span><span class="chip ml">交叉驗證</span><span class="chip ml">客戶流失</span><span class="chip ml">GridSearch</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q9 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum ml">4</div>
+    <h3>集成方法：Bagging vs Boosting 比較</h3>
+    <span class="diff diff-H">進階</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      使用 Random Forest（Bagging）、XGBoost（Boosting）、LightGBM 三個集成模型，在相同資料集上比較訓練速度、準確率、過擬合程度（Train vs Test AUC 差距），並說明三者的原理差異與適用場景。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label ml">Python — 集成模型比較</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> time
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd
+<span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_classification
+<span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split
+<span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> RandomForestClassifier
+<span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> roc_auc_score
+<span class="hljs-comment"># pip install xgboost lightgbm</span>
+<span class="hljs-keyword">from</span> xgboost <span class="hljs-keyword">import</span> XGBClassifier
+<span class="hljs-keyword">from</span> lightgbm <span class="hljs-keyword">import</span> LGBMClassifier
+
+X, y = make_classification(n_samples=<span class="hljs-number">20000</span>, n_features=<span class="hljs-number">25</span>, n_informative=<span class="hljs-number">15</span>,
+                            n_redundant=<span class="hljs-number">5</span>, random_state=<span class="hljs-number">42</span>)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">42</span>)
+
+models = {
+    <span class="hljs-string">'Random Forest (Bagging)'</span>: RandomForestClassifier(
+        n_estimators=<span class="hljs-number">200</span>, max_depth=<span class="hljs-number">10</span>, n_jobs=-<span class="hljs-number">1</span>, random_state=<span class="hljs-number">42</span>),
+    <span class="hljs-string">'XGBoost (Boosting)'</span>: XGBClassifier(
+        n_estimators=<span class="hljs-number">200</span>, max_depth=<span class="hljs-number">6</span>, learning_rate=<span class="hljs-number">0.05</span>,
+        subsample=<span class="hljs-number">0.8</span>, colsample_bytree=<span class="hljs-number">0.8</span>,
+        eval_metric=<span class="hljs-string">'logloss'</span>, use_label_encoder=<span class="hljs-literal">False</span>, random_state=<span class="hljs-number">42</span>),
+    <span class="hljs-string">'LightGBM (Boosting)'</span>: LGBMClassifier(
+        n_estimators=<span class="hljs-number">200</span>, max_depth=<span class="hljs-number">6</span>, learning_rate=<span class="hljs-number">0.05</span>,
+        subsample=<span class="hljs-number">0.8</span>, colsample_bytree=<span class="hljs-number">0.8</span>,
+        n_jobs=-<span class="hljs-number">1</span>, random_state=<span class="hljs-number">42</span>, verbose=-<span class="hljs-number">1</span>)
+}
+
+results = []
+<span class="hljs-keyword">for</span> name, model <span class="hljs-keyword">in</span> models.items():
+    t = time.time()
+    model.fit(X_tr, y_tr)
+    elapsed = time.time() - t
+
+    tr_auc = roc_auc_score(y_tr, model.predict_proba(X_tr)[:,<span class="hljs-number">1</span>])
+    te_auc = roc_auc_score(y_te, model.predict_proba(X_te)[:,<span class="hljs-number">1</span>])
+    overfit = tr_auc - te_auc   <span class="hljs-comment"># 過擬合差距</span>
+
+    results.append({<span class="hljs-string">'模型'</span>:name, <span class="hljs-string">'訓練AUC'</span>:tr_auc, <span class="hljs-string">'測試AUC'</span>:te_auc,
+                    <span class="hljs-string">'過擬合差距'</span>:overfit, <span class="hljs-string">'訓練時間(s)'</span>:elapsed})
+
+res_df = pd.DataFrame(results).set_index(<span class="hljs-string">'模型'</span>)
+<span class="hljs-built_in">print</span>(res_df.<span class="hljs-built_in">round</span>(<span class="hljs-number">4</span>).to_string())
+
+<span class="hljs-comment"># 說明原理</span>
+<span class="hljs-built_in">print</span>(<span class="hljs-string">"""
+╔══ 原理差異 ══════════════════════════════════╗
+║ Random Forest : 並行訓練多棵深樹，Bootstrap  ║
+║   取樣 + 隨機特徵選取，平均預測降低 Variance ║
+║ XGBoost       : 序列訓練，每棵樹補前樹的殘差 ║
+║   (Gradient)，L1/L2 正則化防止過擬合        ║
+║ LightGBM      : 葉展開(leaf-wise)策略比      ║
+║   level-wise 更深但更快；Histogram 分箱技術  ║
+║   大幅加速訓練（適合大資料集）               ║
+╚═════════════════════════════════════════════╝
+"""</span>)</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr ml">📊 應用分析</div>
+      <ul>
+        <li><strong>Bagging（Random Forest）：</strong>並行訓練，獨立的基礎學習器（Base Learner）透過投票降低 Variance；對雜訊較不敏感；訓練速度快（可完全並行）；適合特徵數量多、資料雜訊大的情境。</li>
+        <li><strong>Boosting（XGBoost/LightGBM）：</strong>序列訓練，每棵樹修正前一棵的錯誤，降低 Bias；通常在表格資料上達到最高準確率；需調整 learning_rate 防止過擬合；LightGBM 比 XGBoost 快 3~10x（leaf-wise + histogram）。</li>
+        <li><strong>過擬合監控：</strong>Train AUC − Test AUC 差距 &gt; 0.02 需警惕；XGBoost/LightGBM 可加入 early_stopping_rounds，在驗證集不再改善時停止。</li>
+        <li><strong>實際應用：</strong>Kaggle 競賽最常用組合（LightGBM/XGBoost 佔 90%+）；廣告點擊率（CTR）預測；推薦系統 Ranking；信用評分 Scorecard。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip ml">集成學習</span><span class="chip ml">XGBoost</span><span class="chip ml">LightGBM</span><span class="chip ml">Bagging/Boosting</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Q10 -->
+<div class="qcard">
+  <div class="qcard-hdr">
+    <div class="qnum ml">5</div>
+    <h3>模型評估與 ROC / PR 曲線</h3>
+    <span class="diff diff-M">中級</span>
+  </div>
+  <div class="qcard-body">
+    <div class="q-stmt">
+      <strong>題目</strong>
+      對醫療診斷模型（陽性=患病）繪製 ROC 曲線與 Precision-Recall 曲線，計算 AUC 與 AP（Average Precision），並說明：① 何時用 ROC，何時用 PR 曲線；② 如何選擇最佳分類閾值（Threshold）。
+    </div>
+    <div class="code-wrap">
+      <div class="code-label ml">Python — ROC &amp; PR 曲線分析</div>
+      <pre><code class="language-python hljs" data-claude-hljs-claimed="1" data-highlighted="yes"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_classification
+<span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LogisticRegression
+<span class="hljs-keyword">from</span> sklearn.ensemble <span class="hljs-keyword">import</span> GradientBoostingClassifier
+<span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split
+<span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> (roc_curve, auc, precision_recall_curve,
+                              average_precision_score, f1_score)
+
+<span class="hljs-comment"># 不平衡醫療資料（患病率 5%）</span>
+X, y = make_classification(n_samples=<span class="hljs-number">10000</span>, n_features=<span class="hljs-number">15</span>,
+                            weights=[<span class="hljs-number">0.95</span>, <span class="hljs-number">0.05</span>], random_state=<span class="hljs-number">42</span>)
+X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=<span class="hljs-number">0.25</span>,
+                                           stratify=y, random_state=<span class="hljs-number">42</span>)
+
+models = {
+    <span class="hljs-string">'Logistic Regression'</span>: LogisticRegression(class_weight=<span class="hljs-string">'balanced'</span>),
+    <span class="hljs-string">'Gradient Boosting'</span>:   GradientBoostingClassifier(n_estimators=<span class="hljs-number">200</span>, random_state=<span class="hljs-number">42</span>)
+}
+
+fig, (ax1, ax2) = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">14</span>, <span class="hljs-number">5</span>))
+colors = [<span class="hljs-string">'#6D28D9'</span>,<span class="hljs-string">'#0F766E'</span>]
+
+<span class="hljs-keyword">for</span> (name, model), color <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(models.items(), colors):
+    model.fit(X_tr, y_tr)
+    y_prob = model.predict_proba(X_te)[:,<span class="hljs-number">1</span>]
+
+    <span class="hljs-comment"># ROC 曲線</span>
+    fpr, tpr, thr_roc = roc_curve(y_te, y_prob)
+    roc_auc = auc(fpr, tpr)
+    ax1.plot(fpr, tpr, color=color, lw=<span class="hljs-number">2</span>, label=<span class="hljs-string">f'<span class="hljs-subst">{name}</span> (AUC=<span class="hljs-subst">{roc_auc:<span class="hljs-number">.3</span>f}</span>)'</span>)
+
+    <span class="hljs-comment"># PR 曲線</span>
+    prec, rec, thr_pr = precision_recall_curve(y_te, y_prob)
+    ap = average_precision_score(y_te, y_prob)
+    ax2.plot(rec, prec, color=color, lw=<span class="hljs-number">2</span>, label=<span class="hljs-string">f'<span class="hljs-subst">{name}</span> (AP=<span class="hljs-subst">{ap:<span class="hljs-number">.3</span>f}</span>)'</span>)
+
+    <span class="hljs-comment"># ── 最佳閾值：Youden's J（max TPR - FPR）</span>
+    j = tpr - fpr
+    best_idx = np.argmax(j)
+    best_thr = thr_roc[best_idx]
+    y_pred_best = (y_prob &gt;= best_thr).astype(<span class="hljs-built_in">int</span>)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f"<span class="hljs-subst">{name}</span>  最佳閾值=<span class="hljs-subst">{best_thr:<span class="hljs-number">.3</span>f}</span>  F1=<span class="hljs-subst">{f1_score(y_te,y_pred_best):<span class="hljs-number">.4</span>f}</span>"</span>)
+
+ax1.plot([<span class="hljs-number">0</span>,<span class="hljs-number">1</span>],[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>],<span class="hljs-string">'k--'</span>,lw=<span class="hljs-number">1</span>); ax1.set_xlabel(<span class="hljs-string">'FPR'</span>); ax1.set_ylabel(<span class="hljs-string">'TPR'</span>)
+ax1.set_title(<span class="hljs-string">'ROC 曲線（適用：資料平衡）'</span>); ax1.legend(fontsize=<span class="hljs-number">9</span>); ax1.grid(alpha=<span class="hljs-number">.3</span>)
+
+ax2.axhline(y=y_te.mean(), color=<span class="hljs-string">'k'</span>, linestyle=<span class="hljs-string">'--'</span>, lw=<span class="hljs-number">1</span>, label=<span class="hljs-string">f'Baseline AP=<span class="hljs-subst">{y_te.mean():<span class="hljs-number">.3</span>f}</span>'</span>)
+ax2.set_xlabel(<span class="hljs-string">'Recall'</span>); ax2.set_ylabel(<span class="hljs-string">'Precision'</span>)
+ax2.set_title(<span class="hljs-string">'PR 曲線（適用：資料不平衡）'</span>); ax2.legend(fontsize=<span class="hljs-number">9</span>); ax2.grid(alpha=<span class="hljs-number">.3</span>)
+
+plt.tight_layout()
+plt.savefig(<span class="hljs-string">'roc_pr_curves.png'</span>, dpi=<span class="hljs-number">120</span>, bbox_inches=<span class="hljs-string">'tight'</span>)
+plt.show()</code></pre>
+    </div>
+    <div class="analysis">
+      <div class="analysis-hdr ml">📊 應用分析</div>
+      <ul>
+        <li><strong>ROC vs PR 選擇原則：</strong>ROC AUC 受負樣本（True Negative）影響大，資料平衡時適用；PR 曲線只關注正樣本，極度不平衡資料（患病率 5%、詐欺率 0.1%）必用 PR Curve，ROC 此時往往虛高。</li>
+        <li><strong>最佳閾值策略：</strong>① Youden's J = TPR − FPR 最大點（平衡 Sensitivity/Specificity）；② F1 最大點（Precision-Recall 均衡）；③ 成本矩陣法（False Negative 代價 10 倍 → 調低閾值提高 Recall）。</li>
+        <li><strong>Average Precision (AP)：</strong>PR 曲線下面積，比單一 F1 更全面；PASCAL VOC 目標偵測標準指標；醫學診斷、資安異常偵測的黃金評估標準。</li>
+        <li><strong>實際應用：</strong>醫療 AI 輔助診斷（胸部 X-ray）；資安入侵偵測系統（IDS）；信用違約風險評估；癌症早期篩查模型驗證。</li>
+      </ul>
+      <div class="scene-chips">
+        <span class="chip ml">模型評估</span><span class="chip ml">ROC/PR 曲線</span><span class="chip ml">閾值優化</span><span class="chip ml">醫療 AI</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// Syntax highlighting
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof hljs !== 'undefined') {
+    document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+  }
+});
+</script>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

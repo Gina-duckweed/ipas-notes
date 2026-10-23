@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>科目三 第三章 名詞解釋｜機器學習基礎數學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --T:#2A8A8A;--Tlt:#E0F5F5;--Tdk:#1D6262;
+  --B:#2D5F9A;--Blt:#E6EEF8;--O:#E85D3A;--Olt:#FEF0EC;
+  --G:#3A9A6E;--Glt:#E6F5EE;--A:#D4920A;--Alt:#FFF8E6;
+  --P:#7B5EA7;--Plt:#F0EAF8;--R:#C0392B;--Rlt:#FAEAEA;
+  --bg:#F5FAFA;--s:#FFFFFF;--s2:#F0F7F7;--b:#D4E8E8;
+  --t:#1A2B2B;--t2:#3D5A5A;--t3:#6A8A8A;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F1E1E;--s:#162929;--s2:#1E3535;--b:#264040;
+  --t:#D8F0F0;--t2:#A0C8C8;--t3:#6A9A9A;
+  --Tlt:#1A3838;--Alt:#2A2010;--Blt:#1A2535;--Glt:#1A2E24;
+  --Plt:#221A2E;--Rlt:#2A1A1A;--Olt:#2A1E1A;
+}}
+[data-theme=dark]{
+  --bg:#0F1E1E;--s:#162929;--s2:#1E3535;--b:#264040;
+  --t:#D8F0F0;--t2:#A0C8C8;--t3:#6A9A9A;
+  --Tlt:#1A3838;--Alt:#2A2010;--Blt:#1A2535;--Glt:#1A2E24;
+  --Plt:#221A2E;--Rlt:#2A1A1A;--Olt:#2A1E1A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:13px;padding:14px}
+.page{max-width:1100px;margin:0 auto}
+.hdr{text-align:center;background:var(--s);border:2px solid var(--T);border-radius:12px;padding:14px;margin-bottom:14px}
+.badge{display:inline-block;background:var(--T);color:#fff;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:6px}
+.hdr h1{font-size:18px;font-weight:900;color:var(--T);margin-bottom:3px}
+.hdr p{font-size:11px;color:var(--t2)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.card{background:var(--s);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b);border-left:4px solid var(--T)}
+.ctop{padding:9px 10px 8px;background:var(--Tlt)}
+.ctop .en{font-size:9.5px;font-weight:700;letter-spacing:.5px;color:var(--Tdk);opacity:.8;margin-bottom:1px}
+.ctop .zh{font-size:14px;font-weight:900;color:var(--Tdk);line-height:1.2}
+.ctop .abbr{display:inline-block;background:var(--T);color:#fff;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:10px;margin-top:3px}
+.cdiag{padding:4px 10px;display:flex;justify-content:center;background:var(--s)}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1;color:var(--t)}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;line-height:1.5;color:var(--t2)}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px;color:var(--T)}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;line-height:1.5;border:1.5px solid var(--A);background:var(--Alt);color:var(--t)}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+</style>
+
+<div class="page">
+<div class="hdr">
+  <div class="badge">科目三・第三章</div>
+  <h1>第三章名詞解釋：機器學習基礎數學</h1>
+  <p>機率與統計・線性代數・數值優化 ── 共 30 個核心名詞</p>
+</div>
+<div class="grid">
+
+<!-- 1. 隨機變數 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Random Variable</div>
+    <div class="zh">隨機變數</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- 擲骰子 → 數字對應 -->
+      <rect x="5" y="15" width="30" height="30" rx="5" fill="none" stroke="#2A8A8A" stroke-width="2"></rect>
+      <circle cx="12" cy="22" r="2.5" fill="#2A8A8A"></circle><circle cx="28" cy="22" r="2.5" fill="#2A8A8A"></circle>
+      <circle cx="20" cy="30" r="2.5" fill="#2A8A8A"></circle>
+      <circle cx="12" cy="38" r="2.5" fill="#2A8A8A"></circle><circle cx="28" cy="38" r="2.5" fill="#2A8A8A"></circle>
+      <text x="8" y="55" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif">樣本空間Ω</text>
+      <line x1="40" y1="30" x2="58" y2="30" stroke="#6A9A9A" stroke-width="1.5" marker-end="url(#arr)"></line>
+      <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#6A9A9A" stroke-width="1"></path></marker></defs>
+      <text x="62" y="17" font-size="9" fill="#1D6262" font-family="Courier New,monospace">X: Ω→ℝ</text>
+      <text x="62" y="30" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif">離散 X∈{1,2,3,4,5,6}</text>
+      <text x="62" y="42" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif">連續 X∈[0,∞)</text>
+    </svg>
+  </div>
+  <div class="cdef">將隨機實驗的結果對應到實數的函數，X: Ω → ℝ。分為<b>離散型</b>（可數結果）與<b>連續型</b>（不可數結果）兩類。</div>
+  <div class="cscene"><b>🎲 情境分析</b>擲骰子點數 X∈{1,…,6} 是離散型；量測某人身高 H 是連續型隨機變數。</div>
+  <div class="cexam"><b>📝 考題方向</b>區分離散/連續型的判斷，及後續 PMF/PDF 的適用條件。</div>
+</div>
+
+<!-- 2. 機率質量函數 PMF -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Probability Mass Function</div>
+    <div class="zh">機率質量函數</div>
+    <span class="abbr">PMF</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="10" y1="55" x2="115" y2="55" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="10" y1="10" x2="10" y2="55" stroke="#6A9A9A" stroke-width="1"></line>
+      <rect x="18" y="35" width="12" height="20" fill="#2A8A8A" opacity=".6" rx="1"></rect>
+      <rect x="35" y="22" width="12" height="33" fill="#2A8A8A" opacity=".75" rx="1"></rect>
+      <rect x="52" y="28" width="12" height="27" fill="#2A8A8A" opacity=".7" rx="1"></rect>
+      <rect x="69" y="40" width="12" height="15" fill="#2A8A8A" opacity=".55" rx="1"></rect>
+      <rect x="86" y="47" width="12" height="8" fill="#2A8A8A" opacity=".45" rx="1"></rect>
+      <text x="20" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">1</text>
+      <text x="37" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">2</text>
+      <text x="54" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">3</text>
+      <text x="71" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">4</text>
+      <text x="88" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">5</text>
+      <text x="12" y="16" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">P(X=x)</text>
+      <text x="50" y="12" font-size="7" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700">ΣP(X=x)=1</text>
+    </svg>
+  </div>
+  <div class="cdef">描述<b>離散型</b>隨機變數取各值的機率，P(X=x)≥0，且 ΣP(X=x)=1。每根柱子代表某個具體值的機率。</div>
+  <div class="cscene"><b>🎲 情境分析</b>擲公平骰子，P(X=1)=P(X=2)=…=P(X=6)=1/6，各點機率相等。</div>
+  <div class="cexam"><b>📝 考題方向</b>PMF 對應離散型；PDF 對應連續型；兩者積分或加總皆為 1。</div>
+</div>
+
+<!-- 3. 機率密度函數 PDF -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Probability Density Function</div>
+    <div class="zh">機率密度函數</div>
+    <span class="abbr">PDF</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <defs>
+        <lineargradient id="pdfg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2A8A8A" stop-opacity=".4"></stop>
+          <stop offset="100%" stop-color="#2A8A8A" stop-opacity="0"></stop>
+        </lineargradient>
+      </defs>
+      <line x1="8" y1="56" x2="115" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <polyline points="8,55 25,52 40,38 55,14 70,38 85,52 100,55 115,56" fill="none" stroke="#2A8A8A" stroke-width="2"></polyline>
+      <polygon points="8,55 25,52 40,38 55,14 70,38 85,52 100,55 115,56 115,57 8,57" fill="url(#pdfg)"></polygon>
+      <!-- shade area between a and b -->
+      <polygon points="42,36 48,22 54,15 60,22 66,36 66,57 42,57" fill="#2A8A8A" opacity=".2"></polygon>
+      <text x="46" y="48" font-size="7.5" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700">P(a≤X≤b)</text>
+      <text x="40" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">a  b</text>
+      <text x="2" y="10" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">∫f(x)dx=1</text>
+    </svg>
+  </div>
+  <div class="cdef">描述<b>連續型</b>隨機變數的機率分佈，f(x)≥0，區間積分 ∫f(x)dx=1。P(a≤X≤b) 等於曲線下面積。</div>
+  <div class="cscene"><b>📊 情境分析</b>身高服從常態分佈，160~170cm 之間的機率 = 常態 PDF 在此區間的積分面積。</div>
+  <div class="cexam"><b>📝 考題方向</b>PDF 本身不是機率（可能&gt;1）；積分才是機率，單點機率 P(X=x)=0。</div>
+</div>
+
+<!-- 4. 伯努利分佈 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Bernoulli Distribution</div>
+    <div class="zh">伯努利分佈</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- 兩根柱 -->
+      <line x1="10" y1="55" x2="110" y2="55" stroke="#6A9A9A" stroke-width="1"></line>
+      <rect x="25" y="20" width="28" height="35" fill="#C0392B" opacity=".6" rx="2"></rect>
+      <rect x="65" y="38" width="28" height="17" fill="#2A8A8A" opacity=".7" rx="2"></rect>
+      <text x="29" y="18" font-size="8" fill="#C0392B" font-family="Nunito,sans-serif" font-weight="700">p=0.7</text>
+      <text x="69" y="36" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif" font-weight="700">1-p</text>
+      <text x="30" y="62" font-size="8" fill="#6A9A9A" font-family="Nunito,sans-serif">X=1(成功)</text>
+      <text x="68" y="62" font-size="8" fill="#6A9A9A" font-family="Nunito,sans-serif">X=0(失敗)</text>
+    </svg>
+  </div>
+  <div class="cdef">最簡單的離散分佈，只有兩種結果：成功(X=1,機率p)或失敗(X=0,機率1−p)。E[X]=p, Var[X]=p(1−p)。</div>
+  <div class="cscene"><b>📧 情境分析</b>判斷一封信是否為垃圾郵件，每封信獨立地服從 Bernoulli(p) 分佈。</div>
+  <div class="cexam"><b>📝 考題方向</b>邏輯迴歸輸出的機率即為 Bernoulli 分佈的參數 p；二項分佈是 n 次 Bernoulli 的加總。</div>
+</div>
+
+<!-- 5. 二項分佈 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Binomial Distribution</div>
+    <div class="zh">二項分佈</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="8" y1="55" x2="115" y2="55" stroke="#6A9A9A" stroke-width="1"></line>
+      <rect x="14" y="50" width="9" height="5" fill="#2A8A8A" opacity=".5" rx="1"></rect>
+      <rect x="26" y="42" width="9" height="13" fill="#2A8A8A" opacity=".6" rx="1"></rect>
+      <rect x="38" y="30" width="9" height="25" fill="#2A8A8A" opacity=".75" rx="1"></rect>
+      <rect x="50" y="22" width="9" height="33" fill="#2A8A8A" opacity=".85" rx="1"></rect>
+      <rect x="62" y="30" width="9" height="25" fill="#2A8A8A" opacity=".75" rx="1"></rect>
+      <rect x="74" y="42" width="9" height="13" fill="#2A8A8A" opacity=".6" rx="1"></rect>
+      <rect x="86" y="50" width="9" height="5" fill="#2A8A8A" opacity=".5" rx="1"></rect>
+      <text x="30" y="12" font-size="8.5" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700">B(n=6, p=0.5)</text>
+      <text x="10" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">0  1  2  3  4  5  6 次成功</text>
+    </svg>
+  </div>
+  <div class="cdef">n 次獨立 Bernoulli 試驗中，成功 k 次的機率：P(X=k)=C(n,k)pᵏ(1−p)ⁿ⁻ᵏ。E[X]=np, Var[X]=np(1−p)。</div>
+  <div class="cscene"><b>📦 情境分析</b>100 件產品各自 5% 不良率，抽 10 件中有 k 件不良的機率服從 B(10, 0.05)。</div>
+  <div class="cexam"><b>📝 考題方向</b>n→∞ 時趨近常態分佈（中央極限定理）；n 大 p 小時趨近 Poisson 分佈。</div>
+</div>
+
+<!-- 6. 泊松分佈 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Poisson Distribution</div>
+    <div class="zh">泊松分佈</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="8" y1="55" x2="115" y2="55" stroke="#6A9A9A" stroke-width="1"></line>
+      <rect x="12" y="32" width="10" height="23" fill="#3A9A6E" opacity=".65" rx="1"></rect>
+      <rect x="26" y="20" width="10" height="35" fill="#3A9A6E" opacity=".8" rx="1"></rect>
+      <rect x="40" y="28" width="10" height="27" fill="#3A9A6E" opacity=".7" rx="1"></rect>
+      <rect x="54" y="40" width="10" height="15" fill="#3A9A6E" opacity=".6" rx="1"></rect>
+      <rect x="68" y="48" width="10" height="7" fill="#3A9A6E" opacity=".5" rx="1"></rect>
+      <rect x="82" y="52" width="10" height="3" fill="#3A9A6E" opacity=".4" rx="1"></rect>
+      <text x="12" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">0 1 2 3 4 5 次/單位時間</text>
+      <text x="30" y="12" font-size="8" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700">λ=1.5, E[X]=Var[X]=λ</text>
+    </svg>
+  </div>
+  <div class="cdef">描述單位時間/空間內，稀有事件發生次數的分佈。P(X=k)=λᵏe⁻λ/k!，其中 λ&gt;0 為平均發生率，且 E[X]=Var[X]=λ。</div>
+  <div class="cscene"><b>☎️ 情境分析</b>客服中心每小時平均接到 5 通電話，X=某小時接到電話次數 ~ Poisson(5)。</div>
+  <div class="cexam"><b>📝 考題方向</b>E[X]=Var[X]=λ 是 Poisson 特性；考題常問「稀有事件、單位時間」等關鍵詞對應此分佈。</div>
+</div>
+
+<!-- 7. 常態分佈 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Normal / Gaussian Distribution</div>
+    <div class="zh">常態分佈</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <defs>
+        <lineargradient id="ng" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2A8A8A" stop-opacity=".35"></stop>
+          <stop offset="100%" stop-color="#2A8A8A" stop-opacity="0"></stop>
+        </lineargradient>
+      </defs>
+      <line x1="5" y1="56" x2="115" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <polyline points="5,55 18,53 30,45 45,26 60,10 75,26 90,45 102,53 115,55" fill="none" stroke="#2A8A8A" stroke-width="2.2"></polyline>
+      <polygon points="5,55 18,53 30,45 45,26 60,10 75,26 90,45 102,53 115,55 115,57 5,57" fill="url(#ng)"></polygon>
+      <line x1="60" y1="10" x2="60" y2="56" stroke="#1D6262" stroke-width="1" stroke-dasharray="3,2"></line>
+      <text x="62" y="52" font-size="8" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700">μ</text>
+      <text x="8" y="18" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">68% within ±σ</text>
+      <text x="8" y="28" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">95% within ±2σ</text>
+    </svg>
+  </div>
+  <div class="cdef">最重要的連續機率分佈，N(μ,σ²)，由均值μ和變異數σ²決定。具有對稱鐘形曲線，68-95-99.7 法則：±σ含68%，±2σ含95%，±3σ含99.7%數據。</div>
+  <div class="cscene"><b>📏 情境分析</b>人類身高、測量誤差、股票日報酬率通常近似常態分佈，中央極限定理保證其廣泛性。</div>
+  <div class="cexam"><b>📝 考題方向</b>標準化 Z=(X−μ)/σ；MLE 在常態假設下對應 MSE 損失函數；考題常考 68/95/99.7 數值。</div>
+</div>
+
+<!-- 8. 均勻分佈 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Uniform Distribution</div>
+    <div class="zh">均勻分佈</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="8" y1="56" x2="115" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="8" y1="10" x2="8" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <!-- uniform rect -->
+      <rect x="25" y="22" width="70" height="34" fill="#7B5EA7" opacity=".25" rx="1"></rect>
+      <line x1="25" y1="22" x2="95" y2="22" stroke="#7B5EA7" stroke-width="2.2"></line>
+      <line x1="25" y1="22" x2="25" y2="56" stroke="#7B5EA7" stroke-width="1.5" stroke-dasharray="3,2"></line>
+      <line x1="95" y1="22" x2="95" y2="56" stroke="#7B5EA7" stroke-width="1.5" stroke-dasharray="3,2"></line>
+      <text x="25" y="62" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">a</text>
+      <text x="92" y="62" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">b</text>
+      <text x="45" y="18" font-size="8" fill="#7B5EA7" font-family="Nunito,sans-serif" font-weight="700">f(x)=1/(b-a)</text>
+    </svg>
+  </div>
+  <div class="cdef">在 [a,b] 區間內每點機率相等，f(x)=1/(b−a)，E[X]=(a+b)/2，Var[X]=(b−a)²/12。離散版：各結果等機率。</div>
+  <div class="cscene"><b>🔧 情境分析</b>神經網路權重隨機初始化（Xavier 初始化）時，常使用均勻分佈 U(−√6/n, √6/n)。</div>
+  <div class="cexam"><b>📝 考題方向</b>常作為先驗分佈（無資訊先驗）；權重初始化與隨機種子的基礎分佈。</div>
+</div>
+
+<!-- 9. 指數分佈 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Exponential Distribution</div>
+    <div class="zh">指數分佈</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="8" y1="56" x2="115" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="8" y1="10" x2="8" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <path d="M10,12 Q25,12 40,28 Q60,48 80,53 Q95,56 115,57" fill="none" stroke="#E85D3A" stroke-width="2.2"></path>
+      <defs><lineargradient id="exp" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E85D3A" stop-opacity=".3"></stop><stop offset="100%" stop-color="#E85D3A" stop-opacity="0"></stop></lineargradient></defs>
+      <path d="M10,12 Q25,12 40,28 Q60,48 80,53 Q95,56 115,57 L115,58 L10,58Z" fill="url(#exp)"></path>
+      <text x="12" y="20" font-size="8" fill="#E85D3A" font-family="Nunito,sans-serif" font-weight="700">f(t)=λe⁻λt</text>
+      <text x="12" y="30" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">E[T]=1/λ</text>
+      <text x="60" y="45" font-size="7.5" fill="#E85D3A" font-family="Nunito,sans-serif">無記憶性</text>
+    </svg>
+  </div>
+  <div class="cdef">描述<b>等待時間</b>的連續分佈，f(t)=λe⁻λt，E[T]=1/λ。具有<b>無記憶性</b>：P(T&gt;s+t|T&gt;s)=P(T&gt;t)。</div>
+  <div class="cscene"><b>⏱️ 情境分析</b>網路封包到達間隔時間、設備故障間隔時間常用指數分佈建模，λ 為事件發生率。</div>
+  <div class="cexam"><b>📝 考題方向</b>無記憶性是指數分佈的唯一特性；Poisson 過程中事件間隔時間服從指數分佈。</div>
+</div>
+
+<!-- 10. 卡方分佈 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Chi-square Distribution</div>
+    <div class="zh">卡方分佈</div>
+    <span class="abbr">χ²</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="8" y1="56" x2="115" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="8" y1="10" x2="8" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <!-- k=1 curve (starts high) -->
+      <path d="M10,12 Q18,12 28,28 Q45,48 65,54 Q85,57 115,58" fill="none" stroke="#D4920A" stroke-width="1.8"></path>
+      <!-- k=4 curve -->
+      <path d="M10,52 Q20,45 35,28 Q50,14 65,22 Q80,32 95,44 Q105,50 115,55" fill="none" stroke="#2A8A8A" stroke-width="1.8"></path>
+      <!-- k=8 curve -->
+      <path d="M10,56 Q25,55 45,48 Q60,38 75,22 Q85,14 95,22 Q105,35 115,48" fill="none" stroke="#7B5EA7" stroke-width="1.8"></path>
+      <text x="70" y="12" font-size="7" fill="#D4920A" font-family="Nunito,sans-serif">k=1</text>
+      <text x="70" y="22" font-size="7" fill="#2A8A8A" font-family="Nunito,sans-serif">k=4</text>
+      <text x="70" y="32" font-size="7" fill="#7B5EA7" font-family="Nunito,sans-serif">k=8</text>
+      <text x="10" y="10" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">χ²(k)自由度</text>
+    </svg>
+  </div>
+  <div class="cdef">k 個獨立標準常態隨機變數平方和的分佈：χ²(k)=Z₁²+…+Zk²。E[χ²]=k，常用於<b>獨立性檢定</b>與<b>配適度檢定</b>。</div>
+  <div class="cscene"><b>🗃️ 情境分析</b>用於檢定類別型特徵是否獨立（如性別與購買偏好），或模型預測分佈是否符合預期。</div>
+  <div class="cexam"><b>📝 考題方向</b>卡方檢定是非參數檢定；自由度 k 影響分佈形狀；p 值小於 α 表示拒絕獨立假設。</div>
+</div>
+
+<!-- 11. 條件機率 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Conditional Probability</div>
+    <div class="zh">條件機率</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- Venn diagram -->
+      <ellipse cx="45" cy="32" rx="32" ry="22" fill="none" stroke="#2A8A8A" stroke-width="1.8"></ellipse>
+      <ellipse cx="75" cy="32" rx="32" ry="22" fill="none" stroke="#7B5EA7" stroke-width="1.8"></ellipse>
+      <!-- intersection shade -->
+      <path d="M60,13 Q73,20 73,32 Q73,44 60,51 Q47,44 47,32 Q47,20 60,13Z" fill="#2A8A8A" opacity=".2"></path>
+      <text x="28" y="34" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif" font-weight="700">A</text>
+      <text x="83" y="34" font-size="8" fill="#7B5EA7" font-family="Nunito,sans-serif" font-weight="700">B</text>
+      <text x="53" y="34" font-size="7.5" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700">A∩B</text>
+      <text x="2" y="12" font-size="8" fill="#1D6262" font-family="Courier New,monospace">P(A|B)=P(A∩B)/P(B)</text>
+    </svg>
+  </div>
+  <div class="cdef">在 B 已發生的條件下，A 發生的機率：P(A|B)=P(A∩B)/P(B)（P(B)&gt;0）。條件機率縮小了樣本空間。</div>
+  <div class="cscene"><b>🔍 情境分析</b>已知用戶是 VIP 會員 (B)，求其購買高端商品 (A) 的機率，即 P(A|B)。</div>
+  <div class="cexam"><b>📝 考題方向</b>條件機率是貝氏定理的基礎；獨立性定義為 P(A|B)=P(A)，即 B 不影響 A 的機率。</div>
+</div>
+
+<!-- 12. 貝氏定理 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Bayes' Theorem</div>
+    <div class="zh">貝氏定理</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <rect x="5" y="5" width="30" height="18" rx="4" fill="#E0F5F5" stroke="#2A8A8A" stroke-width="1.5"></rect>
+      <text x="20" y="17" font-size="7.5" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700" text-anchor="middle">先驗 P(θ)</text>
+      <rect x="5" y="38" width="30" height="18" rx="4" fill="#Blt" stroke="#2D5F9A" stroke-width="1.5"></rect>
+      <text x="20" y="50" font-size="7.5" fill="#2D5F9A" font-family="Nunito,sans-serif" font-weight="700" text-anchor="middle">P(X|θ)似然</text>
+      <line x1="38" y1="14" x2="54" y2="30" stroke="#6A9A9A" stroke-width="1" marker-end="url(#arr2)"></line>
+      <line x1="38" y1="47" x2="54" y2="33" stroke="#6A9A9A" stroke-width="1" marker-end="url(#arr2)"></line>
+      <defs><marker id="arr2" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5" fill="none" stroke="#6A9A9A" stroke-width="1"></path></marker></defs>
+      <rect x="56" y="23" width="60" height="18" rx="4" fill="#E6F5EE" stroke="#3A9A6E" stroke-width="1.5"></rect>
+      <text x="86" y="33" font-size="7" fill="#1D6262" font-family="Nunito,sans-serif" font-weight="700" text-anchor="middle">後驗 P(θ|X)</text>
+    </svg>
+  </div>
+  <div class="cdef">P(θ|X) = P(X|θ)·P(θ) / P(X)，即<b>後驗 ∝ 似然 × 先驗</b>。在觀測到數據 X 後，更新對參數 θ 的信念。</div>
+  <div class="cscene"><b>📧 情境分析</b>垃圾郵件過濾：先驗=垃圾郵件比例，似然=該郵件包含某詞的機率，後驗=是垃圾的機率。</div>
+  <div class="cexam"><b>📝 考題方向</b>MLE 只用似然；MAP 加入先驗（等同 L2 正則化）；貝氏推斷給出完整後驗分佈。</div>
+</div>
+
+<!-- 13. 先驗/後驗機率 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Prior / Posterior Probability</div>
+    <div class="zh">先驗/後驗機率</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- Timeline update -->
+      <line x1="10" y1="35" x2="110" y2="35" stroke="#6A9A9A" stroke-width="1.5"></line>
+      <!-- Prior bell -->
+      <polyline points="10,35 20,34 28,28 36,22 42,28 50,34 58,35" fill="none" stroke="#D4920A" stroke-width="1.8"></polyline>
+      <!-- Data point -->
+      <circle cx="65" cy="32" r="5" fill="#C0392B" opacity=".7"></circle>
+      <text x="62" y="26" font-size="7" fill="#C0392B" font-family="Nunito,sans-serif">Data</text>
+      <!-- Posterior bell (narrower) -->
+      <polyline points="68,35 76,34 82,26 88,18 94,26 100,34 108,35" fill="none" stroke="#2A8A8A" stroke-width="1.8"></polyline>
+      <text x="12" y="50" font-size="8" fill="#D4920A" font-family="Nunito,sans-serif" font-weight="700">Prior P(θ)</text>
+      <text x="72" y="50" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif" font-weight="700">Posterior P(θ|X)</text>
+    </svg>
+  </div>
+  <div class="cdef"><b>先驗 P(θ)</b>：觀測數據前對參數的信念（主觀或歷史數據）。<b>後驗 P(θ|X)</b>：觀測數據後更新的信念，通常比先驗更集中（不確定性降低）。</div>
+  <div class="cscene"><b>🩺 情境分析</b>疾病篩檢：先驗=人群患病率1%，檢測陽性後更新→後驗大幅提高至50%（取決於偽陽率）。</div>
+  <div class="cexam"><b>📝 考題方向</b>先驗為均勻分佈時 MAP≡MLE；Conjugate Prior（共軛先驗）可讓後驗與先驗同族。</div>
+</div>
+
+<!-- 14. MLE -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Maximum Likelihood Estimation</div>
+    <div class="zh">最大似然估計</div>
+    <span class="abbr">MLE</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- Log-likelihood curve -->
+      <line x1="8" y1="56" x2="115" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="8" y1="10" x2="8" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <path d="M12,52 Q30,40 50,22 Q65,12 75,12 Q85,12 95,22 Q105,35 115,52" fill="none" stroke="#2A8A8A" stroke-width="2"></path>
+      <line x1="75" y1="12" x2="75" y2="56" stroke="#C0392B" stroke-width="1.2" stroke-dasharray="3,2"></line>
+      <circle cx="75" cy="12" r="3.5" fill="#C0392B"></circle>
+      <text x="78" y="22" font-size="8" fill="#C0392B" font-family="Nunito,sans-serif" font-weight="700">θ̂_MLE</text>
+      <text x="10" y="20" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">logL(θ|X)</text>
+      <text x="20" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">θ 參數空間</text>
+    </svg>
+  </div>
+  <div class="cdef">找到使觀測數據 X 出現機率最大的參數估計：θ̂=argmax∑logP(xᵢ|θ)。對數似然使乘積變加法，數值更穩定。</div>
+  <div class="cscene"><b>📈 情境分析</b>線性迴歸在常態誤差假設下，MLE 等價於最小化 MSE（因 logL ∝ −MSE）。</div>
+  <div class="cexam"><b>📝 考題方向</b>MLE 無先驗；考題常問MLE與MSE/Cross-Entropy的等價關係，及加入先驗後的 MAP 差異。</div>
+</div>
+
+<!-- 15. 假設檢定 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Hypothesis Testing</div>
+    <div class="zh">假設檢定</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="5" y1="52" x2="115" y2="52" stroke="#6A9A9A" stroke-width="1"></line>
+      <!-- H0 distribution -->
+      <polyline points="5,52 20,50 32,38 45,18 58,10 70,18 82,38 95,50 108,52" fill="none" stroke="#2A8A8A" stroke-width="1.8"></polyline>
+      <!-- rejection region right -->
+      <polygon points="92,50 97,40 103,34 108,32 112,35 115,52" fill="#C0392B" opacity=".3"></polygon>
+      <line x1="92" y1="10" x2="92" y2="52" stroke="#C0392B" stroke-width="1.2" stroke-dasharray="3,2"></line>
+      <text x="93" y="28" font-size="7.5" fill="#C0392B" font-family="Nunito,sans-serif" font-weight="700">α=0.05</text>
+      <text x="94" y="48" font-size="7" fill="#C0392B" font-family="Nunito,sans-serif">拒絕域</text>
+      <text x="8" y="18" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">H₀ 分佈</text>
+    </svg>
+  </div>
+  <div class="cdef">對一個統計假設（H₀ 虛無假設 vs H₁ 對立假設）進行決策的程序。計算檢定統計量，若落入拒絕域（p值＜α），則拒絕 H₀。</div>
+  <div class="cscene"><b>🧪 情境分析</b>A/B 測試：H₀：新版本與舊版本轉換率無差異。計算 z 值，p&lt;0.05 則推翻 H₀，採用新版本。</div>
+  <div class="cexam"><b>📝 考題方向</b>Type I 錯誤(α)：誤拒真 H₀；Type II 錯誤(β)：漏拒假 H₀；Power=1−β。</div>
+</div>
+
+<!-- 16. p值與顯著水準 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">p-value &amp; Significance Level α</div>
+    <div class="zh">p值與顯著水準</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="5" y1="54" x2="115" y2="54" stroke="#6A9A9A" stroke-width="1"></line>
+      <polyline points="5,54 20,52 35,42 50,24 65,12 80,24 95,42 110,52 115,54" fill="none" stroke="#2D5F9A" stroke-width="1.8"></polyline>
+      <!-- observed test statistic -->
+      <line x1="88" y1="10" x2="88" y2="54" stroke="#C0392B" stroke-width="1.5"></line>
+      <text x="90" y="22" font-size="7.5" fill="#C0392B" font-family="Nunito,sans-serif" font-weight="700">t_obs</text>
+      <!-- shade p value area -->
+      <polygon points="88,38 95,42 100,47 107,52 113,54 115,54 115,55 88,55" fill="#C0392B" opacity=".3"></polygon>
+      <text x="97" y="50" font-size="7" fill="#C0392B" font-family="Nunito,sans-serif" font-weight="700">p值</text>
+      <!-- alpha line -->
+      <line x1="82" y1="10" x2="82" y2="54" stroke="#D4920A" stroke-width="1" stroke-dasharray="3,2"></line>
+      <text x="70" y="18" font-size="7.5" fill="#D4920A" font-family="Nunito,sans-serif">α界</text>
+    </svg>
+  </div>
+  <div class="cdef"><b>p值</b>：在 H₀ 成立下，觀測到現有或更極端結果的機率。<b>顯著水準 α</b>：通常設 0.05 或 0.01，為 Type I 錯誤的容忍上限。p＜α → 拒絕 H₀。</div>
+  <div class="cscene"><b>🔬 情境分析</b>模型 A vs B 的準確率差異：p=0.03 &lt; α=0.05，統計上顯著，認為差異非隨機。</div>
+  <div class="cexam"><b>📝 考題方向</b>p值不是「效果大小」；p值大不等於 H₀ 為真；只表示沒有足夠證據拒絕 H₀。</div>
+</div>
+
+<!-- 17. 向量 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Vector</div>
+    <div class="zh">向量</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="10" y1="56" x2="110" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="10" y1="10" x2="10" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <!-- v1 -->
+      <line x1="10" y1="56" x2="65" y2="22" stroke="#2A8A8A" stroke-width="2.2" marker-end="url(#a1)"></line>
+      <defs><marker id="a1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#2A8A8A"></path></marker></defs>
+      <!-- v2 -->
+      <line x1="10" y1="56" x2="90" y2="40" stroke="#7B5EA7" stroke-width="2.2" marker-end="url(#a2)"></line>
+      <defs><marker id="a2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#7B5EA7"></path></marker></defs>
+      <text x="55" y="20" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif" font-weight="700">a</text>
+      <text x="92" y="40" font-size="8" fill="#7B5EA7" font-family="Nunito,sans-serif" font-weight="700">b</text>
+      <!-- angle -->
+      <path d="M10,50 Q25,45 30,52" fill="none" stroke="#D4920A" stroke-width="1.2"></path>
+      <text x="18" y="52" font-size="7.5" fill="#D4920A" font-family="Nunito,sans-serif">θ</text>
+      <text x="50" y="58" font-size="7.5" fill="#1D6262" font-family="Nunito,sans-serif">a·b=|a||b|cosθ</text>
+    </svg>
+  </div>
+  <div class="cdef">有方向和大小的量，可以表示特徵空間中的一個點（數據樣本）或一個方向（梯度）。在 ML 中，每個樣本通常表示為一個 d 維特徵向量。</div>
+  <div class="cscene"><b>📦 情境分析</b>一封郵件的 TF-IDF 特徵向量（每個詞的重要性）是高維向量，用於文字分類模型。</div>
+  <div class="cexam"><b>📝 考題方向</b>向量的 L2 範數（長度）、向量夾角（餘弦相似度）常考；梯度本身是損失函數的梯度向量。</div>
+</div>
+
+<!-- 18. 矩陣 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Matrix</div>
+    <div class="zh">矩陣</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- Matrix A -->
+      <rect x="5" y="8" width="38" height="46" rx="3" fill="none" stroke="#2A8A8A" stroke-width="1.8"></rect>
+      <text x="12" y="22" font-size="7.5" fill="#1D6262" font-family="Courier New,monospace">a b c</text>
+      <text x="12" y="32" font-size="7.5" fill="#1D6262" font-family="Courier New,monospace">d e f</text>
+      <text x="12" y="42" font-size="7.5" fill="#1D6262" font-family="Courier New,monospace">g h i</text>
+      <text x="8" y="58" font-size="7" fill="#2A8A8A" font-family="Nunito,sans-serif">A (n×d 數據集)</text>
+      <!-- operations -->
+      <text x="48" y="18" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">轉置 Aᵀ</text>
+      <text x="48" y="30" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">逆矩陣 A⁻¹</text>
+      <text x="48" y="42" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">矩陣乘法 AB</text>
+      <text x="48" y="54" font-size="7.5" fill="#D4920A" font-family="Nunito,sans-serif">det(A)=行列式</text>
+    </svg>
+  </div>
+  <div class="cdef">m×n 個數值排列成的二維陣列。在 ML 中，n 個樣本×d 個特徵的數據集表示為 n×d 矩陣 X；權重矩陣 W 定義神經網路層的線性變換。</div>
+  <div class="cscene"><b>🧠 情境分析</b>神經網路的前向傳播 z = Wx + b，W 是權重矩陣，每次矩陣乘法完成一次線性變換。</div>
+  <div class="cexam"><b>📝 考題方向</b>OLS 解析解 β=(XᵀX)⁻¹Xᵀy；矩陣可逆條件（行列式≠0）；轉置與共軛轉置的差異。</div>
+</div>
+
+<!-- 19. 點積 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Dot Product (Inner Product)</div>
+    <div class="zh">點積</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- Dot product visualization -->
+      <text x="5" y="16" font-size="8.5" fill="#1D6262" font-family="Courier New,monospace">a = [1, 2, 3]</text>
+      <text x="5" y="28" font-size="8.5" fill="#2D5F9A" font-family="Courier New,monospace">b = [4, 5, 6]</text>
+      <line x1="5" y1="32" x2="115" y2="32" stroke="#b" stroke-width="1"></line>
+      <text x="5" y="44" font-size="8" fill="#2A8A8A" font-family="Courier New,monospace">a·b = 1×4+2×5+3×6</text>
+      <text x="5" y="56" font-size="9" fill="#C0392B" font-family="Courier New,monospace" font-weight="700">= 32</text>
+      <text x="75" y="50" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">cosθ=a·b/|a||b|</text>
+    </svg>
+  </div>
+  <div class="cdef">兩個等長向量逐元素相乘再加總：a·b=∑aᵢbᵢ。幾何意義：|a||b|cosθ，衡量兩向量方向相似程度，是神經網路線性層與注意力機制的核心運算。</div>
+  <div class="cscene"><b>🤖 情境分析</b>Transformer 的縮放點積注意力：score = (QKᵀ)/√d，Q 和 K 的點積衡量查詢與鍵的相關性。</div>
+  <div class="cexam"><b>📝 考題方向</b>a·b=0 ⟺ 正交；餘弦相似度用於文字向量比較；點積是矩陣乘法的構件。</div>
+</div>
+
+<!-- 20. 特徵值分解 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Eigenvalue Decomposition</div>
+    <div class="zh">特徵值分解</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <text x="5" y="14" font-size="8.5" fill="#1D6262" font-family="Courier New,monospace">A = QΛQᵀ</text>
+      <text x="5" y="26" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">Q: 特徵向量矩陣</text>
+      <text x="5" y="36" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">Λ: 特徵值對角矩陣</text>
+      <line x1="5" y1="40" x2="115" y2="40" stroke="#b" stroke-width="1"></line>
+      <!-- eigenvalue diagram -->
+      <rect x="8" y="44" width="20" height="14" rx="2" fill="#2A8A8A" opacity=".3"></rect>
+      <text x="18" y="54" font-size="7.5" fill="#1D6262" font-family="Nunito,sans-serif" text-anchor="middle">λ₁=5</text>
+      <rect x="32" y="48" width="16" height="10" rx="2" fill="#2A8A8A" opacity=".25"></rect>
+      <text x="40" y="56" font-size="7.5" fill="#1D6262" font-family="Nunito,sans-serif" text-anchor="middle">λ₂=2</text>
+      <rect x="52" y="51" width="12" height="7" rx="2" fill="#2A8A8A" opacity=".2"></rect>
+      <text x="58" y="57" font-size="6.5" fill="#6A9A9A" font-family="Nunito,sans-serif" text-anchor="middle">λ₃=.3</text>
+      <text x="70" y="54" font-size="7.5" fill="#D4920A" font-family="Nunito,sans-serif">→ 保留前k個</text>
+    </svg>
+  </div>
+  <div class="cdef">對<b>方形矩陣</b> A，找到滿足 Av=λv 的特徵向量 v 和特徵值 λ。分解形式 A=QΛQᵀ，特徵值大小代表對應方向的「重要性」，PCA 的核心計算。</div>
+  <div class="cscene"><b>📊 情境分析</b>PCA 計算共變異矩陣的特徵值分解，選取最大特徵值對應的特徵向量作為主成分方向。</div>
+  <div class="cexam"><b>📝 考題方向</b>僅適用於方形矩陣；SVD 是更一般化的版本，適用任意矩陣；考題辨別 PCA 用哪種分解。</div>
+</div>
+
+<!-- 21. 奇異值分解 SVD -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Singular Value Decomposition</div>
+    <div class="zh">奇異值分解</div>
+    <span class="abbr">SVD</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <text x="5" y="14" font-size="9" fill="#1D6262" font-family="Courier New,monospace" font-weight="700">X = U Σ Vᵀ</text>
+      <line x1="5" y1="18" x2="115" y2="18" stroke="#b" stroke-width="1"></line>
+      <rect x="5" y="22" width="18" height="30" rx="2" fill="#E0F5F5" stroke="#2A8A8A" stroke-width="1.2"></rect>
+      <text x="14" y="40" font-size="7.5" fill="#1D6262" font-family="Nunito,sans-serif" text-anchor="middle">U</text>
+      <text x="14" y="56" font-size="7" fill="#2A8A8A" font-family="Nunito,sans-serif" text-anchor="middle">m×m</text>
+      <rect x="27" y="28" width="22" height="22" rx="2" fill="#FFF8E6" stroke="#D4920A" stroke-width="1.2"></rect>
+      <text x="38" y="42" font-size="7.5" fill="#D4920A" font-family="Nunito,sans-serif" text-anchor="middle">Σ</text>
+      <text x="38" y="56" font-size="7" fill="#D4920A" font-family="Nunito,sans-serif" text-anchor="middle">σ₁≥σ₂≥…</text>
+      <rect x="53" y="22" width="30" height="18" rx="2" fill="#F0EAF8" stroke="#7B5EA7" stroke-width="1.2"></rect>
+      <text x="68" y="35" font-size="7.5" fill="#7B5EA7" font-family="Nunito,sans-serif" text-anchor="middle">Vᵀ</text>
+      <text x="68" y="56" font-size="7" fill="#7B5EA7" font-family="Nunito,sans-serif" text-anchor="middle">n×n</text>
+      <text x="88" y="30" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">截斷=</text>
+      <text x="88" y="40" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">降維/壓縮</text>
+    </svg>
+  </div>
+  <div class="cdef">將任意 m×n 矩陣分解：X=UΣVᵀ，U/V 為正交矩陣，Σ 為奇異值對角矩陣（σ₁≥σ₂≥…≥0）。截斷前 k 個奇異值可做低秩近似，用於降維、推薦系統。</div>
+  <div class="cscene"><b>🎬 情境分析</b>Netflix 推薦系統：將用戶-電影評分矩陣做截斷 SVD，填補缺失值並找潛在因子。</div>
+  <div class="cexam"><b>📝 考題方向</b>SVD 適用任意矩陣（PCA 需方陣）；截斷 SVD 等於矩陣的最佳低秩近似（Eckart-Young 定理）。</div>
+</div>
+
+<!-- 22. PCA -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Principal Component Analysis</div>
+    <div class="zh">主成分分析</div>
+    <span class="abbr">PCA</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- scatter data points -->
+      <circle cx="30" cy="50" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <circle cx="38" cy="44" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <circle cx="45" cy="38" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <circle cx="55" cy="30" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <circle cx="62" cy="25" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <circle cx="70" cy="20" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <circle cx="35" cy="46" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <circle cx="50" cy="35" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <circle cx="65" cy="22" r="2.5" fill="#6A9A9A" opacity=".6"></circle>
+      <!-- PC1 arrow (main direction) -->
+      <line x1="18" y1="58" x2="82" y2="12" stroke="#2A8A8A" stroke-width="2.2" marker-end="url(#pc1)"></line>
+      <defs><marker id="pc1" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#2A8A8A"></path></marker></defs>
+      <!-- PC2 arrow (perpendicular) -->
+      <line x1="52" y1="52" x2="32" y2="22" stroke="#D4920A" stroke-width="1.5" marker-end="url(#pc2)"></line>
+      <defs><marker id="pc2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#D4920A"></path></marker></defs>
+      <text x="78" y="14" font-size="8" fill="#2A8A8A" font-family="Nunito,sans-serif" font-weight="700">PC1</text>
+      <text x="18" y="22" font-size="8" fill="#D4920A" font-family="Nunito,sans-serif" font-weight="700">PC2</text>
+    </svg>
+  </div>
+  <div class="cdef">找到<b>最大方差方向</b>的正交投影，將高維數據降至低維，同時保留最多信息。計算共變異矩陣的特徵向量，按特徵值大小排序，選前 k 個主成分。</div>
+  <div class="cscene"><b>🖼️ 情境分析</b>人臉辨識：256×256 像素圖片（65536 維）→ PCA 降至 200 維特征臉（Eigenface），大幅減少計算。</div>
+  <div class="cexam"><b>📝 考題方向</b>PCA 是無監督；LDA 是監督式；考解釋方差比（explained variance ratio）決定保留幾個主成分。</div>
+</div>
+
+<!-- 23. LDA -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Linear Discriminant Analysis</div>
+    <div class="zh">線性判別分析</div>
+    <span class="abbr">LDA</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- Two class clusters -->
+      <circle cx="30" cy="20" r="3" fill="#2A8A8A" opacity=".7"></circle>
+      <circle cx="38" cy="16" r="3" fill="#2A8A8A" opacity=".7"></circle>
+      <circle cx="26" cy="28" r="3" fill="#2A8A8A" opacity=".7"></circle>
+      <circle cx="22" cy="22" r="3" fill="#2A8A8A" opacity=".7"></circle>
+      <circle cx="80" cy="44" r="3" fill="#C0392B" opacity=".7"></circle>
+      <circle cx="88" cy="38" r="3" fill="#C0392B" opacity=".7"></circle>
+      <circle cx="76" cy="50" r="3" fill="#C0392B" opacity=".7"></circle>
+      <circle cx="84" cy="46" r="3" fill="#C0392B" opacity=".7"></circle>
+      <!-- LDA projection axis -->
+      <line x1="5" y1="58" x2="115" y2="5" stroke="#D4920A" stroke-width="1.8" stroke-dasharray="4,3"></line>
+      <!-- projection points on axis -->
+      <circle cx="25" cy="44" r="3" fill="#2A8A8A" opacity=".5"></circle>
+      <circle cx="85" cy="20" r="3" fill="#C0392B" opacity=".5"></circle>
+      <text x="50" y="38" font-size="7.5" fill="#D4920A" font-family="Nunito,sans-serif" font-weight="700">最大化類別間距</text>
+    </svg>
+  </div>
+  <div class="cdef"><b>監督式</b>降維方法，找到最大化<b>類別間分散</b>、最小化<b>類別內分散</b>的投影方向。與 PCA 不同：LDA 利用標籤信息，目標是區分類別而非保留整體方差。</div>
+  <div class="cscene"><b>🔬 情境分析</b>醫學診斷：將患者多個生理指標投影到 LDA 方向，使健康/患病群體分離最大化，提升分類準確率。</div>
+  <div class="cexam"><b>📝 考題方向</b>PCA（無監督，最大方差）vs LDA（監督，最大類別分離）；LDA 假設類別內協方差相同。</div>
+</div>
+
+<!-- 24. 損失函數 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Loss Function</div>
+    <div class="zh">損失函數</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <text x="5" y="14" font-size="8" fill="#C0392B" font-family="Nunito,sans-serif" font-weight="700">回歸：MSE, MAE, Huber</text>
+      <text x="5" y="26" font-size="8" fill="#2D5F9A" font-family="Nunito,sans-serif" font-weight="700">分類：Cross-Entropy</text>
+      <text x="5" y="38" font-size="8" fill="#3A9A6E" font-family="Nunito,sans-serif" font-weight="700">目標偵測：Focal Loss</text>
+      <line x1="5" y1="42" x2="115" y2="42" stroke="#b" stroke-width="1"></line>
+      <text x="5" y="52" font-size="7.5" fill="#1D6262" font-family="Courier New,monospace">MSE: (1/n)Σ(y-ŷ)²</text>
+      <text x="5" y="62" font-size="7.5" fill="#1D6262" font-family="Courier New,monospace">CE: -Σy·log(ŷ)</text>
+    </svg>
+  </div>
+  <div class="cdef">衡量模型預測值與真實值差距的函數，訓練目標是最小化損失。常見：<b>MSE</b>（回歸）、<b>Cross-Entropy</b>（分類）、<b>Huber Loss</b>（抗離群值）、<b>Focal Loss</b>（類別不平衡）。</div>
+  <div class="cscene"><b>🎯 情境分析</b>詐騙偵測：正負樣本嚴重不平衡，使用 Focal Loss 對難分樣本（詐騙案例）加大損失權重。</div>
+  <div class="cexam"><b>📝 考題方向</b>MSE 對離群值敏感；MAE 對離群值穩健；Cross-Entropy = MLE 下的負對數似然；考題常問選擇依據。</div>
+</div>
+
+<!-- 25. 梯度下降 GD -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Gradient Descent</div>
+    <div class="zh">梯度下降</div>
+    <span class="abbr">GD</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="5" y1="58" x2="115" y2="58" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="5" y1="10" x2="5" y2="58" stroke="#6A9A9A" stroke-width="1"></line>
+      <path d="M8,14 Q30,12 45,28 Q55,40 65,50 Q75,56 85,58 Q98,58 110,58" fill="none" stroke="#2A8A8A" stroke-width="2"></path>
+      <!-- steps along curve -->
+      <circle cx="18" cy="13.5" r="3" fill="#C0392B"></circle>
+      <circle cx="35" cy="19" r="3" fill="#E85D3A"></circle>
+      <circle cx="50" cy="31" r="3" fill="#D4920A"></circle>
+      <circle cx="63" cy="46" r="3" fill="#3A9A6E"></circle>
+      <circle cx="80" cy="56" r="3" fill="#2A8A8A"></circle>
+      <line x1="18" y1="13.5" x2="35" y2="19" stroke="#E0E0E0" stroke-width="1"></line>
+      <line x1="35" y1="19" x2="50" y2="31" stroke="#E0E0E0" stroke-width="1"></line>
+      <line x1="50" y1="31" x2="63" y2="46" stroke="#E0E0E0" stroke-width="1"></line>
+      <line x1="63" y1="46" x2="80" y2="56" stroke="#E0E0E0" stroke-width="1"></line>
+      <text x="5" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">θ←θ−η∇L(θ) 全量批次</text>
+    </svg>
+  </div>
+  <div class="cdef">用<b>全部訓練數據</b>計算梯度，更新參數：θ ← θ − η∇L(θ)。η 為學習率。優點：梯度準確；缺點：大數據集每步計算昂貴，更新慢。</div>
+  <div class="cscene"><b>⚙️ 情境分析</b>小型數據集（數千樣本）訓練線性迴歸時，每次更新使用全部樣本，收斂穩定。</div>
+  <div class="cexam"><b>📝 考題方向</b>GD vs SGD vs Mini-batch：批次大小影響梯度噪聲、記憶體用量、收斂速度的三向取捨。</div>
+</div>
+
+<!-- 26. SGD -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Stochastic Gradient Descent</div>
+    <div class="zh">隨機梯度下降</div>
+    <span class="abbr">SGD</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="5" y1="56" x2="115" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="5" y1="10" x2="5" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <!-- noisy path -->
+      <polyline points="10,14 18,22 24,16 32,28 38,20 46,32 50,24 58,35 64,28 72,38 76,32 84,42 90,36 98,44 104,40 110,45" fill="none" stroke="#E85D3A" stroke-width="1.8"></polyline>
+      <!-- trend line -->
+      <line x1="10" y1="14" x2="110" y2="45" stroke="#2A8A8A" stroke-width="1" stroke-dasharray="3,2" opacity=".6"></line>
+      <text x="5" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">每次1個樣本更新，梯度有噪聲</text>
+    </svg>
+  </div>
+  <div class="cdef">每次只用<b>1個樣本</b>估計梯度並更新參數。更新頻繁、速度快，但梯度噪聲大，損失震盪。優點：可跳脫局部極小值；缺點：收斂路徑不穩定。</div>
+  <div class="cscene"><b>🌊 情境分析</b>大型語言模型在線學習（Online Learning）場景：每到一筆新數據立即更新模型參數。</div>
+  <div class="cexam"><b>📝 考題方向</b>SGD 的噪聲有助逃脫局部最優；但噪聲過大時需加學習率衰減或改用 Mini-batch。</div>
+</div>
+
+<!-- 27. Mini-batch SGD -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Mini-batch Gradient Descent</div>
+    <div class="zh">小批量梯度下降</div>
+    <span class="abbr">Mini-batch</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- Three comparison bars -->
+      <rect x="10" y="45" width="22" height="12" rx="2" fill="#C0392B" opacity=".6"></rect>
+      <text x="21" y="54" font-size="7" fill="#fff" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">GD</text>
+      <rect x="48" y="30" width="22" height="27" rx="2" fill="#2A8A8A" opacity=".7"></rect>
+      <text x="59" y="48" font-size="7" fill="#fff" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">Mini</text>
+      <text x="59" y="56" font-size="7" fill="#fff" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">batch</text>
+      <rect x="86" y="10" width="22" height="47" rx="2" fill="#E85D3A" opacity=".6"></rect>
+      <text x="97" y="42" font-size="7" fill="#fff" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">SGD</text>
+      <text x="10" y="12" font-size="7.5" fill="#6A9A9A" font-family="Nunito,sans-serif">梯度噪聲</text>
+      <text x="21" y="62" font-size="6.5" fill="#C0392B" font-family="Nunito,sans-serif" text-anchor="middle">低</text>
+      <text x="59" y="62" font-size="6.5" fill="#2A8A8A" font-family="Nunito,sans-serif" text-anchor="middle">中</text>
+      <text x="97" y="62" font-size="6.5" fill="#E85D3A" font-family="Nunito,sans-serif" text-anchor="middle">高</text>
+    </svg>
+  </div>
+  <div class="cdef">每次用 <b>B 個樣本</b>（B 通常 32~512）估計梯度更新。兼顧 GD（梯度準確）與 SGD（更新頻繁）的優點，也能充分利用 GPU 平行運算，是深度學習的標準訓練方式。</div>
+  <div class="cscene"><b>🖥️ 情境分析</b>ImageNet 訓練 ResNet-50：batch size=256，每次讀入 256 張圖計算梯度，更新一次權重。</div>
+  <div class="cexam"><b>📝 考題方向</b>Batch size 越大梯度越穩定但記憶體需求越高；太小則噪聲大；通常為 2 的次方以利 GPU 優化。</div>
+</div>
+
+<!-- 28. Adam 優化器 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Adam Optimizer</div>
+    <div class="zh">Adam 優化器</div>
+    <span class="abbr">Adam</span>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <rect x="5" y="5" width="32" height="20" rx="4" fill="#E0F5F5" stroke="#2A8A8A" stroke-width="1.2"></rect>
+      <text x="21" y="18" font-size="7.5" fill="#1D6262" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">Momentum</text></svg><br>(mₜ)
+      <rect x="5" y="35" width="32" height="20" rx="4" fill="#FEF0EC" stroke="#E85D3A" stroke-width="1.2">
+      <text x="21" y="48" font-size="7.5" fill="#C0392B" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="700">RMSprop<br>(vₜ)</text>
+      <text x="42" y="33" font-size="18" fill="#D4920A">+</text>
+      <rect x="56" y="18" width="60" height="28" rx="5" fill="#FFF8E6" stroke="#D4920A" stroke-width="1.5">
+      <text x="86" y="30" font-size="8.5" fill="#1D6262" font-family="Nunito,sans-serif" text-anchor="middle" font-weight="800">Adam</text>
+      <text x="86" y="41" font-size="7" fill="#D4920A" font-family="Courier New,monospace" text-anchor="middle">m̂ₜ/(√v̂ₜ+ε)</text>
+    
+  </rect></rect></div>
+  <div class="cdef">結合<b>動量（Momentum）</b>的一階矩估計與<b>RMSprop</b>的二階矩估計：θ ← θ − α·m̂ₜ/(√v̂ₜ+ε)。自適應學習率，β₁=0.9, β₂=0.999。深度學習最廣泛使用的優化器。</div>
+  <div class="cscene"><b>🚀 情境分析</b>Transformer 模型訓練：Adam 自動調整各參數的學習率，注意力層的稀疏梯度也能有效更新。</div>
+  <div class="cexam"><b>📝 考題方向</b>Adam = Momentum + RMSprop 的偏差修正版；考題問 β₁(一階矩)/β₂(二階矩)/ε(防零除)的作用。</div>
+</div>
+
+<!-- 29. 學習率調整 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Learning Rate Schedule</div>
+    <div class="zh">學習率調整</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <line x1="8" y1="56" x2="115" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <line x1="8" y1="10" x2="8" y2="56" stroke="#6A9A9A" stroke-width="1"></line>
+      <!-- Warmup + cosine decay -->
+      <polyline points="8,52 20,30 30,12 40,15 55,22 70,32 85,42 100,50 112,54" fill="none" stroke="#2A8A8A" stroke-width="2"></polyline>
+      <!-- Step decay -->
+      <polyline points="8,18 30,18 30,28 60,28 60,38 90,38 90,48 115,48" fill="none" stroke="#D4920A" stroke-width="1.5" stroke-dasharray="3,2"></polyline>
+      <text x="10" y="12" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif">Warmup+Cosine</text>
+      <text x="55" y="26" font-size="7.5" fill="#D4920A" font-family="Nunito,sans-serif">Step Decay</text>
+      <text x="8" y="62" font-size="7" fill="#6A9A9A" font-family="Nunito,sans-serif">Epochs →</text>
+    </svg>
+  </div>
+  <div class="cdef">隨訓練進行動態調整學習率的策略。常見方法：<b>Step Decay</b>（定期衰減）、<b>Cosine Annealing</b>（餘弦衰減）、<b>Warmup</b>（先升後降，Transformer 常用）、<b>Cyclical LR</b>（周期性波動）。</div>
+  <div class="cscene"><b>🌡️ 情境分析</b>BERT 預訓練使用線性 Warmup（前 10% 步數升至最大學習率）再線性衰減，穩定大模型訓練初期。</div>
+  <div class="cexam"><b>📝 考題方向</b>學習率太大：震盪發散；太小：收斂慢；Warmup 解決訓練初期不穩定；Cosine 比 Step 更平滑。</div>
+</div>
+
+<!-- 30. 梯度裁剪 -->
+<div class="card">
+  <div class="ctop">
+    <div class="en">Gradient Clipping</div>
+    <div class="zh">梯度裁剪</div>
+  </div>
+  <div class="cdiag">
+    <svg width="120" height="62" viewBox="0 0 120 62">
+      <!-- Before clipping: huge arrow -->
+      <line x1="10" y1="50" x2="10" y2="10" stroke="#C0392B" stroke-width="3" marker-end="url(#huge)"></line>
+      <defs><marker id="huge" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#C0392B"></path></marker></defs>
+      <text x="14" y="30" font-size="7.5" fill="#C0392B" font-family="Nunito,sans-serif" font-weight="700">梯度爆炸</text>
+      <text x="14" y="40" font-size="7" fill="#C0392B" font-family="Nunito,sans-serif">|g|=1000</text>
+      <!-- clip indicator -->
+      <line x1="40" y1="15" x2="40" y2="58" stroke="#D4920A" stroke-width="1.5" stroke-dasharray="3,2"></line>
+      <text x="38" y="12" font-size="8" fill="#D4920A" font-family="Nunito,sans-serif" transform="rotate(-90,38,12)">clip threshold</text>
+      <!-- After clipping: small arrow -->
+      <line x1="65" y1="50" x2="65" y2="30" stroke="#2A8A8A" stroke-width="2.5" marker-end="url(#clip)"></line>
+      <defs><marker id="clip" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#2A8A8A"></path></marker></defs>
+      <text x="70" y="38" font-size="7.5" fill="#2A8A8A" font-family="Nunito,sans-serif" font-weight="700">裁剪後</text>
+      <text x="70" y="48" font-size="7" fill="#2A8A8A" font-family="Nunito,sans-serif">|g|=5</text>
+    </svg>
+  </div>
+  <div class="cdef">當梯度範數超過閾值 θ_max 時，等比縮放梯度：g ← g·θ_max/‖g‖。防止訓練 RNN/LSTM 時的<b>梯度爆炸</b>問題（梯度通過時間反向傳播而指數增長）。</div>
+  <div class="cscene"><b>📝 情境分析</b>訓練 LSTM 語言模型時，梯度突然爆炸至 1e5，設置 clip_grad_norm=5 後訓練穩定收斂。</div>
+  <div class="cexam"><b>📝 考題方向</b>梯度裁剪解決「梯度爆炸」；梯度消失用 LSTM/殘差連接/BatchNorm 解決，兩者對應不同問題。</div>
+</div>
+
+</div><!-- /grid -->
+</div><!-- /page -->
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

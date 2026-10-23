@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第四章名詞解釋：機器學習與深度學習</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+:root{
+  --R:#C0392B;--Rlt:#FDEDEC;--Rdk:#922B21;
+  --A:#D4920A;--Alt:#FFF8E1;
+  --s:#F8F8F8;--s2:#F0F0F0;--b:#E0E0E0;--t:#1A1A1A;--t2:#555;--t3:#888;
+  --card:#fff;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --s:#181818;--s2:#252525;--b:#333;--t:#F0F0F0;--t2:#BBB;--t3:#888;
+  --card:#222;--Rlt:#3A1210;--Alt:#3A2E00;
+}}
+[data-theme=dark]{--s:#181818;--s2:#252525;--b:#333;--t:#F0F0F0;--t2:#BBB;--t3:#888;--card:#222;--Rlt:#3A1210;--Alt:#3A2E00;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--s);color:var(--t);font-family:'Nunito','Noto Sans TC',sans-serif;padding:16px}
+.page-hdr{text-align:center;margin-bottom:18px}
+.page-badge{display:inline-block;background:var(--R);color:#fff;font-size:10px;font-weight:800;letter-spacing:1px;padding:3px 14px;border-radius:20px;margin-bottom:8px}
+.page-title{font-size:20px;font-weight:900;color:var(--t)}
+.page-sub{font-size:11px;color:var(--t3);margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b);border-left:4px solid var(--R)}
+.ctop{padding:9px 10px 8px;background:var(--Rlt)}
+.ctop .en{font-size:9.5px;font-weight:700;letter-spacing:.5px;color:var(--Rdk);text-transform:uppercase}
+.ctop .zh{font-size:14px;font-weight:900;color:var(--Rdk);line-height:1.2;margin:2px 0}
+.ctop .abbr{display:inline-block;background:var(--R);color:#fff;font-size:8.5px;font-weight:800;padding:1px 6px;border-radius:10px}
+.cdiag{padding:4px 10px;display:flex;justify-content:center}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1;color:var(--t2)}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2);line-height:1.45}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px;color:var(--R)}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2);border:1.5px solid var(--A);background:var(--Alt);line-height:1.45}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+</style>
+
+<div class="page-hdr">
+  <div class="page-badge">科目三 · 第四章</div>
+  <div class="page-title">第四章名詞解釋：機器學習與深度學習</div>
+  <div class="page-sub">30 個核心詞彙 · Machine Learning &amp; Deep Learning</div>
+</div>
+
+<div class="grid">
+
+<!-- 1 監督式學習 -->
+<div class="card">
+<div class="ctop"><div class="en">Supervised Learning</div><div class="zh">監督式學習</div></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="5" y="12" width="30" height="28" rx="4" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.5"></rect>
+  <text x="20" y="30" font-size="9" text-anchor="middle" fill="#922B21" font-weight="700">標籤資料</text>
+  <path d="M37 26 L55 26" stroke="#C0392B" stroke-width="1.5" marker-end="url(#ra)"></path>
+  <rect x="57" y="12" width="30" height="28" rx="4" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.5"></rect>
+  <text x="72" y="30" font-size="9" text-anchor="middle" fill="#922B21" font-weight="700">學習映射</text>
+  <path d="M89 26 L107 26" stroke="#C0392B" stroke-width="1.5" marker-end="url(#ra)"></path>
+  <rect x="109" y="17" width="8" height="18" rx="2" fill="#C0392B" opacity=".7"></rect>
+  <defs><marker id="ra" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6Z" fill="#C0392B"></path></marker></defs>
+</svg></div>
+<div class="cdef">利用含有<b>標籤(Labels)</b>的訓練資料，學習輸入特徵到輸出目標的映射函數 f(x)→y。包含分類（離散輸出）與迴歸（連續輸出）兩大任務型態。</div>
+<div class="cscene"><b>📌 情境</b>給定歷史房價（含坪數、地段等特徵及實際售價），訓練模型預測新房屋價格。</div>
+<div class="cexam"><b>⚡ 考題方向</b>與非監督式學習的核心差異（有無標籤）；監督學習的訓練→驗證→測試流程。</div>
+</div>
+
+<!-- 2 非監督式學習 -->
+<div class="card">
+<div class="ctop"><div class="en">Unsupervised Learning</div><div class="zh">非監督式學習</div></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <circle cx="25" cy="20" r="5" fill="#C0392B" opacity=".6"></circle>
+  <circle cx="35" cy="28" r="5" fill="#C0392B" opacity=".6"></circle>
+  <circle cx="28" cy="35" r="5" fill="#C0392B" opacity=".6"></circle>
+  <circle cx="80" cy="18" r="5" fill="#2D5F9A" opacity=".6"></circle>
+  <circle cx="90" cy="28" r="5" fill="#2D5F9A" opacity=".6"></circle>
+  <circle cx="83" cy="36" r="5" fill="#2D5F9A" opacity=".6"></circle>
+  <ellipse cx="29" cy="28" rx="18" ry="16" fill="none" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="4,2"></ellipse>
+  <ellipse cx="84" cy="27" rx="18" ry="16" fill="none" stroke="#2D5F9A" stroke-width="1.5" stroke-dasharray="4,2"></ellipse>
+  <text x="60" y="48" font-size="8" text-anchor="middle" fill="#888">自動發現群集結構</text>
+</svg></div>
+<div class="cdef">在<b>無標籤資料</b>中自動發現隱藏模式、結構或關係的技術。核心目標是讓模型自行組織、理解資料內在規律。包含聚類、降維、關聯規則與表示學習。</div>
+<div class="cscene"><b>📌 情境</b>電商平台將數百萬用戶按購買行為自動分群，發現高價值客群。</div>
+<div class="cexam"><b>⚡ 考題方向</b>非監督學習的評估難題（無標準答案）；常見方法：聚類、降維、關聯規則的適用場景。</div>
+</div>
+
+<!-- 3 強化式學習 -->
+<div class="card">
+<div class="ctop"><div class="en">Reinforcement Learning</div><div class="zh">強化式學習</div><span class="abbr">RL</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="8" y="16" width="32" height="22" rx="5" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.5"></rect>
+  <text x="24" y="30" font-size="9" text-anchor="middle" fill="#922B21" font-weight="700">Agent</text>
+  <rect x="80" y="16" width="32" height="22" rx="5" fill="#E8F5E9" stroke="#3A9A6E" stroke-width="1.5"></rect>
+  <text x="96" y="30" font-size="9" text-anchor="middle" fill="#1B6B3A" font-weight="700">Env</text>
+  <path d="M42 22 Q60 10 78 22" fill="none" stroke="#C0392B" stroke-width="1.3" marker-end="url(#ra2)"></path>
+  <text x="60" y="10" font-size="8" text-anchor="middle" fill="#922B21">Action</text>
+  <path d="M78 32 Q60 44 42 32" fill="none" stroke="#3A9A6E" stroke-width="1.3" marker-end="url(#ra3)"></path>
+  <text x="60" y="50" font-size="8" text-anchor="middle" fill="#1B6B3A">State,Reward</text>
+  <defs>
+    <marker id="ra2" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#C0392B"></path></marker>
+    <marker id="ra3" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#3A9A6E"></path></marker>
+  </defs>
+</svg></div>
+<div class="cdef">Agent 在環境(Environment)中透過執行行動(Action)獲得獎勵(Reward)訊號，學習最大化累積獎勵的策略(Policy)。無需預先標籤，透過試誤學習。</div>
+<div class="cscene"><b>📌 情境</b>AlphaGo 透過自我對弈強化學習，學習圍棋最優落子策略。</div>
+<div class="cexam"><b>⚡ 考題方向</b>MDP 五元素(S/A/R/P/γ)；策略梯度(Policy Gradient)vs.價值學習(Q-learning)的差異。</div>
+</div>
+
+<!-- 4 馬可夫決策過程 -->
+<div class="card">
+<div class="ctop"><div class="en">Markov Decision Process</div><div class="zh">馬可夫決策過程</div><span class="abbr">MDP</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="5" y="18" width="20" height="16" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="15" y="28" font-size="7.5" text-anchor="middle" fill="#922B21" font-weight="700">S</text>
+  <path d="M27 24 L38 20" stroke="#C0392B" stroke-width="1.2" marker-end="url(#ra4)"></path>
+  <text x="33" y="17" font-size="6.5" fill="#555">A</text>
+  <rect x="40" y="18" width="20" height="16" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="50" y="28" font-size="7.5" text-anchor="middle" fill="#922B21" font-weight="700">S'</text>
+  <text x="33" y="36" font-size="6.5" fill="#3A9A6E">R</text>
+  <path d="M27 30 L38 34" stroke="#3A9A6E" stroke-width="1.2" marker-end="url(#ra5)"></path>
+  <rect x="75" y="8" width="40" height="38" rx="5" fill="#FFF8E1" stroke="#D4920A" stroke-width="1.2"></rect>
+  <text x="95" y="22" font-size="7" text-anchor="middle" fill="#A0720A" font-weight="700">S: 狀態</text>
+  <text x="95" y="32" font-size="7" text-anchor="middle" fill="#A0720A" font-weight="700">A: 行動</text>
+  <text x="95" y="42" font-size="7" text-anchor="middle" fill="#A0720A" font-weight="700">R: 獎勵</text>
+  <defs>
+    <marker id="ra4" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#C0392B"></path></marker>
+    <marker id="ra5" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#3A9A6E"></path></marker>
+  </defs>
+</svg></div>
+<div class="cdef">強化學習的數學框架，由<b>五元素</b>構成：狀態S、行動A、轉移機率P、獎勵R、折扣因子γ。「馬可夫性質」指下一狀態只取決於當前狀態，與歷史無關。</div>
+<div class="cscene"><b>📌 情境</b>機器人導航問題可建模為MDP，每個位置為狀態，移動方向為行動，到達目標獲正獎勵。</div>
+<div class="cexam"><b>⚡ 考題方向</b>MDP 五元素的定義；馬可夫性質(無記憶性)；Value Function 與 Policy 的關係。</div>
+</div>
+
+<!-- 5 線性迴歸 -->
+<div class="card">
+<div class="ctop"><div class="en">Linear Regression</div><div class="zh">線性迴歸</div></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <line x1="10" y1="45" x2="110" y2="45" stroke="#ccc" stroke-width="1"></line>
+  <line x1="10" y1="45" x2="10" y2="5" stroke="#ccc" stroke-width="1"></line>
+  <circle cx="25" cy="38" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="40" cy="30" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="55" cy="28" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="70" cy="22" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="85" cy="15" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="100" cy="12" r="3" fill="#C0392B" opacity=".7"></circle>
+  <line x1="15" y1="43" x2="108" y2="8" stroke="#C0392B" stroke-width="2" opacity=".8"></line>
+  <text x="90" y="22" font-size="7.5" fill="#922B21" font-weight="700">ŷ=β₀+β₁x</text>
+</svg></div>
+<div class="cdef">預測連續輸出的最基礎迴歸模型。公式：<b>y=β₀+Σβᵢxᵢ+ε</b>，透過最小二乘法(OLS)最小化殘差平方和(MSE)估計係數β。假設：線性關係、殘差常態分布、獨立同分布。</div>
+<div class="cscene"><b>📌 情境</b>預測廣告投放金額與銷售額的線性關係，建立簡單解釋性模型。</div>
+<div class="cexam"><b>⚡ 考題方向</b>OLS估計的前提假設；多重共線性問題；R²衡量模型解釋力；與Lasso/Ridge的關係。</div>
+</div>
+
+<!-- 6 Lasso 迴歸 -->
+<div class="card">
+<div class="ctop"><div class="en">Lasso Regression (L1)</div><div class="zh">Lasso 迴歸</div><span class="abbr">L1</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="30" y="10" width="60" height="32" rx="4" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="60" y="22" font-size="9" text-anchor="middle" fill="#922B21" font-weight="700">MSE + λΣ|βⱼ|</text>
+  <text x="60" y="35" font-size="8" text-anchor="middle" fill="#555">L1懲罰項</text>
+  <text x="15" y="30" font-size="8" text-anchor="middle" fill="#3A9A6E" font-weight="700">稀疏</text>
+  <text x="105" y="30" font-size="8" text-anchor="middle" fill="#C0392B" font-weight="700">→0</text>
+  <path d="M5" y1="5" x2="5" y2="45" stroke="#ccc"></path>
+  <rect x="5" y="46" width="10" height="4" rx="1" fill="#C0392B" opacity=".8"></rect>
+  <rect x="18" y="44" width="10" height="6" rx="1" fill="#3A9A6E" opacity=".5"></rect>
+  <rect x="31" y="42" width="10" height="8" rx="1" fill="#3A9A6E" opacity=".5"></rect>
+  <text x="60" y="50" font-size="7" text-anchor="middle" fill="#888">部分係數→0（稀疏）</text>
+</svg></div>
+<div class="cdef">在線性迴歸損失函數加入<b>L1正則化項 λΣ|βⱼ|</b>。λ越大懲罰越強，會將部分係數壓縮至精確為零，實現<b>自動特徵選擇</b>（稀疏模型）。適合高維特徵且多數無關的情境。</div>
+<div class="cscene"><b>📌 情境</b>基因組資料含數萬個特徵，用Lasso自動篩選出真正影響疾病的少數基因。</div>
+<div class="cexam"><b>⚡ 考題方向</b>L1 vs. L2正則化的差異；Lasso能產生稀疏解做特徵選擇；λ超參數的調整效果。</div>
+</div>
+
+<!-- 7 Ridge 迴歸 -->
+<div class="card">
+<div class="ctop"><div class="en">Ridge Regression (L2)</div><div class="zh">Ridge 迴歸</div><span class="abbr">L2</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="25" y="10" width="70" height="32" rx="4" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="60" y="22" font-size="9" text-anchor="middle" fill="#922B21" font-weight="700">MSE + λΣβⱼ²</text>
+  <text x="60" y="35" font-size="8" text-anchor="middle" fill="#555">L2懲罰項</text>
+  <text x="8" y="48" font-size="7" fill="#888">λ大：係數趨近0但不為0</text>
+  <rect x="5" y="46" width="10" height="4" rx="1" fill="#C0392B" opacity=".8"></rect>
+  <rect x="18" y="44" width="10" height="6" rx="1" fill="#C0392B" opacity=".5"></rect>
+  <rect x="31" y="42" width="10" height="8" rx="1" fill="#C0392B" opacity=".4"></rect>
+</svg></div>
+<div class="cdef">在損失函數加入<b>L2正則化項 λΣβⱼ²</b>。懲罰使所有係數均勻縮小但不為零，有效處理<b>多重共線性</b>問題。與Lasso不同，Ridge保留所有特徵但縮減係數。</div>
+<div class="cscene"><b>📌 情境</b>醫療預測中多個相關檢測指標存在共線性，用Ridge穩定模型係數估計。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Ridge解決多共線性；L2不產生稀疏解；ElasticNet = Lasso+Ridge 結合兩者優點。</div>
+</div>
+
+<!-- 8 SVR -->
+<div class="card">
+<div class="ctop"><div class="en">Support Vector Regression</div><div class="zh">支援向量迴歸</div><span class="abbr">SVR</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <line x1="10" y1="26" x2="110" y2="26" stroke="#C0392B" stroke-width="1.5"></line>
+  <rect x="10" y="18" width="100" height="16" rx="0" fill="#FDEDEC" opacity=".6"></rect>
+  <line x1="10" y1="18" x2="110" y2="18" stroke="#C0392B" stroke-width="1" stroke-dasharray="4,2"></line>
+  <line x1="10" y1="34" x2="110" y2="34" stroke="#C0392B" stroke-width="1" stroke-dasharray="4,2"></line>
+  <text x="60" y="14" font-size="8" text-anchor="middle" fill="#922B21" font-weight="700">ε-tube（容忍管道）</text>
+  <circle cx="30" cy="22" r="3" fill="#3A9A6E" opacity=".8"></circle>
+  <circle cx="50" cy="28" r="3" fill="#3A9A6E" opacity=".8"></circle>
+  <circle cx="70" cy="38" r="3" fill="#C0392B" opacity=".8"></circle>
+  <circle cx="90" cy="20" r="3" fill="#3A9A6E" opacity=".8"></circle>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#888">管道外點受懲罰(C參數)</text>
+</svg></div>
+<div class="cdef">SVM 的迴歸版本。建立一個<b>ε-不敏感管道</b>，管道內的偏差不計入損失，只懲罰超出管道的點。C參數控制管道外點的懲罰程度，ε決定管道寬度。</div>
+<div class="cscene"><b>📌 情境</b>股價預測中允許小範圍誤差，SVR能建立穩健的非線性迴歸模型。</div>
+<div class="cexam"><b>⚡ 考題方向</b>ε-tube的作用；C參數與ε參數的調整效果；SVR可搭配核函數處理非線性資料。</div>
+</div>
+
+<!-- 9 隨機森林 -->
+<div class="card">
+<div class="ctop"><div class="en">Random Forest</div><div class="zh">隨機森林</div><span class="abbr">RF</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <polygon points="20,42 15,30 12,18 20,8 28,18 25,30" fill="#3A9A6E" opacity=".6"></polygon>
+  <polygon points="60,42 55,30 52,18 60,8 68,18 65,30" fill="#3A9A6E" opacity=".6"></polygon>
+  <polygon points="100,42 95,30 92,18 100,8 108,18 105,30" fill="#3A9A6E" opacity=".6"></polygon>
+  <rect x="5" y="42" width="30" height="6" rx="2" fill="#2D5F9A" opacity=".6"></rect>
+  <rect x="45" y="42" width="30" height="6" rx="2" fill="#2D5F9A" opacity=".6"></rect>
+  <rect x="85" y="42" width="30" height="6" rx="2" fill="#2D5F9A" opacity=".6"></rect>
+  <text x="60" y="5" font-size="7.5" text-anchor="middle" fill="#555">Bootstrap + 隨機特徵抽樣</text>
+</svg></div>
+<div class="cdef">集成方法(Bagging)。透過<b>Bootstrap抽樣</b>建立多棵決策樹，並在每個節點隨機抽取部分特徵進行分裂，最終取平均（迴歸）或投票（分類）。抗過擬合，可輸出特徵重要性。</div>
+<div class="cscene"><b>📌 情境</b>信用風險評估中，隨機森林整合數百棵決策樹，提升預測穩定性與準確性。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Bagging核心機制；Bootstrap抽樣的作用；特徵重要性計算；與單一決策樹的比較。</div>
+</div>
+
+<!-- 10 梯度提升 -->
+<div class="card">
+<div class="ctop"><div class="en">Gradient Boosting</div><div class="zh">梯度提升</div><span class="abbr">GBM</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="5" y="20" width="22" height="20" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="16" y="33" font-size="8" text-anchor="middle" fill="#922B21" font-weight="700">T₁</text>
+  <path d="M29 30 L37 30" stroke="#C0392B" stroke-width="1.2" marker-end="url(#ra6)"></path>
+  <text x="33" y="25" font-size="7" fill="#888">殘差</text>
+  <rect x="39" y="20" width="22" height="20" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="50" y="33" font-size="8" text-anchor="middle" fill="#922B21" font-weight="700">T₂</text>
+  <path d="M63 30 L71 30" stroke="#C0392B" stroke-width="1.2" marker-end="url(#ra6)"></path>
+  <text x="67" y="25" font-size="7" fill="#888">殘差</text>
+  <rect x="73" y="20" width="22" height="20" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="84" y="33" font-size="8" text-anchor="middle" fill="#922B21" font-weight="700">T₃</text>
+  <text x="107" y="30" font-size="11" fill="#C0392B" font-weight="700">…</text>
+  <text x="60" y="10" font-size="7.5" text-anchor="middle" fill="#555">F(x)=T₁+ηT₂+ηT₃+…</text>
+  <defs><marker id="ra6" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#C0392B"></path></marker></defs>
+</svg></div>
+<div class="cdef">Boosting集成方法。<b>逐步建立弱學習器</b>（通常是淺層決策樹），每棵新樹專門修正前一棵樹的殘差（梯度方向），透過加權求和得最終預測。學習率η控制每步步長。</div>
+<div class="cscene"><b>📌 情境</b>Kaggle競賽中梯度提升是最常見的致勝演算法，尤其在結構化表格資料上表現優異。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Boosting降偏差(Bias)的原理；逐步修正殘差；與Bagging的本質差異；Early Stopping防過擬合。</div>
+</div>
+
+<!-- 11 XGBoost -->
+<div class="card">
+<div class="ctop"><div class="en">eXtreme Gradient Boosting</div><div class="zh">XGBoost</div><span class="abbr">XGB</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="5" y="8" width="50" height="38" rx="5" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="30" y="20" font-size="8" text-anchor="middle" fill="#922B21" font-weight="700">XGBoost</text>
+  <text x="30" y="31" font-size="7" text-anchor="middle" fill="#555">Level-wise</text>
+  <text x="30" y="40" font-size="7" text-anchor="middle" fill="#555">Hessian加速</text>
+  <rect x="65" y="8" width="50" height="38" rx="5" fill="#E8F5E9" stroke="#3A9A6E" stroke-width="1.2"></rect>
+  <text x="90" y="20" font-size="8" text-anchor="middle" fill="#1B6B3A" font-weight="700">LightGBM</text>
+  <text x="90" y="31" font-size="7" text-anchor="middle" fill="#555">Leaf-wise</text>
+  <text x="90" y="40" font-size="7" text-anchor="middle" fill="#555">Histogram快速</text>
+</svg></div>
+<div class="cdef">梯度提升的高效實作，引入<b>二階導數(Hessian)</b>加速最佳分裂點搜尋，採用<b>Level-wise</b>（層級式）生長策略，內建L1/L2正則化、稀疏資料支援、缺值自動處理。</div>
+<div class="cscene"><b>📌 情境</b>廣告點擊率預測中XGBoost處理數百個特徵的大規模資料，訓練效率高且準確率優異。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Level-wise(XGBoost)vs.Leaf-wise(LightGBM)生長策略；Hessian二階導數加速；正則化控制過擬合。</div>
+</div>
+
+<!-- 12 LightGBM -->
+<div class="card">
+<div class="ctop"><div class="en">Light Gradient Boosting Machine</div><div class="zh">LightGBM</div><span class="abbr">LGBM</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <line x1="60" y1="6" x2="60" y2="18" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <line x1="60" y1="18" x2="40" y2="30" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <line x1="60" y1="18" x2="80" y2="30" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <line x1="80" y1="30" x2="70" y2="42" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <line x1="80" y1="30" x2="90" y2="42" stroke="#3A9A6E" stroke-width="1.5"></line>
+  <circle cx="60" cy="6" r="4" fill="#C0392B" opacity=".8"></circle>
+  <circle cx="40" cy="30" r="4" fill="#3A9A6E" opacity=".7"></circle>
+  <circle cx="80" cy="30" r="4" fill="#3A9A6E" opacity=".7"></circle>
+  <circle cx="70" cy="42" r="4" fill="#D4920A" opacity=".8"></circle>
+  <circle cx="90" cy="42" r="4" fill="#D4920A" opacity=".8"></circle>
+  <text x="95" y="35" font-size="7.5" fill="#922B21">max</text>
+  <text x="95" y="43" font-size="7" fill="#888">gain葉</text>
+  <text x="60" y="52" font-size="7.5" text-anchor="middle" fill="#555">Leaf-wise生長</text>
+</svg></div>
+<div class="cdef">梯度提升的高效版本，採用<b>Leaf-wise（葉子式）分裂策略</b>：每次選擇能帶來最大增益(max gain)的葉節點分裂。搭配<b>Histogram-based</b>演算法降低計算複雜度，大數據上速度更快。</div>
+<div class="cscene"><b>📌 情境</b>推薦系統中LightGBM在大規模用戶-商品特徵矩陣上訓練速度比XGBoost快數倍。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Leaf-wise vs. Level-wise的差異與過擬合風險；Histogram-based加速；max_depth限制必要性。</div>
+</div>
+
+<!-- 13 邏輯迴歸 -->
+<div class="card">
+<div class="ctop"><div class="en">Logistic Regression</div><div class="zh">邏輯迴歸</div><span class="abbr">LR</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <path d="M10,42 Q30,42 40,32 Q55,16 70,10 Q85,5 110,5" fill="none" stroke="#C0392B" stroke-width="2" opacity=".8"></path>
+  <line x1="10" y1="24" x2="110" y2="24" stroke="#ccc" stroke-width="1" stroke-dasharray="4,2"></line>
+  <text x="105" y="20" font-size="7.5" fill="#888">1</text>
+  <text x="105" y="28" font-size="7.5" fill="#888">.5</text>
+  <text x="105" y="47" font-size="7.5" fill="#888">0</text>
+  <text x="60" y="48" font-size="8" text-anchor="middle" fill="#922B21" font-weight="700">σ(z)=1/(1+e⁻ᶻ)</text>
+</svg></div>
+<div class="cdef">雖名為「迴歸」，實際上是最基礎的<b>分類</b>演算法。透過Sigmoid函數將線性組合壓縮至(0,1)範圍，輸出類別機率。假設特徵與Log-Odds呈線性關係。公式：p=1/(1+e⁻(β₀+Σβᵢxᵢ))。</div>
+<div class="cscene"><b>📌 情境</b>銀行信用卡申請審核：輸出客戶違約機率，以0.5為閾值進行二元分類。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Sigmoid函數的輸出範圍；Log-Odds(對數勝率)的意義；多類別需OvR或Multinomial擴展。</div>
+</div>
+
+<!-- 14 SVM -->
+<div class="card">
+<div class="ctop"><div class="en">Support Vector Machine</div><div class="zh">支援向量機</div><span class="abbr">SVM</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <line x1="60" y1="5" x2="60" y2="48" stroke="#C0392B" stroke-width="2"></line>
+  <line x1="48" y1="5" x2="48" y2="48" stroke="#C0392B" stroke-width="1" stroke-dasharray="3,2" opacity=".6"></line>
+  <line x1="72" y1="5" x2="72" y2="48" stroke="#C0392B" stroke-width="1" stroke-dasharray="3,2" opacity=".6"></line>
+  <circle cx="25" cy="20" r="4" fill="#2D5F9A" opacity=".8"></circle>
+  <circle cx="30" cy="35" r="4" fill="#2D5F9A" opacity=".8"></circle>
+  <circle cx="42" cy="28" r="5" fill="none" stroke="#2D5F9A" stroke-width="2"></circle>
+  <circle cx="85" cy="18" r="4" fill="#C0392B" opacity=".6"></circle>
+  <circle cx="90" cy="33" r="4" fill="#C0392B" opacity=".6"></circle>
+  <circle cx="78" cy="25" r="5" fill="none" stroke="#C0392B" stroke-width="2"></circle>
+  <text x="60" y="52" font-size="7.5" text-anchor="middle" fill="#888">⟵ Margin ⟶</text>
+</svg></div>
+<div class="cdef">在特徵空間中找到<b>最大化兩類間距(Margin)</b>的超平面決策邊界。決策邊界：w·x+b=0。邊界上的資料點稱為「支援向量」。軟間隔SVM用C參數容忍部分誤分類。</div>
+<div class="cscene"><b>📌 情境</b>人臉辨識中SVM尋找最佳超平面區分「人臉」與「非人臉」，在小資料集上表現良好。</div>
+<div class="cexam"><b>⚡ 考題方向</b>最大化Margin的原理；支援向量的定義；C參數作用；核函數如何處理非線性問題。</div>
+</div>
+
+<!-- 15 核函數 -->
+<div class="card">
+<div class="ctop"><div class="en">Kernel Function</div><div class="zh">核函數</div><span class="abbr">Kernel</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <ellipse cx="30" cy="36" rx="20" ry="10" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></ellipse>
+  <circle cx="24" cy="33" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="36" cy="39" r="3" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="28" cy="40" r="3" fill="#C0392B" opacity=".7"></circle>
+  <text x="30" y="50" font-size="7" text-anchor="middle" fill="#888">原始空間</text>
+  <path d="M53 30 L67 20" stroke="#D4920A" stroke-width="1.5" marker-end="url(#ra7)"></path>
+  <text x="60" y="15" font-size="7.5" fill="#D4920A" font-weight="700">Φ(x)</text>
+  <text x="60" y="22" font-size="7" fill="#888">映射高維</text>
+  <rect x="75" y="10" width="38" height="35" rx="5" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <line x1="85" y1="35" x2="103" y2="15" stroke="#C0392B" stroke-width="1.5"></line>
+  <circle cx="82" cy="38" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="105" cy="12" r="3" fill="#2D5F9A" opacity=".7"></circle>
+  <text x="94" y="46" font-size="7" text-anchor="middle" fill="#888">高維線性可分</text>
+  <defs><marker id="ra7" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#D4920A"></path></marker></defs>
+</svg></div>
+<div class="cdef">「核技巧(Kernel Trick)」：透過核函數<b>K(xᵢ,x)=Φ(xᵢ)·Φ(x)</b>隱式地將資料映射至高維空間，使線性不可分的資料變得線性可分，且無需顯式計算高維座標。常用：RBF核、多項式核。</div>
+<div class="cscene"><b>📌 情境</b>圓形分布資料在2D線性不可分，RBF核函數映射3D後即可用平面分開。</div>
+<div class="cexam"><b>⚡ 考題方向</b>核技巧的意義（避免顯式高維計算）；RBF/Linear/Polynomial核的適用場景；γ參數對RBF核的影響。</div>
+</div>
+
+<!-- 16 決策樹 -->
+<div class="card">
+<div class="ctop"><div class="en">Decision Tree</div><div class="zh">決策樹</div><span class="abbr">DT</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <circle cx="60" cy="10" r="8" fill="#C0392B" opacity=".8"></circle>
+  <text x="60" y="13" font-size="7" text-anchor="middle" fill="#fff" font-weight="700">Root</text>
+  <line x1="54" y1="17" x2="38" y2="28" stroke="#C0392B" stroke-width="1.3"></line>
+  <line x1="66" y1="17" x2="82" y2="28" stroke="#C0392B" stroke-width="1.3"></line>
+  <circle cx="35" cy="32" r="7" fill="#D4920A" opacity=".7"></circle>
+  <text x="35" y="35" font-size="6.5" text-anchor="middle" fill="#fff">Node</text>
+  <circle cx="85" cy="32" r="7" fill="#D4920A" opacity=".7"></circle>
+  <text x="85" y="35" font-size="6.5" text-anchor="middle" fill="#fff">Node</text>
+  <line x1="30" y1="38" x2="22" y2="46" stroke="#C0392B" stroke-width="1.2"></line>
+  <line x1="40" y1="38" x2="48" y2="46" stroke="#C0392B" stroke-width="1.2"></line>
+  <rect x="15" y="46" width="14" height="6" rx="2" fill="#3A9A6E" opacity=".7"></rect>
+  <rect x="41" y="46" width="14" height="6" rx="2" fill="#3A9A6E" opacity=".7"></rect>
+  <text x="22" y="51" font-size="6" text-anchor="middle" fill="#fff">Leaf</text>
+  <text x="48" y="51" font-size="6" text-anchor="middle" fill="#fff">Leaf</text>
+</svg></div>
+<div class="cdef">透過一系列「如果…那麼…」規則遞迴分裂資料的樹狀模型。分裂準則：<b>基尼不純度(Gini)</b>或<b>資訊增益(Information Gain)</b>。優點：直觀可解釋；缺點：易過擬合，對資料微小變動敏感。</div>
+<div class="cscene"><b>📌 情境</b>醫療診斷系統中，決策樹的規則直觀：「發燒&gt;38.5且咳嗽→疑似流感」。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Gini vs. 資訊增益的分裂標準；max_depth/min_samples_split防過擬合；單棵樹vs.集成方法的比較。</div>
+</div>
+
+<!-- 17 基尼不純度 -->
+<div class="card">
+<div class="ctop"><div class="en">Gini Impurity</div><div class="zh">基尼不純度</div><span class="abbr">Gini</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="10" y="10" width="30" height="35" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <rect x="10" y="10" width="30" height="17" rx="3" fill="#C0392B" opacity=".6"></rect>
+  <rect x="10" y="27" width="30" height="18" rx="0" fill="#2D5F9A" opacity=".4"></rect>
+  <text x="25" y="24" font-size="8" text-anchor="middle" fill="#fff" font-weight="700">50%</text>
+  <text x="25" y="39" font-size="8" text-anchor="middle" fill="#2D5F9A" font-weight="700">50%</text>
+  <text x="25" y="50" font-size="7" text-anchor="middle" fill="#888">G=0.5 高</text>
+  <rect x="55" y="10" width="30" height="35" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <rect x="55" y="10" width="30" height="32" rx="3" fill="#C0392B" opacity=".6"></rect>
+  <rect x="55" y="42" width="30" height="3" rx="0" fill="#2D5F9A" opacity=".4"></rect>
+  <text x="70" y="28" font-size="8" text-anchor="middle" fill="#fff" font-weight="700">90%</text>
+  <text x="70" y="50" font-size="7" text-anchor="middle" fill="#888">G=0.18 低</text>
+  <rect x="90" y="10" width="30" height="35" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <rect x="90" y="10" width="30" height="35" rx="3" fill="#C0392B" opacity=".6"></rect>
+  <text x="105" y="30" font-size="8" text-anchor="middle" fill="#fff" font-weight="700">100%</text>
+  <text x="105" y="50" font-size="7" text-anchor="middle" fill="#888">G=0 純</text>
+</svg></div>
+<div class="cdef">衡量節點<b>混雜程度</b>的指標，用於決策樹分裂標準。公式：<b>G = 1 - Σpᵢ²</b>。G=0表示節點完全純淨（只有一種類別），G=0.5（二分類等比）表示最混雜。決策樹選擇能最大降低Gini的特徵分裂。</div>
+<div class="cscene"><b>📌 情境</b>分裂前節點有50%好瓜/50%壞瓜(G=0.5)，分裂後左子節點90%好瓜(G=0.18)，右子節點80%壞瓜(G=0.32)，整體不純度下降。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Gini公式計算；與資訊增益(Entropy)的比較；G值越小越好；CART演算法使用Gini。</div>
+</div>
+
+<!-- 18 KNN -->
+<div class="card">
+<div class="ctop"><div class="en">K Nearest Neighbors</div><div class="zh">K最近鄰分類</div><span class="abbr">KNN</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <circle cx="60" cy="26" r="10" fill="none" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="5,3"></circle>
+  <circle cx="60" cy="26" r="6" fill="#FFF" stroke="#D4920A" stroke-width="1.5"></circle>
+  <text x="60" y="29" font-size="7" text-anchor="middle" fill="#D4920A" font-weight="700">?</text>
+  <circle cx="75" cy="18" r="4" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="72" cy="33" r="4" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="80" cy="28" r="4" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="40" cy="20" r="4" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="45" cy="35" r="4" fill="#2D5F9A" opacity=".7"></circle>
+  <line x1="60" y1="26" x2="75" y2="18" stroke="#888" stroke-width="1" stroke-dasharray="3,2"></line>
+  <line x1="60" y1="26" x2="72" y2="33" stroke="#888" stroke-width="1" stroke-dasharray="3,2"></line>
+  <line x1="60" y1="26" x2="80" y2="28" stroke="#888" stroke-width="1" stroke-dasharray="3,2"></line>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#C0392B">K=3 → 紅色(多數決)</text>
+</svg></div>
+<div class="cdef">非參數、惰性學習(Lazy Learning)演算法。無需建立顯式模型，預測時計算新樣本與所有訓練樣本的距離，找出K個最近鄰，以<b>多數投票</b>（分類）或取均值（迴歸）決定輸出。</div>
+<div class="cscene"><b>📌 情境</b>推薦系統中「與你最相似的3位用戶喜歡X電影」，即KNN的直覺概念。</div>
+<div class="cexam"><b>⚡ 考題方向</b>K值選擇的影響（太小易過擬合，太大邊界模糊）；維度詛咒；需特徵標準化；惰性學習的特點。</div>
+</div>
+
+<!-- 19 樸素貝氏 -->
+<div class="card">
+<div class="ctop"><div class="en">Naïve Bayes Classifier</div><div class="zh">樸素貝氏分類</div><span class="abbr">NB</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="5" y="18" width="40" height="20" rx="4" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="25" y="29" font-size="8" text-anchor="middle" fill="#922B21" font-weight="700">P(C|X)</text>
+  <text x="55" y="28" font-size="14" fill="#C0392B">=</text>
+  <rect x="65" y="8" width="50" height="16" rx="3" fill="#E8F5E9" stroke="#3A9A6E" stroke-width="1.2"></rect>
+  <text x="90" y="19" font-size="8" text-anchor="middle" fill="#1B6B3A" font-weight="700">P(X|C)·P(C)</text>
+  <line x1="65" y1="27" x2="115" y2="27" stroke="#555" stroke-width="1.5"></line>
+  <rect x="65" y="30" width="50" height="14" rx="3" fill="#FFF8E1" stroke="#D4920A" stroke-width="1.2"></rect>
+  <text x="90" y="40" font-size="8" text-anchor="middle" fill="#A0720A" font-weight="700">P(X)</text>
+</svg></div>
+<div class="cdef">基於貝氏定理，假設所有特徵在給定類別條件下<b>彼此獨立</b>（「樸素」假設）。雖然現實中獨立性幾乎不完全成立，但在文本分類等場景效果良好，且計算快速、可即時更新。</div>
+<div class="cscene"><b>📌 情境</b>垃圾郵件過濾：計算出現「優惠」「領獎」等詞彙條件下，郵件為垃圾信的後驗機率。</div>
+<div class="cexam"><b>⚡ 考題方向</b>樸素假設的含義；零機率問題與Laplace平滑解決方法；適用文本分類、即時預測場景。</div>
+</div>
+
+<!-- 20 k-means -->
+<div class="card">
+<div class="ctop"><div class="en">k-means Clustering</div><div class="zh">k-means 分群</div><span class="abbr">k-means</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <circle cx="35" cy="22" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="28" cy="30" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="40" cy="35" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="32" cy="18" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="80" cy="18" r="3" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="88" cy="28" r="3" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="75" cy="32" r="3" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="85" cy="10" r="3" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="33" cy="26" r="7" fill="none" stroke="#C0392B" stroke-width="2" stroke-dasharray="3,2"></circle>
+  <circle cx="82" cy="22" r="7" fill="none" stroke="#2D5F9A" stroke-width="2" stroke-dasharray="3,2"></circle>
+  <text x="33" y="26" font-size="8" text-anchor="middle" fill="#C0392B" font-weight="900">✕</text>
+  <text x="82" y="22" font-size="8" text-anchor="middle" fill="#2D5F9A" font-weight="900">✕</text>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#888">質心(Centroid)迭代更新</text>
+</svg></div>
+<div class="cdef">最常用的聚類演算法。預設K個群集，隨機初始化質心，<b>迭代執行</b>：①分配每個點至最近質心→②重新計算質心，直到收斂。需<b>預先指定K值</b>，對初始質心敏感，只能處理凸形群集。</div>
+<div class="cscene"><b>📌 情境</b>將全球10萬家零售門市按銷售特徵自動分為K個群組，指導差異化行銷策略。</div>
+<div class="cexam"><b>⚡ 考題方向</b>需預設K值（Elbow Method選K）；對離群值敏感；只能處理凸形群集；vs. DBSCAN的核心差異。</div>
+</div>
+
+<!-- 21 DBSCAN -->
+<div class="card">
+<div class="ctop"><div class="en">Density-Based Spatial Clustering</div><div class="zh">DBSCAN</div><span class="abbr">DBSCAN</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <circle cx="28" cy="22" r="3" fill="#C0392B" opacity=".8"></circle>
+  <circle cx="22" cy="32" r="3" fill="#C0392B" opacity=".8"></circle>
+  <circle cx="35" cy="35" r="3" fill="#C0392B" opacity=".8"></circle>
+  <circle cx="32" cy="14" r="3" fill="#C0392B" opacity=".8"></circle>
+  <ellipse cx="29" cy="27" rx="18" ry="17" fill="none" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="4,2"></ellipse>
+  <circle cx="80" cy="20" r="3" fill="#2D5F9A" opacity=".8"></circle>
+  <circle cx="88" cy="30" r="3" fill="#2D5F9A" opacity=".8"></circle>
+  <circle cx="75" cy="35" r="3" fill="#2D5F9A" opacity=".8"></circle>
+  <ellipse cx="81" cy="28" rx="16" ry="14" fill="none" stroke="#2D5F9A" stroke-width="1.5" stroke-dasharray="4,2"></ellipse>
+  <circle cx="58" cy="10" r="4" fill="none" stroke="#888" stroke-width="1.5" stroke-dasharray="2,2"></circle>
+  <text x="58" y="13" font-size="6" text-anchor="middle" fill="#888">雜訊</text>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#888">ε半徑+MinPts密度定義</text>
+</svg></div>
+<div class="cdef">基於<b>密度</b>的聚類演算法，以ε（鄰域半徑）和MinPts（最少點數）定義核心點、邊界點和雜訊點。無需預設K值，能發現<b>任意形狀</b>群集，並自動識別<b>離群值（雜訊點）</b>。</div>
+<div class="cscene"><b>📌 情境</b>地圖上餐廳位置聚類：DBSCAN能發現不規則形狀的商圈，並標記偏遠孤立餐廳為異常點。</div>
+<div class="cexam"><b>⚡ 考題方向</b>不需預設K、能識別雜訊點、處理任意形狀群集（vs.k-means只能凸形）；ε與MinPts的調整影響。</div>
+</div>
+
+<!-- 22 階層式分群 -->
+<div class="card">
+<div class="ctop"><div class="en">Hierarchical Clustering</div><div class="zh">階層式分群</div><span class="abbr">HC</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <line x1="20" y1="48" x2="20" y2="38" stroke="#C0392B" stroke-width="1.5"></line>
+  <line x1="40" y1="48" x2="40" y2="38" stroke="#C0392B" stroke-width="1.5"></line>
+  <line x1="20" y1="38" x2="40" y2="38" stroke="#C0392B" stroke-width="1.5"></line>
+  <line x1="30" y1="38" x2="30" y2="28" stroke="#C0392B" stroke-width="1.5"></line>
+  <line x1="65" y1="48" x2="65" y2="43" stroke="#C0392B" stroke-width="1.5"></line>
+  <line x1="85" y1="48" x2="85" y2="43" stroke="#C0392B" stroke-width="1.5"></line>
+  <line x1="65" y1="43" x2="85" y2="43" stroke="#C0392B" stroke-width="1.5"></line>
+  <line x1="75" y1="43" x2="75" y2="28" stroke="#C0392B" stroke-width="1.5"></line>
+  <line x1="30" y1="28" x2="75" y2="28" stroke="#C0392B" stroke-width="2"></line>
+  <line x1="52" y1="28" x2="52" y2="15" stroke="#C0392B" stroke-width="2"></line>
+  <text x="60" y="11" font-size="7.5" text-anchor="middle" fill="#922B21" font-weight="700">Dendrogram</text>
+  <circle cx="20" cy="50" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="40" cy="50" r="3" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="65" cy="50" r="3" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="85" cy="50" r="3" fill="#2D5F9A" opacity=".7"></circle>
+</svg></div>
+<div class="cdef">以<b>樹狀圖(Dendrogram)</b>呈現資料點的相似層次結構。凝聚式(bottom-up)：從每點各自為群逐步合併；分裂式(top-down)：從整體逐步分裂。<b>不需預先指定K值</b>，可後期截斷Dendrogram決定K。</div>
+<div class="cscene"><b>📌 情境</b>生物學中以基因表現相似性建立物種進化樹，Dendrogram呈現親緣關係層次。</div>
+<div class="cexam"><b>⚡ 考題方向</b>凝聚式vs.分裂式；Dendrogram的讀法與截斷選K；計算複雜度O(n²)；鏈結準則（Single/Complete/Average）。</div>
+</div>
+
+<!-- 23 神經網路 -->
+<div class="card">
+<div class="ctop"><div class="en">Artificial Neural Network</div><div class="zh">人工神經網路</div><span class="abbr">ANN</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <circle cx="15" cy="18" r="5" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="15" cy="34" r="5" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="42" cy="12" r="5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="42" cy="26" r="5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="42" cy="40" r="5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="75" cy="18" r="5" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="75" cy="34" r="5" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="105" cy="26" r="5" fill="#3A9A6E" opacity=".8"></circle>
+  <line x1="20" y1="18" x2="37" y2="12" stroke="#ccc" stroke-width=".8"></line><line x1="20" y1="18" x2="37" y2="26" stroke="#ccc" stroke-width=".8"></line><line x1="20" y1="18" x2="37" y2="40" stroke="#ccc" stroke-width=".8"></line>
+  <line x1="20" y1="34" x2="37" y2="12" stroke="#ccc" stroke-width=".8"></line><line x1="20" y1="34" x2="37" y2="26" stroke="#ccc" stroke-width=".8"></line><line x1="20" y1="34" x2="37" y2="40" stroke="#ccc" stroke-width=".8"></line>
+  <line x1="47" y1="12" x2="70" y2="18" stroke="#ccc" stroke-width=".8"></line><line x1="47" y1="26" x2="70" y2="18" stroke="#ccc" stroke-width=".8"></line><line x1="47" y1="40" x2="70" y2="18" stroke="#ccc" stroke-width=".8"></line>
+  <line x1="47" y1="12" x2="70" y2="34" stroke="#ccc" stroke-width=".8"></line><line x1="47" y1="26" x2="70" y2="34" stroke="#ccc" stroke-width=".8"></line><line x1="47" y1="40" x2="70" y2="34" stroke="#ccc" stroke-width=".8"></line>
+  <line x1="80" y1="18" x2="100" y2="26" stroke="#ccc" stroke-width=".8"></line><line x1="80" y1="34" x2="100" y2="26" stroke="#ccc" stroke-width=".8"></line>
+  <text x="15" y="50" font-size="7" text-anchor="middle" fill="#888">輸入</text>
+  <text x="42" y="50" font-size="7" text-anchor="middle" fill="#888">隱藏</text>
+  <text x="105" y="50" font-size="7" text-anchor="middle" fill="#888">輸出</text>
+</svg></div>
+<div class="cdef">模仿生物神經元連接的計算模型。由<b>輸入層、隱藏層、輸出層</b>組成，每個神經元計算加權和再經激活函數輸出：z=Σwᵢxᵢ+b，a=σ(z)。多層疊加賦予強大的非線性表示能力。</div>
+<div class="cscene"><b>📌 情境</b>三層神經網路學習手寫數字辨識：輸入784像素→隱藏層特徵提取→輸出10類機率。</div>
+<div class="cexam"><b>⚡ 考題方向</b>前向傳播(Forward Propagation)計算流程；激活函數(ReLU/Sigmoid/Tanh)的作用；深度vs.寬度的影響。</div>
+</div>
+
+<!-- 24 CNN -->
+<div class="card">
+<div class="ctop"><div class="en">Convolutional Neural Network</div><div class="zh">卷積神經網路</div><span class="abbr">CNN</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="5" y="8" width="20" height="36" rx="2" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="15" y="28" font-size="7" text-anchor="middle" fill="#922B21" font-weight="700" transform="rotate(-90,15,28)">Image</text>
+  <rect x="30" y="12" width="18" height="28" rx="2" fill="#D4920A" opacity=".5"></rect>
+  <text x="39" y="28" font-size="6.5" text-anchor="middle" fill="#6B4A00" font-weight="700">Conv</text>
+  <rect x="53" y="16" width="14" height="20" rx="2" fill="#2D5F9A" opacity=".5"></rect>
+  <text x="60" y="28" font-size="6" text-anchor="middle" fill="#1B3A6B" font-weight="700">Pool</text>
+  <rect x="72" y="12" width="18" height="28" rx="2" fill="#D4920A" opacity=".5"></rect>
+  <text x="81" y="28" font-size="6.5" text-anchor="middle" fill="#6B4A00" font-weight="700">Conv</text>
+  <rect x="95" y="8" width="22" height="36" rx="2" fill="#3A9A6E" opacity=".5"></rect>
+  <text x="106" y="28" font-size="6.5" text-anchor="middle" fill="#1B6B3A" font-weight="700">FC</text>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#888">局部感受野 + 參數共享</text>
+</svg></div>
+<div class="cdef">專為處理<b>網格狀資料（影像）</b>設計的深度學習架構。卷積層(Conv)以小型濾波器掃描，實現<b>局部感受野</b>與<b>參數共享</b>；池化層(Pooling)降維保留主要特徵；全連接層(FC)完成最終分類。</div>
+<div class="cscene"><b>📌 情境</b>醫療影像AI：CNN自動學習X光片中腫瘤的形狀、紋理特徵，協助醫師診斷。</div>
+<div class="cexam"><b>⚡ 考題方向</b>局部感受野與參數共享的優勢；Conv/Pool/FC各層作用；適用場景：影像分類/物件偵測/分割。</div>
+</div>
+
+<!-- 25 RNN -->
+<div class="card">
+<div class="ctop"><div class="en">Recurrent Neural Network</div><div class="zh">循環神經網路</div><span class="abbr">RNN</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="40" y="16" width="40" height="20" rx="5" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.5"></rect>
+  <text x="60" y="29" font-size="9" text-anchor="middle" fill="#922B21" font-weight="700">RNN Cell</text>
+  <path d="M60 16 Q85 5 80 16" fill="none" stroke="#C0392B" stroke-width="1.5" marker-end="url(#ra8)"></path>
+  <text x="80" y="8" font-size="7.5" fill="#922B21">hₜ→hₜ₊₁</text>
+  <path d="M20 26 L38 26" stroke="#3A9A6E" stroke-width="1.5" marker-end="url(#ra9)"></path>
+  <text x="28" y="22" font-size="7.5" fill="#3A9A6E">xₜ</text>
+  <path d="M82 26 L100 26" stroke="#2D5F9A" stroke-width="1.5" marker-end="url(#ra10)"></path>
+  <text x="91" y="22" font-size="7.5" fill="#2D5F9A">yₜ</text>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#888">隱藏狀態傳遞記憶</text>
+  <defs>
+    <marker id="ra8" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#C0392B"></path></marker>
+    <marker id="ra9" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#3A9A6E"></path></marker>
+    <marker id="ra10" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#2D5F9A"></path></marker>
+  </defs>
+</svg></div>
+<div class="cdef">專為處理<b>序列資料</b>設計的神經網路，每個時間步的隱藏狀態hₜ = f(xₜ, hₜ₋₁)，將前一步的隱藏狀態傳遞至下一步，實現「記憶」。缺點：長序列中存在<b>梯度消失/爆炸</b>問題。</div>
+<div class="cscene"><b>📌 情境</b>文字生成模型中RNN逐字預測下一個詞，利用之前詞彙的上下文隱藏狀態。</div>
+<div class="cexam"><b>⚡ 考題方向</b>隱藏狀態傳遞的機制；梯度消失問題（長序列）；BPTT（時間反向傳播）；RNN→LSTM改進方向。</div>
+</div>
+
+<!-- 26 LSTM -->
+<div class="card">
+<div class="ctop"><div class="en">Long Short-Term Memory</div><div class="zh">長短期記憶網路</div><span class="abbr">LSTM</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="25" y="10" width="70" height="34" rx="5" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.5"></rect>
+  <rect x="30" y="16" width="16" height="12" rx="3" fill="#2D5F9A" opacity=".6"></rect>
+  <text x="38" y="24" font-size="6.5" text-anchor="middle" fill="#fff" font-weight="700">忘記</text>
+  <rect x="50" y="16" width="16" height="12" rx="3" fill="#3A9A6E" opacity=".6"></rect>
+  <text x="58" y="24" font-size="6.5" text-anchor="middle" fill="#fff" font-weight="700">輸入</text>
+  <rect x="70" y="16" width="16" height="12" rx="3" fill="#D4920A" opacity=".7"></rect>
+  <text x="78" y="24" font-size="6.5" text-anchor="middle" fill="#fff" font-weight="700">輸出</text>
+  <line x1="60" y1="28" x2="60" y2="38" stroke="#C0392B" stroke-width="1.2"></line>
+  <text x="60" y="46" font-size="7.5" text-anchor="middle" fill="#555">三個閘門(Gate)控制記憶流</text>
+</svg></div>
+<div class="cdef">RNN的改進版，透過<b>三個閘門</b>解決梯度消失問題：<b>遺忘閘(Forget Gate)</b>決定丟棄舊記憶、<b>輸入閘(Input Gate)</b>決定寫入新記憶、<b>輸出閘(Output Gate)</b>決定輸出。同時維護Cell State(長期記憶)與Hidden State。</div>
+<div class="cscene"><b>📌 情境</b>機器翻譯中LSTM能記憶長距離的句子結構，如記住句子開頭的主語以正確生成動詞時態。</div>
+<div class="cexam"><b>⚡ 考題方向</b>三個閘門的功能；Cell State(長期記憶)vs. Hidden State(短期記憶)；LSTM解決梯度消失的機制；GRU的簡化版本。</div>
+</div>
+
+<!-- 27 Transformer -->
+<div class="card">
+<div class="ctop"><div class="en">Transformer</div><div class="zh">Transformer 架構</div><span class="abbr">Attn</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="5" y="8" width="50" height="38" rx="5" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="30" y="20" font-size="8" text-anchor="middle" fill="#922B21" font-weight="700">Encoder</text>
+  <text x="30" y="31" font-size="7" text-anchor="middle" fill="#555">Self-Attn</text>
+  <text x="30" y="40" font-size="7" text-anchor="middle" fill="#555">+FFN</text>
+  <rect x="65" y="8" width="50" height="38" rx="5" fill="#E8F5E9" stroke="#3A9A6E" stroke-width="1.2"></rect>
+  <text x="90" y="20" font-size="8" text-anchor="middle" fill="#1B6B3A" font-weight="700">Decoder</text>
+  <text x="90" y="31" font-size="7" text-anchor="middle" fill="#555">Cross-Attn</text>
+  <text x="90" y="40" font-size="7" text-anchor="middle" fill="#555">+FFN</text>
+  <path d="M57 26 L63 26" stroke="#D4920A" stroke-width="1.5" marker-end="url(#ra11)"></path>
+  <defs><marker id="ra11" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#D4920A"></path></marker></defs>
+  <text x="60" y="52" font-size="7" text-anchor="middle" fill="#888">BERT/GPT的基礎架構</text>
+</svg></div>
+<div class="cdef">完全基於<b>自注意力機制(Self-Attention)</b>的架構，拋棄RNN的序列處理，能並行計算全序列的依賴關係。由Encoder（理解輸入）與Decoder（生成輸出）組成，加入<b>位置編碼</b>補充序列順序資訊。</div>
+<div class="cscene"><b>📌 情境</b>GPT系列語言模型、BERT文本理解模型皆以Transformer為基礎，成為現代NLP的核心架構。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Self-Attention的計算(Q/K/V)；位置編碼的必要性；Encoder-only(BERT)/Decoder-only(GPT)的差異；並行計算優勢。</div>
+</div>
+
+<!-- 28 注意力機制 -->
+<div class="card">
+<div class="ctop"><div class="en">Attention Mechanism</div><div class="zh">注意力機制</div><span class="abbr">Attn</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <text x="10" y="22" font-size="8.5" fill="#555" font-weight="600">The</text>
+  <text x="28" y="22" font-size="8.5" fill="#C0392B" font-weight="800">cat</text>
+  <text x="50" y="22" font-size="8.5" fill="#555">sat</text>
+  <text x="68" y="22" font-size="8.5" fill="#555">on</text>
+  <text x="80" y="22" font-size="8.5" fill="#555">the</text>
+  <text x="100" y="22" font-size="8.5" fill="#D4920A" font-weight="800">mat</text>
+  <rect x="28" y="24" width="18" height="3" rx="1" fill="#C0392B" opacity=".8"></rect>
+  <rect x="100" y="24" width="18" height="3" rx="1" fill="#D4920A" opacity=".6"></rect>
+  <rect x="10" y="24" width="10" height="2" rx="1" fill="#888" opacity=".4"></rect>
+  <rect x="50" y="24" width="10" height="2" rx="1" fill="#888" opacity=".4"></rect>
+  <rect x="68" y="24" width="10" height="2" rx="1" fill="#888" opacity=".4"></rect>
+  <rect x="80" y="24" width="10" height="2" rx="1" fill="#888" opacity=".4"></rect>
+  <text x="60" y="40" font-size="8" text-anchor="middle" fill="#555">Attention(Q,K,V)</text>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#888">= softmax(QKᵀ/√d)·V</text>
+</svg></div>
+<div class="cdef">讓模型在處理某位置時，動態關注序列中<b>最相關的其他位置</b>的機制。透過計算Query(Q)、Key(K)、Value(V)：Attention=softmax(QKᵀ/√dₖ)·V，得到上下文感知的表示向量。</div>
+<div class="cscene"><b>📌 情境</b>翻譯「The cat sat on the mat」時，處理「cat」位置時，模型對「mat」的注意力權重也較高（語意關聯）。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Q/K/V的角色；√dₖ縮放的目的（防Softmax梯度消失）；Multi-Head Attention的多視角優勢。</div>
+</div>
+
+<!-- 29 Batch Normalization -->
+<div class="card">
+<div class="ctop"><div class="en">Batch Normalization</div><div class="zh">批次正規化</div><span class="abbr">BN</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <rect x="5" y="10" width="35" height="30" rx="3" fill="#FDEDEC" stroke="#C0392B" stroke-width="1.2"></rect>
+  <text x="22" y="23" font-size="8" text-anchor="middle" fill="#555">原始</text>
+  <text x="22" y="33" font-size="7" text-anchor="middle" fill="#888">x̄=5, σ=3</text>
+  <path d="M42 25 L58 25" stroke="#C0392B" stroke-width="1.5" marker-end="url(#ra12)"></path>
+  <text x="50" y="20" font-size="7" text-anchor="middle" fill="#C0392B">BN</text>
+  <rect x="60" y="10" width="55" height="30" rx="3" fill="#E8F5E9" stroke="#3A9A6E" stroke-width="1.2"></rect>
+  <text x="87" y="23" font-size="8" text-anchor="middle" fill="#555">標準化</text>
+  <text x="87" y="33" font-size="7" text-anchor="middle" fill="#888">x̂=(x-μ)/σ</text>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#888">γx̂+β 可學習縮放偏移</text>
+  <defs><marker id="ra12" markerWidth="5" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5Z" fill="#C0392B"></path></marker></defs>
+</svg></div>
+<div class="cdef">在神經網路的層之間加入的正規化操作。對每個批次的輸入計算均值與方差，將其標準化為均值0、方差1，再乘以可學習的縮放(γ)和偏移(β)。加速訓練收斂、緩解梯度問題、具輕微正則化效果。</div>
+<div class="cscene"><b>📌 情境</b>深層CNN訓練中加入BN後，可使用更大學習率，訓練速度顯著提升且更穩定。</div>
+<div class="cexam"><b>⚡ 考題方向</b>BN的作用：加速收斂、防Internal Covariate Shift；γ/β的可學習性；訓練vs.推理階段的差異（使用全局統計量）。</div>
+</div>
+
+<!-- 30 Dropout -->
+<div class="card">
+<div class="ctop"><div class="en">Dropout</div><div class="zh">Dropout 正則化</div><span class="abbr">Drop</span></div>
+<div class="cdiag"><svg width="120" height="52" viewBox="0 0 120 52">
+  <circle cx="15" cy="18" r="5" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="15" cy="34" r="5" fill="#C0392B" opacity=".7"></circle>
+  <circle cx="42" cy="12" r="5" fill="#ccc" opacity=".4" stroke="#888" stroke-width="1.2" stroke-dasharray="2,2"></circle>
+  <circle cx="42" cy="26" r="5" fill="#D4920A" opacity=".7"></circle>
+  <circle cx="42" cy="40" r="5" fill="#ccc" opacity=".4" stroke="#888" stroke-width="1.2" stroke-dasharray="2,2"></circle>
+  <circle cx="75" cy="18" r="5" fill="#2D5F9A" opacity=".7"></circle>
+  <circle cx="75" cy="34" r="5" fill="#ccc" opacity=".4" stroke="#888" stroke-width="1.2" stroke-dasharray="2,2"></circle>
+  <circle cx="105" cy="26" r="5" fill="#3A9A6E" opacity=".8"></circle>
+  <line x1="20" y1="18" x2="37" y2="26" stroke="#D4920A" stroke-width=".8"></line>
+  <line x1="20" y1="34" x2="37" y2="26" stroke="#D4920A" stroke-width=".8"></line>
+  <line x1="47" y1="26" x2="70" y2="18" stroke="#2D5F9A" stroke-width=".8"></line>
+  <line x1="80" y1="18" x2="100" y2="26" stroke="#3A9A6E" stroke-width=".8"></line>
+  <text x="60" y="50" font-size="7.5" text-anchor="middle" fill="#888">p比例神經元隨機丟棄</text>
+</svg></div>
+<div class="cdef">訓練時<b>隨機丟棄(置零)部分神經元</b>（以概率p），防止神經元之間產生共適應(Co-adaptation)，迫使網路學習更魯棒的特徵表示。推理時使用所有神經元但乘以(1-p)。等效於訓練多個子網路的集成。</div>
+<div class="cscene"><b>📌 情境</b>深度神經網路訓練時加入Dropout(p=0.5)，有效減少過擬合，提升在測試集上的泛化性能。</div>
+<div class="cexam"><b>⚡ 考題方向</b>Dropout防過擬合的原理；訓練vs.推理的行為差異；p值選擇（通常0.2~0.5）；與L2正則化的比較。</div>
+</div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

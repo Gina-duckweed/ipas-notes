@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>科目三 第五章｜機器學習建模與參數調校</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+:root{
+  --B:#2D5F9A;--Blt:#E3EDF8;--Bdk:#1B3A6B;
+  --O:#E85D3A;--G:#3A9A6E;--A:#D4920A;--P:#7B5EA7;--R:#C0392B;--T:#2A8A8A;
+  --Alt:#FFF8E1;
+  --bg:#F5F8FC;--s:#FFFFFF;--s2:#EEF4FB;--b:#C8D8ED;--t:#0F1E35;--t2:#2C4A70;--t3:#6080A0;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0D1928;--s:#102040;--s2:#162A4E;--b:#1E3560;--t:#D0E4F8;--t2:#8AADD8;--t3:#5070A0;
+  --Blt:#0D1E35;--Alt:#2A2000;
+}}
+[data-theme=dark]{
+  --bg:#0D1928;--s:#102040;--s2:#162A4E;--b:#1E3560;--t:#D0E4F8;--t2:#8AADD8;--t3:#5070A0;
+  --Blt:#0D1E35;--Alt:#2A2000;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:13px;line-height:1.5;padding:18px}
+.page{max-width:980px;margin:0 auto}
+
+/* ── Hero ── */
+.hero{background:linear-gradient(135deg,var(--Bdk) 0%,var(--B) 55%,#4A85C8 100%);color:#fff;border-radius:16px;padding:24px 28px 20px;margin-bottom:18px;position:relative;overflow:hidden}
+.hero::after{content:'⚙ ⟳ ▲ ◈';position:absolute;right:24px;top:50%;transform:translateY(-50%);font-size:48px;opacity:.10;font-weight:900;letter-spacing:8px}
+.hero-eyebrow{font-size:10px;font-weight:800;letter-spacing:2px;opacity:.75;margin-bottom:6px}
+.hero h1{font-size:26px;font-weight:900;line-height:1.2;margin-bottom:6px}
+.hero-sub{font-size:12px;opacity:.85;font-weight:600}
+.hero-tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.hero-tag{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:3px 12px;font-size:10.5px;font-weight:700}
+
+/* ── Section row ── */
+.sec-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+.sec-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.sec{background:var(--s);border-radius:12px;border:2px solid var(--B);overflow:hidden}
+.sec-hdr{background:var(--B);color:#fff;padding:9px 13px;display:flex;align-items:center;gap:8px}
+.sec-num{font-size:22px;font-weight:900;opacity:.4;line-height:1}
+.sec-title{font-size:12px;font-weight:800;line-height:1.3}
+.sec-body{padding:10px 12px}
+.topic-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+.topic-list li{font-size:11px;line-height:1.45;padding-left:14px;position:relative;color:var(--t2)}
+.topic-list li::before{content:'▸';position:absolute;left:0;color:var(--B);font-size:10px}
+.topic-list li b{color:var(--t);font-weight:700}
+
+/* ── Subsection label ── */
+.sub-label{font-size:9.5px;font-weight:800;letter-spacing:1.2px;color:var(--B);text-transform:uppercase;margin:8px 0 4px;border-bottom:1.5px solid var(--Blt);padding-bottom:2px}
+
+/* ── Mini diagram: flow strip ── */
+.flow{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:6px 0}
+.flow-node{background:var(--Blt);border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;color:var(--Bdk);white-space:nowrap}
+.flow-arr{color:var(--B);font-size:12px;font-weight:900}
+
+/* ── Pill row ── */
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0}
+.pill{background:var(--Blt);color:var(--Bdk);border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700}
+.pill.red{background:#FDE8E5;color:#A0281C}
+.pill.grn{background:#E3F5EC;color:#1E6E48}
+.pill.amb{background:#FFF0C8;color:#8A5800}
+.pill.pur{background:#EDE8F5;color:#4E3280}
+
+/* ── Metric table ── */
+.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:5px 0}
+.metric-item{background:var(--s2);border-radius:6px;padding:5px 7px}
+.metric-item .mn{font-size:10px;font-weight:800;color:var(--Bdk)}
+.metric-item .md{font-size:10px;color:var(--t2);line-height:1.4}
+
+/* ── Wide section (spans all 3 cols) ── */
+.sec-wide{background:var(--s);border-radius:12px;border:2px solid var(--B);overflow:hidden;margin-bottom:14px}
+.sec-wide .sec-body{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px}
+
+/* ── Optimizer diagram ── */
+.opt-col{border-right:1px solid var(--b);padding-right:8px}
+.opt-col:last-child{border-right:none;padding-right:0}
+.opt-name{font-size:10.5px;font-weight:800;color:var(--B);margin-bottom:3px}
+.opt-desc{font-size:10px;color:var(--t2);line-height:1.4}
+
+/* ── Formula strip ── */
+.formula-strip{background:var(--s);border:1.5px solid var(--b);border-radius:10px;padding:10px 14px;margin-bottom:14px;display:flex;gap:14px;flex-wrap:wrap}
+.formula-group{flex:1;min-width:180px}
+.fg-title{font-size:9.5px;font-weight:800;letter-spacing:1.2px;color:var(--B);text-transform:uppercase;margin-bottom:5px;border-bottom:1.5px solid var(--Blt);padding-bottom:3px}
+.fi{font-size:11px;margin-bottom:3px;color:var(--t2)}
+.fi code{background:var(--s2);border-radius:4px;padding:1px 5px;font-size:10.5px;font-family:'Courier New',monospace;color:var(--B);font-weight:700}
+
+/* ── Exam box ── */
+.exam-box{background:var(--Alt);border:2px solid var(--A);border-radius:10px;padding:10px 14px;margin-bottom:14px}
+.exam-title{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--A);margin-bottom:7px;text-transform:uppercase}
+.exam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.exam-item{background:rgba(255,255,255,.55);border-radius:7px;padding:7px 9px}
+.exam-item-q{font-size:10.5px;font-weight:700;color:var(--t);margin-bottom:3px}
+.exam-item-a{font-size:10px;color:var(--t2);line-height:1.45}
+
+/* ── Footer ── */
+.footer{text-align:center;font-size:10px;color:var(--t3);padding:6px}
+</style>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">iPAS 中級 AI應用規劃師・科目三：機器學習技術與應用</div>
+  <h1>第五章　機器學習建模與參數調校</h1>
+  <div class="hero-sub">特徵工程 × 模型選擇 × 訓練評估 × 超參數調校 ── 從資料到部署的完整建模流程</div>
+  <div class="hero-tags">
+    <span class="hero-tag">5.1 數據準備與特徵工程</span>
+    <span class="hero-tag">5.2 模型選擇與架構設計</span>
+    <span class="hero-tag">5.3 訓練評估驗證</span>
+    <span class="hero-tag">5.4 模型調整與優化</span>
+  </div>
+</div>
+
+<!-- ROW 1: 5.1 三欄 -->
+<div class="sec-row">
+
+  <!-- 5.1a 缺失/異常 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">5.1</div>
+      <div class="sec-title">缺失值處理 &amp; 異常值偵測</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">缺失值處理策略</div>
+      <ul class="topic-list">
+        <li><b>刪除法</b>：列刪除（資料量充足）</li>
+        <li><b>均值／中位數填補</b>：數值型快速填補</li>
+        <li><b>預測模型填補</b>：回歸、KNN 推估缺失值</li>
+        <li><b>缺失指標法</b>：新增 is_missing 二元欄位</li>
+      </ul>
+      <div class="sub-label">異常值偵測方法</div>
+      <ul class="topic-list">
+        <li><b>Z-score</b>：|z|&gt;3 視為異常；常態分佈假設</li>
+        <li><b>IQR 法</b>：Q1−1.5×IQR ～ Q3+1.5×IQR</li>
+        <li><b>Isolation Forest</b>：隨機分割，異常者路徑短</li>
+        <li><b>LOF</b>：局部離群因子；密度比較法</li>
+      </ul>
+      <div class="flow">
+        <div class="flow-node">原始資料</div><div class="flow-arr">→</div>
+        <div class="flow-node">偵測異常</div><div class="flow-arr">→</div>
+        <div class="flow-node">刪除/修正</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.1b 特徵選擇 & 降維 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">5.1</div>
+      <div class="sec-title">特徵選擇 &amp; 降維</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">特徵選擇三大方法</div>
+      <ul class="topic-list">
+        <li><b>Filter 方法</b>：相關係數、卡方、互資訊；與模型無關</li>
+        <li><b>Wrapper 方法</b>：RFE 遞迴特徵消除；模型導向搜尋</li>
+        <li><b>Embedded 方法</b>：Lasso 正則化、決策樹特徵重要性</li>
+      </ul>
+      <div class="sub-label">降維技術</div>
+      <ul class="topic-list">
+        <li><b>PCA</b>：線性、最大化變異，非監督式</li>
+        <li><b>LDA</b>：線性、最大化類別間距，監督式</li>
+        <li><b>t-SNE / UMAP</b>：非線性；視覺化高維資料</li>
+        <li><b>SVD</b>：奇異值分解；矩陣低秩近似</li>
+      </ul>
+      <div class="pills">
+        <span class="pill">Filter</span><span class="pill">Wrapper</span>
+        <span class="pill">Embedded</span><span class="pill grn">PCA</span>
+        <span class="pill grn">LDA</span><span class="pill pur">t-SNE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.1c 轉換/編碼/增強 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">5.1</div>
+      <div class="sec-title">特徵轉換、編碼 &amp; 資料增強</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">特徵縮放 / 轉換</div>
+      <ul class="topic-list">
+        <li><b>Min-Max 正規化</b>：縮放到 [0,1]；對極值敏感</li>
+        <li><b>Z-score 標準化</b>：均值0、標準差1</li>
+        <li><b>Robust Scaling</b>：用 IQR 縮放；抗異常值</li>
+        <li><b>Log Transform</b>：處理右偏分佈；Box-Cox 更通用</li>
+      </ul>
+      <div class="sub-label">類別特徵編碼</div>
+      <ul class="topic-list">
+        <li><b>Label Encoding</b>：整數編碼；有序類別適用</li>
+        <li><b>One-hot Encoding</b>：二元向量；無序類別</li>
+        <li><b>Target Encoding</b>：以目標均值替代；防過擬合需交叉驗證</li>
+      </ul>
+      <div class="sub-label">資料增強（解決資料不足）</div>
+      <div class="pills">
+        <span class="pill">影像旋轉/翻轉</span><span class="pill">文字同義替換</span>
+        <span class="pill grn">SMOTE 過採樣</span><span class="pill">音訊時移</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sec-row -->
+
+<!-- ROW 2: 5.2 + 5.3前段 -->
+<div class="sec-row">
+
+  <!-- 5.2 模型選擇 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">5.2</div>
+      <div class="sec-title">模型選擇與架構設計</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">選擇模型的四維考量</div>
+      <ul class="topic-list">
+        <li><b>任務類型</b>：分類→SVM/樹/DNN；迴歸→線性/樹/MLP；生成→GAN/VAE</li>
+        <li><b>資料規模</b>：小資料→簡單模型+正則化；大資料→深度學習</li>
+        <li><b>解釋性需求</b>：醫療/金融→決策樹、線性模型；精度優先→黑盒可</li>
+        <li><b>資源限制</b>：Edge 部署→輕量模型；雲端→大模型</li>
+      </ul>
+      <div class="sub-label">偏差－變異權衡</div>
+      <div class="flow">
+        <div class="flow-node">高偏差</div><div class="flow-arr">↔</div>
+        <div class="flow-node">高變異</div>
+      </div>
+      <ul class="topic-list">
+        <li><b>欠擬合</b>（高偏差）：模型太簡單，訓練誤差大</li>
+        <li><b>過擬合</b>（高變異）：訓練好但測試差，需正則化</li>
+        <li><b>最佳</b>：偏差與變異均低，泛化能力強</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5.3a 交叉驗證 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">5.3</div>
+      <div class="sec-title">交叉驗證策略</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">K-fold 家族</div>
+      <ul class="topic-list">
+        <li><b>K-fold CV</b>：k 等份輪流做驗證集，估計泛化誤差</li>
+        <li><b>Stratified K-fold</b>：各折保持類別比例；不平衡資料首選</li>
+        <li><b>LOOCV</b>：k=N，變異大但無偏；小資料集適用</li>
+        <li><b>Repeated K-fold</b>：多次 shuffle 後 K-fold，更穩健估計</li>
+      </ul>
+      <div class="sub-label">批次訓練方式</div>
+      <ul class="topic-list">
+        <li><b>Batch GD</b>：全資料一次更新；穩定但慢</li>
+        <li><b>SGD</b>：單樣本更新；快速但噪聲大</li>
+        <li><b>Mini-batch</b>：折中，通常 32–256；GPU 最佳化</li>
+      </ul>
+      <div class="flow">
+        <div class="flow-node">訓練集</div><div class="flow-arr">→</div>
+        <div class="flow-node">K-fold</div><div class="flow-arr">→</div>
+        <div class="flow-node">平均誤差</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.3b 評估指標 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">5.3</div>
+      <div class="sec-title">模型評估指標</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">分類指標</div>
+      <div class="metric-grid">
+        <div class="metric-item"><div class="mn">Accuracy 準確率</div><div class="md">(TP+TN)／全部；類別均衡時適用</div></div>
+        <div class="metric-item"><div class="mn">Precision 精確率</div><div class="md">TP／(TP+FP)；降低誤報</div></div>
+        <div class="metric-item"><div class="mn">Recall 召回率</div><div class="md">TP／(TP+FN)；降低漏報</div></div>
+        <div class="metric-item"><div class="mn">F1-Score</div><div class="md">Precision×Recall 調和均值</div></div>
+        <div class="metric-item"><div class="mn">ROC-AUC</div><div class="md">TPR vs FPR 面積；越接近1越好</div></div>
+        <div class="metric-item"><div class="mn">類別不平衡</div><div class="md">用 F1／AUC，勿用 Accuracy</div></div>
+      </div>
+      <div class="sub-label">迴歸指標</div>
+      <div class="pills">
+        <span class="pill">MSE 均方誤差</span><span class="pill">MAE 平均絕對誤差</span>
+        <span class="pill">RMSE</span><span class="pill grn">R² 決定係數</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /sec-row -->
+
+<!-- ROW 3: 5.4 兩欄大布局 -->
+<div class="sec-row-2">
+
+  <!-- 5.4a 超參數 + 優化器 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">5.4</div>
+      <div class="sec-title">超參數 &amp; 優化器</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">常見超參數類型</div>
+      <ul class="topic-list">
+        <li><b>學習率 (lr)</b>：步伐大小；過大發散，過小收斂慢</li>
+        <li><b>批次大小 (batch size)</b>：影響梯度估計穩定性與訓練速度</li>
+        <li><b>網路深度／寬度</b>：層數、神經元數；容量與計算成本</li>
+        <li><b>正則化係數 λ</b>：L1／L2 懲罰強度</li>
+      </ul>
+      <div class="sub-label">激活函數</div>
+      <div class="pills">
+        <span class="pill grn">ReLU：輸出層外最常用</span>
+        <span class="pill pur">Sigmoid：二分類輸出</span>
+        <span class="pill amb">Softmax：多分類輸出</span>
+        <span class="pill">Tanh：[-1,1] 輸出</span>
+      </div>
+      <div class="sub-label">優化器比較</div>
+      <div class="metric-grid">
+        <div class="metric-item"><div class="mn">SGD</div><div class="md">基礎；需手動調學習率，需 momentum</div></div>
+        <div class="metric-item"><div class="mn">Momentum</div><div class="md">加入慣性；加速收斂，平滑震盪</div></div>
+        <div class="metric-item"><div class="mn">Adagrad</div><div class="md">自適應學習率；稀疏特徵效果佳</div></div>
+        <div class="metric-item"><div class="mn">Adam</div><div class="md">Momentum+RMSProp；預設首選優化器</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.4b 正則化 + 壓縮 -->
+  <div class="sec">
+    <div class="sec-hdr">
+      <div class="sec-num">5.4</div>
+      <div class="sec-title">正則化技術 &amp; 模型壓縮加速</div>
+    </div>
+    <div class="sec-body">
+      <div class="sub-label">正則化防止過擬合</div>
+      <ul class="topic-list">
+        <li><b>L1 正則化 (Lasso)</b>：稀疏化權重，適合特徵選擇，部分係數歸零</li>
+        <li><b>L2 正則化 (Ridge)</b>：縮小所有權重，防止任一特徵支配</li>
+        <li><b>Elastic Net</b>：L1+L2 組合；兼顧稀疏與穩定</li>
+        <li><b>Dropout</b>：訓練時隨機丟棄神經元（p=0.5）；強迫模型魯棒</li>
+        <li><b>Early Stopping</b>：驗證損失不再下降即停止，避免過擬合</li>
+      </ul>
+      <div class="sub-label">資料增強與重取樣（類別不平衡）</div>
+      <div class="pills">
+        <span class="pill grn">Oversampling（複製少數類）</span>
+        <span class="pill grn">SMOTE（合成少數類樣本）</span>
+        <span class="pill red">Undersampling（縮減多數類）</span>
+        <span class="pill amb">Class Weighting</span>
+      </div>
+      <div class="sub-label">模型壓縮加速（推論效能）</div>
+      <ul class="topic-list">
+        <li><b>知識蒸餾</b>：大模型→小模型，保留「軟標籤」知識</li>
+        <li><b>模型剪枝</b>：移除接近0的權重或神經元</li>
+        <li><b>量化</b>：FP32→INT8，降低記憶體與計算量</li>
+        <li><b>混合精度訓練</b>：FP16 前向傳播＋FP32 更新，速度↑精度↑</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- /sec-row-2 -->
+
+<!-- FORMULA STRIP -->
+<div class="formula-strip">
+  <div class="formula-group">
+    <div class="fg-title">📐 分類評估公式</div>
+    <div class="fi">精確率：<code>P = TP/(TP+FP)</code></div>
+    <div class="fi">召回率：<code>R = TP/(TP+FN)</code></div>
+    <div class="fi">F1-Score：<code>2PR/(P+R)</code></div>
+  </div>
+  <div class="formula-group">
+    <div class="fg-title">📐 迴歸評估公式</div>
+    <div class="fi">MSE：<code>Σ(yᵢ−ŷᵢ)² / n</code></div>
+    <div class="fi">MAE：<code>Σ|yᵢ−ŷᵢ| / n</code></div>
+    <div class="fi">R²：<code>1 − SS_res/SS_tot</code></div>
+  </div>
+  <div class="formula-group">
+    <div class="fg-title">📐 正則化懲罰項</div>
+    <div class="fi">L1 (Lasso)：<code>λ Σ|wᵢ|</code></div>
+    <div class="fi">L2 (Ridge)：<code>λ Σwᵢ²</code></div>
+    <div class="fi">Elastic Net：<code>α·L1 + (1−α)·L2</code></div>
+  </div>
+  <div class="formula-group">
+    <div class="fg-title">📐 SMOTE 合成</div>
+    <div class="fi">新樣本：<code>x_new = x + δ·(xₙ−x)</code></div>
+    <div class="fi">IQR 異常：<code>[Q1−1.5×IQR, Q3+1.5×IQR]</code></div>
+    <div class="fi">Z-score：<code>z = (x−μ)/σ</code></div>
+  </div>
+</div>
+
+<!-- EXAM BOX -->
+<div class="exam-box">
+  <div class="exam-title">⚡ 考試高頻考點 Exam Focus</div>
+  <div class="exam-grid">
+    <div class="exam-item">
+      <div class="exam-item-q">Q：SMOTE 解決什麼問題？</div>
+      <div class="exam-item-a">A：類別不平衡，合成少數類的人工樣本（非複製），提升少數類分類能力</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：L1 vs L2 正則化差異？</div>
+      <div class="exam-item-a">A：L1 使部分係數歸零（特徵選擇）；L2 縮小所有係數但不歸零（較穩定）</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：Stratified K-fold 適用情境？</div>
+      <div class="exam-item-a">A：類別不平衡的分類任務；確保每折類別分佈一致，結果更可靠</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：Dropout 作用原理？</div>
+      <div class="exam-item-a">A：訓練時隨機丟棄神經元，強迫學習冗餘特徵，推論時不丟棄</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：知識蒸餾的「軟標籤」？</div>
+      <div class="exam-item-a">A：大模型輸出的機率分佈（含類別間關係）比 One-hot 標籤含更多知識</div>
+    </div>
+    <div class="exam-item">
+      <div class="exam-item-q">Q：Adam 優化器優點？</div>
+      <div class="exam-item-a">A：結合 Momentum（一階矩）+ RMSProp（二階矩），自適應學習率，收斂快</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">iPAS 中級 AI應用規劃師 ・ 科目三第五章 ・ 機器學習建模與參數調校</div>
+
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

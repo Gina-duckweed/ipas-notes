@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第六章：大數據在人工智慧之應用</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap">
+<style>:root{color-scheme:light}@media (prefers-color-scheme:dark){:root{color-scheme:dark}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
+:root {
+  --bg: #F9F8F4; --surface: #FFFFFF; --surface2: #F3F1EB;
+  --text: #2A2820; --text-muted: #6B6860; --border: #DDD9CF;
+  --blue: #2D5F9A; --blue-lt: #EAF0F8;
+  --orange: #E85D3A; --orange-lt: #FDF0EC;
+  --green: #3A9A6E; --green-lt: #EAF5EF;
+  --amber: #D4920A; --amber-lt: #FDF6E3;
+  --purple: #7B5EA7; --purple-lt: #F2EEFA;
+  --teal: #2A8A8A; --teal-lt: #E6F5F5;
+  --red: #C0392B; --red-lt: #FDECEB;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1A1916; --surface: #252320; --surface2: #2E2C28;
+    --text: #EDE9E0; --text-muted: #A09D95; --border: #3D3A34;
+    --blue: #6B9FD4; --blue-lt: #1A2535;
+    --orange: #F08060; --orange-lt: #2D1E18;
+    --green: #5CC490; --green-lt: #142A1F;
+    --amber: #F0B840; --amber-lt: #2A2008;
+    --purple: #A888D8; --purple-lt: #221630;
+    --teal: #50B8B8; --teal-lt: #102222;
+    --red: #E05040; --red-lt: #2A1210;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1A1916; --surface: #252320; --surface2: #2E2C28;
+  --text: #EDE9E0; --text-muted: #A09D95; --border: #3D3A34;
+  --blue: #6B9FD4; --blue-lt: #1A2535;
+  --orange: #F08060; --orange-lt: #2D1E18;
+  --green: #5CC490; --green-lt: #142A1F;
+  --amber: #F0B840; --amber-lt: #2A2008;
+  --purple: #A888D8; --purple-lt: #221630;
+  --teal: #50B8B8; --teal-lt: #102222;
+  --red: #E05040; --red-lt: #2A1210;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', 'Noto Sans TC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* PAGE HEADER */
+.page-header {
+  text-align: center;
+  margin-bottom: 14px;
+  padding: 14px 20px 12px;
+  background: var(--surface);
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  position: relative;
+}
+.chapter-badge {
+  display: inline-block;
+  background: var(--purple);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.page-title {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.2;
+}
+.page-title span { color: var(--purple); }
+.page-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.section-pills {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.sec-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 12px;
+  border: 1.5px solid currentColor;
+}
+
+/* 3-COLUMN GRID */
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 11px;
+  margin-bottom: 10px;
+}
+.card:last-child { margin-bottom: 0; }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--border);
+}
+.card-icon {
+  width: 26px; height: 26px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.card-title {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+.card-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* SECTION LABELS */
+.sec-label {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 8px 0 4px;
+}
+.sec-label:first-of-type { margin-top: 0; }
+
+/* PILL TAGS */
+.tags { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+.tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+.tag-blue { background: var(--blue-lt); color: var(--blue); }
+.tag-orange { background: var(--orange-lt); color: var(--orange); }
+.tag-green { background: var(--green-lt); color: var(--green); }
+.tag-amber { background: var(--amber-lt); color: var(--amber); }
+.tag-purple { background: var(--purple-lt); color: var(--purple); }
+.tag-teal { background: var(--teal-lt); color: var(--teal); }
+.tag-red { background: var(--red-lt); color: var(--red); }
+
+/* FLOW / PIPELINE */
+.flow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin: 5px 0;
+}
+.flow-step {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+.flow-arrow { color: var(--text-muted); font-size: 11px; font-weight: 900; }
+
+/* HIGHLIGHT BOXES */
+.hl-box {
+  border-radius: 7px;
+  padding: 5px 8px;
+  margin: 4px 0;
+  font-size: 11px;
+}
+.hl-box .hl-title {
+  font-weight: 800;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+.hl-box .hl-body {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* MINI TABLE */
+.mtable { width: 100%; border-collapse: collapse; margin: 5px 0; font-size: 10px; }
+.mtable th {
+  background: var(--surface2);
+  color: var(--text-muted);
+  font-weight: 800;
+  padding: 3px 6px;
+  text-align: left;
+  border: 1px solid var(--border);
+  font-size: 9.5px;
+  letter-spacing: 0.3px;
+}
+.mtable td {
+  padding: 3px 6px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.mtable tr:nth-child(even) td { background: var(--surface2); }
+
+/* BULLET LIST */
+.blist { list-style: none; padding: 0; }
+.blist li {
+  padding: 2px 0 2px 12px;
+  font-size: 11px;
+  line-height: 1.4;
+  position: relative;
+  color: var(--text);
+}
+.blist li::before {
+  content: '▸';
+  position: absolute; left: 0;
+  font-size: 9px;
+  top: 4px;
+  color: var(--text-muted);
+}
+.blist li strong { font-weight: 800; }
+
+/* GRID 2 INSIDE CARD */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+/* SMALL DIVIDER */
+.divider {
+  border: none;
+  border-top: 1.5px dashed var(--border);
+  margin: 7px 0;
+}
+
+/* APP ROW - industry apps */
+.app-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5px 8px;
+  align-items: start;
+  margin: 4px 0;
+  padding: 5px 7px;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+}
+.app-icon { font-size: 15px; line-height: 1; padding-top: 1px; }
+.app-content { }
+.app-title { font-weight: 800; font-size: 11px; color: var(--text); }
+.app-models { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+
+/* SVG DIAGRAM */
+.diagram-wrap {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 8px;
+  margin: 6px 0;
+  overflow-x: auto;
+}
+
+/* EXAM HINT */
+.exam-hint {
+  background: var(--amber-lt);
+  border: 1.5px solid var(--amber);
+  border-radius: 7px;
+  padding: 5px 8px;
+  margin-top: 6px;
+  font-size: 10px;
+}
+.exam-hint .eh-title { font-weight: 800; color: var(--amber); font-size: 10px; margin-bottom: 2px; }
+
+/* COLOR ACCENTS ON CARD-HEADER */
+.accent-purple .card-icon { background: var(--purple-lt); }
+.accent-purple .card-title { color: var(--purple); }
+.accent-blue .card-icon { background: var(--blue-lt); }
+.accent-blue .card-title { color: var(--blue); }
+.accent-orange .card-icon { background: var(--orange-lt); }
+.accent-orange .card-title { color: var(--orange); }
+.accent-green .card-icon { background: var(--green-lt); }
+.accent-green .card-title { color: var(--green); }
+.accent-teal .card-icon { background: var(--teal-lt); }
+.accent-teal .card-title { color: var(--teal); }
+.accent-red .card-icon { background: var(--red-lt); }
+.accent-red .card-title { color: var(--red); }
+.accent-amber .card-icon { background: var(--amber-lt); }
+.accent-amber .card-title { color: var(--amber); }
+</style>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="chapter-badge">Chapter 6 · 科目二</div>
+  <div class="page-title">大數據在<span>人工智慧</span>之應用</div>
+  <div class="page-subtitle">iPAS 中級 AI應用規劃師 · 大數據處理分析與應用</div>
+  <div class="section-pills">
+    <span class="sec-pill" style="color:var(--purple)">6.1 大數據與ML</span>
+    <span class="sec-pill" style="color:var(--blue)">6.2 鑑別式AI應用</span>
+    <span class="sec-pill" style="color:var(--green)">6.3 生成式AI</span>
+    <span class="sec-pill" style="color:var(--red)">6.4 隱私·安全·合規</span>
+  </div>
+</div>
+
+<div class="grid3">
+
+<!-- ============ COL 1: 6.1 大數據與機器學習 ============ -->
+<div>
+
+  <!-- 6.1 Header -->
+  <div class="card accent-purple">
+    <div class="card-header">
+      <div class="card-icon">🤖</div>
+      <div>
+        <div class="card-title">6.1 大數據 × 機器學習</div>
+        <div class="card-sub">5V影響 · 分散式訓練 · End-to-End Pipeline</div>
+      </div>
+    </div>
+
+    <!-- 5V Impact -->
+    <div class="sec-label">5V 對 ML 管線的影響</div>
+    <table class="mtable">
+      <tbody><tr>
+        <th>5V</th><th>ML 挑戰</th>
+      </tr>
+      <tr><td><strong style="color:var(--purple)">Volume</strong> 量</td><td>資料規模大→分散式儲存訓練</td></tr>
+      <tr><td><strong style="color:var(--blue)">Velocity</strong> 速</td><td>串流輸入→即時推論</td></tr>
+      <tr><td><strong style="color:var(--orange)">Variety</strong> 多</td><td>多模態資料→特徵整合</td></tr>
+      <tr><td><strong style="color:var(--red)">Veracity</strong> 真</td><td>資料雜訊→清洗驗證</td></tr>
+      <tr><td><strong style="color:var(--green)">Value</strong> 值</td><td>高維特徵→特徵工程降維</td></tr>
+    </tbody></table>
+
+    <!-- 分散式訓練 -->
+    <div class="sec-label">分散式訓練策略</div>
+    <div class="grid2">
+      <div class="hl-box" style="background:var(--blue-lt)">
+        <div class="hl-title" style="color:var(--blue)">🗂 Data Parallelism</div>
+        <div class="hl-body">資料切分，各節點同模型，梯度聚合</div>
+      </div>
+      <div class="hl-box" style="background:var(--purple-lt)">
+        <div class="hl-title" style="color:var(--purple)">🔀 Model Parallelism</div>
+        <div class="hl-body">大模型拆層到不同GPU，適超大模型</div>
+      </div>
+      <div class="hl-box" style="background:var(--teal-lt)">
+        <div class="hl-title" style="color:var(--teal)">⚡ Hybrid Parallelism</div>
+        <div class="hl-body">Data + Model 混合，現代LLM主流</div>
+      </div>
+    </div>
+
+    <!-- 訓練最佳化 -->
+    <div class="sec-label">訓練最佳化技術</div>
+    <div class="tags">
+      <span class="tag tag-purple">GPU/TPU 加速</span>
+      <span class="tag tag-blue">Mixed Precision FP16/32</span>
+      <span class="tag tag-teal">Gradient Accumulation</span>
+      <span class="tag tag-green">Early Stopping</span>
+      <span class="tag tag-amber">Checkpointing</span>
+      <span class="tag tag-orange">Fine-tuning</span>
+      <span class="tag tag-red">Continual Learning</span>
+    </div>
+  </div>
+
+  <!-- MLOps Pipeline -->
+  <div class="card accent-blue">
+    <div class="card-header">
+      <div class="card-icon">🔄</div>
+      <div>
+        <div class="card-title">End-to-End ML Pipeline</div>
+        <div class="card-sub">MLOps 完整流程</div>
+      </div>
+    </div>
+
+    <!-- Pipeline flow -->
+    <div class="flow" style="margin-bottom:6px">
+      <span class="flow-step" style="background:var(--blue-lt);color:var(--blue)">① 資料處理</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step" style="background:var(--purple-lt);color:var(--purple)">② 訓練&amp;驗證</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step" style="background:var(--green-lt);color:var(--green)">③ 部署</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step" style="background:var(--amber-lt);color:var(--amber)">④ 監控</span>
+    </div>
+
+    <div class="grid2">
+      <div class="hl-box" style="background:var(--green-lt)">
+        <div class="hl-title" style="color:var(--green)">③ 部署模式</div>
+        <div class="hl-body">
+          Batch / Online / Streaming<br>
+          Docker + Kubernetes<br>
+          A/B Testing 灰度驗證
+        </div>
+      </div>
+      <div class="hl-box" style="background:var(--amber-lt)">
+        <div class="hl-title" style="color:var(--amber)">④ 監控重點</div>
+        <div class="hl-body">
+          Data Drift 資料偏移<br>
+          Concept Drift 概念漂移<br>
+          MLOps 持續迭代
+        </div>
+      </div>
+    </div>
+
+    <div class="exam-hint">
+      <div class="eh-title">⭐ 考題焦點</div>
+      大數據加速訓練 → <strong>Mixed Precision Training (C)</strong><br>
+      資料量運算不對稱 → <strong>分散式訓練+硬體加速 (C)</strong>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ COL 2: 6.2 鑑別式AI應用 ============ -->
+<div>
+
+  <div class="card accent-blue">
+    <div class="card-header">
+      <div class="card-icon">🎯</div>
+      <div>
+        <div class="card-title">6.2 大數據在鑑別式 AI</div>
+        <div class="card-sub">5大產業應用 · 模型 · 挑戰</div>
+      </div>
+    </div>
+
+    <!-- (1) 金融 -->
+    <div class="app-row" style="background:var(--blue-lt)">
+      <div class="app-icon">🏦</div>
+      <div class="app-content">
+        <div class="app-title">金融 · 風險管理</div>
+        <div class="app-models">Credit Scoring · Fraud Detection · AML</div>
+        <div class="tags" style="margin-top:3px">
+          <span class="tag tag-blue">Logistic Regression</span>
+          <span class="tag tag-blue">Random Forest</span>
+          <span class="tag tag-blue">GNN</span>
+          <span class="tag tag-blue">XGBoost</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- (2) 零售 -->
+    <div class="app-row" style="background:var(--orange-lt)">
+      <div class="app-icon">🛒</div>
+      <div class="app-content">
+        <div class="app-title">零售 · 電商推薦</div>
+        <div class="app-models">Churn Prediction · 客群分群 · 個人化</div>
+        <div class="tags" style="margin-top:3px">
+          <span class="tag tag-orange">Decision Tree</span>
+          <span class="tag tag-orange">LSTM</span>
+          <span class="tag tag-orange">CLIP</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- (3) 客服NLP -->
+    <div class="app-row" style="background:var(--purple-lt)">
+      <div class="app-icon">💬</div>
+      <div class="app-content">
+        <div class="app-title">客服 · 文本分類</div>
+        <div class="app-models">情感分析 · 意圖識別 · 文件分類</div>
+        <div class="tags" style="margin-top:3px">
+          <span class="tag tag-purple">Naive Bayes</span>
+          <span class="tag tag-purple">SVM</span>
+          <span class="tag tag-purple">BERT</span>
+          <span class="tag tag-purple">RoBERTa</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- (4) 醫療 -->
+    <div class="app-row" style="background:var(--green-lt)">
+      <div class="app-icon">🏥</div>
+      <div class="app-content">
+        <div class="app-title">醫療 · 健康科技</div>
+        <div class="app-models">病歷結構化 · 影像分類 · 疾病預測</div>
+        <div class="tags" style="margin-top:3px">
+          <span class="tag tag-green">CNN/ResNet/VGG</span>
+          <span class="tag tag-green">XGBoost</span>
+          <span class="tag tag-green">多模態</span>
+        </div>
+        <div style="font-size:9.5px;color:var(--text-muted);margin-top:2px">⚠ 挑戰: 隱私/標註成本/異常值</div>
+      </div>
+    </div>
+
+    <!-- (5) 資安 -->
+    <div class="app-row" style="background:var(--red-lt)">
+      <div class="app-icon">🔐</div>
+      <div class="app-content">
+        <div class="app-title">資安 · 異常偵測</div>
+        <div class="app-models">登入異常/DDoS/釣魚郵件辨識</div>
+        <div class="tags" style="margin-top:3px">
+          <span class="tag tag-red">Isolation Forest</span>
+          <span class="tag tag-red">LSTM</span>
+          <span class="tag tag-red">BERT</span>
+        </div>
+        <div style="font-size:9.5px;color:var(--text-muted);margin-top:2px">⚠ 挑戰: 不平衡(SMOTE)/即時(Kafka)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 輸入資料與標註 -->
+  <div class="card accent-teal">
+    <div class="card-header">
+      <div class="card-icon">🏷</div>
+      <div>
+        <div class="card-title">輸入資料類型 · 標註策略</div>
+        <div class="card-sub">跨來源整合挑戰</div>
+      </div>
+    </div>
+
+    <div class="sec-label">資料類型</div>
+    <div class="grid2">
+      <div class="hl-box" style="background:var(--blue-lt)">
+        <div class="hl-title" style="color:var(--blue)">結構化</div>
+        <div class="hl-body">ERP/CRM/POS → 交易/屬性</div>
+      </div>
+      <div class="hl-box" style="background:var(--teal-lt)">
+        <div class="hl-title" style="color:var(--teal)">半結構化</div>
+        <div class="hl-body">JSON/XML/Log → Parsing展平</div>
+      </div>
+      <div class="hl-box" style="background:var(--purple-lt)">
+        <div class="hl-title" style="color:var(--purple)">非結構化</div>
+        <div class="hl-body">文字/影像/聲音→特徵萃取</div>
+      </div>
+      <div class="hl-box" style="background:var(--amber-lt)">
+        <div class="hl-title" style="color:var(--amber)">多模態</div>
+        <div class="hl-body">結合多來源特徵融合</div>
+      </div>
+    </div>
+
+    <div class="sec-label">標註策略</div>
+    <table class="mtable">
+      <tbody><tr><th>方法</th><th>優點</th><th>限制</th></tr>
+      <tr><td><strong>人工標註</strong></td><td>準確度高</td><td>成本高/難擴展</td></tr>
+      <tr><td><strong>弱監督</strong></td><td>速度快低成本</td><td>誤標風險高</td></tr>
+      <tr><td><strong>群眾外包</strong></td><td>低成本快速</td><td>品質參差不齊</td></tr>
+      <tr><td><strong>主動學習</strong></td><td>減少標註量</td><td>需初始資料迭代</td></tr>
+    </tbody></table>
+
+    <div class="sec-label">跨來源整合挑戰</div>
+    <div class="tags">
+      <span class="tag tag-red">主鍵不一致</span>
+      <span class="tag tag-orange">時間戳時區差異</span>
+      <span class="tag tag-amber">更新頻率不同</span>
+      <span class="tag tag-red">資料品質不均</span>
+    </div>
+
+    <div class="exam-hint">
+      <div class="eh-title">⭐ 考題焦點</div>
+      鑑別式AI主要特性 → <strong>專注資料分類與決策邊界 (C)</strong>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ COL 3: 6.3 生成式AI + 6.4 隱私合規 ============ -->
+<div>
+
+  <!-- 6.3 生成式AI -->
+  <div class="card accent-green">
+    <div class="card-header">
+      <div class="card-icon">✨</div>
+      <div>
+        <div class="card-title">6.3 大數據在生成式 AI</div>
+        <div class="card-sub">LLM · 資料選擇 · 典型應用</div>
+      </div>
+    </div>
+
+    <div class="sec-label">資料選擇影響內容品質（4面向）</div>
+    <div class="grid2">
+      <div class="hl-box" style="background:var(--blue-lt)">
+        <div class="hl-title" style="color:var(--blue)">① 多樣性</div>
+        <div class="hl-body">涵蓋不同模態/語言/主題/情境</div>
+      </div>
+      <div class="hl-box" style="background:var(--orange-lt)">
+        <div class="hl-title" style="color:var(--orange)">② 代表性</div>
+        <div class="hl-body">避免性別/地區/社經/平台偏誤</div>
+      </div>
+      <div class="hl-box" style="background:var(--green-lt)">
+        <div class="hl-title" style="color:var(--green)">③ 品質</div>
+        <div class="hl-body">語法正確/無雜訊/資訊真實性</div>
+      </div>
+      <div class="hl-box" style="background:var(--amber-lt)">
+        <div class="hl-title" style="color:var(--amber)">④ 時效性</div>
+        <div class="hl-body">持續更新避免模型知識落後</div>
+      </div>
+    </div>
+
+    <div class="sec-label">典型應用情境</div>
+    <table class="mtable">
+      <tbody><tr><th>類型</th><th>應用範例</th></tr>
+      <tr>
+        <td><strong style="color:var(--blue)">語言生成</strong></td>
+        <td>自動撰寫/客製對話/程式碼補全</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--purple)">圖像生成</strong></td>
+        <td>廣告設計/DALL·E/AI藝術</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--teal)">多模態生成</strong></td>
+        <td>文字↔圖像/視訊語音合成</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--green)">合成資料</strong></td>
+        <td>擴充少數群/模擬罕見情境</td>
+      </tr>
+    </tbody></table>
+
+    <div class="exam-hint">
+      <div class="eh-title">⭐ 考題焦點</div>
+      生成式AI輸入結構化→輸出敘述 → <strong>語言生成模型 (C)</strong><br>
+      生成內容品質關鍵 → <strong>訓練樣本多樣性與語境一致性 (B)</strong>
+    </div>
+  </div>
+
+  <!-- 6.4 隱私保護 -->
+  <div class="card accent-red">
+    <div class="card-header">
+      <div class="card-icon">🛡</div>
+      <div>
+        <div class="card-title">6.4 隱私保護 · 安全 · 合規</div>
+        <div class="card-sub">匿名化技術 · 合規原則 · 企業治理</div>
+      </div>
+    </div>
+
+    <div class="sec-label">個資識別風險</div>
+    <div class="tags">
+      <span class="tag tag-red">直接識別資訊</span>
+      <span class="tag tag-orange">準識別資訊</span>
+      <span class="tag tag-amber">敏感資料</span>
+    </div>
+    <ul class="blist" style="margin-top:3px">
+      <li><strong>橫向比對</strong>：結合外部資料識別個人</li>
+      <li><strong>時間軸拼接</strong>：GPS+購買時間推身份</li>
+      <li><strong>保護不足</strong>：僅形式移除仍可再識別</li>
+    </ul>
+
+    <div class="sec-label">資料匿名化技術</div>
+    <table class="mtable">
+      <tbody><tr><th>技術</th><th>說明</th><th>限制</th></tr>
+      <tr><td><strong>遮蔽Masking</strong></td><td>特殊符號替換敏感欄</td><td>易被推還原</td></tr>
+      <tr><td><strong>雜湊Hashing</strong></td><td>SHA-256不可逆轉換</td><td>彩虹表攻擊</td></tr>
+      <tr><td><strong>泛化</strong></td><td>降精度→區間/行政區</td><td>精度損失</td></tr>
+      <tr><td><strong>分桶Bucketing</strong></td><td>連續值→離散區間</td><td>過細仍暴露</td></tr>
+      <tr><td><strong>隨機擾動</strong></td><td>加入高斯噪音</td><td>需平衡分析</td></tr>
+    </tbody></table>
+
+    <div class="sec-label">進階隱私強化技術（PETs）</div>
+    <div class="grid2">
+      <div class="hl-box" style="background:var(--purple-lt)">
+        <div class="hl-title" style="color:var(--purple)">K-匿名 / L多樣 / T接近</div>
+        <div class="hl-body">K-1筆相同準識別；L種不同敏感值；T分佈接近全體</div>
+      </div>
+      <div class="hl-box" style="background:var(--blue-lt)">
+        <div class="hl-title" style="color:var(--blue)">差分隱私 DP</div>
+        <div class="hl-body">加嚴格控制噪音（Laplace/Gaussian）確保單筆影響微乎其微；DPSGD應用於ML</div>
+      </div>
+      <div class="hl-box" style="background:var(--green-lt)">
+        <div class="hl-title" style="color:var(--green)">聯邦學習 FL</div>
+        <div class="hl-body">本地訓練僅傳梯度，資料不外洩；醫療跨院訓練</div>
+      </div>
+      <div class="hl-box" style="background:var(--teal-lt)">
+        <div class="hl-title" style="color:var(--teal)">同態加密 HE</div>
+        <div class="hl-body">密文直接運算，解密後等同明文；雲端AI訓練</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 合規治理 -->
+  <div class="card accent-amber">
+    <div class="card-header">
+      <div class="card-icon">⚖️</div>
+      <div>
+        <div class="card-title">合規原則 · 企業治理機制</div>
+        <div class="card-sub">GDPR · CCPA · 台灣個資法</div>
+      </div>
+    </div>
+
+    <div class="sec-label">合規資料處理5原則</div>
+    <div class="tags">
+      <span class="tag tag-amber">合法性/正當性/透明性</span>
+      <span class="tag tag-orange">目的限制</span>
+      <span class="tag tag-blue">資料最小化</span>
+      <span class="tag tag-green">保存期限限制</span>
+      <span class="tag tag-purple">可追蹤/可刪除（被遺忘權）</span>
+    </div>
+
+    <div class="sec-label">AI訓練資料合法取得依據</div>
+    <ul class="blist">
+      <li><strong>明確同意</strong>：使用者主動同意+可撤回</li>
+      <li><strong>契約履行</strong>：服務提供所必要</li>
+      <li><strong>公共利益/學術研究</strong>：IRB審查+去識別</li>
+      <li><strong>非個人資料</strong>：強匿名後不受個資法約束</li>
+    </ul>
+
+    <div class="sec-label">企業內部治理架構</div>
+    <div class="flow" style="flex-direction:column; align-items:flex-start; gap:3px">
+      <div style="display:flex;align-items:center;gap:6px;width:100%">
+        <span class="flow-step" style="background:var(--amber-lt);color:var(--amber);flex:1">資料治理委員會（法務+資安+資科+業務）</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;width:100%">
+        <span class="flow-step" style="background:var(--blue-lt);color:var(--blue);flex:1">Chief AI Officer · Data Steward</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;width:100%">
+        <span class="flow-step" style="background:var(--green-lt);color:var(--green);flex:1">Data Catalog · Model Card 模型透明性紀錄</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;width:100%">
+        <span class="flow-step" style="background:var(--purple-lt);color:var(--purple);flex:1">自動化治理：稽核追蹤/敏感資料偵測/模型監控</span>
+      </div>
+    </div>
+
+    <div class="exam-hint">
+      <div class="eh-title">⭐ 考題焦點</div>
+      隱私保護技術 → <strong>差分隱私 (B)</strong>｜
+      醫療AI合規 → <strong>取得合法授權+同意+隱私強化 (B)</strong><br>
+      確保合規與可追溯 → <strong>資料版本管理與操作紀錄制度 (C)</strong><br>
+      AI治理持續合規 → <strong>AI治理框架+跨部門監管流程 (C)</strong>
+    </div>
+  </div>
+
+</div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>

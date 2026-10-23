@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>科目一 Ch3｜AI核心技術 詞彙卡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap">
+<style>
+:root{
+  --C:#2A8A8A;--Clt:#E0F4F4;--Cdk:#1A6A6A;
+  --A:#D4920A;--Alt:#FFF8E1;
+  --bg:#F0FAFA;--s:#FFFFFF;--s2:#E0F4F4;--b:#B0D8D8;
+  --card:#FFFFFF;
+  --t:#1A3A3A;--t2:#2A5A5A;--t3:#4A7A7A;
+  --font:'Nunito','Noto Sans TC',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0A1F1F;--s:#101E1E;--s2:#162A2A;--b:#2A5050;--card:#101E1E;
+  --t:#D4EEF0;--t2:#A4C8CC;--t3:#6A9898;--Clt:#162A2A;--Alt:#2A2000;
+}}
+[data-theme=dark]{--bg:#0A1F1F;--s:#101E1E;--s2:#162A2A;--b:#2A5050;--card:#101E1E;--t:#D4EEF0;--t2:#A4C8CC;--t3:#6A9898;--Clt:#162A2A;--Alt:#2A2000;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);min-height:100vh}
+.hero{background:linear-gradient(135deg,var(--Cdk) 0%,var(--C) 60%,#4AACAC 100%);padding:28px 40px 22px}
+.hero-sub{font-size:10px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.7);text-transform:uppercase;margin-bottom:5px}
+.hero-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:4px}
+.hero-desc{font-size:12px;color:rgba(255,255,255,.8)}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px}
+.sdiv{display:flex;align-items:center;gap:10px;margin:22px 0 12px}
+.sdiv-label{font-size:10px;font-weight:800;color:var(--C);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap}
+.sdiv-line{flex:1;height:1.5px;background:var(--b)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.card{background:var(--card);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;border:1.5px solid var(--b);border-left:4px solid var(--C)}
+.ctop{padding:9px 10px 7px;background:var(--Clt)}
+.ctop .en{font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--Cdk);text-transform:uppercase;opacity:.85}
+.ctop .zh{font-size:14px;font-weight:900;color:var(--Cdk);line-height:1.2;margin:2px 0}
+.ctop .abbr{display:inline-block;background:var(--C);color:#fff;font-size:8.5px;font-weight:800;padding:1px 7px;border-radius:10px;margin-top:2px}
+.cdef{padding:7px 10px;font-size:11px;line-height:1.55;border-top:1px dashed var(--b);flex:1;color:var(--t2)}
+.cscene{margin:0 10px 6px;background:var(--s2);border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2)}
+.cscene b{font-size:9px;font-weight:800;letter-spacing:.8px;display:block;margin-bottom:2px;color:var(--C)}
+.cexam{margin:0 10px 10px;border-radius:7px;padding:5px 8px;font-size:10.5px;color:var(--t2);border:1.5px solid var(--A);background:var(--Alt)}
+.cexam b{font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--A);display:block;margin-bottom:2px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-sub">科目一・第三章・詞彙卡</div>
+  <div class="hero-title">AI 核心技術 — 30 核心詞彙</div>
+  <div class="hero-desc">NLP・電腦視覺・生成式AI・多模態 共 30 組關鍵術語</div>
+</div>
+
+<div class="wrap">
+  <div class="sdiv"><div class="sdiv-label">3.1 自然語言處理</div><div class="sdiv-line"></div></div>
+  <div class="grid">
+    <div class="card">
+      <div class="ctop"><div class="en">Tokenization</div><div class="zh">斷詞 / 分詞</div></div>
+      <div class="cdef">將連續文字切割為最小意義單元（Token），可為字、詞或子詞（Subword）。BPE（Byte-Pair Encoding）是常見子詞切割演算法。</div>
+      <div class="cscene"><b>🔍 應用場景</b>NLP 前處理第一步，適用中英文所有語言模型輸入。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Subword Tokenization（如 BPE）可平衡詞彙量與未知詞問題。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Named Entity Recognition</div><div class="zh">命名實體識別</div><div class="abbr">NER</div></div>
+      <div class="cdef">從文本中自動識別並分類具有特定意義的實體，如人名、地名、組織機構名稱、時間、金額等。</div>
+      <div class="cscene"><b>🔍 應用場景</b>新聞資訊擷取、法律文件分析、醫療病歷結構化。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>NER 屬於序列標注任務，常用 CRF 或 Transformer 模型處理。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Word Embeddings</div><div class="zh">詞向量 / 詞嵌入</div></div>
+      <div class="cdef">將詞彙映射為低維稠密向量，使語義相似的詞在向量空間中距離相近。代表方法：Word2Vec、GloVe、FastText。</div>
+      <div class="cscene"><b>🔍 應用場景</b>NLP 特徵表示基礎，用於文字分類、情感分析、推薦系統。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Word2Vec 有 CBOW 和 Skip-gram 兩種訓練方式；FastText 支援子詞。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">TF-IDF</div><div class="zh">詞頻-逆文件頻率</div></div>
+      <div class="cdef">統計加權方法，衡量詞彙在特定文件中的重要性。TF（詞頻）高且 IDF（逆文件頻率）高，表示該詞對該文件有辨識力。</div>
+      <div class="cscene"><b>🔍 應用場景</b>資訊檢索、文件分類、關鍵詞提取。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>停用詞（如「的」「是」）IDF 低，TF-IDF 分數低，自動降權。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Transformer</div><div class="zh">轉換器架構</div></div>
+      <div class="cdef">以 Self-Attention 機制為核心的深度學習架構，能並行計算序列中各位置的依賴關係，打破 RNN 的順序限制，成為現代 NLP 基礎。</div>
+      <div class="cscene"><b>🔍 應用場景</b>BERT、GPT、T5 等所有主流語言模型的底層架構。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>「Attention is All You Need」（2017 Google）提出；Encoder-only / Decoder-only / Encoder-Decoder 三種變體。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">BERT</div><div class="zh">雙向編碼表示</div></div>
+      <div class="cdef">Google 提出的雙向 Transformer 編碼器，透過 Masked Language Model（MLM）與 Next Sentence Prediction（NSP）預訓練，同時理解上下文。</div>
+      <div class="cscene"><b>🔍 應用場景</b>文本分類、問答系統、語義相似度比對。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>BERT 雙向理解，適合分類任務；GPT 單向生成，適合文本生成任務。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Sentiment Analysis</div><div class="zh">情感分析</div></div>
+      <div class="cdef">自動辨識文本中表達的情緒傾向（正面/負面/中性），可進一步細分為多類別情感或情緒強度評估。</div>
+      <div class="cscene"><b>🔍 應用場景</b>品牌監控、顧客回饋分析、社群媒體輿情偵測。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>屬監督式分類任務，訓練資料需標注情感標籤；零樣本可用 LLM 完成。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Machine Translation</div><div class="zh">機器翻譯</div></div>
+      <div class="cdef">自動將一種自然語言翻譯成另一種語言。現代主流為基於 Transformer 的 Seq2Seq 模型（Encoder-Decoder 架構），如 NLLB、mBART。</div>
+      <div class="cscene"><b>🔍 應用場景</b>跨語言文件處理、即時翻譯服務、多語系客服。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>BLEU 分數（Bilingual Evaluation Understudy）為機器翻譯主要評估指標。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Text Summarization</div><div class="zh">文本摘要生成</div></div>
+      <div class="cdef">自動從長篇文本中提取或生成精簡摘要。<b>抽取式（Extractive）</b>：直接選取原句；<b>生成式（Abstractive）</b>：重新組句生成，需生成模型。</div>
+      <div class="cscene"><b>🔍 應用場景</b>新聞摘要、法律文件精華、會議紀錄自動化。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>抽取式用相似度排序；生成式用 T5/BART/GPT 等 Seq2Seq 模型。</div>
+    </div>
+
+    <div class="card">
+      <div class="ctop"><div class="en">Attention Mechanism</div><div class="zh">注意力機制</div></div>
+      <div class="cdef">讓模型在處理序列時，動態計算輸入各位置的相關性權重。Self-Attention 計算每個 token 與其餘所有 token 的相似度，Multi-Head Attention 並行執行多組注意力、捕捉不同維度語義。Scaled Dot-Product Attention 公式：softmax(QKᵀ/√d)V。</div>
+      <div class="cscene"><b>🔍 應用場景</b>BERT、GPT 等所有 Transformer 模型的核心；機器翻譯對齊來源與目標詞彙；摘要模型關注關鍵句。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Q/K/V（Query/Key/Value）三要素必記；Self-Attention 複雜度 O(n²)，長序列計算量大；Cross-Attention 用於 Encoder→Decoder 資訊橋接。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">LSTM / RNN</div><div class="zh">長短期記憶 / 遞迴神經網路</div>
+      <div class="abbr">LSTM</div></div>
+      <div class="cdef">RNN（Recurrent Neural Network）透過隱藏狀態傳遞序列資訊，但面臨梯度消失問題。LSTM 引入輸入門、遺忘門、輸出門三個門控機制，可選擇性記憶或遺忘，有效捕捉長程依賴。GRU 是 LSTM 的簡化版。</div>
+      <div class="cscene"><b>🔍 應用場景</b>時序預測（股價、氣象）、語音辨識、文本生成；Transformer 普及前 NLP 主流架構。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>LSTM 解決 RNN 梯度消失問題；Transformer 取代 RNN 成為 NLP 主流後，LSTM 仍用於資源受限場景；三門（Input Gate、Forget Gate、Output Gate）考試常考。</div>
+    </div>
+    <div class="sdiv" style="grid-column:1/-1"><div class="sdiv-label">3.2 電腦視覺</div><div class="sdiv-line"></div></div>
+    <div class="card">
+      <div class="ctop"><div class="en">Convolutional Neural Network</div><div class="zh">卷積神經網路</div><div class="abbr">CNN</div></div>
+      <div class="cdef">專為影像設計的深度神經網路，透過卷積核自動學習局部空間特徵，具平移不變性。由卷積層、池化層、全連接層組成。</div>
+      <div class="cscene"><b>🔍 應用場景</b>影像分類、物件偵測、人臉辨識、醫療影像分析。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>池化（Max Pooling）降低特徵圖尺寸，減少參數量；代表模型：ResNet（殘差連接解決梯度消失）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Transfer Learning</div><div class="zh">遷移學習</div></div>
+      <div class="cdef">將在大型資料集（如 ImageNet）預訓練的模型權重應用於新任務，透過 Fine-tuning 微調部分層，大幅降低訓練資料與算力需求。</div>
+      <div class="cscene"><b>🔍 應用場景</b>醫療影像診斷（小量標注資料）、工廠瑕疵偵測。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>常見策略：凍結底層特徵層，只訓練頂層分類器（Feature Extraction）或全層微調（Full Fine-tuning）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Object Detection</div><div class="zh">物件偵測</div></div>
+      <div class="cdef">在影像中同時定位並分類多個物件，輸出邊界框（Bounding Box）與類別標籤。主要分兩階段（Faster R-CNN）和單階段（YOLO）兩類框架。</div>
+      <div class="cscene"><b>🔍 應用場景</b>自動駕駛感知、工業產線檢測、人流監控、零售貨架管理。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>YOLO 速度快（即時）；Faster R-CNN 精度高但較慢；mAP 為偵測評估指標。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Semantic Segmentation</div><div class="zh">語義分割</div></div>
+      <div class="cdef">對影像中每個像素進行類別預測，將整張影像劃分為語義區域（如道路、天空、行人）。比物件偵測更細緻，但計算成本更高。</div>
+      <div class="cscene"><b>🔍 應用場景</b>自動駕駛場景理解、衛星影像分析、醫療組織分割。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>代表模型：U-Net（醫療）、DeepLab（場景）；評估指標：mIoU（平均交並比）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Image Classification</div><div class="zh">影像分類</div></div>
+      <div class="cdef">對整張影像分配一個或多個類別標籤，是電腦視覺最基礎任務。代表模型包括 ResNet、VGG、EfficientNet、ViT（Vision Transformer）。</div>
+      <div class="cscene"><b>🔍 應用場景</b>產品缺陷分類、植物病害辨識、X光胸部疾病篩查。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>ResNet 引入殘差連接（Skip Connection）解決深度網路梯度消失問題。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">YOLO</div><div class="zh">即時物件偵測框架</div></div>
+      <div class="cdef">You Only Look Once，單階段物件偵測框架，將偵測問題轉為迴歸任務，一次前向傳播同時預測多個邊界框與類別，速度遠快於兩階段方法。</div>
+      <div class="cscene"><b>🔍 應用場景</b>即時監控攝影機、邊緣裝置部署、車牌辨識、交通流量分析。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>YOLO 速度優先；Faster R-CNN 精度優先；考題常考兩者取捨。</div>
+    </div>
+
+    <div class="sdiv" style="grid-column:1/-1"><div class="sdiv-label">3.3 生成式 AI</div><div class="sdiv-line"></div></div>
+    <div class="card">
+      <div class="ctop"><div class="en">Large Language Model</div><div class="zh">大型語言模型</div><div class="abbr">LLM</div></div>
+      <div class="cdef">基於 Transformer 的超大規模語言模型，以海量文本預訓練，具備語言理解、生成、推理等通用能力。代表：GPT-4、LLaMA、Claude、Gemini。</div>
+      <div class="cscene"><b>🔍 應用場景</b>智慧客服、程式碼生成、文案撰寫、知識問答、多步驟推理。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>核心問題：幻覺（Hallucination）— 生成看似合理但不實的內容，需 RAG 或 Grounding 技術緩解。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Prompt Engineering</div><div class="zh">提示詞工程</div></div>
+      <div class="cdef">設計與優化輸入提示以引導 LLM 輸出預期回應的技術。包括 Zero-shot、Few-shot、Chain-of-Thought、Role Prompting 等策略。</div>
+      <div class="cscene"><b>🔍 應用場景</b>提升 LLM 任務表現、減少幻覺、引導複雜推理流程。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>Chain-of-Thought（CoT）引導模型「分步推理」，顯著提升數學與邏輯任務準確率。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Retrieval-Augmented Generation</div><div class="zh">檢索增強生成</div><div class="abbr">RAG</div></div>
+      <div class="cdef">結合外部知識庫與 LLM 生成能力：先從向量資料庫檢索相關文件片段，再輸入 LLM 生成基於事實的回答，降低幻覺並提升知識時效性。</div>
+      <div class="cscene"><b>🔍 應用場景</b>企業知識庫問答、法規查詢、客服機器人知識更新。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>RAG = 向量搜尋（Embedding Similarity）+ LLM 生成；不需重新訓練模型即可更新知識。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Fine-tuning / LoRA</div><div class="zh">微調 / 低秩適應</div></div>
+      <div class="cdef">Fine-tuning：在預訓練模型基礎上，用特定領域資料繼續訓練部分或全部權重。LoRA（Low-Rank Adaptation）：在原始權重矩陣旁插入低秩矩陣，大幅減少可訓練參數量。</div>
+      <div class="cscene"><b>🔍 應用場景</b>法律/醫療領域模型客製化、公司內部資料微調。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>LoRA 只更新少量參數（原模型凍結），顯著降低 GPU 記憶體需求。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Reinforcement Learning from Human Feedback</div><div class="zh">人類反饋強化學習</div><div class="abbr">RLHF</div></div>
+      <div class="cdef">透過收集人類對模型輸出的偏好評分，訓練獎勵模型（Reward Model），再用強化學習（PPO）調整 LLM 輸出，使其更安全、有用、符合人類偏好。</div>
+      <div class="cscene"><b>🔍 應用場景</b>ChatGPT、Claude 等對話模型對齊訓練，減少有害輸出。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>RLHF 三步驟：SFT（監督微調）→ 訓練Reward Model → PPO 強化學習優化。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Hallucination</div><div class="zh">幻覺（AI幻覺）</div></div>
+      <div class="cdef">LLM 生成看似合理但實際錯誤或虛構的內容，如捏造文獻、錯誤事實、不存在的 API。根本原因是模型依賴統計模式而非真實世界知識。</div>
+      <div class="cscene"><b>🔍 應用場景</b>所有 LLM 應用場景均需防範；高風險場景（醫療/法律）需人工審查。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>緩解幻覺的方法：RAG（外部知識接地）、Grounding、事實驗證後處理。</div>
+    </div>
+
+    <div class="card">
+      <div class="ctop"><div class="en">In-context Learning</div><div class="zh">情境學習</div>
+      <div class="abbr">ICL</div></div>
+      <div class="cdef">LLM 在 Prompt 中提供少量範例即可執行新任務、無需更新模型參數的能力。Zero-shot：無範例直接推論；One-shot：提供一個範例；Few-shot：提供多個範例，模型從情境推斷任務規則，是 GPT 系列的核心能力之一。</div>
+      <div class="cscene"><b>🔍 應用場景</b>企業使用 Few-shot Prompt 讓 LLM 遵循特定輸出格式；快速適應情感分析、程式轉換、分類等新任務，無需重新訓練。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>ICL vs Fine-tuning：ICL 不改變模型權重（成本低、彈性高）；Fine-tuning 調整參數（特定領域表現更穩定）。Zero/One/Few-shot 的區分是考試高頻考點。</div>
+    </div>
+    <div class="sdiv" style="grid-column:1/-1"><div class="sdiv-label">3.4 多模態 AI 與生成模型</div><div class="sdiv-line"></div></div>
+    <div class="card">
+      <div class="ctop"><div class="en">Generative Adversarial Network</div><div class="zh">生成對抗網路</div><div class="abbr">GAN</div></div>
+      <div class="cdef">包含生成器（Generator）與判別器（Discriminator）兩個網路的對抗訓練框架。生成器學習產生逼真樣本，判別器判斷真偽，雙方博弈達到納什均衡。</div>
+      <div class="cscene"><b>🔍 應用場景</b>人臉合成、影像風格轉換、資料增強、Deepfake 偵測。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>主要缺點：訓練不穩定、模式崩潰（Mode Collapse，生成器只產出少數類型樣本）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Variational Autoencoder</div><div class="zh">變分自編碼器</div><div class="abbr">VAE</div></div>
+      <div class="cdef">學習輸入資料的潛在空間機率分佈（均值μ與方差σ），透過重參數化技巧進行可微分採樣，在潛在空間插值可生成平滑多樣的新樣本。</div>
+      <div class="cscene"><b>🔍 應用場景</b>異常偵測、藥物分子生成、語音重建、隱變數建模。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>VAE 生成樣本平滑但細節稍模糊；GAN 細節清晰但訓練不穩定。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Diffusion Model</div><div class="zh">擴散生成模型</div></div>
+      <div class="cdef">透過逐步向資料加入高斯噪聲（前向擴散），再學習逐步去噪（反向擴散）以生成新樣本的生成模型。Stable Diffusion、DALL-E 2 為代表作。</div>
+      <div class="cscene"><b>🔍 應用場景</b>文字生成圖像（Text-to-Image）、影像修復、超解析度重建。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>生成品質三者對比：Diffusion > GAN（穩定性） > VAE（清晰度）；Diffusion 速度最慢。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">CLIP</div><div class="zh">圖文對比學習模型</div></div>
+      <div class="cdef">OpenAI 提出的對比學習模型，同時訓練圖像編碼器與文字編碼器，使匹配的圖文對在向量空間靠近，不匹配的遠離。支援零樣本圖像分類。</div>
+      <div class="cscene"><b>🔍 應用場景</b>跨模態搜索（以文找圖）、零樣本分類、DALL-E / Stable Diffusion 的引導組件。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>CLIP 無需針對特定類別訓練，直接以文字描述作為分類標準（Zero-shot）。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Visual Question Answering</div><div class="zh">視覺問答</div><div class="abbr">VQA</div></div>
+      <div class="cdef">模型同時接收影像與自然語言問題，輸出基於圖像內容的回答。融合視覺特徵提取（CNN/ViT）與語言理解（BERT/GPT）兩大能力。</div>
+      <div class="cscene"><b>🔍 應用場景</b>醫療影像問診、智慧教育圖文理解、無障礙輔助（描述圖像內容）。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>VQA 是多模態 AI 的核心評測基準；GPT-4V、Gemini Vision 已具備強大 VQA 能力。</div>
+    </div>
+    <div class="card">
+      <div class="ctop"><div class="en">Multimodal Large Language Model</div><div class="zh">多模態大語言模型</div><div class="abbr">MLLM</div></div>
+      <div class="cdef">能同時處理多種模態輸入（文字、圖像、音訊、影片）的大型模型。代表：GPT-4V、Gemini、Claude 3 Sonnet，整合視覺編碼器與語言模型。</div>
+      <div class="cscene"><b>🔍 應用場景</b>圖文理解、影像描述生成、文件OCR、跨模態推理。</div>
+      <div class="cexam"><b>⚡ 考試提示</b>多模態 = 視覺 Encoder（如 ViT）+ 語言 Decoder（LLM），透過 Cross-Attention 或 Projection Layer 橋接。</div>
+    </div>
+  </div>
+</div>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a><style>.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}.ipas-back:hover{background:#2C5282}.ipas-back:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}</style>
+</body>
+</html>
