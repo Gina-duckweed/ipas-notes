@@ -52,7 +52,7 @@ a.card .t{font-weight:900;font-size:16.5px}
 a.card .d{color:var(--muted);font-size:13.5px}
 .none{color:var(--muted)}
 footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
-</style>
+.btn.play{background:#FFF4EC;border-color:#E2622D;color:#B8481C}.go-slides{display:inline-block;margin-top:8px;font-weight:800;color:#B8481C;text-decoration:underline;text-underline-offset:4px}</style>
 </head>
 <body>
 <div class="wrap">
@@ -60,7 +60,7 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);paddin
     <div>
       <div class="eyebrow">iPAS · AI 應用規劃師 · 中級</div>
       <h1>iPAS 中級筆記庫</h1>
-      <p class="sub">三個考科的章節重點筆記與名詞解釋，加上演算法學習卡、實作分析與 Python 練習。每章都有「重點筆記」與「名詞解釋 30 詞」兩份。</p>
+      <p class="sub">三個考科的章節重點筆記與名詞解釋，加上演算法學習卡、實作分析與 Python 練習。每章都有「重點筆記」、「名詞解釋 30 詞」與「動畫簡報」三份。<br><a class="go-slides" href="../slides/ipas-slides/">→ 前往動畫簡報頁</a></p>
     </div>
     <div class="search">
       <label for="q">搜尋章節或主題</label>
@@ -95,7 +95,7 @@ const EXTRA=[
 const N="零一二三四五六七";
 const grid=document.getElementById("grid"), extras=document.getElementById("extras");
 grid.innerHTML=SUBJ.map(s=>`<article class="subj" style="--c:var(${s.c})"><h2>${s.no}</h2><h3>${s.name}</h3>${
-  s.ch.map(([n,t,d])=>`<div class="ch" data-s="${s.no} ${s.name} 第${N[n]}章 ${t} ${d}"><div class="name"><b>CH${n}</b>${t}</div><div class="links"><a class="btn solid" href="${s.id}-ch${n}-notes.html">重點筆記</a><a class="btn" href="${s.id}-ch${n}-terms.html">名詞解釋 30 詞</a></div></div>`).join("")}</article>`).join("");
+  s.ch.map(([n,t,d])=>`<div class="ch" data-s="${s.no} ${s.name} 第${N[n]}章 ${t} ${d}"><div class="name"><b>CH${n}</b>${t}</div><div class="links"><a class="btn solid" href="${s.id}-ch${n}-notes.html">重點筆記</a><a class="btn" href="${s.id}-ch${n}-terms.html">名詞解釋 30 詞</a><a class="btn play" href="../slides/ipas-slides/${s.id}-ch${n}.html">▶ 動畫簡報</a></div></div>`).join("")}</article>`).join("");
 extras.innerHTML=EXTRA.map(([f,k,t,d])=>`<a class="card" href="${f}.html" data-s="${k} ${t} ${d}"><span class="k">${k}</span><span class="t">${t}</span><span class="d">${d}</span></a>`).join("");
 document.getElementById("q").addEventListener("input",e=>{
   const q=e.target.value.trim().toLowerCase(); let any=false;
