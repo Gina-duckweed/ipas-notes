@@ -3,106 +3,320 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>iPAS 中級筆記庫</title>
+<title>iPAS 學習島</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Nunito:wght@700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
 <style>
-/* 學習地圖：三科目分欄，每章一列「重點筆記 / 名詞解釋」，下方是專題與練習 */
 :root{
-  --bg:#F4F6FA;--card:#FFFFFF;--ink:#16243A;--muted:#5A6880;--line:#DCE3EE;
-  --s1:#1F8A8A;--s2:#3B5BDB;--s3:#7B4FC4;--ex:#C77D0A;--focus:#F6AD55;
-  --f:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--n:"Nunito","Noto Sans TC",sans-serif;
+  --sea:#8ED6EC;--sea2:#76C7E2;--wave:rgba(255,255,255,.45);
+  --card:#FFFDF8;--ink:#24324A;--muted:#66748C;--line:#EADFCC;--accent:#FF7A59;--accent-ink:#B4421F;
+  --sand:#F4E3B2;--sand2:#DEC48A;--foam:rgba(255,255,255,.6);--ol:#2B3A55;
+  --s1:#1E8A68;--s2:#B0791A;--s3:#6E4FC0;--sp:#C2533A;
+  --f:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--r:"Huninn","Nunito","Noto Sans TC",sans-serif;--n:"Nunito","Noto Sans TC",sans-serif;
+  --shadow:0 10px 30px rgba(30,60,90,.18);
 }
 @media (prefers-color-scheme:dark){:root{
-  --bg:#0F1726;--card:#172236;--ink:#E7EDF7;--muted:#9AA9C2;--line:#2A3A55;
-  --s1:#43C2C2;--s2:#7C95FF;--s3:#B293F0;--ex:#F0B048;color-scheme:dark}}
+  --sea:#17405F;--sea2:#123553;--wave:rgba(160,210,255,.16);
+  --card:#1D2A3F;--ink:#EEF3FA;--muted:#A6B4CA;--line:#2F3F59;--accent:#FF916F;--accent-ink:#FFB196;
+  --sand:#D9C48D;--sand2:#AF9862;--foam:rgba(200,230,255,.22);
+  --s1:#5FD3AA;--s2:#F2C25E;--s3:#B39BF5;--sp:#FF9C82;--shadow:0 10px 30px rgba(0,0,0,.45);color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.6;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
-.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
-header{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between}
-.eyebrow{font-family:var(--n);font-weight:800;letter-spacing:.14em;font-size:12px;color:var(--muted);text-transform:uppercase}
-h1{margin:4px 0 6px;font-size:clamp(28px,4.6vw,42px);line-height:1.15;font-weight:900;text-wrap:balance}
-.sub{margin:0;color:var(--muted);max-width:36em}
-.search{display:flex;flex-direction:column;gap:6px;min-width:min(100%,280px)}
-.search label{font-size:13px;color:var(--muted)}
-.search input{font:inherit;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);width:100%}
-.search input:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-@media (max-width:900px){.grid{grid-template-columns:1fr}}
-.subj{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 10px;display:flex;flex-direction:column;gap:4px;min-width:0;border-top:6px solid var(--c)}
-.subj h2{margin:0;font-size:13px;font-family:var(--n);font-weight:800;letter-spacing:.1em;color:var(--c)}
-.subj h3{margin:0 0 8px;font-size:19px;font-weight:900;line-height:1.35}
-.ch{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;padding:12px 0;border-top:1px solid var(--line)}
-.ch .name{font-weight:700}
-.ch .name b{font-family:var(--n);color:var(--c);margin-right:6px}
-.links{display:flex;flex-wrap:wrap;gap:8px}
-a.btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:13.5px;font-weight:700;padding:6px 12px;border-radius:999px;color:var(--c);border:1.5px solid var(--c);background:transparent}
-a.btn.solid{background:var(--c);color:#fff}
-@media (prefers-color-scheme:dark){a.btn.solid{color:#0F1726}}
-a.btn:hover{transform:translateY(-1px)}
-a.btn:focus-visible,a.card:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-.extra h2{margin:0 0 12px;font-size:20px;font-weight:900}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
-a.card{--c:var(--ex);display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
-a.card:hover{border-color:var(--c)}
-a.card .k{align-self:flex-start;font-size:12px;font-weight:700;color:#fff;background:var(--c);padding:1px 10px;border-radius:999px}
-@media (prefers-color-scheme:dark){a.card .k{color:#0F1726}}
-a.card .t{font-weight:900;font-size:16.5px}
-a.card .d{color:var(--muted);font-size:13.5px}
-.none{color:var(--muted)}
-footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:14px}
-.btn.play{background:#FFF4EC;border-color:#E2622D;color:#B8481C}.go-slides{display:inline-block;margin-top:8px;font-weight:800;color:#B8481C;text-decoration:underline;text-underline-offset:4px}</style>
+html,body{margin:0;height:100%}
+body{font-family:var(--f);color:var(--ink);background-color:var(--sea);overflow:hidden;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cpath d='M8 20q8-7 16 0M68 48q8-7 16 0' fill='none' stroke='white' stroke-opacity='.45' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E"),radial-gradient(120% 90% at 50% 45%,var(--sea) 40%,var(--sea2) 100%);
+  animation:drift 40s linear infinite}
+@media (prefers-color-scheme:dark){body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Cpath d='M8 20q8-7 16 0M68 48q8-7 16 0' fill='none' stroke='%23A0D2FF' stroke-opacity='.18' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E"),radial-gradient(120% 90% at 50% 45%,var(--sea) 40%,var(--sea2) 100%)}}
+@keyframes drift{to{background-position:120px 0,0 0}}
+#map{position:fixed;inset:0;width:100%;height:100%;display:block}
+body.port{overflow-y:auto;overflow-x:hidden}body.port #map{position:absolute;top:0;left:0;bottom:auto;height:auto}
+/* ---------- map art ---------- */
+.ol{stroke:var(--ol);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+.tile{cursor:pointer;outline:none}
+.tile .lift{transition:transform .22s cubic-bezier(.3,1.6,.5,1)}
+.tile:hover .lift,.tile:focus-visible .lift{transform:translateY(-8px)}
+.tile .top{transition:filter .2s}
+.tile:hover .top,.tile:focus-visible .top{filter:brightness(1.06)}
+.tile:focus-visible .ring,.tile.sel .ring{stroke:#fff;stroke-width:4;stroke-dasharray:8 6;animation:march 1s linear infinite}
+@keyframes march{to{stroke-dashoffset:-14}}
+.pill{fill:#fff;fill-opacity:.92}
+.pt{font:800 13px var(--n);fill:var(--ol)}
+.lbl{font:400 30px var(--r);fill:var(--ink);paint-order:stroke;stroke:var(--card);stroke-width:7px;stroke-linejoin:round;text-anchor:middle}
+.lbl2{font:700 15px var(--f);fill:var(--muted);paint-order:stroke;stroke:var(--card);stroke-width:5px;stroke-linejoin:round;text-anchor:middle}
+.foam{fill:var(--foam)} .sand{fill:var(--sand)} .sand2{fill:var(--sand2)}
+.bob{animation:bob 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bob{50%{transform:translateY(5px) rotate(-3deg)}}
+.spin{animation:spin 6s linear infinite;transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+.beam{animation:beam 4s ease-in-out infinite;transform-box:view-box}
+@keyframes beam{0%,100%{opacity:.15}50%{opacity:.55}}
+.flame{animation:flame .35s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:top center}
+@keyframes flame{to{transform:scaleY(1.35)}}
+.cloud{animation:cloud 70s linear infinite}
+@keyframes cloud{from{transform:translateX(-260px)}to{transform:translateX(1500px)}}
+.star-on{fill:#FFC93C;stroke:#C98A00;stroke-width:1}.star-off{fill:#fff;fill-opacity:.55;stroke:var(--ol);stroke-opacity:.35;stroke-width:1}
+.flag{animation:wave 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:left center}
+@keyframes wave{50%{transform:skewY(-8deg) scaleX(.9)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+/* ---------- overlay UI ---------- */
+.hud{position:fixed;top:max(14px,env(safe-area-inset-top));left:max(14px,env(safe-area-inset-left));z-index:5;
+  background:var(--card);border-radius:20px;padding:14px 18px 14px;box-shadow:var(--shadow);max-width:min(360px,calc(100vw - 96px));border:3px solid var(--ol)}
+.hud .eb{font:800 11px var(--n);letter-spacing:.16em;color:var(--accent-ink);text-transform:uppercase}
+.hud h1{margin:2px 0 4px;font:400 clamp(24px,4vw,32px)/1.15 var(--r)}
+.hud .sub{margin:0;font-size:13px;color:var(--muted)}
+.prog{margin-top:10px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}
+.bar{flex:1;height:10px;border-radius:99px;background:var(--line);overflow:hidden;border:2px solid var(--ol)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#FFC93C,#FF7A59);transition:width .5s}
+.side{position:fixed;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));z-index:6;display:flex;gap:10px}
+.side button,.side a{all:unset;cursor:pointer;width:62px;height:62px;border-radius:18px;background:var(--card);box-shadow:var(--shadow);border:3px solid var(--ol);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:700 12px var(--f);color:var(--ink);text-align:center}
+.side svg{width:24px;height:24px}
+.side button:hover,.side a:hover{transform:translateY(-2px)}
+.side button:focus-visible,.side a:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hint[hidden]{display:none}.hint{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:4;background:var(--ol);color:#fff;
+  padding:8px 16px;border-radius:99px;font-size:13.5px;font-weight:700;white-space:nowrap;box-shadow:var(--shadow);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{transform:translateX(-50%) translateY(-4px)}}
+/* panel */
+.panel{position:fixed;z-index:8;right:max(14px,env(safe-area-inset-right));top:96px;width:min(380px,calc(100vw - 28px));max-height:calc(100dvh - 112px);overflow:auto;
+  background:var(--card);border-radius:24px;border:3px solid var(--ol);box-shadow:var(--shadow);padding:20px 20px 18px;transform:translateX(120%);transition:transform .35s cubic-bezier(.3,1.3,.5,1)}
+.panel.open{transform:none}
+@media (max-width:700px){.panel{top:auto;bottom:0;right:0;left:0;width:100%;border-radius:24px 24px 0 0;border-bottom:0;max-height:72dvh;transform:translateY(110%);padding-bottom:max(18px,env(safe-area-inset-bottom))}.panel.open{transform:none}}
+.x{all:unset;cursor:pointer;position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-size:22px;color:var(--muted)}
+.x:hover{background:var(--line)}.x:focus-visible{outline:3px solid var(--accent)}
+.panel .eb{font:800 12px var(--n);letter-spacing:.14em;color:var(--c,var(--accent-ink))}
+.panel h2{margin:4px 40px 6px 0;font:400 26px/1.25 var(--r)}
+.panel p{margin:0 0 14px;color:var(--muted);font-size:14px;line-height:1.65}
+.acts{display:flex;flex-direction:column;gap:10px}
+a.act{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);background:color-mix(in srgb,var(--c,var(--accent)) 10%,var(--card));
+  border:2.5px solid var(--ol);border-radius:16px;padding:11px 14px;font-weight:700;transition:transform .15s}
+a.act:hover{transform:translateY(-2px)}a.act:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+a.act .ic{width:36px;height:36px;border-radius:11px;background:var(--c,var(--accent));display:grid;place-items:center;flex:none}
+a.act .ic svg{width:20px;height:20px}
+a.act .tx{flex:1;display:flex;flex-direction:column;line-height:1.35}
+a.act .tx small{font-weight:500;color:var(--muted);font-size:12.5px}
+a.act .st{flex:none;width:24px;height:24px}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.nav button{all:unset;cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);padding:6px 10px;border-radius:10px}
+.nav button:hover{background:var(--line);color:var(--ink)}.nav button:focus-visible{outline:3px solid var(--accent)}
+.nav button[disabled]{visibility:hidden}
+/* list drawer */
+.drawer{position:fixed;z-index:9;top:0;right:0;height:100dvh;width:min(440px,100vw);background:var(--card);border-left:3px solid var(--ol);box-shadow:var(--shadow);
+  transform:translateX(105%);transition:transform .3s;display:flex;flex-direction:column}
+.drawer.open{transform:none}
+.drawer header{padding:18px 20px 12px;border-bottom:2px solid var(--line);position:relative}
+.drawer h2{margin:0 0 10px;font:400 24px var(--r)}
+.drawer input{font:inherit;width:100%;padding:10px 14px;border-radius:12px;border:2.5px solid var(--ol);background:var(--card);color:var(--ink)}
+.drawer input:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.drawer .body{overflow:auto;padding:8px 20px 28px}
+.grp h3{margin:18px 0 6px;font:400 18px var(--r);color:var(--c)}
+.row{padding:10px 0;border-top:1.5px dashed var(--line)}
+.row .nm{font-weight:700;font-size:14.5px}.row .nm b{font-family:var(--n);color:var(--c);margin-right:6px}
+.row .lk{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.row .lk a{font-size:13px;font-weight:700;text-decoration:none;color:var(--c);border:2px solid var(--c);padding:3px 10px;border-radius:99px}
+.row .lk a:hover{background:var(--c);color:var(--card)}
+.row .lk a:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.none{color:var(--muted);margin-top:16px}
+.reset{all:unset;cursor:pointer;margin-top:22px;font-size:13px;color:var(--muted);text-decoration:underline}
+.scrim{position:fixed;inset:0;z-index:7;background:rgba(20,35,55,.35);opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+/* tour */
+.tour{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:16px;background:rgba(20,40,60,.35);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.tour[hidden]{display:none}
+.tcard{background:var(--card);border-radius:26px;border:3px solid var(--ol);box-shadow:var(--shadow);padding:30px 30px 26px;max-width:560px;width:100%;animation:pop .4s cubic-bezier(.3,1.5,.5,1)}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.tcard .eb{font:800 12px var(--n);letter-spacing:.2em;color:var(--accent-ink)}
+.tcard h2{margin:10px 0 10px;font:400 clamp(26px,5vw,34px)/1.25 var(--r)}
+.tcard p{margin:0;color:var(--muted);font-size:15.5px;line-height:1.75}
+.tcard .dots{display:flex;gap:6px;margin:20px 0 0}.tcard .dots i{width:8px;height:8px;border-radius:9px;background:var(--line)}.tcard .dots i.on{background:var(--accent);width:22px}
+.tbtn{display:flex;justify-content:space-between;margin-top:20px;gap:12px}
+.tbtn button{font:700 16px var(--f);padding:12px 20px;border-radius:14px;cursor:pointer;border:2.5px solid var(--ol)}
+.tbtn .skip{background:transparent;color:var(--ink)}.tbtn .next{background:var(--ol);color:#fff}
+@media (prefers-color-scheme:dark){.tbtn .next{background:var(--accent);color:#1D2A3F;border-color:var(--accent)}}
+.tbtn button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:700px){
+ .hud{left:10px;right:10px;max-width:none;padding:12px 14px;border-radius:18px}.hud .sub{display:none}.hud h1{font-size:24px}
+ .side{top:auto;bottom:max(10px,env(safe-area-inset-bottom));right:10px;left:10px;justify-content:space-between;gap:8px}
+ .side button,.side a{flex:1;width:auto;height:56px;border-radius:16px}
+ .hint{bottom:calc(max(10px,env(safe-area-inset-bottom)) + 66px)}
+ .panel{z-index:10}
+}
+</style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div>
-      <div class="eyebrow">iPAS · AI 應用規劃師 · 中級</div>
-      <h1>iPAS 中級筆記庫</h1>
-      <p class="sub">三個考科的章節重點筆記與名詞解釋，加上演算法學習卡、實作分析與 Python 練習。每章都有「重點筆記」、「名詞解釋 30 詞」與「動畫簡報」三份。<br><a class="go-slides" href="../slides/ipas-slides/">→ 前往動畫簡報頁</a>　<a class="go-slides" href="../quiz/">→ 考古題線上練習</a></p>
-    </div>
-    <div class="search">
-      <label for="q">搜尋章節或主題</label>
-      <input id="q" type="search" placeholder="例如：機率、SVM、MLOps" autocomplete="off">
-    </div>
-  </header>
+<svg id="map" role="group" aria-label="學習島地圖：三座科目島與燈塔、劇場、練功坊"></svg>
 
-  <section class="grid" id="grid"></section>
-
-  <section class="extra">
-    <h2>專題學習卡與練習</h2>
-    <div class="cards" id="extras"></div>
-  </section>
-  <p class="none" id="none" hidden>找不到符合的章節。</p>
-
-  <footer>個人讀書筆記，內容依 iPAS 中級 AI 應用規劃師考試範圍整理，僅供學習參考。</footer>
+<div class="hud">
+  <div class="eb">iPAS · AI 應用規劃師 · 中級</div>
+  <h1>iPAS 學習島</h1>
+  <p class="sub">點一塊地，打開那一章的筆記、名詞與動畫簡報。</p>
+  <div class="prog"><span id="pt">探索 0 / 33</span><div class="bar"><i id="pb"></i></div><span aria-hidden="true">★</span></div>
 </div>
+
+<nav class="side" aria-label="快捷">
+  <button id="bList" aria-label="開啟章節清單與搜尋"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h9"/></svg>清單</button>
+  <a href="../quiz/" aria-label="前往考古題線上練習"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M9 21h6l-1-12h-4zM8.5 9h7M10 9V6h4v3M12 3v1"/></svg>題庫</a>
+  <a href="../slides/ipas-slides/" aria-label="前往動畫簡報頁"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M10 8.5v5l4-2.5z" fill="currentColor"/><path d="M8 21h8"/></svg>簡報</a>
+  <button id="bTour" aria-label="重新播放導覽"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.5M12 17h.01"/></svg>導覽</button>
+</nav>
+
+<div class="hint" id="hint">點一塊小島開始探索 ↓</div>
+<div class="scrim" id="scrim"></div>
+
+<aside class="panel" id="panel" aria-live="polite" aria-label="章節內容"></aside>
+
+<aside class="drawer" id="drawer" aria-label="章節清單">
+  <header><h2>全部章節</h2><label class="sr" for="q">搜尋章節或主題</label><input id="q" type="search" placeholder="搜尋：機率、SVM、MLOps…" autocomplete="off"><button class="x" id="dx" aria-label="關閉清單">×</button></header>
+  <div class="body" id="dbody"></div>
+</aside>
+
+<div class="tour" id="tour" hidden role="dialog" aria-modal="true" aria-labelledby="tt">
+  <div class="tcard"><div class="eb" id="te"></div><h2 id="tt"></h2><p id="tp"></p><div class="dots" id="td"></div>
+  <div class="tbtn"><button class="skip" id="tskip">略過</button><button class="next" id="tnext">下一步 →</button></div></div>
+</div>
+
 <script>
+/* ===== data ===== */
 const SUBJ=[
- {id:"s1",c:"--s1",no:"科目一",name:"人工智慧技術應用與規劃",ch:[["3","AI 核心技術","NLP・電腦視覺・生成式 AI・多模態"],["4","AI 導入與風險管理","導入評估・專案規劃・風險與倫理"],["5","AI 技術應用與系統部署","資料準備・模型選擇・MLOps・部署"]]},
- {id:"s2",c:"--s2",no:"科目二",name:"大數據處理分析與應用",ch:[["3","機率統計基礎","敘述統計・機率分佈・假設檢定"],["4","大數據處理技術","收集清理・儲存管理・處理工具"],["5","大數據分析方法與工具","統計應用・分析方法・可視化"],["6","大數據在人工智慧之應用","鑑別式 AI・生成式 AI・分散式訓練"]]},
- {id:"s3",c:"--s3",no:"科目三",name:"機器學習技術與應用",ch:[["3","機器學習基礎數學","機率統計・線性代數・數值優化"],["4","機器學習與深度學習","學習典範・主流演算法・CNN／RNN／Transformer"],["5","機器學習建模與參數調校","特徵工程・模型選擇・超參數調校"],["6","機器學習治理","隱私合規・匿名化・偏見與公平性"]]}
+ {id:"s1",no:"科目一",name:"人工智慧技術應用與規劃",top:"#9DDDB5",side:"#5FAE84",cv:"--s1",shape:[[0,0],[1,0],[0,1]],
+  ch:[["3","AI 核心技術","NLP、電腦視覺、生成式 AI 與多模態應用。","robot"],["4","AI 導入與風險管理","導入評估、專案規劃、風險與倫理治理。","sign"],["5","AI 技術應用與系統部署","資料準備、模型選擇、MLOps 與部署策略。","rocket"]]},
+ {id:"s2",no:"科目二",name:"大數據處理分析與應用",top:"#F7D98B",side:"#D2A957",cv:"--s2",shape:[[0,0],[1,0],[0,1],[1,1]],
+  ch:[["3","機率統計基礎","敘述統計、機率分佈與假設檢定。","dice"],["4","大數據處理技術","資料收集清理、儲存管理與處理工具。","silo"],["5","大數據分析方法與工具","統計應用、分析方法與資料可視化。","chart"],["6","大數據在人工智慧之應用","鑑別式 AI、生成式 AI 與分散式訓練。","bulb"]]},
+ {id:"s3",no:"科目三",name:"機器學習技術與應用",top:"#CBB8F3",side:"#9A84D1",cv:"--s3",shape:[[0,0],[1,0],[-1,1],[0,1]],
+  ch:[["3","機器學習基礎數學","機率統計、線性代數與數值優化。","sigma"],["4","機器學習與深度學習","學習典範、主流演算法與 CNN／RNN／Transformer。","tree"],["5","機器學習建模與參數調校","特徵工程、模型選擇與超參數調校。","mill"],["6","機器學習治理","隱私合規、匿名化、偏見與公平性。","castle"]]}
 ];
-const EXTRA=[
- ["weak-spots","衝刺","iPAS 弱項衝刺筆記","依答對率鎖定最值得補強的主題"],
- ["ml-cards-15-21","學習卡","ML 學習卡 Cards 15–21","過擬合／欠擬合等核心概念"],
- ["svm","學習卡","SVM 支援向量機","最大間隔、核函數與白話理解"],
- ["iris-logistic","實作","Iris 羅吉斯迴歸分析","資料載入到評估的完整流程與圖表"],
- ["python-exercises","練習題","Python 大數據與機器學習應用題","分主題練習，附完整程式碼"],
- ["python-handbook","速查","Python 語法手冊","依主題分類的語法與範例，可搜尋"]
+const EXTRA=[["weak-spots","衝刺","iPAS 弱項衝刺筆記","依答對率鎖定最值得補強的主題"],["ml-cards-15-21","學習卡","ML 學習卡 Cards 15–21","過擬合／欠擬合等核心概念"],["svm","學習卡","SVM 支援向量機","最大間隔、核函數與白話理解"],["iris-logistic","實作","Iris 羅吉斯迴歸分析","資料載入到評估的完整流程與圖表"],["python-exercises","練習題","Python 大數據與機器學習應用題","分主題練習，附完整程式碼"],["python-handbook","速查","Python 語法手冊","依主題分類的語法與範例，可搜尋"]];
+const SPECIAL=[
+ {id:"quiz",no:"燈塔",name:"考古題線上練習",top:"#AEDD93",side:"#77B05F",icon:"light",pill:"題庫"},
+ {id:"slides",no:"劇場",name:"動畫簡報",top:"#FFC4B2",side:"#E08F78",icon:"tent",pill:"簡報"},
+ {id:"dojo",no:"練功坊",name:"專題學習卡與練習",top:"#BDE3F6",side:"#7FB3D3",icon:"books",pill:"練功"}
 ];
-const N="零一二三四五六七";
-const grid=document.getElementById("grid"), extras=document.getElementById("extras");
-grid.innerHTML=SUBJ.map(s=>`<article class="subj" style="--c:var(${s.c})"><h2>${s.no}</h2><h3>${s.name}</h3>${
-  s.ch.map(([n,t,d])=>`<div class="ch" data-s="${s.no} ${s.name} 第${N[n]}章 ${t} ${d}"><div class="name"><b>CH${n}</b>${t}</div><div class="links"><a class="btn solid" href="${s.id}-ch${n}-notes.html">重點筆記</a><a class="btn" href="${s.id}-ch${n}-terms.html">名詞解釋 30 詞</a><a class="btn play" href="../slides/ipas-slides/${s.id}-ch${n}.html">▶ 動畫簡報</a></div></div>`).join("")}</article>`).join("");
-extras.innerHTML=EXTRA.map(([f,k,t,d])=>`<a class="card" href="${f}.html" data-s="${k} ${t} ${d}"><span class="k">${k}</span><span class="t">${t}</span><span class="d">${d}</span></a>`).join("");
-document.getElementById("q").addEventListener("input",e=>{
-  const q=e.target.value.trim().toLowerCase(); let any=false;
-  document.querySelectorAll("[data-s]").forEach(el=>{const m=!q||el.dataset.s.toLowerCase().includes(q);el.hidden=!m;if(m)any=true;});
-  document.querySelectorAll(".subj").forEach(s=>s.hidden=![...s.querySelectorAll(".ch")].some(c=>!c.hidden));
-  document.getElementById("none").hidden=any;
-});
+const LAYOUT={
+ land:{vb:[0,-20,1240,800],s1:[300,300],s2:[640,520],s3:[980,300],quiz:[1060,600],slides:[200,610],dojo:[640,190],
+   boats:[[480,690],[860,140],[110,420]],clouds:[60,250,520]},
+ port:{vb:[0,0,560,1560],dojo:[430,330],s1:[165,460],s2:[350,820],quiz:[90,880],s3:[215,1210],slides:[450,1290],
+   boats:[[490,600],[70,1080],[400,1500]],clouds:[150,700,1050]}
+};
+const R=56,K=.62,D=16,S3=Math.sqrt(3);
+/* ===== progress ===== */
+const KEY="ipas-island-v1";let P={};try{P=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}};
+const done=(k,t)=>!!(P[k]&&P[k][t]);
+const stars=k=>["n","t","p"].filter(t=>done(k,t)).length;
+function mark(k,t){P[k]=P[k]||{};P[k][t]=1;save();refresh()}
+/* ===== icons (local coords, base at 0,0) ===== */
+const I={
+robot:`<line class="ol" x1="0" y1="-36" x2="0" y2="-44"/><circle class="ol" cx="0" cy="-46" r="3.5" fill="#FF7A59"/><rect class="ol" x="-21" y="-28" width="5" height="10" rx="2" fill="#B9C6D6"/><rect class="ol" x="16" y="-28" width="5" height="10" rx="2" fill="#B9C6D6"/><rect class="ol" x="-16" y="-36" width="32" height="26" rx="8" fill="#EEF4F9"/><circle cx="-7" cy="-24" r="3.2" fill="#2B3A55"/><circle cx="7" cy="-24" r="3.2" fill="#2B3A55"/><path class="ol" d="M-5 -16q5 4 10 0" fill="none"/><rect class="ol" x="-11" y="-10" width="22" height="10" rx="3" fill="#7FC8F8"/>`,
+sign:`<rect class="ol" x="-3" y="-46" width="6" height="46" rx="2" fill="#B07A55"/><path class="ol" d="M-2-42h22l7 6-7 6H-2z" fill="#FFD166"/><path class="ol" d="M2-26h-22l-7 6 7 6H2z" fill="#FF9F68"/><circle cx="0" cy="-48" r="4" class="ol" fill="#FF7A59"/>`,
+rocket:`<path class="flame" d="M-6-8 0 4 6-8z" fill="#FFB627"/><path class="ol" d="M-9-18-18-4-9-8zM9-18 18-4 9-8z" fill="#FF7A59"/><path class="ol" d="M0-52c13 12 13 32 9 44H-9c-4-12-4-32 9-44z" fill="#F4F7FB"/><circle class="ol" cx="0" cy="-32" r="5.5" fill="#7FC8F8"/>`,
+dice:`<path class="ol" d="M0-46 19-36 0-26-19-36z" fill="#fff"/><path class="ol" d="M-19-36 0-26V-2L-19-12z" fill="#E4E9F2"/><path class="ol" d="M0-26 19-36v24L0-2z" fill="#CBD5E4"/><circle cx="0" cy="-36" r="2.6" fill="#FF5A5F"/><circle cx="-13" cy="-26" r="2.3" fill="#2B3A55"/><circle cx="-6" cy="-12" r="2.3" fill="#2B3A55"/><circle cx="5" cy="-24" r="2.3" fill="#2B3A55"/><circle cx="9.5" cy="-17" r="2.3" fill="#2B3A55"/><circle cx="14" cy="-10" r="2.3" fill="#2B3A55"/>`,
+silo:`<path class="ol" d="M-17-40v34a17 6 0 0 0 34 0v-34" fill="#7FC8F8"/><ellipse class="ol" cx="0" cy="-40" rx="17" ry="6" fill="#C2E7FF"/><path class="ol" d="M-17-28a17 6 0 0 0 34 0M-17-16a17 6 0 0 0 34 0" fill="none"/><circle cx="10" cy="-22" r="2" fill="#fff"/><circle cx="10" cy="-10" r="2" fill="#7CF29A"/>`,
+chart:`<path class="ol" d="M-14 0v-14M14 0v-14" fill="none"/><rect class="ol" x="-24" y="-50" width="48" height="36" rx="5" fill="#fff"/><rect x="-16" y="-28" width="7" height="10" rx="1.5" fill="#7FC8F8"/><rect x="-5" y="-38" width="7" height="20" rx="1.5" fill="#FF9F68"/><rect x="6" y="-44" width="7" height="26" rx="1.5" fill="#5FD3AA"/><path class="ol" d="M-17-36 -4-44 6-40 17-47" fill="none" stroke-width="2"/>`,
+bulb:`<g stroke="#FFB627" stroke-width="3" stroke-linecap="round"><path d="M-22-36h-6M22-36h6M-16-52l-4-4M16-52l4-4M0-58v-6"/></g><circle class="ol" cx="0" cy="-36" r="15" fill="#FFE066"/><path class="ol" d="M-5-38l5 5 5-5M0-33v10" fill="none" stroke-width="2"/><rect class="ol" x="-7" y="-22" width="14" height="10" rx="3" fill="#B0BCCB"/><path class="ol" d="M-4-6h8" />`,
+sigma:`<rect class="ol" x="-18" y="-50" width="36" height="48" rx="10" fill="#E4DCF8"/><path d="M9-40H-9L2-26-9-12H9" fill="none" stroke="#6E4FC0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`,
+tree:`<rect class="ol" x="-4" y="-18" width="8" height="18" rx="2" fill="#A0694B"/><circle class="ol" cx="0" cy="-36" r="20" fill="#6CC58A"/><g stroke="#fff" stroke-width="1.6" opacity=".9"><path d="M-10-44 0-36M-10-28 0-36M0-36 10-44M0-36 10-28M-10-44-10-28"/></g><g fill="#fff" stroke="#2B3A55" stroke-width="1.4"><circle cx="-10" cy="-44" r="3.5"/><circle cx="-10" cy="-28" r="3.5"/><circle cx="0" cy="-36" r="3.5"/><circle cx="10" cy="-44" r="3.5"/><circle cx="10" cy="-28" r="3.5"/></g>`,
+mill:`<path class="ol" d="M-10 0 10 0 6-34H-6z" fill="#FFF3E0"/><path class="ol" d="M-9-34h18l-9-10z" fill="#FF8FA3"/><rect class="ol" x="-4" y="-12" width="8" height="12" rx="3" fill="#B07A55"/><g class="spin"><path class="ol" d="M0-38-4-60h8zM0-38 22-42v8zM0-38 4-16h-8zM0-38-22-34v-8z" fill="#fff"/><circle class="ol" cx="0" cy="-38" r="3.5" fill="#FFC93C"/></g>`,
+castle:`<path class="ol" d="M-22 0v-30h6v-6h6v6h4v-6h12v6h4v-6h6v6h6V0z" fill="#EEE8F8"/><path class="ol" d="M-6 0v-10a6 6 0 0 1 12 0V0z" fill="#9A84D1"/><path class="ol" d="M0-46l12 4v8c0 8-6 12-12 14-6-2-12-6-12-14v-8z" fill="#6E4FC0"/><path d="M-5-34l4 4 7-8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`,
+light:`<path class="beam" d="M4-58 110-80V-36z" fill="#FFF3A6" opacity=".35"/><path class="ol" d="M-10 0 10 0 7-46H-7z" fill="#fff"/><path d="M-9-14 9-14 8.3-24H-8.3zM-7.6-34 7.6-34 7-44H-7z" fill="#FF5A5F"/><path class="ol" d="M-10 0 10 0 7-46H-7z" fill="none"/><rect class="ol" x="-8" y="-56" width="16" height="10" rx="2" fill="#FFE066"/><path class="ol" d="M-11-56h22L0-66z" fill="#FF5A5F"/>`,
+tent:`<path class="ol" d="M-28 0 0-44 28 0z" fill="#fff"/><path d="M-14-22 0-44 14-22 6-10-6-10z" fill="#FF8FA3" opacity=".9"/><path class="ol" d="M-28 0 0-44 28 0z" fill="none"/><path class="ol" d="M0-44v-12" fill="none"/><path class="flag ol" d="M0-56h12l-3 4 3 4H0z" fill="#FFC93C"/><circle class="ol" cx="0" cy="-12" r="9" fill="#2B3A55"/><path d="M-3-16v8l7-4z" fill="#fff"/>`,
+books:`<rect class="ol" x="-22" y="-12" width="44" height="12" rx="3" fill="#FF9F68"/><rect class="ol" x="-18" y="-24" width="38" height="12" rx="3" fill="#7FC8F8"/><rect class="ol" x="-20" y="-36" width="36" height="12" rx="3" fill="#5FD3AA"/><path class="ol" d="M-6-36l4-16 18 5-4 11z" fill="#FFE066"/><circle cx="16" cy="-50" r="2.5" fill="#FF5A5F"/>`
+};
+const palm=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><path class="ol" d="M0 0q3-14 0-28" fill="none" stroke="#A0694B" stroke-width="5"/><path class="ol" d="M0 0q3-14 0-28" fill="none" stroke-width="1.5"/><path class="ol" d="M0-28q-14-6-22 4 10-8 22-4zM0-28q14-6 22 4-10-8-22-4zM0-28q-6-14-18-14 12 2 18 14zM0-28q6-14 18-14-12 2-18 14z" fill="#5FB87A"/></g>`;
+const bush=(x,y)=>`<g transform="translate(${x} ${y})"><circle class="ol" cx="-6" cy="-6" r="7" fill="#6CC58A"/><circle class="ol" cx="5" cy="-8" r="8" fill="#7FD39A"/></g>`;
+const boat=(x,y,d)=>`<g transform="translate(${x} ${y})"><g class="bob" style="animation-delay:${d}s"><path class="ol" d="M-20 0h40l-7 9h-26z" fill="#FF7A59"/><path class="ol" d="M0 0v-30M2-28l14 24H2z" fill="#fff"/><path class="ol" d="M-2-24l-12 20h12z" fill="#FFE066"/></g></g>`;
+const cloud=(y,d,s)=>`<g class="cloud" style="animation-delay:-${d}s"><g transform="translate(0 ${y}) scale(${s})" opacity=".92"><ellipse cx="0" cy="0" rx="46" ry="16" fill="#fff"/><circle cx="-16" cy="-10" r="16" fill="#fff"/><circle cx="12" cy="-14" r="20" fill="#fff"/></g></g>`;
+/* ===== geometry ===== */
+const hex=(cx,cy,r)=>[...Array(6)].map((_,i)=>{const a=Math.PI/180*(60*i-30);return (cx+r*Math.cos(a)).toFixed(1)+","+(cy+r*Math.sin(a)*K).toFixed(1)}).join(" ");
+function tilesOf(shape,[ox,oy]){const c=shape.map(([q,r])=>[R*S3*(q+r/2),R*1.5*K*r*1.5]);const mx=c.reduce((a,b)=>a+b[0],0)/c.length,my=c.reduce((a,b)=>a+b[1],0)/c.length;return c.map(([x,y])=>[ox+x-mx,oy+y-my])}
+/* ===== build map ===== */
+const svg=document.getElementById("map");let mode="";const ALL=[];
+SUBJ.forEach(s=>s.ch.forEach(([n,t,d,ic],i)=>ALL.push({k:`${s.id}-${n}`,s,n,t,d,ic,i})));
+function build(){
+  const portrait=innerWidth/innerHeight<.9, m=portrait?"port":"land"; if(m===mode)return; mode=m; const L=LAYOUT[m];
+  svg.setAttribute("viewBox",L.vb.join(" ")); svg.setAttribute("preserveAspectRatio","xMidYMid meet");
+  document.body.classList.toggle("port",portrait); svg.style.height=portrait?(innerWidth*L.vb[3]/L.vb[2])+"px":"";
+  let base="",tiles=[],deco="",labels="";
+  const islands=[...SUBJ.map(s=>({s,pos:L[s.id],cells:tilesOf(s.shape,L[s.id])})),...SPECIAL.map(p=>({p,pos:L[p.id],cells:tilesOf([[0,0]],L[p.id])}))];
+  islands.forEach(isl=>{
+    const cells=isl.cells;
+    base+=cells.map(([x,y])=>`<polygon class="foam" points="${hex(x,y+D+10,R+26)}"/>`).join("");
+    isl._sand2=cells.map(([x,y])=>`<polygon class="sand2" points="${hex(x,y+D+12,R+13)}"/>`).join("");
+    isl._sand=cells.map(([x,y])=>`<polygon class="sand" points="${hex(x,y+D+4,R+13)}"/>`).join("");
+    const xs=cells.map(c=>c[0]),ys=cells.map(c=>c[1]),minx=Math.min(...xs),maxx=Math.max(...xs),maxy=Math.max(...ys),miny=Math.min(...ys);
+    const L0=cells.find(c=>c[0]===minx),R0=cells.find(c=>c[0]===maxx);
+    deco+=palm(L0[0]-R*.95,L0[1]+D+6,.9)+palm(R0[0]+R*.98,R0[1]+D+10,.8)+bush(R0[0]+R*.6,miny-R*K+4);
+    const ly=maxy+R*K+D+(isl.s?58:44), lx=isl.pos[0];
+    if(isl.s)labels+=`<text class="lbl" x="${lx}" y="${ly}">${isl.s.no}</text><text class="lbl2" x="${lx}" y="${ly+22}">${isl.s.name}</text>`;
+    else labels+=`<text class="lbl" x="${lx}" y="${ly}" style="font-size:22px">${isl.p.no}</text><text class="lbl2" x="${lx}" y="${ly+19}">${isl.p.name}</text>`;
+    cells.forEach(([x,y],i)=>{
+      const c=isl.s?{k:`${isl.s.id}-${isl.s.ch[i][0]}`,top:isl.s.top,side:isl.s.side,ic:isl.s.ch[i][3],pill:"CH"+isl.s.ch[i][0],aria:`${isl.s.no} 第${isl.s.ch[i][0]}章 ${isl.s.ch[i][1]}`,star:1}
+                   :{k:isl.p.id,top:isl.p.top,side:isl.p.side,ic:isl.p.icon,pill:isl.p.pill,aria:`${isl.p.no}：${isl.p.name}`,star:0};
+      tiles.push({y,html:`<g class="tile" data-k="${c.k}" tabindex="0" role="button" aria-label="${c.aria}"><g class="lift">
+        <polygon points="${hex(x,y+D,R)}" fill="${c.side}" class="ol"/><polygon class="top ol" points="${hex(x,y,R)}" fill="${c.top}"/>
+        <polygon points="${hex(x,y-2,R-10)}" fill="#fff" opacity=".18"/><polygon class="ring" points="${hex(x,y,R-4)}" fill="none"/>
+        <g transform="translate(${x} ${y+6})">${I[c.ic]}</g>
+        <g transform="translate(${x} ${y+22})"><rect class="pill ol" x="${c.star?-33:-20}" y="-10" width="${c.star?66:40}" height="20" rx="10" stroke-width="1.8"/>
+        <text class="pt" x="${c.star?-14:0}" y="4.5" text-anchor="middle">${c.pill}</text>
+        ${c.star?[0,1,2].map(j=>`<path class="st" data-j="${j}" transform="translate(${7+j*9.5} 0)" d="M0-4.6 1.4-1.5 4.6-1.2 2.2 1 2.9 4.2 0 2.6-2.9 4.2-2.2 1-4.6-1.2-1.4-1.5z"/>`).join(""):""}</g>
+        <g class="done-flag" transform="translate(${x+R*.55} ${y-R*K+4})" style="display:none"><path class="ol" d="M0 0v-30" fill="none"/><path class="flag ol" d="M0-30h18l-5 6 5 6H0z" fill="#FF5A5F"/></g>
+      </g></g>`});
+    });
+  });
+  tiles.sort((a,b)=>a.y-b.y);
+  svg.innerHTML=`<g>${L.clouds.map((y,i)=>cloud(y,i*23,1-i*.15)).join("")}</g>${base}${islands.map(i=>i._sand2).join("")}${islands.map(i=>i._sand).join("")}${deco}${tiles.map(t=>t.html).join("")}${labels}${L.boats.map(([x,y],i)=>boat(x,y,i*.8)).join("")}`;
+  svg.querySelectorAll(".tile").forEach(g=>{g.addEventListener("click",()=>open(g.dataset.k));g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open(g.dataset.k)}})});
+  refresh(); if(cur)sel(cur);
+}
+/* ===== panel ===== */
+const panel=document.getElementById("panel"),scrim=document.getElementById("scrim");let cur=null;
+const ICN={n:`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/></svg>`,t:`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 10h8M8 14h5"/></svg>`,p:`<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff"/></svg>`,go:`<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>`};
+const STAR=on=>`<svg class="st" viewBox="0 0 24 24" aria-label="${on?"已完成":"未完成"}"><path d="M12 2.8l2.8 5.9 6.4.7-4.8 4.4 1.3 6.3L12 17l-5.7 3.1 1.3-6.3L2.8 9.4l6.4-.7z" ${on?'fill="#FFC93C" stroke="#C98A00"':'fill="none" stroke="currentColor" opacity=".35"'} stroke-width="1.6" stroke-linejoin="round"/></svg>`;
+function act(href,ic,title,sub,c,mk){return `<a class="act" href="${href}" ${mk?`data-mk="${mk}"`:""}><span class="ic">${ICN[ic]}</span><span class="tx">${title}<small>${sub}</small></span>${mk?STAR(done(...mk.split("|"))):""}</a>`}
+function open(k){
+  cur=k;sel(k);document.getElementById("hint").hidden=true;
+  const ch=ALL.find(a=>a.k===k);let h="";
+  if(ch){const {s,n,t,d}=ch,idx=ALL.indexOf(ch);panel.style.setProperty("--c",`var(${s.cv})`);
+    h=`<div class="eb">${s.no} · CH${n} · ${"★".repeat(stars(k))}${"☆".repeat(3-stars(k))}</div><h2>${t}</h2><p>${d}</p><div class="acts">
+    ${act(`${s.id}-ch${n}-notes.html`,"n","重點筆記","Sketchnote 圖解重點",0,`${k}|n`)}
+    ${act(`${s.id}-ch${n}-terms.html`,"t","名詞解釋 30 詞","翻卡記憶關鍵名詞",0,`${k}|t`)}
+    ${act(`../slides/ipas-slides/${s.id}-ch${n}.html`,"p","▶ 動畫簡報","一步一步看懂概念",0,`${k}|p`)}</div>
+    <div class="nav"><button data-go="${idx-1}" ${idx?"":"disabled"}>← ${idx?ALL[idx-1].s.no+" CH"+ALL[idx-1].n:""}</button><button data-go="${idx+1}" ${idx<ALL.length-1?"":"disabled"}>${idx<ALL.length-1?ALL[idx+1].s.no+" CH"+ALL[idx+1].n:""} →</button></div>`;}
+  else if(k==="quiz"){panel.style.setProperty("--c","var(--sp)");h=`<div class="eb">燈塔 · 題庫</div><h2>考古題線上練習</h2><p>114、115 年公告試題 300 題，加上模擬試題 300 題與情境應用題 180 題，共 780 題。點選答案立即對答，附解析，錯題可再複習。</p><div class="acts">${act("../quiz/","go","進入題庫","依梯次、科目、模式篩選")}</div>`}
+  else if(k==="slides"){panel.style.setProperty("--c","var(--sp)");h=`<div class="eb">劇場 · 動畫簡報</div><h2>動畫簡報</h2><p>每章 30 個名詞，用動畫一步一步拆解。</p><div class="acts">${act("../slides/ipas-slides/","go","前往動畫簡報頁","11 章全部列表")}</div><div class="acts" style="margin-top:12px">${SUBJ.map(s=>`<div class="row" style="--c:var(${s.cv})"><div class="nm"><b>${s.no}</b>${s.name}</div><div class="lk">${s.ch.map(([n])=>`<a href="../slides/ipas-slides/${s.id}-ch${n}.html" data-mk="${s.id}-${n}|p">CH${n}</a>`).join("")}</div></div>`).join("")}</div>`}
+  else{panel.style.setProperty("--c","#2F7FB0");h=`<div class="eb">練功坊</div><h2>專題學習卡與練習</h2><p>演算法學習卡、實作分析與 Python 練習。</p><div class="acts">${EXTRA.map(([f,k2,t,d])=>act(f+".html","go",t,`${k2}・${d}`)).join("")}</div>`}
+  panel.innerHTML=`<button class="x" aria-label="關閉">×</button>`+h;panel.classList.add("open");
+  panel.querySelector(".x").onclick=close;panel.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>open(ALL[+b.dataset.go].k));
+}
+function close(){panel.classList.remove("open");cur=null;sel(null)}
+function sel(k){svg.querySelectorAll(".tile").forEach(g=>g.classList.toggle("sel",g.dataset.k===k))}
+document.addEventListener("click",e=>{const a=e.target.closest("a[data-mk]");if(a){const [k,t]=a.dataset.mk.split("|");mark(k,t)}});
+function refresh(){
+  let tot=0;ALL.forEach(a=>{const n=stars(a.k);tot+=n;const g=svg.querySelector(`.tile[data-k="${a.k}"]`);if(!g)return;
+    g.querySelectorAll(".st").forEach(p=>p.setAttribute("class","st "+(+p.dataset.j<n?"star-on":"star-off")));g.querySelector(".done-flag").style.display=n===3?"":"none"});
+  document.getElementById("pt").textContent=`探索 ${tot} / ${ALL.length*3}`;document.getElementById("pb").style.width=(tot/(ALL.length*3)*100)+"%";
+}
+/* ===== list drawer ===== */
+const drawer=document.getElementById("drawer"),dbody=document.getElementById("dbody");
+dbody.innerHTML=SUBJ.map(s=>`<section class="grp" style="--c:var(${s.cv})"><h3>${s.no}　${s.name}</h3>${s.ch.map(([n,t,d])=>`<div class="row" data-s="${s.no} ${s.name} CH${n} ${t} ${d}"><div class="nm"><b>CH${n}</b>${t}</div><div class="lk"><a href="${s.id}-ch${n}-notes.html" data-mk="${s.id}-${n}|n">重點筆記</a><a href="${s.id}-ch${n}-terms.html" data-mk="${s.id}-${n}|t">名詞解釋</a><a href="../slides/ipas-slides/${s.id}-ch${n}.html" data-mk="${s.id}-${n}|p">▶ 動畫簡報</a></div></div>`).join("")}</section>`).join("")
+ +`<section class="grp" style="--c:var(--sp)"><h3>練功坊與題庫</h3>${EXTRA.map(([f,k,t,d])=>`<div class="row" data-s="${k} ${t} ${d}"><div class="nm">${t}</div><div class="lk"><a href="${f}.html">${k}・開啟</a></div></div>`).join("")}<div class="row" data-s="考古題 題庫 模擬 情境 練習"><div class="nm">考古題線上練習（780 題）</div><div class="lk"><a href="../quiz/">開啟題庫</a></div></div><div class="row" data-s="動畫簡報 slides"><div class="nm">動畫簡報總覽</div><div class="lk"><a href="../slides/ipas-slides/">開啟</a></div></div></section>
+ <p class="none" id="none" hidden>找不到符合的章節。</p><button class="reset" id="reset">重設探索進度</button>`;
+const showD=o=>{drawer.classList.toggle("open",o);scrim.classList.toggle("on",o);if(o)setTimeout(()=>document.getElementById("q").focus(),300)};
+document.getElementById("bList").onclick=()=>showD(true);document.getElementById("dx").onclick=()=>showD(false);scrim.onclick=()=>showD(false);
+document.getElementById("q").addEventListener("input",e=>{const q=e.target.value.trim().toLowerCase();let any=false;
+  dbody.querySelectorAll(".row").forEach(r=>{const m=!q||r.dataset.s.toLowerCase().includes(q);r.hidden=!m;if(m)any=true});
+  dbody.querySelectorAll(".grp").forEach(g=>g.hidden=![...g.querySelectorAll(".row")].some(r=>!r.hidden));document.getElementById("none").hidden=any});
+document.getElementById("reset").onclick=()=>{P={};save();refresh();if(cur)open(cur)};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){if(!tour.hidden)endTour();else if(drawer.classList.contains("open"))showD(false);else close()}});
+/* ===== tour ===== */
+const STEPS=[["HELLO, 學習者 / 01","每一塊地都是一個章節","三座主島分別是三個考科。點一塊地，就能打開那一章的重點筆記、名詞解釋與動畫簡報。"],
+ ["PROGRESS / 02","讀過就會點亮星星","打開過的內容會在地塊上點亮一顆星，三顆星全亮就插上小旗子。進度只存在這台裝置的瀏覽器。"],
+ ["MORE / 03","燈塔、劇場與練功坊","燈塔是 780 題線上題庫，劇場是動畫簡報，練功坊收著學習卡與 Python 練習。右上角「清單」可以搜尋章節。"]];
+const tour=document.getElementById("tour");let ts=0;
+function showStep(){const [e,t,p]=STEPS[ts];te.textContent=e;tt.textContent=t;tp.textContent=p;td.innerHTML=STEPS.map((_,i)=>`<i class="${i===ts?"on":""}"></i>`).join("");tnext.textContent=ts===STEPS.length-1?"開始探索 →":"下一步 →"}
+function startTour(){ts=0;showStep();tour.hidden=false;tnext.focus()}
+function endTour(){tour.hidden=true;try{localStorage.setItem(KEY+"-tour","1")}catch(e){}}
+tnext.onclick=()=>{if(ts<STEPS.length-1){ts++;showStep()}else endTour()};tskip.onclick=endTour;document.getElementById("bTour").onclick=startTour;
+let seen=null;try{seen=localStorage.getItem(KEY+"-tour")}catch(e){} if(!seen)startTour();
+addEventListener("resize",build);build();
 </script>
 </body>
 </html>
