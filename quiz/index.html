@@ -37,6 +37,8 @@ h1{margin:4px 0 6px;font-size:clamp(28px,6vw,44px);font-weight:900;line-height:1
 .group summary{cursor:pointer;font-weight:700;color:#8A5A12}
 .stem{font-size:17px;font-weight:500;margin:4px 0 14px}
 .txt{white-space:pre-wrap;word-break:break-word}
+.code{font-family:'JetBrains Mono',Consolas,monospace;font-size:13.5px;line-height:1.55;background:#1E2530;color:#F4EEE4;border-radius:10px;padding:12px 14px;margin:10px 0;white-space:pre;overflow-x:auto}
+.tag.mk{background:#F0EAF6;color:#6B4C9A}
 .fig{display:block;max-width:100%;height:auto;margin:10px 0;border:1px solid var(--line);border-radius:8px;background:#fff}
 .opts{display:flex;flex-direction:column;gap:9px}
 .opt{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;font-size:16px;background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 14px;cursor:pointer;color:var(--ink);transition:border-color .15s,background .15s}
@@ -69,8 +71,8 @@ h1{margin:4px 0 6px;font-size:clamp(28px,6vw,44px);font-weight:900;line-height:1
 <body>
 <div class="wrap">
 <p class="eb">iPAS 中級 AI 應用規劃師</p>
-<h1>考古題線上練習</h1>
-<p class="lead">收錄 114 年第二次與 115 年第一次公告試題，三科共 300 題。點選答案立即對答，附解析。</p>
+<h1>考古題與模擬試題練習</h1>
+<p class="lead">收錄 114 年第二次與 115 年第一次公告試題（300 題），以及依考古題與各科筆記方向編寫的模擬試題兩回（每科每回 50 題，共 300 題）。點選答案立即對答，附解析。</p>
 <div class="nav"><a href="../ipas-site/">← 回到 iPAS 筆記首頁</a><a href="../slides/ipas-slides/">→ 前往動畫簡報頁</a></div>
 
 <div class="panel">
@@ -93,12 +95,12 @@ h1{margin:4px 0 6px;font-size:clamp(28px,6vw,44px);font-weight:900;line-height:1
  <div class="small">綠色＝答對、紅色＝答錯；作答紀錄只存在這台裝置的瀏覽器中。</div>
  <div class="grid" id="grid"></div>
 </div>
-<p class="small">試題來源：iPAS AI 應用規劃師中級能力鑑定公告試題。解析為學習整理，僅供參考。</p>
+<p class="small">試題來源：iPAS AI 應用規劃師中級能力鑑定公告試題；模擬試題為依考古題與筆記方向自行編寫，非官方試題。解析為學習整理，僅供參考。</p>
 </div>
 <script>
 const SUBJ={1:'科目一 人工智慧技術應用與規劃',2:'科目二 大數據處理分析與應用',3:'科目三 機器學習技術與應用'};
 const SUBJS={1:'科目一',2:'科目二',3:'科目三'};
-const EXAM={'114':'114 年第二次','115':'115 年第一次'};
+const EXAM={'114':'114 年第二次','115':'115 年第一次','M1':'模擬第 1 回','M2':'模擬第 2 回'};
 let D=null,list=[],idx=0;
 const st={e:'all',s:'all',m:'seq'};
 let rec={};try{rec=JSON.parse(localStorage.getItem('ipas-quiz-rec')||'{}')}catch(e){rec={}}
@@ -110,7 +112,7 @@ function chips(el,items,key,cls){$(el).innerHTML='';items.forEach(([v,l])=>{cons
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function scope(){return D.q.filter(q=>(st.e==='all'||q.e===st.e)&&(st.s==='all'||q.s==+st.s))}
 function build(reset){
- chips('fe',[['all','全部'],['114','114 年第二次'],['115','115 年第一次']],'e');
+ chips('fe',[['all','全部'],['114','114 年第二次'],['115','115 年第一次'],['M1','模擬第 1 回'],['M2','模擬第 2 回']],'e');
  chips('fs',[['all','全部'],['1','科目一'],['2','科目二'],['3','科目三']],'s');
  chips('fm',[['seq','依序'],['rand','隨機'],['undone','未作答'],['wrong','錯題複習']],'m','or');
  let L=scope();
@@ -123,11 +125,11 @@ function build(reset){
 function stats(){const S=scope();const done=S.filter(q=>rec[q.id]);const ok=done.filter(q=>rec[q.id]===q.a).length;
  $('st-n').textContent=S.length;$('st-d').textContent=done.length;$('st-r').textContent=done.length?Math.round(ok/done.length*100)+'%':'–';$('st-w').textContent=done.length-ok;$('pbar').style.width=(S.length?done.length/S.length*100:0)+'%'}
 function grid(){const g=$('grid');g.innerHTML='';let last='';list.forEach((q,i)=>{if(st.m!=='rand'){const key=q.e+'-'+q.s;if(key!==last){last=key;const h=document.createElement('div');h.className='ghead';h.textContent=EXAM[q.e]+'・'+SUBJ[q.s];g.appendChild(h)}}const b=document.createElement('button');b.className='cell'+(rec[q.id]?(rec[q.id]===q.a?' ok':' ng'):'')+(i===idx?' cur':'');b.textContent=q.n;b.title=EXAM[q.e]+' '+SUBJS[q.s]+' 第 '+q.n+' 題';b.onclick=()=>{idx=i;show();grid();window.scrollTo({top:$('qpanel').offsetTop-10,behavior:'smooth'})};g.appendChild(b)})}
-function parts(arr){const f=document.createDocumentFragment();arr.forEach(p=>{if(p.i){const im=document.createElement('img');im.className='fig';im.src=p.i.startsWith('data:')?p.i:'img/'+p.i;im.alt='題目附圖';im.loading='lazy';f.appendChild(im)}else{const d=document.createElement('div');d.className='txt';d.textContent=p.t;f.appendChild(d)}});return f}
+function parts(arr){const f=document.createDocumentFragment();arr.forEach(p=>{if(p.i){const im=document.createElement('img');im.className='fig';im.src=p.i.startsWith('data:')?p.i:'img/'+p.i;im.alt='題目附圖';im.loading='lazy';f.appendChild(im)}else if(p.c){const d=document.createElement('pre');d.className='code';d.textContent=p.c;f.appendChild(d)}else{const d=document.createElement('div');d.className='txt';d.textContent=p.t;f.appendChild(d)}});return f}
 function show(){const P=$('qpanel');P.innerHTML='';
  if(!list.length){P.innerHTML='<div class="empty">'+(st.m==='wrong'?'目前沒有錯題，太棒了！':st.m==='undone'?'這個範圍已全部作答完畢。':'沒有符合條件的題目。')+'</div>';return}
  const q=list[idx];
- const h=document.createElement('div');h.className='qhead';h.innerHTML='<span><span class="tag s'+q.s+'">'+SUBJS[q.s]+'</span> <span class="tag">'+EXAM[q.e]+'</span> <span class="tag">'+q.tp+'</span></span><span class="qno">第 '+q.n+' 題　'+(idx+1)+' / '+list.length+'</span>';P.appendChild(h);
+ const h=document.createElement('div');h.className='qhead';h.innerHTML='<span><span class="tag s'+q.s+'">'+SUBJS[q.s]+'</span> <span class="tag'+(q.e[0]==='M'?' mk':'')+'">'+EXAM[q.e]+'</span> <span class="tag">'+q.tp+'</span></span><span class="qno">第 '+q.n+' 題　'+(idx+1)+' / '+list.length+'</span>';P.appendChild(h);
  if(q.g&&D.g[q.g]){const G=D.g[q.g];const d=document.createElement('details');d.className='group';d.open=true;const s=document.createElement('summary');s.textContent='題組情境（第 '+G.rng[0]+'～'+G.rng[1]+' 題）';d.appendChild(s);d.appendChild(parts(G.body));P.appendChild(d)}
  const stem=document.createElement('div');stem.className='stem';stem.appendChild(parts(q.q));P.appendChild(stem);
  const os=document.createElement('div');os.className='opts';const btns={};
