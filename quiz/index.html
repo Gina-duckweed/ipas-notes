@@ -101,7 +101,7 @@ h1{margin:4px 0 6px;font-size:clamp(28px,6vw,44px);font-weight:900;line-height:1
 <script>
 const SUBJ={1:'科目一 人工智慧技術應用與規劃',2:'科目二 大數據處理分析與應用',3:'科目三 機器學習技術與應用'};
 const SUBJS={1:'科目一',2:'科目二',3:'科目三'};
-const EXAM={'114':'114 年第二次','115':'115 年第一次','M1':'模擬第 1 回','M2':'模擬第 2 回','S1':'情境應用第 1 回','S2':'情境應用第 2 回'};
+const EXAM={'114':'114 年第二次','115':'115 年第一次','M1':'模擬第 1 回','M2':'模擬第 2 回','S1':'情境應用第 1 回','S2':'情境應用第 2 回','P1':'預測模擬卷（115-4 走向）'};
 let D=null,list=[],idx=0;
 const st={e:'all',s:'all',m:'seq'};
 let rec={};try{rec=JSON.parse(localStorage.getItem('ipas-quiz-rec')||'{}')}catch(e){rec={}}
@@ -113,7 +113,7 @@ function chips(el,items,key,cls){$(el).innerHTML='';items.forEach(([v,l])=>{cons
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function scope(){return D.q.filter(q=>(st.e==='all'||q.e===st.e)&&(st.s==='all'||q.s==+st.s))}
 function build(reset){
- chips('fe',[['all','全部'],['114','114 年第二次'],['115','115 年第一次'],['M1','模擬第 1 回'],['M2','模擬第 2 回'],['S1','情境應用第 1 回'],['S2','情境應用第 2 回']],'e');
+ chips('fe',[['all','全部'],['114','114 年第二次'],['115','115 年第一次'],['M1','模擬第 1 回'],['M2','模擬第 2 回'],['S1','情境應用第 1 回'],['S2','情境應用第 2 回'],['P1','預測模擬卷（115-4 走向）']],'e');
  chips('fs',[['all','全部'],['1','科目一'],['2','科目二'],['3','科目三']],'s');
  chips('fm',[['seq','依序'],['rand','隨機'],['undone','未作答'],['wrong','錯題複習']],'m','or');
  let L=scope();
