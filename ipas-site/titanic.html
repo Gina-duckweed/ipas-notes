@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鐵達尼號生存預測：完整 Python 專案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --P:#4A3FA0;--Plt:#EEEAFF;--Pdk:#2E2680;
+  --R:#C0392B;--Rlt:#FDECEA;
+  --O:#D4720A;--Olt:#FFF3E0;
+  --G:#1A6B40;--Glt:#E0F4EA;
+  --bg:#F6F4FB;--s:#FFF;--s2:#F0ECFF;--b:#D0CAEE;
+  --t:#1A1440;--t2:#3A3070;--t3:#6A6298;
+  --font:'Nunito','Noto Sans TC',sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;
+  --t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;
+  --Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark;
+}}
+[data-theme=dark]{--bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;--t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;--Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:15px;line-height:1.7;min-height:100vh}
+a{color:var(--P)}
+:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}
+.hero{background:linear-gradient(135deg,var(--Pdk) 0%,var(--P) 55%,#7B6FD0 100%);padding:36px 24px 30px;color:#fff}
+.hero-in{max-width:1080px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.75);margin-bottom:8px}
+.hero h1{font-size:clamp(26px,4vw,34px);font-weight:900;line-height:1.2;margin-bottom:8px;text-wrap:balance}
+.hero p{font-size:14px;color:rgba(255,255,255,.88);max-width:680px;margin-bottom:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none}
+.chip:hover{background:rgba(255,255,255,.25)}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px;display:grid;gap:28px}
+section{background:var(--s);border:1.5px solid var(--b);border-radius:14px;padding:22px 24px;scroll-margin-top:12px}
+.label{font-size:11px;font-weight:800;color:var(--P);letter-spacing:1.5px;margin-bottom:6px}
+h2{font-size:21px;font-weight:900;margin-bottom:10px;text-wrap:balance}
+h3{font-size:16px;font-weight:800;margin-bottom:4px}
+p{max-width:72ch}
+.lead{color:var(--t2);margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:6px}
+.kpi{background:var(--s2);border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:26px;font-weight:900;color:var(--P);font-variant-numeric:tabular-nums;line-height:1.2}
+[data-theme=dark] .kpi b{color:#B9AEFF}
+.kpi span{font-size:13px;color:var(--t2)}
+.tbl{overflow-x:auto;border:1.5px solid var(--b);border-radius:12px;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--b)}
+th{background:var(--s2);font-size:12px;color:var(--t2);font-weight:800;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:800;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:8px}
+.card{background:var(--s2);border-radius:12px;padding:14px 16px;border-left:4px solid var(--P);display:grid;gap:6px;align-content:start}
+.card .en{font-family:var(--mono);font-size:12px;color:var(--t3)}
+.card .row{font-size:13.5px}
+.card .row b{color:var(--P)}
+[data-theme=dark] .card .row b{color:#B9AEFF}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:1px 8px;border-radius:10px;margin-right:4px;background:var(--Plt);color:var(--P)}
+.tag.hot{background:var(--Rlt);color:var(--R)}
+.tag.mid{background:var(--Olt);color:var(--O)}
+.trap{font-size:13px;background:var(--Rlt);color:var(--t);border-radius:8px;padding:6px 10px}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.fbtn{font:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:20px;padding:3px 12px;cursor:pointer}
+.fbtn[aria-pressed=true]{background:var(--P);border-color:var(--P);color:#fff}
+figure{margin-top:8px;background:var(--s2);border-radius:12px;padding:12px;overflow-x:auto}
+figcaption{font-size:12px;color:var(--t3);margin-top:6px}
+svg text{font-family:var(--font)}
+.steps{counter-reset:s;list-style:none;display:grid;gap:8px;margin-top:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);width:26px;height:26px;border-radius:50%;background:var(--P);color:#fff;font-weight:900;font-size:13px;display:grid;place-items:center}
+.q{border:1.5px solid var(--b);border-radius:12px;padding:14px 16px;margin-top:10px}
+.q p{font-weight:700;margin-bottom:8px}
+.opts{display:grid;gap:6px}
+.opt{font:inherit;font-size:14px;text-align:left;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:8px;padding:8px 10px;cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--P)}
+.opt.ok{background:var(--Glt);border-color:var(--G)}
+.opt.ng{background:var(--Rlt);border-color:var(--R)}
+.exp{margin-top:8px;font-size:13.5px;background:var(--Plt);border-radius:8px;padding:8px 10px}
+.score{font-weight:800;color:var(--P);margin-top:10px}
+.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.ipas-back:hover{background:#2C5282}
+@media(max-width:560px){section{padding:18px 16px}td:first-child{white-space:normal}}
+
+pre.code{position:relative;background:#1C1838;color:#ECE8FF;border-radius:10px;padding:14px 16px;margin-top:8px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.65;tab-size:4}
+pre.code .c{color:#9A93C9;font-style:italic}
+pre.code .k{color:#FFB86C;font-weight:700}
+pre.code .s{color:#A6E3A1}
+.cbtn{position:absolute;top:8px;right:8px;font:700 11px/1 var(--font);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:5px 8px;cursor:pointer}
+.cbtn:hover{background:rgba(255,255,255,.25)}
+.lang{display:inline-block;font:800 11px/1 var(--mono);background:var(--Plt);color:var(--P);border-radius:6px;padding:4px 7px;margin-top:14px}
+.ex{margin-top:16px;padding-top:14px;border-top:1px dashed var(--b)}
+.ex:first-of-type{border-top:none;padding-top:0}
+.out{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:8px;padding:8px 12px;margin-top:6px;white-space:pre;overflow-x:auto;color:var(--t2)}
+code.i{font-family:var(--mono);font-size:.9em;background:var(--s2);border-radius:5px;padding:1px 5px}
+td code{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:5px;padding:1px 5px;white-space:nowrap}
+.note{font-size:13.5px;background:var(--Olt);border-radius:10px;padding:10px 14px;margin-top:10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.bars{display:grid;gap:6px;margin-top:6px}
+.bar{display:grid;grid-template-columns:120px 1fr 54px;gap:8px;align-items:center;font-size:13px}
+.bar i{display:block;height:16px;border-radius:4px;background:var(--P)}
+.bar i.f{background:#C0587E}
+.bar span:last-child{font-variant-numeric:tabular-nums;font-weight:800;text-align:right}
+.bar .trk{background:var(--s2);border-radius:4px}
+.dl{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-weight:800;background:var(--P);color:#fff;text-decoration:none;border-radius:10px;padding:9px 16px}
+.dl:hover{background:var(--Pdk)}
+</style>
+</head>
+<body>
+<header class="hero"><div class="hero-in">
+  <div class="eyebrow">iPAS AI 應用規劃師｜Python 專案個案</div>
+  <h1>鐵達尼號生存預測：完整 Python 專案</h1>
+  <p>用 Kaggle 經典資料集走完一次資料科學專案：問題定義 → 資料理解 → EDA → 清理 → 特徵工程 → 建模 → 評估 → 用 SQL 驗證。頁面上的數字都是實際執行程式得到的結果，完整程式可下載後直接執行。</p>
+  <nav class="chips" aria-label="頁內目錄"><a class="chip" href="#goal">專案目標</a><a class="chip" href="#data">資料說明</a><a class="chip" href="#eda">EDA 發現</a><a class="chip" href="#clean">清理與特徵</a><a class="chip" href="#model">建模</a><a class="chip" href="#eval">評估</a><a class="chip" href="#sqlv">SQL 驗證</a><a class="chip" href="#exam">考點連結</a><a class="chip" href="#quiz">自我檢測</a></nav>
+</div></header>
+<main class="wrap">
+<section id="goal" aria-labelledby="h-goal">
+  <div class="label">01 專案目標</div>
+  <h2 id="h-goal">從乘客資料預測是否生還</h2>
+  <p class="lead">1912 年鐵達尼號沉沒，2,224 名乘客與船員中約 1,500 人罹難。本專案用 891 名乘客的資料，建立二元分類（Binary Classification）模型，預測乘客是否生還，並解釋哪些因素影響最大。</p>
+  <div class="kpis">
+    <div class="kpi"><b>891 筆</b><span>訓練資料，12 個欄位</span></div>
+    <div class="kpi"><b>38.4%</b><span>整體生存率（類別不平衡程度中等）</span></div>
+    <div class="kpi"><b>61.7%</b><span>基準線 Baseline：全部猜「罹難」的準確率</span></div>
+    <div class="kpi"><b>83.7%</b><span>調參後隨機森林的 5 折交叉驗證準確率</span></div>
+  </div>
+  <h3 style="margin-top:16px">專案流程（CRISP-DM）</h3>
+  <ol class="steps">
+    <li><span><b>商業理解</b>：定義目標變數 Survived，選擇評估指標（Accuracy、F1、ROC-AUC）</span></li>
+    <li><span><b>資料理解</b>：檢視欄位、型別、缺失值與分布</span></li>
+    <li><span><b>資料準備</b>：缺失值填補、特徵工程、編碼與標準化</span></li>
+    <li><span><b>建模</b>：比較邏輯迴歸、決策樹、隨機森林</span></li>
+    <li><span><b>評估</b>：交叉驗證、混淆矩陣、特徵重要性</span></li>
+    <li><span><b>部署與溝通</b>：整理結論、輸出圖表與報告</span></li>
+  </ol>
+  <a class="dl" href="titanic_project.py" download>⬇ 下載完整程式 titanic_project.py</a>
+  <p style="margin-top:8px;font-size:13px;color:var(--t3)">執行前先安裝：<code class="i">pip install pandas numpy matplotlib seaborn scikit-learn</code>。程式會自動下載資料，並輸出 titanic_eda.png、titanic_importance.png 兩張圖。</p>
+</section>
+<section id="data" aria-labelledby="h-data">
+  <div class="label">02 資料說明</div>
+  <h2 id="h-data">欄位與缺失狀況</h2>
+  <div class="tbl"><table><thead><tr><th>欄位</th><th>說明</th><th>型別</th><th>缺失</th><th>處理方式</th></tr></thead><tbody>
+    <tr><td>Survived</td><td>是否生還（0 罹難、1 生還）</td><td>目標變數</td><td>0</td><td>預測對象</td></tr>
+    <tr><td>Pclass</td><td>艙等（1 頭等、2 二等、3 三等）</td><td>順序類別</td><td>0</td><td>One-Hot 編碼</td></tr>
+    <tr><td>Name</td><td>姓名（含稱謂 Mr、Mrs、Miss、Master）</td><td>文字</td><td>0</td><td>擷取稱謂 Title</td></tr>
+    <tr><td>Sex</td><td>性別</td><td>名目類別</td><td>0</td><td>One-Hot 編碼</td></tr>
+    <tr><td>Age</td><td>年齡</td><td>數值</td><td>177（19.9%）</td><td>中位數填補</td></tr>
+    <tr><td>SibSp</td><td>同行兄弟姊妹與配偶數</td><td>數值</td><td>0</td><td>合成 FamilySize</td></tr>
+    <tr><td>Parch</td><td>同行父母與子女數</td><td>數值</td><td>0</td><td>合成 FamilySize</td></tr>
+    <tr><td>Ticket</td><td>船票號碼</td><td>文字</td><td>0</td><td>本專案不使用</td></tr>
+    <tr><td>Fare</td><td>票價</td><td>數值（偏態 4.79）</td><td>0</td><td>取對數 log1p</td></tr>
+    <tr><td>Cabin</td><td>艙房號碼</td><td>文字</td><td>687（77.1%）</td><td>改為 HasCabin 有/無</td></tr>
+    <tr><td>Embarked</td><td>登船港口（C、Q、S）</td><td>名目類別</td><td>2</td><td>眾數填補</td></tr>
+  </tbody></table></div><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">import</span> pandas <span class="k">as</span> pd
+df = pd.read_csv(<span class="s">"https://raw.githubusercontent.com/datasciencedojo/datasets/master/titanic.csv"</span>)
+df.shape                                   <span class="c"># (891, 12)</span>
+df.isna().sum().sort_values(ascending=<span class="k">False</span>).head(4)
+df[<span class="s">"Survived"</span>].mean()                      <span class="c"># 0.3838</span></code></pre><div class="out">Cabin          687
+Age            177
+Embarked         2
+PassengerId      0</div></section>
+<section id="eda" aria-labelledby="h-eda"><div class="label">03 探索式資料分析 EDA</div><h2 id="h-eda">誰比較容易生還？</h2><p class="lead">「婦孺優先」與「艙等差距」在資料中非常明顯。</p><div class="grid2"><div><h3>依性別</h3><div class="bars"><div class="bar"><span>女性 (314)</span><span class="trk"><i class="" style="width:74.2%"></i></span><span>74.2%</span></div><div class="bar"><span>男性 (577)</span><span class="trk"><i class="" style="width:18.9%"></i></span><span>18.9%</span></div></div></div><div><h3>依艙等</h3><div class="bars"><div class="bar"><span>頭等 (216)</span><span class="trk"><i class="" style="width:63.0%"></i></span><span>63.0%</span></div><div class="bar"><span>二等 (184)</span><span class="trk"><i class="" style="width:47.3%"></i></span><span>47.3%</span></div><div class="bar"><span>三等 (491)</span><span class="trk"><i class="" style="width:24.2%"></i></span><span>24.2%</span></div></div></div><div><h3>艙等 × 性別</h3><div class="bars"><div class="bar"><span>頭等女性</span><span class="trk"><i class="f" style="width:96.8%"></i></span><span>96.8%</span></div><div class="bar"><span>二等女性</span><span class="trk"><i class="f" style="width:92.1%"></i></span><span>92.1%</span></div><div class="bar"><span>三等女性</span><span class="trk"><i class="f" style="width:50.0%"></i></span><span>50.0%</span></div></div><div class="bars"><div class="bar"><span>頭等男性</span><span class="trk"><i class="" style="width:36.9%"></i></span><span>36.9%</span></div><div class="bar"><span>二等男性</span><span class="trk"><i class="" style="width:15.7%"></i></span><span>15.7%</span></div><div class="bar"><span>三等男性</span><span class="trk"><i class="" style="width:13.5%"></i></span><span>13.5%</span></div></div></div><div><h3>依稱謂 Title</h3><div class="bars"><div class="bar"><span>Mrs (126)</span><span class="trk"><i class="" style="width:79.4%"></i></span><span>79.4%</span></div><div class="bar"><span>Miss (185)</span><span class="trk"><i class="" style="width:70.3%"></i></span><span>70.3%</span></div><div class="bar"><span>Master (40)</span><span class="trk"><i class="" style="width:57.5%"></i></span><span>57.5%</span></div><div class="bar"><span>Rare (23)</span><span class="trk"><i class="" style="width:34.8%"></i></span><span>34.8%</span></div><div class="bar"><span>Mr (517)</span><span class="trk"><i class="" style="width:15.7%"></i></span><span>15.7%</span></div></div></div><div><h3>依年齡</h3><div class="bars"><div class="bar"><span>0–12 歲 (69)</span><span class="trk"><i class="" style="width:58.0%"></i></span><span>58.0%</span></div><div class="bar"><span>13–18 歲 (70)</span><span class="trk"><i class="" style="width:42.9%"></i></span><span>42.9%</span></div><div class="bar"><span>19–60 歲 (553)</span><span class="trk"><i class="" style="width:38.9%"></i></span><span>38.9%</span></div><div class="bar"><span>61 歲以上 (22)</span><span class="trk"><i class="" style="width:22.7%"></i></span><span>22.7%</span></div></div></div><div><h3>依家庭人數</h3><div class="bars"><div class="bar"><span>獨自 (537)</span><span class="trk"><i class="" style="width:30.4%"></i></span><span>30.4%</span></div><div class="bar"><span>2–4 人 (292)</span><span class="trk"><i class="" style="width:57.9%"></i></span><span>57.9%</span></div><div class="bar"><span>5 人以上 (62)</span><span class="trk"><i class="" style="width:16.1%"></i></span><span>16.1%</span></div></div></div></div><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">import</span> seaborn <span class="k">as</span> sns
+<span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt
+
+df.groupby(<span class="s">"Sex"</span>)[<span class="s">"Survived"</span>].mean()
+pd.crosstab(df[<span class="s">"Pclass"</span>], df[<span class="s">"Sex"</span>], values=df[<span class="s">"Survived"</span>], aggfunc=<span class="s">"mean"</span>)
+
+fig, axes = plt.subplots(2, 2, figsize=(11, 8))
+sns.countplot(data=df, x=<span class="s">"Survived"</span>, ax=axes[0, 0])
+sns.barplot(data=df, x=<span class="s">"Pclass"</span>, y=<span class="s">"Survived"</span>, hue=<span class="s">"Sex"</span>, ax=axes[0, 1])   <span class="c"># 平均值 = 生存率</span>
+sns.histplot(data=df, x=<span class="s">"Age"</span>, hue=<span class="s">"Survived"</span>, bins=30, kde=<span class="k">True</span>, ax=axes[1, 0])
+sns.heatmap(df.select_dtypes(<span class="s">"number"</span>).corr(), annot=<span class="k">True</span>, fmt=<span class="s">".2f"</span>,
+            cmap=<span class="s">"coolwarm"</span>, ax=axes[1, 1])
+fig.tight_layout()
+fig.savefig(<span class="s">"titanic_eda.png"</span>, dpi=150)</code></pre><div class="cards" style="margin-top:14px">
+    <div class="card"><h3>發現 1：性別是最強因素</h3><div class="row">女性生存率是男性的 3.9 倍；三等艙女性（50%）仍高於頭等艙男性（36.9%）。</div></div>
+    <div class="card"><h3>發現 2：艙等反映社經地位</h3><div class="row">頭等艙生存率是三等艙的 2.6 倍，且艙等與票價高度相關，兩者都進模型時要注意共線性。</div></div>
+    <div class="card"><h3>發現 3：家庭人數呈非線性</h3><div class="row">獨自與大家庭都偏低、2–4 人最高。線性模型抓不到這種形狀，可用分組特徵或樹模型處理。</div></div>
+    <div class="card"><h3>發現 4：缺失本身也是資訊</h3><div class="row">有艙房號碼者生存率 66.7%、沒有者 30.0%。缺失與否和艙等有關，不是完全隨機缺失。</div></div>
+  </div></section>
+<section id="clean" aria-labelledby="h-clean">
+  <div class="label">04 資料清理與特徵工程</div>
+  <h2 id="h-clean">把原始欄位變成模型看得懂的特徵</h2><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">import</span> numpy <span class="k">as</span> np
+
+<span class="k">def</span> add_features(d):
+    d = d.copy()
+    <span class="c"># 1) 從姓名擷取稱謂："Braund, Mr. Owen Harris" → "Mr"</span>
+    d[<span class="s">"Title"</span>] = d[<span class="s">"Name"</span>].str.extract(r<span class="s">",\s*([^\.]+)\."</span>, expand=<span class="k">False</span>).str.strip()
+    d[<span class="s">"Title"</span>] = d[<span class="s">"Title"</span>].replace({<span class="s">"Mlle"</span>: <span class="s">"Miss"</span>, <span class="s">"Ms"</span>: <span class="s">"Miss"</span>, <span class="s">"Mme"</span>: <span class="s">"Mrs"</span>})
+    d.loc[~d[<span class="s">"Title"</span>].isin([<span class="s">"Mr"</span>, <span class="s">"Mrs"</span>, <span class="s">"Miss"</span>, <span class="s">"Master"</span>]), <span class="s">"Title"</span>] = <span class="s">"Rare"</span>
+    <span class="c"># 2) 家庭人數與是否獨自</span>
+    d[<span class="s">"FamilySize"</span>] = d[<span class="s">"SibSp"</span>] + d[<span class="s">"Parch"</span>] + 1
+    d[<span class="s">"IsAlone"</span>] = (d[<span class="s">"FamilySize"</span>] == 1).astype(int)
+    <span class="c"># 3) Cabin 缺 77%，不填補，改成「有沒有艙房號碼」</span>
+    d[<span class="s">"HasCabin"</span>] = d[<span class="s">"Cabin"</span>].notna().astype(int)
+    <span class="c"># 4) 票價嚴重右偏，取對數</span>
+    d[<span class="s">"LogFare"</span>] = np.log1p(d[<span class="s">"Fare"</span>])
+    <span class="k">return</span> d
+
+df = add_features(df)</code></pre>
+  <div class="tbl" style="margin-top:12px"><table><thead><tr><th>技巧</th><th>本專案做法</th><th>為什麼</th></tr></thead><tbody>
+    <tr><td>缺失值填補</td><td>Age 用中位數、Embarked 用眾數</td><td>中位數不受極端值影響；類別欄用眾數</td></tr>
+    <tr><td>缺失指標</td><td>Cabin → HasCabin</td><td>缺失比例過高，缺失與否本身有預測力</td></tr>
+    <tr><td>文字擷取</td><td>Name → Title（正規表示式）</td><td>稱謂同時包含性別、年齡、婚姻與社會地位</td></tr>
+    <tr><td>特徵組合</td><td>SibSp + Parch + 1 → FamilySize</td><td>兩個弱特徵合成一個更有意義的特徵</td></tr>
+    <tr><td>數值轉換</td><td>Fare → log1p(Fare)</td><td>降低偏態，對邏輯迴歸等線性模型有幫助</td></tr>
+    <tr><td>類別編碼</td><td>One-Hot Encoding</td><td>名目類別沒有大小關係，不能直接用 0、1、2</td></tr>
+    <tr><td>標準化</td><td>StandardScaler（平均 0、標準差 1）</td><td>邏輯迴歸、KNN、SVM 對尺度敏感；樹模型不需要</td></tr>
+  </tbody></table></div>
+  <p class="note"><b>防止資料洩漏（Data Leakage）：</b>先切分訓練集與測試集，再把填補、標準化包進 Pipeline。這樣中位數、平均數只從訓練資料計算，交叉驗證時每一折也會各自重新計算。</p>
+</section>
+<section id="model" aria-labelledby="h-model">
+  <div class="label">05 建模</div>
+  <h2 id="h-model">Pipeline + 交叉驗證比較三種模型</h2><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">from</span> sklearn.model_selection <span class="k">import</span> train_test_split, StratifiedKFold, cross_val_score, GridSearchCV
+<span class="k">from</span> sklearn.compose <span class="k">import</span> ColumnTransformer
+<span class="k">from</span> sklearn.pipeline <span class="k">import</span> Pipeline
+<span class="k">from</span> sklearn.impute <span class="k">import</span> SimpleImputer
+<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> StandardScaler, OneHotEncoder
+<span class="k">from</span> sklearn.linear_model <span class="k">import</span> LogisticRegression
+<span class="k">from</span> sklearn.tree <span class="k">import</span> DecisionTreeClassifier
+<span class="k">from</span> sklearn.ensemble <span class="k">import</span> RandomForestClassifier
+
+NUM = [<span class="s">"Age"</span>, <span class="s">"SibSp"</span>, <span class="s">"Parch"</span>, <span class="s">"LogFare"</span>, <span class="s">"FamilySize"</span>]
+CAT = [<span class="s">"Pclass"</span>, <span class="s">"Sex"</span>, <span class="s">"Embarked"</span>, <span class="s">"Title"</span>, <span class="s">"IsAlone"</span>, <span class="s">"HasCabin"</span>]
+X, y = df[NUM + CAT], df[<span class="s">"Survived"</span>]
+
+<span class="c"># 分層抽樣 stratify：讓訓練、測試集的生存比例都維持約 38%</span>
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42)
+
+preprocess = ColumnTransformer([
+    (<span class="s">"num"</span>, Pipeline([(<span class="s">"imp"</span>, SimpleImputer(strategy=<span class="s">"median"</span>)),
+                      (<span class="s">"sc"</span>, StandardScaler())]), NUM),
+    (<span class="s">"cat"</span>, Pipeline([(<span class="s">"imp"</span>, SimpleImputer(strategy=<span class="s">"most_frequent"</span>)),
+                      (<span class="s">"oh"</span>, OneHotEncoder(handle_unknown=<span class="s">"ignore"</span>))]), CAT),
+])
+
+cv = StratifiedKFold(n_splits=5, shuffle=<span class="k">True</span>, random_state=42)
+<span class="k">for</span> name, m <span class="k">in</span> {<span class="s">"LogReg"</span>: LogisticRegression(max_iter=1000),
+                <span class="s">"Tree"</span>: DecisionTreeClassifier(max_depth=4, random_state=42),
+                <span class="s">"RF"</span>: RandomForestClassifier(n_estimators=300, max_depth=6, random_state=42)}.items():
+    pipe = Pipeline([(<span class="s">"prep"</span>, preprocess), (<span class="s">"model"</span>, m)])
+    s = cross_val_score(pipe, X_train, y_train, cv=cv, scoring=<span class="s">"accuracy"</span>)
+    print(name, round(s.mean(), 3), round(s.std(), 3))</code></pre>
+  <div class="tbl" style="margin-top:12px"><table><thead><tr><th>模型</th><th>5 折 CV Accuracy</th><th>優點</th><th>限制</th></tr></thead><tbody>
+    <tr><td>Baseline（全猜罹難）</td><td>0.617</td><td>判斷模型是否「有學到東西」的底線</td><td>完全抓不到生還者</td></tr>
+    <tr><td>邏輯迴歸 Logistic Regression</td><td>0.822 ± 0.019</td><td>可解釋（係數、勝算比），訓練快</td><td>只能學線性邊界</td></tr>
+    <tr><td>決策樹 Decision Tree（深度 4）</td><td>0.810 ± 0.016</td><td>規則可視化，易向主管說明</td><td>單棵樹變異大、易過擬合</td></tr>
+    <tr><td>隨機森林 Random Forest</td><td>0.819 ± 0.020</td><td>多棵樹投票，穩定、可看特徵重要性</td><td>較難解釋單一預測</td></tr>
+    <tr><td>隨機森林（GridSearchCV 調參）</td><td><b>0.837</b></td><td>最佳參數：深度 4、葉節點至少 3、400 棵</td><td>調參只能在訓練集上做</td></tr>
+  </tbody></table></div><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>rf = Pipeline([(<span class="s">"prep"</span>, preprocess), (<span class="s">"model"</span>, RandomForestClassifier(random_state=42))])
+grid = GridSearchCV(rf, {
+    <span class="s">"model__n_estimators"</span>: [200, 400],
+    <span class="s">"model__max_depth"</span>: [4, 6, 8],
+    <span class="s">"model__min_samples_leaf"</span>: [1, 3],
+}, cv=cv, scoring=<span class="s">"accuracy"</span>, n_jobs=-1)
+grid.fit(X_train, y_train)
+grid.best_params_, grid.best_score_</code></pre>
+  <p style="margin-top:8px;font-size:13px;color:var(--t3)">以 scikit-learn 1.9、random_state=42 執行；不同版本數字可能有小幅差異。</p>
+</section>
+<section id="eval" aria-labelledby="h-eval">
+  <div class="label">06 評估</div>
+  <h2 id="h-eval">測試集結果：Accuracy 0.793、ROC-AUC 0.843</h2><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">from</span> sklearn.metrics <span class="k">import</span> confusion_matrix, classification_report, roc_auc_score
+best = grid.best_estimator_
+pred  = best.predict(X_test)
+proba = best.predict_proba(X_test)[:, 1]
+confusion_matrix(y_test, pred)
+classification_report(y_test, pred, digits=3)
+roc_auc_score(y_test, proba)</code></pre>
+  <div class="grid2" style="margin-top:12px">
+    <div><h3>混淆矩陣（179 位測試乘客）</h3>
+      <div class="tbl"><table><thead><tr><th></th><th>預測罹難</th><th>預測生還</th></tr></thead><tbody>
+        <tr><td>實際罹難（110）</td><td>TN = 96</td><td>FP = 14</td></tr>
+        <tr><td>實際生還（69）</td><td>FN = 23</td><td>TP = 46</td></tr>
+      </tbody></table></div></div>
+    <div><h3>指標計算</h3>
+      <div class="tbl"><table><thead><tr><th>指標</th><th>公式</th><th>結果</th></tr></thead><tbody>
+        <tr><td>Accuracy</td><td>(TP+TN) / 全部 = 142/179</td><td>0.793</td></tr>
+        <tr><td>Precision（生還）</td><td>TP / (TP+FP) = 46/60</td><td>0.767</td></tr>
+        <tr><td>Recall（生還）</td><td>TP / (TP+FN) = 46/69</td><td>0.667</td></tr>
+        <tr><td>F1（生還）</td><td>2PR / (P+R)</td><td>0.713</td></tr>
+      </tbody></table></div></div>
+  </div>
+  <h3 style="margin-top:16px">特徵重要性 Top 8（隨機森林，Gini 重要性）</h3><div class="bars"><div class="bar"><span>Title_Mr</span><span class="trk"><i class="" style="width:18.4%"></i></span><span>18.4%</span></div><div class="bar"><span>Sex_male</span><span class="trk"><i class="" style="width:17.0%"></i></span><span>17.0%</span></div><div class="bar"><span>Sex_female</span><span class="trk"><i class="" style="width:15.1%"></i></span><span>15.1%</span></div><div class="bar"><span>LogFare</span><span class="trk"><i class="" style="width:6.6%"></i></span><span>6.6%</span></div><div class="bar"><span>Title_Miss</span><span class="trk"><i class="" style="width:5.4%"></i></span><span>5.4%</span></div><div class="bar"><span>HasCabin_0</span><span class="trk"><i class="" style="width:5.2%"></i></span><span>5.2%</span></div><div class="bar"><span>Pclass_3</span><span class="trk"><i class="" style="width:5.1%"></i></span><span>5.1%</span></div><div class="bar"><span>Title_Mrs</span><span class="trk"><i class="" style="width:5.1%"></i></span><span>5.1%</span></div></div>
+  <div class="cards" style="margin-top:14px">
+    <div class="card"><h3>為什麼測試分數比 CV 低？</h3><div class="row">CV 0.837、測試 0.793。測試集只有 179 筆，答對或答錯 1 人就差 0.56 個百分點，屬正常波動；若差距很大才需懷疑過擬合或資料洩漏。</div></div>
+    <div class="card"><h3>Recall 偏低代表什麼？</h3><div class="row">69 位生還者有 23 位被誤判為罹難。若情境是「找出可能存活者去救援」，應調低分類門檻（例如 0.5 → 0.4）換取更高 Recall。</div></div>
+    <div class="card"><h3>重要性被拆散</h3><div class="row">One-Hot 後 Sex 拆成兩欄、Title_Mr 又與性別高度重疊，重要性會互相分攤。解讀時要把相關欄位合併來看。</div></div>
+  </div>
+</section>
+<section id="sqlv" aria-labelledby="h-sqlv">
+  <div class="label">07 用 SQL 驗證</div>
+  <h2 id="h-sqlv">同樣的分析，用 SQL 寫一次</h2>
+  <p class="lead">把 DataFrame 寫進 SQLite 記憶體資料庫，就能用 SQL 查詢；也是練習 GROUP BY、HAVING、CASE WHEN 的好題材。</p><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">import</span> sqlite3
+con = sqlite3.connect(<span class="s">":memory:"</span>)
+df.to_sql(<span class="s">"titanic"</span>, con, index=<span class="k">False</span>)
+pd.read_sql(<span class="s">""</span>"
+    SELECT Pclass, Sex,
+           COUNT(*)                      AS n,
+           ROUND(AVG(Survived) * 100, 1) AS survival_pct
+    FROM titanic
+    GROUP BY Pclass, Sex
+    HAVING COUNT(*) &gt;= 50
+    ORDER BY survival_pct DESC;
+<span class="s">""</span>", con)</code></pre><div class="out">   Pclass     Sex    n  survival_pct
+0       1  female   94          96.8
+1       2  female   76          92.1
+2       3  female  144          50.0
+3       1    male  122          36.9
+4       2    male  108          15.7
+5       3    male  347          13.5</div><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="c">-- 依年齡層統計（CASE WHEN 分箱；Age 為 NULL 的另外歸類）</span>
+<span class="k">SELECT</span> <span class="k">CASE</span> <span class="k">WHEN</span> Age <span class="k">IS</span> <span class="k">NULL</span> <span class="k">THEN</span> <span class="s">'未知'</span>
+            <span class="k">WHEN</span> Age &lt;= 12  <span class="k">THEN</span> <span class="s">'兒童'</span>
+            <span class="k">WHEN</span> Age &lt;= 18  <span class="k">THEN</span> <span class="s">'青少年'</span>
+            <span class="k">WHEN</span> Age &lt;= 60  <span class="k">THEN</span> <span class="s">'成人'</span>
+            <span class="k">ELSE</span> <span class="s">'長者'</span> <span class="k">END</span>            <span class="k">AS</span> age_group,
+       <span class="k">COUNT</span>(*)                        <span class="k">AS</span> n,
+       <span class="k">ROUND</span>(<span class="k">AVG</span>(Survived) * 100, 1)   <span class="k">AS</span> survival_pct
+<span class="k">FROM</span> titanic
+<span class="k">GROUP BY</span> age_group
+<span class="k">ORDER BY</span> survival_pct <span class="k">DESC</span>;
+
+<span class="c">-- 視窗函數：每個艙等內票價排名前 3 的乘客</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> (
+    <span class="k">SELECT</span> Name, Pclass, Fare,
+           <span class="k">RANK</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> Pclass <span class="k">ORDER BY</span> Fare <span class="k">DESC</span>) <span class="k">AS</span> rk
+    <span class="k">FROM</span> titanic
+) <span class="k">WHERE</span> rk &lt;= 3;</code></pre></section>
+<section id="exam" aria-labelledby="h-exam">
+  <div class="label">08 考點連結</div>
+  <h2 id="h-exam">這個專案對應的中級考點</h2>
+  <div class="tbl"><table><thead><tr><th>考點</th><th>在本專案出現的位置</th><th>可能的考法</th></tr></thead><tbody>
+    <tr><td>缺失值機制</td><td>Cabin 缺失與艙等相關</td><td>判斷 MCAR／MAR／MNAR，選擇填補或建立缺失指標</td></tr>
+    <tr><td>資料洩漏</td><td>Pipeline 內做填補與標準化</td><td>「先用全部資料算平均再切分」錯在哪</td></tr>
+    <tr><td>分層抽樣</td><td><code>stratify=y</code>、StratifiedKFold</td><td>類別不平衡時如何切分資料</td></tr>
+    <tr><td>基準線</td><td>全猜罹難 61.7%</td><td>「準確率 65% 的模型好不好」要先比 Baseline</td></tr>
+    <tr><td>編碼方式</td><td>One-Hot vs Label Encoding</td><td>名目類別用 Label Encoding 會造成錯誤的大小關係</td></tr>
+    <tr><td>特徵縮放</td><td>StandardScaler</td><td>哪些模型需要縮放、哪些不需要</td></tr>
+    <tr><td>評估指標</td><td>Precision、Recall、F1、ROC-AUC</td><td>依情境（救援、詐欺、醫療）選擇指標與門檻</td></tr>
+    <tr><td>過擬合</td><td>決策樹限制深度、CV vs 測試分數</td><td>訓練 98%、測試 75% 的原因與對策</td></tr>
+    <tr><td>模型解釋</td><td>特徵重要性、邏輯迴歸係數</td><td>向非技術主管說明模型時用哪種方法</td></tr>
+    <tr><td>倫理與偏誤</td><td>性別與艙等主導預測</td><td>模型學到歷史上的不平等，用於保險或授信時的公平性風險</td></tr>
+  </tbody></table></div>
+</section>
+<section id="quiz" aria-labelledby="h-quiz">
+  <div class="label">自我檢測</div>
+  <h2 id="h-quiz">8 題快速檢測</h2>
+  <p class="lead">點選答案後立即顯示解析。</p>
+  <div id="qz"></div>
+  <p class="score" id="qscore" aria-live="polite">已作答 0 / 8</p>
+</section>
+</main>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a>
+<script>
+var Q=[["鐵達尼號資料中 Cabin 缺失 77%，且有艙房號碼者多為頭等艙。最合適的處理是？", ["用眾數填補", "直接刪除含缺失的列", "建立 HasCabin 欄位表示有無艙房號碼", "用 0 填補後當數值"], 2, "缺失比例高且缺失與艙等相關（非完全隨機），缺失本身就帶有資訊。"], ["某同學先用全部 891 筆資料算出 Age 中位數填補，再切分訓練與測試集。問題是？", ["計算太慢", "測試集資訊流入訓練過程，造成資料洩漏", "中位數不能用在年齡", "會造成類別不平衡"], 1, "前處理統計量應只從訓練集計算，用 Pipeline 可避免。"], ["生存率 38.4%，全部猜罹難的準確率約多少？", ["38.4%", "50%", "61.6%", "100%"], 2, "1 − 0.384 = 0.616，這就是模型必須超越的基準線。"], ["Embarked 有 C、Q、S 三種港口，若用 Label Encoding 編成 0、1、2 給邏輯迴歸使用，主要問題是？", ["資料量會變大", "模型會誤以為港口有大小順序", "無法處理缺失值", "會造成資料洩漏"], 1, "名目類別沒有順序，應使用 One-Hot Encoding。"], ["混淆矩陣 TP=46、FN=23、FP=14、TN=96，生還類別的 Recall 為？", ["46/60 ≈ 0.767", "46/69 ≈ 0.667", "142/179 ≈ 0.793", "96/110 ≈ 0.873"], 1, "Recall = TP / (TP + FN)，即實際生還者中被找出來的比例。"], ["救援情境希望盡量找出所有可能存活的人，較合適的做法是？", ["提高分類門檻到 0.8", "降低分類門檻以提高 Recall", "只看 Accuracy", "刪除女性樣本"], 1, "降低門檻會增加預測為生還的人數，提高 Recall，代價是 Precision 下降。"], ["下列哪個模型在訓練前「最不需要」做特徵標準化？", ["邏輯迴歸", "KNN", "SVM", "隨機森林"], 3, "樹模型依特徵值切分，不受尺度影響；距離或梯度類模型才需要縮放。"], ["train_test_split 中加入 stratify=y 的目的？", ["加快訓練速度", "讓訓練集與測試集的生還比例一致", "自動填補缺失值", "增加資料筆數"], 1, "分層抽樣維持各類別比例，避免測試集剛好生還者過多或過少。"]];
+
+(function(){
+  var box=document.getElementById('qz'), sc=document.getElementById('qscore'), done=0, ok=0, L='ABCD';
+  Q.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='q';
+    var p=document.createElement('p'); p.textContent=(i+1)+'. '+q[0]; d.appendChild(p);
+    var o=document.createElement('div'); o.className='opts'; o.setAttribute('role','group');
+    var bs=[];
+    q[1].forEach(function(t,k){
+      var b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent='('+L[k]+') '+t;
+      b.addEventListener('click',function(){
+        bs.forEach(function(x,j){x.disabled=true; if(j===q[2])x.classList.add('ok'); else if(j===k)x.classList.add('ng');});
+        var e=document.createElement('div'); e.className='exp'; e.textContent=(k===q[2]?'答對！':'答錯，正確答案 '+L[q[2]]+'。')+q[3]; d.appendChild(e);
+        done++; if(k===q[2])ok++; sc.textContent='已作答 '+done+' / '+Q.length+'，答對 '+ok+' 題';
+      });
+      bs.push(b); o.appendChild(b);
+    });
+    d.appendChild(o); box.appendChild(d);
+  });
+})();
+
+document.querySelectorAll('.cbtn').forEach(function(b){b.addEventListener('click',function(){
+  var t=b.parentNode.querySelector('code').innerText;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='已複製';setTimeout(function(){b.textContent='複製'},1500)},function(){
+    var r=document.createRange();r.selectNodeContents(b.parentNode.querySelector('code'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='已選取';});
+});});
+</script>
+</body>
+</html>

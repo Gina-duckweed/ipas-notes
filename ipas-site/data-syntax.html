@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL・Pandas・Matplotlib・Seaborn 語法與應用範例</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --P:#4A3FA0;--Plt:#EEEAFF;--Pdk:#2E2680;
+  --R:#C0392B;--Rlt:#FDECEA;
+  --O:#D4720A;--Olt:#FFF3E0;
+  --G:#1A6B40;--Glt:#E0F4EA;
+  --bg:#F6F4FB;--s:#FFF;--s2:#F0ECFF;--b:#D0CAEE;
+  --t:#1A1440;--t2:#3A3070;--t3:#6A6298;
+  --font:'Nunito','Noto Sans TC',sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;
+  --t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;
+  --Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark;
+}}
+[data-theme=dark]{--bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;--t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;--Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:15px;line-height:1.7;min-height:100vh}
+a{color:var(--P)}
+:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}
+.hero{background:linear-gradient(135deg,var(--Pdk) 0%,var(--P) 55%,#7B6FD0 100%);padding:36px 24px 30px;color:#fff}
+.hero-in{max-width:1080px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.75);margin-bottom:8px}
+.hero h1{font-size:clamp(26px,4vw,34px);font-weight:900;line-height:1.2;margin-bottom:8px;text-wrap:balance}
+.hero p{font-size:14px;color:rgba(255,255,255,.88);max-width:680px;margin-bottom:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none}
+.chip:hover{background:rgba(255,255,255,.25)}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px;display:grid;gap:28px}
+section{background:var(--s);border:1.5px solid var(--b);border-radius:14px;padding:22px 24px;scroll-margin-top:12px}
+.label{font-size:11px;font-weight:800;color:var(--P);letter-spacing:1.5px;margin-bottom:6px}
+h2{font-size:21px;font-weight:900;margin-bottom:10px;text-wrap:balance}
+h3{font-size:16px;font-weight:800;margin-bottom:4px}
+p{max-width:72ch}
+.lead{color:var(--t2);margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:6px}
+.kpi{background:var(--s2);border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:26px;font-weight:900;color:var(--P);font-variant-numeric:tabular-nums;line-height:1.2}
+[data-theme=dark] .kpi b{color:#B9AEFF}
+.kpi span{font-size:13px;color:var(--t2)}
+.tbl{overflow-x:auto;border:1.5px solid var(--b);border-radius:12px;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--b)}
+th{background:var(--s2);font-size:12px;color:var(--t2);font-weight:800;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:800;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:8px}
+.card{background:var(--s2);border-radius:12px;padding:14px 16px;border-left:4px solid var(--P);display:grid;gap:6px;align-content:start}
+.card .en{font-family:var(--mono);font-size:12px;color:var(--t3)}
+.card .row{font-size:13.5px}
+.card .row b{color:var(--P)}
+[data-theme=dark] .card .row b{color:#B9AEFF}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:1px 8px;border-radius:10px;margin-right:4px;background:var(--Plt);color:var(--P)}
+.tag.hot{background:var(--Rlt);color:var(--R)}
+.tag.mid{background:var(--Olt);color:var(--O)}
+.trap{font-size:13px;background:var(--Rlt);color:var(--t);border-radius:8px;padding:6px 10px}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.fbtn{font:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:20px;padding:3px 12px;cursor:pointer}
+.fbtn[aria-pressed=true]{background:var(--P);border-color:var(--P);color:#fff}
+figure{margin-top:8px;background:var(--s2);border-radius:12px;padding:12px;overflow-x:auto}
+figcaption{font-size:12px;color:var(--t3);margin-top:6px}
+svg text{font-family:var(--font)}
+.steps{counter-reset:s;list-style:none;display:grid;gap:8px;margin-top:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);width:26px;height:26px;border-radius:50%;background:var(--P);color:#fff;font-weight:900;font-size:13px;display:grid;place-items:center}
+.q{border:1.5px solid var(--b);border-radius:12px;padding:14px 16px;margin-top:10px}
+.q p{font-weight:700;margin-bottom:8px}
+.opts{display:grid;gap:6px}
+.opt{font:inherit;font-size:14px;text-align:left;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:8px;padding:8px 10px;cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--P)}
+.opt.ok{background:var(--Glt);border-color:var(--G)}
+.opt.ng{background:var(--Rlt);border-color:var(--R)}
+.exp{margin-top:8px;font-size:13.5px;background:var(--Plt);border-radius:8px;padding:8px 10px}
+.score{font-weight:800;color:var(--P);margin-top:10px}
+.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.ipas-back:hover{background:#2C5282}
+@media(max-width:560px){section{padding:18px 16px}td:first-child{white-space:normal}}
+
+pre.code{position:relative;background:#1C1838;color:#ECE8FF;border-radius:10px;padding:14px 16px;margin-top:8px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.65;tab-size:4}
+pre.code .c{color:#9A93C9;font-style:italic}
+pre.code .k{color:#FFB86C;font-weight:700}
+pre.code .s{color:#A6E3A1}
+.cbtn{position:absolute;top:8px;right:8px;font:700 11px/1 var(--font);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:5px 8px;cursor:pointer}
+.cbtn:hover{background:rgba(255,255,255,.25)}
+.lang{display:inline-block;font:800 11px/1 var(--mono);background:var(--Plt);color:var(--P);border-radius:6px;padding:4px 7px;margin-top:14px}
+.ex{margin-top:16px;padding-top:14px;border-top:1px dashed var(--b)}
+.ex:first-of-type{border-top:none;padding-top:0}
+.out{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:8px;padding:8px 12px;margin-top:6px;white-space:pre;overflow-x:auto;color:var(--t2)}
+code.i{font-family:var(--mono);font-size:.9em;background:var(--s2);border-radius:5px;padding:1px 5px}
+td code{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:5px;padding:1px 5px;white-space:nowrap}
+.note{font-size:13.5px;background:var(--Olt);border-radius:10px;padding:10px 14px;margin-top:10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.bars{display:grid;gap:6px;margin-top:6px}
+.bar{display:grid;grid-template-columns:120px 1fr 54px;gap:8px;align-items:center;font-size:13px}
+.bar i{display:block;height:16px;border-radius:4px;background:var(--P)}
+.bar i.f{background:#C0587E}
+.bar span:last-child{font-variant-numeric:tabular-nums;font-weight:800;text-align:right}
+.bar .trk{background:var(--s2);border-radius:4px}
+.dl{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-weight:800;background:var(--P);color:#fff;text-decoration:none;border-radius:10px;padding:9px 16px}
+.dl:hover{background:var(--Pdk)}
+</style>
+</head>
+<body>
+<header class="hero"><div class="hero-in">
+  <div class="eyebrow">iPAS AI 應用規劃師｜專題整理</div>
+  <h1>SQL・Pandas・Matplotlib・Seaborn 語法與應用範例</h1>
+  <p>中級科目二（大數據處理分析與應用）常考「看程式碼選結果」與「哪個語法能達成需求」。本頁把四個工具的核心語法、對照表、應用範例與易錯點整理在一起；範例都可直接複製執行。</p>
+  <nav class="chips" aria-label="頁內目錄"><a class="chip" href="#map">SQL ↔ Pandas 對照</a><a class="chip" href="#sql">SQL</a><a class="chip" href="#pandas">Pandas</a><a class="chip" href="#mpl">Matplotlib</a><a class="chip" href="#sns">Seaborn</a><a class="chip" href="#choose">圖表選擇</a><a class="chip" href="#traps">易錯點</a><a class="chip" href="#quiz">自我檢測</a></nav>
+</div></header>
+<main class="wrap">
+<section id="map" aria-labelledby="h-map">
+  <div class="label">先看全貌</div>
+  <h2 id="h-map">四個工具在分析流程中的位置</h2>
+  <div class="kpis">
+    <div class="kpi"><b>SQL</b><span>從資料庫「取出」資料：篩選、彙總、合併表格</span></div>
+    <div class="kpi"><b>Pandas</b><span>在 Python 中「整理」資料：清理、轉換、特徵工程</span></div>
+    <div class="kpi"><b>Matplotlib</b><span>底層繪圖引擎：完全掌控每個圖表元素</span></div>
+    <div class="kpi"><b>Seaborn</b><span>建立在 Matplotlib 上的統計圖表：一行畫出分組比較</span></div>
+  </div>
+  <h3 style="margin-top:18px">SQL 與 Pandas 語法對照（最常考）</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>需求</th><th>SQL</th><th>Pandas</th></tr></thead>
+    <tbody>
+      <tr><td>選欄位</td><td><code>SELECT name, age FROM t</code></td><td><code>df[["name","age"]]</code></td></tr>
+      <tr><td>條件篩選</td><td><code>WHERE age &gt; 30 AND city='台北'</code></td><td><code>df[(df.age&gt;30) &amp; (df.city=="台北")]</code></td></tr>
+      <tr><td>多值比對</td><td><code>WHERE city IN ('台北','新竹')</code></td><td><code>df[df.city.isin(["台北","新竹"])]</code></td></tr>
+      <tr><td>模糊比對</td><td><code>WHERE name LIKE '王%'</code></td><td><code>df[df.name.str.startswith("王")]</code></td></tr>
+      <tr><td>空值判斷</td><td><code>WHERE age IS NULL</code></td><td><code>df[df.age.isna()]</code></td></tr>
+      <tr><td>排序</td><td><code>ORDER BY amount DESC</code></td><td><code>df.sort_values("amount", ascending=False)</code></td></tr>
+      <tr><td>前 N 筆</td><td><code>LIMIT 5</code></td><td><code>df.head(5)</code>、<code>df.nlargest(5,"amount")</code></td></tr>
+      <tr><td>去除重複</td><td><code>SELECT DISTINCT city</code></td><td><code>df.city.unique()</code>、<code>df.drop_duplicates()</code></td></tr>
+      <tr><td>分組彙總</td><td><code>GROUP BY city</code> + <code>SUM()</code></td><td><code>df.groupby("city")["amount"].sum()</code></td></tr>
+      <tr><td>彙總後篩選</td><td><code>HAVING SUM(amount) &gt; 1000</code></td><td><code>g[g &gt; 1000]</code>（先 groupby 再篩）</td></tr>
+      <tr><td>內部合併</td><td><code>INNER JOIN c ON o.cid=c.cid</code></td><td><code>pd.merge(o, c, on="cid", how="inner")</code></td></tr>
+      <tr><td>左合併</td><td><code>LEFT JOIN</code></td><td><code>how="left"</code></td></tr>
+      <tr><td>上下堆疊</td><td><code>UNION ALL</code></td><td><code>pd.concat([a, b])</code></td></tr>
+      <tr><td>條件欄位</td><td><code>CASE WHEN … THEN … END</code></td><td><code>np.where()</code>、<code>pd.cut()</code></td></tr>
+      <tr><td>排名</td><td><code>RANK() OVER (PARTITION BY …)</code></td><td><code>df.groupby(…)[col].rank()</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+<section id="sql" aria-labelledby="h-sql">
+  <div class="label">01 SQL</div>
+  <h2 id="h-sql">SQL：結構化查詢語言（Structured Query Language）</h2>
+  <p class="lead">考試最愛問「書寫順序」和「執行順序」不同。理解執行順序，就能判斷為什麼 WHERE 不能用聚合函數、為什麼 SELECT 的別名在 WHERE 裡無效。</p>
+  <div class="grid2">
+    <div><h3>書寫順序</h3><ol class="steps">
+      <li><span><b>SELECT</b> 欄位</span></li><li><span><b>FROM</b> 資料表</span></li><li><span><b>JOIN</b> … ON</span></li>
+      <li><span><b>WHERE</b> 列條件</span></li><li><span><b>GROUP BY</b> 分組</span></li><li><span><b>HAVING</b> 組條件</span></li>
+      <li><span><b>ORDER BY</b> 排序</span></li><li><span><b>LIMIT</b> 筆數</span></li></ol></div>
+    <div><h3>實際執行順序</h3><ol class="steps">
+      <li><span><b>FROM / JOIN</b>：先決定資料來源</span></li><li><span><b>WHERE</b>：逐列過濾（還沒分組，不能用 SUM）</span></li>
+      <li><span><b>GROUP BY</b>：分組</span></li><li><span><b>HAVING</b>：過濾組（可用聚合函數）</span></li>
+      <li><span><b>SELECT</b>：計算欄位、產生別名</span></li><li><span><b>DISTINCT</b>：去重</span></li>
+      <li><span><b>ORDER BY</b>：排序（可用別名）</span></li><li><span><b>LIMIT</b>：取前 N 筆</span></li></ol></div>
+  </div><div class="ex"><h3>範例資料表</h3><p>以下範例都使用這兩張表：<code class="i">customers</code>（客戶）與 <code class="i">orders</code>（訂單）。</p><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">CREATE TABLE</span> customers (
+    customer_id <span class="k">INT</span> <span class="k">PRIMARY KEY</span>,
+    name        <span class="k">TEXT</span>,
+    city        <span class="k">TEXT</span>,
+    join_date   <span class="k">DATE</span>
+);
+<span class="k">CREATE TABLE</span> orders (
+    order_id    <span class="k">INT</span> <span class="k">PRIMARY KEY</span>,
+    customer_id <span class="k">INT</span>,          <span class="c">-- 外鍵 Foreign Key，對應 customers</span>
+    order_date  <span class="k">DATE</span>,
+    category    <span class="k">TEXT</span>,
+    amount      <span class="k">REAL</span>
+);</code></pre></div><div class="ex"><h3>1. 基本查詢與篩選</h3><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="c">-- 台北或新竹、2026 年加入的客戶，依加入日期新到舊</span>
+<span class="k">SELECT</span> name, city, join_date
+<span class="k">FROM</span> customers
+<span class="k">WHERE</span> city <span class="k">IN</span> (<span class="s">'台北'</span>, <span class="s">'新竹'</span>)
+  <span class="k">AND</span> join_date <span class="k">BETWEEN</span> <span class="s">'2026-01-01'</span> <span class="k">AND</span> <span class="s">'2026-12-31'</span>   <span class="c">-- BETWEEN 含頭尾</span>
+  <span class="k">AND</span> name <span class="k">LIKE</span> <span class="s">'王%'</span>                                   <span class="c">-- % 任意字元，_ 單一字元</span>
+<span class="k">ORDER BY</span> join_date <span class="k">DESC</span>
+<span class="k">LIMIT</span> 10;</code></pre></div><div class="ex"><h3>2. 聚合函數與 GROUP BY / HAVING</h3><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="c">-- 每個類別的訂單數、總金額、平均金額，只保留總金額超過 10 萬的類別</span>
+<span class="k">SELECT</span> category,
+       <span class="k">COUNT</span>(*)              <span class="k">AS</span> n_orders,      <span class="c">-- COUNT(*) 算列數，含 NULL</span>
+       <span class="k">COUNT</span>(<span class="k">DISTINCT</span> customer_id) <span class="k">AS</span> n_buyers,
+       <span class="k">SUM</span>(amount)           <span class="k">AS</span> total,
+       <span class="k">ROUND</span>(<span class="k">AVG</span>(amount), 1) <span class="k">AS</span> avg_amount     <span class="c">-- AVG 會忽略 NULL</span>
+<span class="k">FROM</span> orders
+<span class="k">WHERE</span> order_date &gt;= <span class="s">'2026-01-01'</span>               <span class="c">-- 分組前先過濾「列」</span>
+<span class="k">GROUP BY</span> category
+<span class="k">HAVING</span> <span class="k">SUM</span>(amount) &gt; 100000                    <span class="c">-- 分組後過濾「組」</span>
+<span class="k">ORDER BY</span> total <span class="k">DESC</span>;</code></pre></div><div class="ex"><h3>3. JOIN 合併資料表</h3>
+  <div class="tbl"><table><thead><tr><th>類型</th><th>保留哪些列</th><th>典型用途</th></tr></thead><tbody>
+    <tr><td>INNER JOIN</td><td>兩表都對得上的列</td><td>只看「有下單」的客戶</td></tr>
+    <tr><td>LEFT JOIN</td><td>左表全部；右表對不上補 NULL</td><td>找出「從未下單」的客戶</td></tr>
+    <tr><td>RIGHT JOIN</td><td>右表全部；左表對不上補 NULL</td><td>同 LEFT，方向相反</td></tr>
+    <tr><td>FULL OUTER JOIN</td><td>兩表全部</td><td>比對兩系統資料差異</td></tr>
+    <tr><td>CROSS JOIN</td><td>笛卡兒積（m × n 列）</td><td>產生所有組合，例如日期 × 門市</td></tr>
+  </tbody></table></div><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="c">-- 每位客戶的消費總額（含從未下單者，顯示 0）</span>
+<span class="k">SELECT</span> c.customer_id, c.name,
+       <span class="k">COALESCE</span>(<span class="k">SUM</span>(o.amount), 0) <span class="k">AS</span> total_spent   <span class="c">-- NULL 轉 0</span>
+<span class="k">FROM</span> customers <span class="k">AS</span> c
+<span class="k">LEFT JOIN</span> orders <span class="k">AS</span> o
+       <span class="k">ON</span> c.customer_id = o.customer_id
+<span class="k">GROUP BY</span> c.customer_id, c.name;
+
+<span class="c">-- 從未下單的客戶：LEFT JOIN 後找右表為 NULL</span>
+<span class="k">SELECT</span> c.name
+<span class="k">FROM</span> customers c
+<span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> c.customer_id = o.customer_id
+<span class="k">WHERE</span> o.order_id <span class="k">IS</span> <span class="k">NULL</span>;</code></pre></div><div class="ex"><h3>4. CASE WHEN 條件分類</h3><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">SELECT</span> order_id, amount,
+       <span class="k">CASE</span> <span class="k">WHEN</span> amount &gt;= 5000 <span class="k">THEN</span> <span class="s">'高'</span>
+            <span class="k">WHEN</span> amount &gt;= 1000 <span class="k">THEN</span> <span class="s">'中'</span>
+            <span class="k">ELSE</span> <span class="s">'低'</span>
+       <span class="k">END</span> <span class="k">AS</span> level                 <span class="c">-- 由上往下判斷，第一個成立就停止</span>
+<span class="k">FROM</span> orders;</code></pre></div><div class="ex"><h3>5. 子查詢與 CTE（WITH）</h3><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="c">-- 子查詢：金額高於整體平均的訂單</span>
+<span class="k">SELECT</span> * <span class="k">FROM</span> orders
+<span class="k">WHERE</span> amount &gt; (<span class="k">SELECT</span> <span class="k">AVG</span>(amount) <span class="k">FROM</span> orders);
+
+<span class="c">-- CTE：把複雜查詢拆成可讀的步驟</span>
+<span class="k">WITH</span> monthly <span class="k">AS</span> (
+    <span class="k">SELECT</span> customer_id,
+           strftime(<span class="s">'%Y-%m'</span>, order_date) <span class="k">AS</span> ym,   <span class="c">-- SQLite 日期函數</span>
+           <span class="k">SUM</span>(amount) <span class="k">AS</span> spent
+    <span class="k">FROM</span> orders
+    <span class="k">GROUP BY</span> customer_id, ym
+)
+<span class="k">SELECT</span> ym, <span class="k">COUNT</span>(*) <span class="k">AS</span> active_customers, <span class="k">AVG</span>(spent) <span class="k">AS</span> avg_spent
+<span class="k">FROM</span> monthly
+<span class="k">GROUP BY</span> ym
+<span class="k">ORDER BY</span> ym;</code></pre></div><div class="ex"><h3>6. 視窗函數 Window Function（中級重點）</h3>
+<p>視窗函數「不會把列合併」，每一列都保留，只是多一欄計算結果。這是和 GROUP BY 最大的差別。</p><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">SELECT</span> customer_id, order_date, amount,
+       <span class="k">ROW_NUMBER</span>() <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id <span class="k">ORDER BY</span> order_date) <span class="k">AS</span> nth_order,
+       <span class="k">SUM</span>(amount)  <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id <span class="k">ORDER BY</span> order_date) <span class="k">AS</span> running_total,
+       <span class="k">LAG</span>(amount)  <span class="k">OVER</span> (<span class="k">PARTITION BY</span> customer_id <span class="k">ORDER BY</span> order_date) <span class="k">AS</span> prev_amount,
+       <span class="k">RANK</span>()       <span class="k">OVER</span> (<span class="k">ORDER BY</span> amount <span class="k">DESC</span>) <span class="k">AS</span> amount_rank
+<span class="k">FROM</span> orders;</code></pre>
+  <div class="tbl"><table><thead><tr><th>函數</th><th>分數 100、90、90、80 的結果</th><th>說明</th></tr></thead><tbody>
+    <tr><td>ROW_NUMBER()</td><td>1、2、3、4</td><td>同分也給不同序號</td></tr>
+    <tr><td>RANK()</td><td>1、2、2、4</td><td>同分同名次，下一名跳號</td></tr>
+    <tr><td>DENSE_RANK()</td><td>1、2、2、3</td><td>同分同名次，不跳號</td></tr>
+  </tbody></table></div></div><div class="ex"><h3>7. 資料異動（DML）</h3><span class="lang">SQL</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">INSERT INTO</span> customers (customer_id, name, city) <span class="k">VALUES</span> (101, <span class="s">'陳小明'</span>, <span class="s">'台中'</span>);
+<span class="k">UPDATE</span> orders <span class="k">SET</span> amount = amount * 0.9 <span class="k">WHERE</span> category = <span class="s">'家電'</span>;   <span class="c">-- 少了 WHERE 會改到全表</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> orders <span class="k">WHERE</span> order_date &lt; <span class="s">'2020-01-01'</span>;</code></pre><p class="note">SQL 分類常考：DDL 定義結構（CREATE、ALTER、DROP）、DML 操作資料（SELECT、INSERT、UPDATE、DELETE）、DCL 權限控制（GRANT、REVOKE）、TCL 交易控制（COMMIT、ROLLBACK）。</p></div></section>
+<section id="pandas" aria-labelledby="h-pd">
+  <div class="label">02 Pandas</div>
+  <h2 id="h-pd">Pandas：Python 的表格資料處理套件</h2>
+  <p class="lead">兩個核心結構：<b>Series</b>（一維，帶索引的一欄）與 <b>DataFrame</b>（二維表格，由多個 Series 組成）。</p><div class="ex"><h3>1. 讀取與檢視</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">import</span> pandas <span class="k">as</span> pd
+<span class="k">import</span> numpy <span class="k">as</span> np
+
+df = pd.read_csv(<span class="s">"orders.csv"</span>, encoding=<span class="s">"utf-8"</span>, parse_dates=[<span class="s">"order_date"</span>])
+<span class="c"># 其他來源：pd.read_excel("a.xlsx", sheet_name="2026")、pd.read_sql(query, con)、pd.read_json()</span>
+
+df.shape          <span class="c"># (列數, 欄數)  —— 屬性，沒有括號</span>
+df.head(5)        <span class="c"># 前 5 列；df.tail() 看最後幾列</span>
+df.info()         <span class="c"># 欄位型別、非空值數量、記憶體</span>
+df.describe()     <span class="c"># 數值欄位的 count/mean/std/min/四分位數/max</span>
+df.dtypes         <span class="c"># 每欄型別</span>
+df.columns        <span class="c"># 欄位名稱</span>
+df[<span class="s">"category"</span>].value_counts()          <span class="c"># 類別次數（預設由多到少）</span>
+df[<span class="s">"category"</span>].value_counts(normalize=<span class="k">True</span>)  <span class="c"># 改成比例</span></code></pre></div><div class="ex"><h3>2. 選取資料：[]、loc、iloc</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>df[<span class="s">"amount"</span>]                 <span class="c"># 單欄 → Series</span>
+df[[<span class="s">"name"</span>, <span class="s">"amount"</span>]]       <span class="c"># 多欄 → DataFrame（注意雙層中括號）</span>
+
+df.loc[0:3, <span class="s">"name"</span>:<span class="s">"amount"</span>]   <span class="c"># loc 用「標籤」，切片包含結尾 → 第 0~3 列（4 列）</span>
+df.iloc[0:3, 0:2]              <span class="c"># iloc 用「位置」，切片不含結尾 → 第 0~2 列（3 列）</span>
+df.loc[df[<span class="s">"amount"</span>] &gt; 1000, [<span class="s">"name"</span>, <span class="s">"amount"</span>]]   <span class="c"># 條件 + 指定欄位</span></code></pre>
+  <div class="tbl"><table><thead><tr><th>寫法</th><th>依據</th><th>切片結尾</th></tr></thead><tbody>
+    <tr><td><code>df.loc[ ]</code></td><td>標籤（索引名稱、欄位名稱、布林條件）</td><td>包含</td></tr>
+    <tr><td><code>df.iloc[ ]</code></td><td>整數位置</td><td>不包含（同 Python list）</td></tr>
+  </tbody></table></div></div><div class="ex"><h3>3. 條件篩選</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>df[(df[<span class="s">"amount"</span>] &gt; 1000) &amp; (df[<span class="s">"city"</span>] == <span class="s">"台北"</span>)]   <span class="c"># 且：&amp;，每個條件要加括號</span>
+df[(df[<span class="s">"city"</span>] == <span class="s">"台北"</span>) | (df[<span class="s">"city"</span>] == <span class="s">"新竹"</span>)]   <span class="c"># 或：|</span>
+df[~df[<span class="s">"city"</span>].isin([<span class="s">"台北"</span>, <span class="s">"新竹"</span>])]                <span class="c"># 非：~</span>
+df[df[<span class="s">"amount"</span>].between(500, 2000)]                   <span class="c"># 含頭尾</span>
+df[df[<span class="s">"name"</span>].str.contains(<span class="s">"王"</span>, na=<span class="k">False</span>)]           <span class="c"># 字串包含</span>
+df.query(<span class="s">"amount &gt; 1000 and city == '台北'"</span>)          <span class="c"># 類 SQL 寫法</span></code></pre></div><div class="ex"><h3>4. 缺失值處理</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>df.isna().sum()                         <span class="c"># 每欄缺失數（isnull 同義）</span>
+df.dropna()                             <span class="c"># 刪除含缺失的列</span>
+df.dropna(subset=[<span class="s">"amount"</span>])            <span class="c"># 只看特定欄</span>
+df.dropna(axis=1, thresh=int(len(df)*0.5))   <span class="c"># 刪除「非空值少於一半」的欄</span>
+
+df[<span class="s">"age"</span>] = df[<span class="s">"age"</span>].fillna(df[<span class="s">"age"</span>].median())            <span class="c"># 數值：中位數（抗極端值）</span>
+df[<span class="s">"city"</span>] = df[<span class="s">"city"</span>].fillna(df[<span class="s">"city"</span>].mode()[0])        <span class="c"># 類別：眾數</span>
+df[<span class="s">"age"</span>] = df.groupby(<span class="s">"title"</span>)[<span class="s">"age"</span>].transform(<span class="k">lambda</span> s: s.fillna(s.median()))  <span class="c"># 分組填補</span>
+df[<span class="s">"price"</span>] = df[<span class="s">"price"</span>].ffill()                            <span class="c"># 時間序列：沿用前值</span></code></pre></div><div class="ex"><h3>5. 欄位轉換與特徵工程</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>df[<span class="s">"amount_k"</span>] = df[<span class="s">"amount"</span>] / 1000                         <span class="c"># 向量化運算（最快）</span>
+df[<span class="s">"is_vip"</span>] = np.where(df[<span class="s">"amount"</span>] &gt;= 5000, 1, 0)          <span class="c"># 二元條件</span>
+df[<span class="s">"level"</span>] = pd.cut(df[<span class="s">"amount"</span>], bins=[0, 1000, 5000, np.inf],
+                     labels=[<span class="s">"低"</span>, <span class="s">"中"</span>, <span class="s">"高"</span>])              <span class="c"># 依固定區間分箱</span>
+df[<span class="s">"quartile"</span>] = pd.qcut(df[<span class="s">"amount"</span>], q=4, labels=<span class="k">False</span>)   <span class="c"># 依分位數分箱（每箱數量相近）</span>
+df[<span class="s">"city_code"</span>] = df[<span class="s">"city"</span>].map({<span class="s">"台北"</span>: 1, <span class="s">"新竹"</span>: 2})    <span class="c"># 對照表轉換</span>
+df[<span class="s">"name_len"</span>] = df[<span class="s">"name"</span>].apply(len)                      <span class="c"># 逐元素套用函數</span>
+df = pd.get_dummies(df, columns=[<span class="s">"category"</span>], drop_first=<span class="k">True</span>)  <span class="c"># One-Hot 編碼</span>
+df[<span class="s">"month"</span>] = df[<span class="s">"order_date"</span>].dt.month                     <span class="c"># 日期拆解：.dt</span>
+df[<span class="s">"amount"</span>] = df[<span class="s">"amount"</span>].astype(float)                   <span class="c"># 轉型</span>
+df = df.rename(columns={<span class="s">"amt"</span>: <span class="s">"amount"</span>}).drop(columns=[<span class="s">"tmp"</span>])</code></pre></div><div class="ex"><h3>6. 分組彙總 groupby、樞紐分析</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>df.groupby(<span class="s">"category"</span>)[<span class="s">"amount"</span>].sum()
+df.groupby([<span class="s">"city"</span>, <span class="s">"category"</span>]).agg(
+    n=(<span class="s">"order_id"</span>, <span class="s">"count"</span>),
+    total=(<span class="s">"amount"</span>, <span class="s">"sum"</span>),
+    avg=(<span class="s">"amount"</span>, <span class="s">"mean"</span>),
+).reset_index()                              <span class="c"># 把分組鍵還原成一般欄位</span>
+
+<span class="c"># transform：結果長度與原表相同，可直接當新欄位（例如每列占該類別比重）</span>
+df[<span class="s">"share"</span>] = df[<span class="s">"amount"</span>] / df.groupby(<span class="s">"category"</span>)[<span class="s">"amount"</span>].transform(<span class="s">"sum"</span>)
+
+pd.pivot_table(df, index=<span class="s">"city"</span>, columns=<span class="s">"category"</span>,
+               values=<span class="s">"amount"</span>, aggfunc=<span class="s">"sum"</span>, fill_value=0, margins=<span class="k">True</span>)
+pd.crosstab(df[<span class="s">"city"</span>], df[<span class="s">"category"</span>], normalize=<span class="s">"index"</span>)   <span class="c"># 交叉次數表（列百分比）</span></code></pre></div><div class="ex"><h3>7. 合併資料：merge、concat、join</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>pd.merge(orders, customers, on=<span class="s">"customer_id"</span>, how=<span class="s">"left"</span>)     <span class="c"># 對應 SQL LEFT JOIN</span>
+pd.merge(a, b, left_on=<span class="s">"cid"</span>, right_on=<span class="s">"customer_id"</span>, how=<span class="s">"inner"</span>)
+pd.concat([df_2025, df_2026], ignore_index=<span class="k">True</span>)              <span class="c"># 上下堆疊（axis=0）</span>
+pd.concat([df_a, df_b], axis=1)                               <span class="c"># 左右並排（依索引對齊）</span></code></pre>
+<p class="note"><b>axis 口訣：</b>axis=0 沿著「列」方向往下運算（結果是每欄一個值，例如 <code class="i">df.sum(axis=0)</code> 得到每欄總和）；axis=1 沿著「欄」方向橫向運算（每列一個值）。<code class="i">drop(columns=…)</code> 等同 <code class="i">drop(…, axis=1)</code>。</p></div><div class="ex"><h3>8. 排序、去重、時間序列</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>df.sort_values([<span class="s">"city"</span>, <span class="s">"amount"</span>], ascending=[<span class="k">True</span>, <span class="k">False</span>])
+df.drop_duplicates(subset=[<span class="s">"customer_id"</span>], keep=<span class="s">"last"</span>)
+df.duplicated().sum()                                   <span class="c"># 重複列數</span>
+
+ts = df.set_index(<span class="s">"order_date"</span>)[<span class="s">"amount"</span>]
+ts.resample(<span class="s">"MS"</span>).sum()                                 <span class="c"># 依月彙總（"W" 週、"D" 日）</span>
+ts.rolling(window=7).mean()                             <span class="c"># 7 期移動平均</span>
+ts.pct_change()                                         <span class="c"># 與前一期的成長率</span>
+ts.shift(1)                                             <span class="c"># 往後平移一期（做落後特徵）</span></code></pre></div><div class="ex"><h3>9. 應用範例：會員 RFM 分析</h3>
+<p>RFM 是常見的顧客價值分群：<b>R</b>ecency 最近一次消費距今天數、<b>F</b>requency 消費次數、<b>M</b>onetary 消費金額。</p><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>today = df[<span class="s">"order_date"</span>].max() + pd.Timedelta(days=1)
+rfm = df.groupby(<span class="s">"customer_id"</span>).agg(
+    R=(<span class="s">"order_date"</span>, <span class="k">lambda</span> s: (today - s.max()).days),
+    F=(<span class="s">"order_id"</span>, <span class="s">"nunique"</span>),
+    M=(<span class="s">"amount"</span>, <span class="s">"sum"</span>),
+)
+<span class="c"># 各指標切成 1~5 分；R 越小越好，所以標籤反過來</span>
+rfm[<span class="s">"R_s"</span>] = pd.qcut(rfm[<span class="s">"R"</span>], 5, labels=[5, 4, 3, 2, 1]).astype(int)
+rfm[<span class="s">"F_s"</span>] = pd.qcut(rfm[<span class="s">"F"</span>].rank(method=<span class="s">"first"</span>), 5, labels=[1, 2, 3, 4, 5]).astype(int)
+rfm[<span class="s">"M_s"</span>] = pd.qcut(rfm[<span class="s">"M"</span>], 5, labels=[1, 2, 3, 4, 5]).astype(int)
+rfm[<span class="s">"segment"</span>] = np.select(
+    [(rfm.R_s &gt;= 4) &amp; (rfm.F_s &gt;= 4), rfm.R_s &lt;= 2],
+    [<span class="s">"忠誠顧客"</span>, <span class="s">"流失風險"</span>], default=<span class="s">"一般顧客"</span>)
+rfm[<span class="s">"segment"</span>].value_counts()</code></pre></div></section>
+<section id="mpl" aria-labelledby="h-mpl">
+  <div class="label">03 Matplotlib</div>
+  <h2 id="h-mpl">Matplotlib：Python 最基礎的繪圖套件</h2>
+  <p class="lead">圖表由 <b>Figure</b>（整張畫布）與 <b>Axes</b>（其中一張子圖，有自己的座標軸）組成。建議使用物件導向寫法 <code class="i">fig, ax = plt.subplots()</code>，多張子圖時不容易畫錯位置。</p><div class="ex"><h3>1. 基本結構與中文字型</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">import</span> matplotlib.pyplot <span class="k">as</span> plt
+
+plt.rcParams[<span class="s">"font.sans-serif"</span>] = [<span class="s">"Microsoft JhengHei"</span>]   <span class="c"># Windows 中文字型（Mac："PingFang TC"）</span>
+plt.rcParams[<span class="s">"axes.unicode_minus"</span>] = <span class="k">False</span>                 <span class="c"># 負號正常顯示</span>
+
+fig, ax = plt.subplots(figsize=(8, 4))      <span class="c"># 寬 8 吋、高 4 吋</span>
+ax.plot(months, sales, marker=<span class="s">"o"</span>, linestyle=<span class="s">"--"</span>, color=<span class="s">"tab:blue"</span>, label=<span class="s">"2026 營收"</span>)
+ax.plot(months, sales_ly, label=<span class="s">"2025 營收"</span>)
+ax.set_title(<span class="s">"月營收趨勢"</span>)
+ax.set_xlabel(<span class="s">"月份"</span>); ax.set_ylabel(<span class="s">"營收（萬元）"</span>)
+ax.legend(loc=<span class="s">"upper left"</span>)
+ax.grid(alpha=0.3)
+fig.tight_layout()                          <span class="c"># 自動調整間距，避免標籤重疊</span>
+fig.savefig(<span class="s">"trend.png"</span>, dpi=150)           <span class="c"># 要在 show() 之前存檔</span>
+plt.show()</code></pre></div><div class="ex"><h3>2. 常用圖形</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>ax.bar(categories, values)                    <span class="c"># 長條圖（比較類別）；橫向用 ax.barh</span>
+ax.hist(df[<span class="s">"age"</span>], bins=20, edgecolor=<span class="s">"white"</span>)   <span class="c"># 直方圖（數值分布）</span>
+ax.scatter(df[<span class="s">"x"</span>], df[<span class="s">"y"</span>], c=df[<span class="s">"label"</span>], s=20, alpha=0.6)   <span class="c"># 散佈圖（兩數值關係）</span>
+ax.boxplot([g1, g2, g3])                          <span class="c"># 箱型圖（中位數、四分位、離群值）</span>
+ax.pie(shares, labels=names, autopct=<span class="s">"%1.1f%%"</span>)   <span class="c"># 圓餅圖（占比，類別宜 ≤ 5）</span>
+ax.fill_between(x, low, high, alpha=0.2)          <span class="c"># 信賴區間帶</span></code></pre></div><div class="ex"><h3>3. 多張子圖</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10, 7))
+axes[0, 0].hist(df[<span class="s">"amount"</span>], bins=30);           axes[0, 0].set_title(<span class="s">"金額分布"</span>)
+axes[0, 1].bar(cat.index, cat.values);            axes[0, 1].set_title(<span class="s">"各類別總額"</span>)
+axes[1, 0].plot(ts.index, ts.values);             axes[1, 0].set_title(<span class="s">"每月趨勢"</span>)
+axes[1, 1].scatter(df[<span class="s">"qty"</span>], df[<span class="s">"amount"</span>]);      axes[1, 1].set_title(<span class="s">"數量 vs 金額"</span>)
+fig.suptitle(<span class="s">"銷售儀表板"</span>, fontsize=16)
+fig.tight_layout()</code></pre></div><div class="ex"><h3>4. 兩種寫法比較</h3>
+  <div class="tbl"><table><thead><tr><th>寫法</th><th>範例</th><th>適合</th></tr></thead><tbody>
+    <tr><td>pyplot 狀態式</td><td><code>plt.plot()</code>、<code>plt.title()</code></td><td>單張快速圖</td></tr>
+    <tr><td>物件導向式</td><td><code>ax.plot()</code>、<code>ax.set_title()</code></td><td>多子圖、要精細控制</td></tr>
+  </tbody></table></div>
+  <p class="note">注意方法名稱差異：pyplot 用 <code class="i">plt.title()</code>、<code class="i">plt.xlabel()</code>；Axes 物件要加 set_，寫成 <code class="i">ax.set_title()</code>、<code class="i">ax.set_xlabel()</code>。</p></div>
+</section>
+<section id="sns" aria-labelledby="h-sns">
+  <div class="label">04 Seaborn</div>
+  <h2 id="h-sns">Seaborn：統計圖表套件</h2>
+  <p class="lead">Seaborn 直接吃 DataFrame，用 <code class="i">x=</code>、<code class="i">y=</code>、<code class="i">hue=</code> 指定欄位名稱，自動完成分組、上色、圖例與信賴區間。底層仍是 Matplotlib，所以可以用 <code class="i">ax=</code> 放進指定子圖，再用 Matplotlib 調整標題。</p><div class="ex"><h3>1. 分布：單一變數長什麼樣子</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">import</span> seaborn <span class="k">as</span> sns
+sns.set_theme(style=<span class="s">"whitegrid"</span>, font=<span class="s">"Microsoft JhengHei"</span>)
+
+df = sns.load_dataset(<span class="s">"tips"</span>)      <span class="c"># 內建範例資料（餐廳小費）</span>
+sns.histplot(data=df, x=<span class="s">"total_bill"</span>, bins=20, kde=<span class="k">True</span>)     <span class="c"># 直方圖 + 密度曲線</span>
+sns.kdeplot(data=df, x=<span class="s">"total_bill"</span>, hue=<span class="s">"time"</span>, fill=<span class="k">True</span>)  <span class="c"># 分組密度比較</span>
+sns.boxplot(data=df, x=<span class="s">"day"</span>, y=<span class="s">"total_bill"</span>, hue=<span class="s">"sex"</span>)     <span class="c"># 箱型圖：看中位數與離群值</span>
+sns.violinplot(data=df, x=<span class="s">"day"</span>, y=<span class="s">"total_bill"</span>)             <span class="c"># 小提琴圖：箱型 + 分布形狀</span></code></pre></div><div class="ex"><h3>2. 類別比較</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>sns.countplot(data=df, x=<span class="s">"day"</span>)                    <span class="c"># 每類「筆數」</span>
+sns.barplot(data=df, x=<span class="s">"day"</span>, y=<span class="s">"tip"</span>, hue=<span class="s">"sex"</span>)  <span class="c"># 每類 y 的「平均值」+ 95% 信賴區間誤差線</span>
+sns.barplot(data=df, x=<span class="s">"day"</span>, y=<span class="s">"tip"</span>, estimator=<span class="s">"sum"</span>, errorbar=<span class="k">None</span>)  <span class="c"># 改成加總、不畫誤差線</span></code></pre><p class="note">常見陷阱：<b>countplot 算筆數</b>，<b>barplot 預設算平均</b>，長條上方的黑線是信賴區間，不是標準差。</p></div><div class="ex"><h3>3. 關係與相關</h3><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>sns.scatterplot(data=df, x=<span class="s">"total_bill"</span>, y=<span class="s">"tip"</span>, hue=<span class="s">"time"</span>, size=<span class="s">"size"</span>)
+sns.regplot(data=df, x=<span class="s">"total_bill"</span>, y=<span class="s">"tip"</span>)             <span class="c"># 散佈 + 迴歸線 + 信賴區間</span>
+corr = df.select_dtypes(<span class="s">"number"</span>).corr()                  <span class="c"># 相關係數矩陣（Pearson）</span>
+sns.heatmap(corr, annot=<span class="k">True</span>, fmt=<span class="s">".2f"</span>, cmap=<span class="s">"coolwarm"</span>, vmin=-1, vmax=1)
+sns.pairplot(df, hue=<span class="s">"time"</span>)                              <span class="c"># 所有數值欄兩兩散佈 + 對角線分布</span></code></pre></div><div class="ex"><h3>4. Axes 層級 vs Figure 層級</h3>
+  <div class="tbl"><table><thead><tr><th>層級</th><th>函數</th><th>特性</th></tr></thead><tbody>
+    <tr><td>Axes-level</td><td><code>histplot</code>、<code>boxplot</code>、<code>scatterplot</code>、<code>heatmap</code></td><td>畫在一張子圖上，可傳 <code>ax=</code></td></tr>
+    <tr><td>Figure-level</td><td><code>displot</code>、<code>catplot</code>、<code>relplot</code>、<code>lmplot</code>、<code>pairplot</code></td><td>自己建立整張圖，用 <code>col=</code>、<code>row=</code> 分面，不能傳 <code>ax=</code></td></tr>
+  </tbody></table></div><span class="lang">Python</span><pre class="code"><button type="button" class="cbtn">複製</button><code>fig, axes = plt.subplots(1, 2, figsize=(10, 4))
+sns.boxplot(data=df, x=<span class="s">"day"</span>, y=<span class="s">"tip"</span>, ax=axes[0])      <span class="c"># Axes-level 放進指定子圖</span>
+sns.histplot(data=df, x=<span class="s">"tip"</span>, ax=axes[1])
+axes[0].set_title(<span class="s">"各日小費"</span>)
+
+sns.catplot(data=df, x=<span class="s">"day"</span>, y=<span class="s">"tip"</span>, col=<span class="s">"time"</span>, kind=<span class="s">"bar"</span>)   <span class="c"># Figure-level 分面</span></code></pre></div></section>
+<section id="choose" aria-labelledby="h-choose">
+  <div class="label">05 圖表選擇</div>
+  <h2 id="h-choose">依分析目的選圖</h2>
+  <div class="tbl"><table><thead><tr><th>分析目的</th><th>推薦圖表</th><th>Matplotlib</th><th>Seaborn</th></tr></thead><tbody>
+    <tr><td>看單一數值分布</td><td>直方圖、密度圖</td><td><code>ax.hist</code></td><td><code>histplot</code>、<code>kdeplot</code></td></tr>
+    <tr><td>看離群值、比較分布</td><td>箱型圖、小提琴圖</td><td><code>ax.boxplot</code></td><td><code>boxplot</code>、<code>violinplot</code></td></tr>
+    <tr><td>比較類別大小</td><td>長條圖</td><td><code>ax.bar</code></td><td><code>barplot</code>、<code>countplot</code></td></tr>
+    <tr><td>時間趨勢</td><td>折線圖</td><td><code>ax.plot</code></td><td><code>lineplot</code></td></tr>
+    <tr><td>兩數值變數關係</td><td>散佈圖、迴歸圖</td><td><code>ax.scatter</code></td><td><code>scatterplot</code>、<code>regplot</code></td></tr>
+    <tr><td>多變數相關</td><td>熱力圖、配對圖</td><td><code>ax.imshow</code></td><td><code>heatmap</code>、<code>pairplot</code></td></tr>
+    <tr><td>占比（少數類別）</td><td>圓餅圖、堆疊長條</td><td><code>ax.pie</code></td><td>（無專用，改用長條）</td></tr>
+  </tbody></table></div>
+</section>
+<section id="traps" aria-labelledby="h-traps">
+  <div class="label">06 易錯點</div>
+  <h2 id="h-traps">考題常見陷阱</h2>
+  <div class="cards">
+    <div class="card"><h3>WHERE vs HAVING</h3><div class="row">WHERE 在分組前過濾列，不能用 SUM、AVG；HAVING 在分組後過濾組。</div></div>
+    <div class="card"><h3>NULL 的比較</h3><div class="row">要寫 <code class="i">IS NULL</code>，不能寫 <code class="i">= NULL</code>（結果永遠不是真）。<code class="i">COUNT(欄位)</code> 不算 NULL，<code class="i">COUNT(*)</code> 會算。</div></div>
+    <div class="card"><h3>LEFT JOIN 後加 WHERE</h3><div class="row">在 WHERE 篩右表欄位（例如 <code class="i">o.amount &gt; 0</code>）會把補 NULL 的列刪掉，效果變成 INNER JOIN；要保留左表就把條件寫在 ON。</div></div>
+    <div class="card"><h3>loc 與 iloc 切片</h3><div class="row"><code class="i">loc[0:3]</code> 含結尾共 4 列；<code class="i">iloc[0:3]</code> 不含結尾共 3 列。</div></div>
+    <div class="card"><h3>Pandas 布林運算</h3><div class="row">要用 <code class="i">&amp;</code>、<code class="i">|</code>、<code class="i">~</code> 並加括號；寫 <code class="i">and</code> 會出現 ValueError（truth value is ambiguous）。</div></div>
+    <div class="card"><h3>apply vs 向量化</h3><div class="row">能用欄位直接運算就不要用 apply 逐列處理，資料量大時差距可達數十倍。</div></div>
+    <div class="card"><h3>inplace 與鏈式指定</h3><div class="row"><code class="i">df[df.a&gt;0]["b"] = 1</code> 可能改不到原表（SettingWithCopyWarning）；應寫 <code class="i">df.loc[df.a&gt;0, "b"] = 1</code>。</div></div>
+    <div class="card"><h3>fillna 用什麼值</h3><div class="row">右偏的數值（收入、票價）用中位數；類別用眾數；時間序列用前值填補。統計量只能從訓練集計算，避免資料洩漏。</div></div>
+    <div class="card"><h3>savefig 時機</h3><div class="row"><code class="i">plt.show()</code> 之後畫布可能已清空，存出空白圖；先 savefig 再 show。</div></div>
+    <div class="card"><h3>相關不等於因果</h3><div class="row">heatmap 只顯示線性相關（Pearson），非線性關係可能顯示接近 0。</div></div>
+  </div>
+</section>
+<section id="quiz" aria-labelledby="h-quiz">
+  <div class="label">自我檢測</div>
+  <h2 id="h-quiz">10 題快速檢測</h2>
+  <p class="lead">點選答案後立即顯示解析。</p>
+  <div id="qz"></div>
+  <p class="score" id="qscore" aria-live="polite">已作答 0 / 10</p>
+</section>
+</main>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a>
+<script>
+var Q=[["下列 SQL 子句的實際執行順序何者正確？", ["SELECT → FROM → WHERE → GROUP BY", "FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY", "FROM → SELECT → WHERE → ORDER BY", "WHERE → FROM → GROUP BY → SELECT"], 1, "FROM 先決定來源，WHERE 過濾列，再分組、HAVING 過濾組，最後 SELECT 與 ORDER BY。"], ["想找出「平均消費超過 3,000 元的城市」，條件應寫在哪裡？", ["WHERE AVG(amount) > 3000", "HAVING AVG(amount) > 3000", "ORDER BY AVG(amount) > 3000", "SELECT 中加 IF"], 1, "聚合後的條件必須用 HAVING。"], ["要列出所有客戶（含從未下單者）及其訂單數，應使用哪種合併？", ["INNER JOIN", "customers LEFT JOIN orders", "CROSS JOIN", "orders INNER JOIN customers"], 1, "LEFT JOIN 保留左表全部客戶，未下單者右表欄位為 NULL。"], ["分數 100、90、90、80 使用 DENSE_RANK() 由高到低排名，結果為？", ["1、2、3、4", "1、2、2、4", "1、2、2、3", "1、1、2、3"], 2, "DENSE_RANK 同分同名次且不跳號；RANK 會跳成 4。"], ["df 索引為 0~9 的整數，df.loc[2:5] 與 df.iloc[2:5] 各回傳幾列？", ["都是 3 列", "4 列與 3 列", "3 列與 4 列", "都是 4 列"], 1, "loc 以標籤切片包含結尾（2,3,4,5）；iloc 以位置切片不含結尾（2,3,4）。"], ["想篩選 amount 大於 1000 且 city 為台北的資料，正確寫法是？", ["df[df.amount > 1000 and df.city == \"台北\"]", "df[(df.amount > 1000) & (df.city == \"台北\")]", "df[df.amount > 1000 & df.city == \"台北\"]", "df.where(amount > 1000, city=\"台北\")"], 1, "Pandas 用 & 並且每個條件要加括號，否則運算子優先順序會出錯。"], ["要在原表新增一欄「每筆訂單占該類別總額的比例」，最適合的方法是？", ["groupby().sum()", "groupby().transform(\"sum\")", "pivot_table()", "value_counts()"], 1, "transform 回傳與原表等長的結果，可直接相除；sum 會把列合併。"], ["sns.barplot(data=df, x=\"day\", y=\"tip\") 長條的高度預設代表？", ["tip 的筆數", "tip 的總和", "tip 的平均值", "tip 的中位數"], 2, "barplot 預設 estimator 為平均值並畫 95% 信賴區間；要筆數用 countplot。"], ["想同時看所有數值欄位兩兩之間的關係與各自分布，最適合？", ["sns.heatmap", "sns.pairplot", "sns.countplot", "ax.pie"], 1, "pairplot 產生散佈圖矩陣，對角線為各變數分布。"], ["使用 fig, ax = plt.subplots() 後，要設定圖表標題的正確寫法是？", ["ax.title(\"標題\")", "ax.set_title(\"標題\")", "fig.title(\"標題\")", "plt.set_title(\"標題\")"], 1, "Axes 物件使用 set_ 開頭的方法；plt.title() 才是 pyplot 狀態式寫法。"]];
+
+(function(){
+  var box=document.getElementById('qz'), sc=document.getElementById('qscore'), done=0, ok=0, L='ABCD';
+  Q.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='q';
+    var p=document.createElement('p'); p.textContent=(i+1)+'. '+q[0]; d.appendChild(p);
+    var o=document.createElement('div'); o.className='opts'; o.setAttribute('role','group');
+    var bs=[];
+    q[1].forEach(function(t,k){
+      var b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent='('+L[k]+') '+t;
+      b.addEventListener('click',function(){
+        bs.forEach(function(x,j){x.disabled=true; if(j===q[2])x.classList.add('ok'); else if(j===k)x.classList.add('ng');});
+        var e=document.createElement('div'); e.className='exp'; e.textContent=(k===q[2]?'答對！':'答錯，正確答案 '+L[q[2]]+'。')+q[3]; d.appendChild(e);
+        done++; if(k===q[2])ok++; sc.textContent='已作答 '+done+' / '+Q.length+'，答對 '+ok+' 題';
+      });
+      bs.push(b); o.appendChild(b);
+    });
+    d.appendChild(o); box.appendChild(d);
+  });
+})();
+
+document.querySelectorAll('.cbtn').forEach(function(b){b.addEventListener('click',function(){
+  var t=b.parentNode.querySelector('code').innerText;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='已複製';setTimeout(function(){b.textContent='複製'},1500)},function(){
+    var r=document.createRange();r.selectNodeContents(b.parentNode.querySelector('code'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='已選取';});
+});});
+</script>
+</body>
+</html>
