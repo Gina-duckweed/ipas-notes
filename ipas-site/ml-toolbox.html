@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python 機器學習工具箱：Statsmodels、scikit-learn、Keras、PyTorch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --P:#4A3FA0;--Plt:#EEEAFF;--Pdk:#2E2680;
+  --R:#C0392B;--Rlt:#FDECEA;
+  --O:#D4720A;--Olt:#FFF3E0;
+  --G:#1A6B40;--Glt:#E0F4EA;
+  --bg:#F6F4FB;--s:#FFF;--s2:#F0ECFF;--b:#D0CAEE;
+  --t:#1A1440;--t2:#3A3070;--t3:#6A6298;
+  --font:'Nunito','Noto Sans TC',sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;
+  --t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;
+  --Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark;
+}}
+[data-theme=dark]{--bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;--t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;--Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:15px;line-height:1.7;min-height:100vh}
+a{color:var(--P)}
+:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}
+.hero{background:linear-gradient(135deg,var(--Pdk) 0%,var(--P) 55%,#7B6FD0 100%);padding:36px 24px 30px;color:#fff}
+.hero-in{max-width:1080px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.75);margin-bottom:8px}
+.hero h1{font-size:clamp(26px,4vw,34px);font-weight:900;line-height:1.2;margin-bottom:8px;text-wrap:balance}
+.hero p{font-size:14px;color:rgba(255,255,255,.88);max-width:680px;margin-bottom:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none}
+.chip:hover{background:rgba(255,255,255,.25)}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px;display:grid;gap:28px}
+section{background:var(--s);border:1.5px solid var(--b);border-radius:14px;padding:22px 24px;scroll-margin-top:12px}
+.label{font-size:11px;font-weight:800;color:var(--P);letter-spacing:1.5px;margin-bottom:6px}
+h2{font-size:21px;font-weight:900;margin-bottom:10px;text-wrap:balance}
+h3{font-size:16px;font-weight:800;margin-bottom:4px}
+p{max-width:72ch}
+.lead{color:var(--t2);margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:6px}
+.kpi{background:var(--s2);border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:26px;font-weight:900;color:var(--P);font-variant-numeric:tabular-nums;line-height:1.2}
+[data-theme=dark] .kpi b{color:#B9AEFF}
+.kpi span{font-size:13px;color:var(--t2)}
+.tbl{overflow-x:auto;border:1.5px solid var(--b);border-radius:12px;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--b)}
+th{background:var(--s2);font-size:12px;color:var(--t2);font-weight:800;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:800;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:8px}
+.card{background:var(--s2);border-radius:12px;padding:14px 16px;border-left:4px solid var(--P);display:grid;gap:6px;align-content:start}
+.card .en{font-family:var(--mono);font-size:12px;color:var(--t3)}
+.card .row{font-size:13.5px}
+.card .row b{color:var(--P)}
+[data-theme=dark] .card .row b{color:#B9AEFF}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:1px 8px;border-radius:10px;margin-right:4px;background:var(--Plt);color:var(--P)}
+.tag.hot{background:var(--Rlt);color:var(--R)}
+.tag.mid{background:var(--Olt);color:var(--O)}
+.trap{font-size:13px;background:var(--Rlt);color:var(--t);border-radius:8px;padding:6px 10px}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.fbtn{font:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:20px;padding:3px 12px;cursor:pointer}
+.fbtn[aria-pressed=true]{background:var(--P);border-color:var(--P);color:#fff}
+figure{margin-top:8px;background:var(--s2);border-radius:12px;padding:12px;overflow-x:auto}
+figcaption{font-size:12px;color:var(--t3);margin-top:6px}
+svg text{font-family:var(--font)}
+.steps{counter-reset:s;list-style:none;display:grid;gap:8px;margin-top:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);width:26px;height:26px;border-radius:50%;background:var(--P);color:#fff;font-weight:900;font-size:13px;display:grid;place-items:center}
+.q{border:1.5px solid var(--b);border-radius:12px;padding:14px 16px;margin-top:10px}
+.q p{font-weight:700;margin-bottom:8px}
+.opts{display:grid;gap:6px}
+.opt{font:inherit;font-size:14px;text-align:left;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:8px;padding:8px 10px;cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--P)}
+.opt.ok{background:var(--Glt);border-color:var(--G)}
+.opt.ng{background:var(--Rlt);border-color:var(--R)}
+.exp{margin-top:8px;font-size:13.5px;background:var(--Plt);border-radius:8px;padding:8px 10px}
+.score{font-weight:800;color:var(--P);margin-top:10px}
+.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.ipas-back:hover{background:#2C5282}
+@media(max-width:560px){section{padding:18px 16px}td:first-child{white-space:normal}}
+
+pre.code{position:relative;background:#1C1838;color:#ECE8FF;border-radius:10px;padding:14px 16px;margin-top:8px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.65;tab-size:4}
+pre.code .c{color:#9A93C9;font-style:italic}
+pre.code .k{color:#FFB86C;font-weight:700}
+pre.code .s{color:#A6E3A1}
+.cbtn{position:absolute;top:8px;right:8px;font:700 11px/1 var(--font);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:5px 8px;cursor:pointer}
+.cbtn:hover{background:rgba(255,255,255,.25)}
+.lang{display:inline-block;font:800 11px/1 var(--mono);background:var(--Plt);color:var(--P);border-radius:6px;padding:4px 7px;margin-top:14px}
+.ex{margin-top:16px;padding-top:14px;border-top:1px dashed var(--b)}
+.ex:first-of-type{border-top:none;padding-top:0}
+.out{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:8px;padding:8px 12px;margin-top:6px;white-space:pre;overflow-x:auto;color:var(--t2)}
+code.i{font-family:var(--mono);font-size:.9em;background:var(--s2);border-radius:5px;padding:1px 5px}
+td code{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:5px;padding:1px 5px;white-space:nowrap}
+.note{font-size:13.5px;background:var(--Olt);border-radius:10px;padding:10px 14px;margin-top:10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.bars{display:grid;gap:6px;margin-top:6px}
+.bar{display:grid;grid-template-columns:120px 1fr 54px;gap:8px;align-items:center;font-size:13px}
+.bar i{display:block;height:16px;border-radius:4px;background:var(--P)}
+.bar i.f{background:#C0587E}
+.bar span:last-child{font-variant-numeric:tabular-nums;font-weight:800;text-align:right}
+.bar .trk{background:var(--s2);border-radius:4px}
+.wrap>section{min-width:0}
+.out.wrap-lines{white-space:pre-wrap;word-break:break-all}
+.dl{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-weight:800;background:var(--P);color:#fff;text-decoration:none;border-radius:10px;padding:9px 16px}
+.dl:hover{background:var(--Pdk)}
+</style>
+<style>.q p{line-height:1.8;font-size:15px;font-weight:500}.q .opt{line-height:1.6}</style></head>
+<body>
+<header class="hero"><div class="hero-in">
+  <div class="eyebrow">iPAS AI 應用規劃師｜影片筆記＋情境題</div>
+  <h1>Python 機器學習工具箱：Statsmodels、scikit-learn、Keras、PyTorch</h1>
+  <p>整理自 YouTube 影片〈從統計建模到深度學習：4 套 Python 工具一次學會〉（資料科學家的工作日常，2026-11-04，約 63 分鐘）。影片是 Colab 直播教學，用三個案例分別以四套工具實作，比較它們在建模流程、評估方式與彈性上的差異。影片沒有字幕，本頁內容依畫面上的程式碼與輸出整理，另外補上實測驗證與常見陷阱。</p>
+  <nav class="chips" aria-label="頁內目錄"><a class="chip" href="#flow">七步驟</a><a class="chip" href="#map">案例×工具</a><a class="chip" href="#tools">工具定位</a><a class="chip" href="#boston">房價迴歸</a><a class="chip" href="#iris">鳶尾花分類</a><a class="chip" href="#day08">小資料作業</a><a class="chip" href="#traps">實作陷阱</a><a class="chip" href="#pick">怎麼選</a><a class="chip" href="#exam">考點對照</a><a class="chip" href="#quiz">30 題情境題</a></nav>
+</div></header>
+<main class="wrap">
+<section id="flow" aria-labelledby="h-flow">
+  <div class="label">資料處理順序 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=60s" target="_blank" rel="noopener">1:00</a></div>
+  <h2 id="h-flow">機器學習專案的七個步驟</h2>
+  <p class="lead">影片一開始先給出整套課程的骨架，後面每個案例都照這個順序走。這也是 iPAS 中級「機器學習技術與應用」最常考的流程題。</p>
+  <div class="tbl"><table><thead><tr><th>步驟</th><th>影片原文</th><th>要做的事</th><th>在案例中的樣子</th></tr></thead><tbody>
+    <tr><td>1</td><td>確認題目目的</td><td>檢視題目或問題詳細說明</td><td>「預測波士頓每區房價中位數」</td></tr>
+    <tr><td>2</td><td>定義問題</td><td>觀察模型預期輸出格式，擬定合適的機器學習任務類型</td><td>連續數值 → 迴歸；花的種類 → 分類</td></tr>
+    <tr><td>3</td><td>收集資料</td><td>爬蟲、貼標（label）</td><td>sklearn 內建資料集、GitHub 上的 CSV</td></tr>
+    <tr><td>4</td><td>資料前處理與探索</td><td>觀察資料、挑選合適的模型與資料格式轉換</td><td>describe／info、箱型圖、熱力圖、補缺值、One-hot、正規化</td></tr>
+    <tr><td>5</td><td>資料建模</td><td>訓練資料模型</td><td>LinearRegression、Dense、nn.Linear</td></tr>
+    <tr><td>6</td><td>評估模型</td><td>挑選合適的評估指標檢測模型</td><td>迴歸用 MAE；分類用 Accuracy</td></tr>
+    <tr><td>7</td><td>優化模型</td><td>找出預測錯誤的原因，改善模型</td><td>調整層數、學習率、epoch、特徵</td></tr>
+  </tbody></table></div>
+  <div class="cards" style="margin-top:14px">
+    <div class="card"><h3>EDA 看兩件事</h3><div class="row"><b>特徵關聯性</b>：特徵與特徵高度相關 → 冗餘特徵；特徵與預測目標高度相關 → 重要特徵。<b>資料分布</b>：看 min、max、mean、std，判斷數值範圍是否差太多。</div></div>
+    <div class="card"><h3>為什麼要正規化</h3><div class="row">TAX（數百）與 NOX（小於 1）尺度差很多。用梯度下降的模型（神經網路）和對距離敏感的模型，要先把特徵壓到相近範圍，例如 MinMaxScaler 壓到 0～1。</div></div>
+  </div>
+</section>
+<section id="map" aria-labelledby="h-map">
+  <div class="label">課程地圖</div>
+  <h2 id="h-map">三個案例 × 四套工具</h2>
+  <p class="lead">同一個問題用不同工具各做一次，是這堂課的核心設計。下表是影片畫面上實際跑出的結果（房價案例的 MAE 是在 0～1 正規化後的尺度上計算）。</p>
+  <div class="tbl"><table><thead><tr><th>案例</th><th>任務</th><th>Statsmodels</th><th>scikit-learn</th><th>Keras</th><th>PyTorch</th></tr></thead><tbody>
+    <tr><td>波士頓房價 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=210s" target="_blank" rel="noopener">3:30</a></td><td>迴歸，13 個特徵、506 筆</td><td>—</td><td>LinearRegression<br>MAE 0.0730</td><td>Dense 32-32-1<br>MAE 0.0797</td><td>nn.Linear 32-32-1<br>MAE 0.0721</td></tr>
+    <tr><td>鳶尾花 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=1680s" target="_blank" rel="noopener">28:00</a></td><td>三類分類，4 個特徵、150 筆</td><td>—</td><td>LogisticRegression<br>Accuracy 0.9</td><td>Dense＋softmax(3)<br>categorical_crossentropy</td><td>nn.Linear＋CrossEntropyLoss<br>Accuracy 1.0</td></tr>
+    <tr><td>作業：是否購買 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=2470s" target="_blank" rel="noopener">41:10</a></td><td>二類分類，10 筆（訓練 7、測試 3）</td><td>sm.Logit（畫面中被註解掉）</td><td>有此節（畫面未細看）</td><td>Dense＋softmax(2)<br>訓練 Accuracy 1.0</td><td>softmax＋CrossEntropyLoss</td></tr>
+    <tr><td>作業：薪資 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=3430s" target="_blank" rel="noopener">57:10</a></td><td>迴歸，10 筆</td><td>sm.OLS</td><td>有此節（畫面未細看）</td><td>Dense 32-32-1，200 epochs</td><td>L1Loss，300 epochs</td></tr>
+  </tbody></table></div>
+  <p class="note">畫面中的數字只代表那一次執行（不同的 random_state、權重初始化結果會不同），也不能直接拿來說「哪套工具比較準」：三套模型的結構其實幾乎一樣，差異主要來自隨機性。這正是影片要傳達的重點：<b>工具不同，背後的建模概念相同</b>。</p>
+</section>
+<section id="tools" aria-labelledby="h-tools">
+  <div class="label">工具定位</div>
+  <h2 id="h-tools">四套工具各自擅長什麼</h2>
+  <div class="tbl"><table><thead><tr><th>工具</th><th>定位</th><th>典型寫法</th><th>輸出重點</th><th>適合情境</th></tr></thead><tbody>
+    <tr><td><b>Statsmodels</b></td><td>傳統統計建模</td><td><code>sm.add_constant(X)</code> → <code>sm.OLS(y, X).fit()</code>／<code>sm.Logit</code></td><td><code>summary()</code>：係數、標準誤、p 值、信賴區間、R²</td><td>要「解釋」變數影響、做假設檢定、寫研究報告</td></tr>
+    <tr><td><b>scikit-learn</b></td><td>經典機器學習</td><td><code>model.fit(X, y)</code> → <code>predict</code>／<code>score</code>；<code>train_test_split</code>、<code>MinMaxScaler</code></td><td>預測值與評估指標，API 一致</td><td>表格資料、快速建立基準模型、前處理與評估流程</td></tr>
+    <tr><td><b>Keras</b>（TensorFlow 後端）</td><td>高階深度學習 API</td><td><code>Sequential([Dense…])</code> → <code>compile(loss, optimizer)</code> → <code>fit(epochs, batch_size)</code> → <code>evaluate</code></td><td>每個 epoch 的 loss／metrics</td><td>用少量程式碼快速搭出標準神經網路</td></tr>
+    <tr><td><b>PyTorch</b></td><td>彈性深度學習框架</td><td>繼承 <code>nn.Module</code> 寫 <code>forward</code>；自己寫訓練迴圈：<code>zero_grad → backward → step</code></td><td>tensor 與梯度（<code>grad_fn</code>）</td><td>研究、客製化模型結構、需要掌控每一步訓練細節</td></tr>
+  </tbody></table></div>
+  <div class="cards" style="margin-top:14px">
+    <div class="card"><h3>Statsmodels 要自己加截距</h3><div class="row"><code>sm.add_constant</code> 會加一欄全為 1 的 const。scikit-learn 的 LinearRegression 預設 <code>fit_intercept=True</code>，不必手動加。</div></div>
+    <div class="card"><h3>Keras 的三步：建、編、訓</h3><div class="row"><code>Sequential</code> 建模型 → <code>compile</code> 指定損失函數與優化器（影片用 <code>"mae"</code>、<code>"sgd"</code>）→ <code>fit</code> 指定 epochs 與 batch_size。</div></div>
+    <div class="card"><h3>PyTorch 的訓練迴圈</h3><div class="row">每個批次：前向計算 → 算 loss → <code>optimizer.zero_grad()</code> 清掉舊梯度 → <code>loss.backward()</code> 反向傳播 → <code>optimizer.step()</code> 更新權重。</div></div>
+    <div class="card"><h3>資料格式要對齊工具</h3><div class="row">PyTorch 要把 NumPy 轉成 <code>torch.tensor(…, dtype=torch.float32)</code>；Keras 多分類用 <code>to_categorical</code> 轉 One-hot；預測後再用 <code>argmax</code> 轉回類別。</div></div>
+  </div>
+</section>
+<section id="boston" aria-labelledby="h-boston">
+  <div class="label">案例一 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=210s" target="_blank" rel="noopener">3:30</a></div>
+  <h2 id="h-boston">波士頓房價：同一個迴歸問題，三套寫法</h2>
+  <p class="lead">資料來自美國人口調查局，13 個特徵（CRIM 犯罪率、RM 平均房間數、TAX 稅率、LSTAT 中下階層比例等），目標 MEDV 是自住房屋中位數房價。定義問題：連續數值 → 迴歸。</p>
+  <div class="ex"><h3>前處理 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=760s" target="_blank" rel="noopener">12:40</a></h3>
+  <span class="lang">Python｜影片程式碼</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="c"># 正規化：準備訓練資料 -&gt; 正規化參數訓練 -&gt; 訓練/測試資料正規化</span>
+<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> MinMaxScaler
+<span class="k">from</span> sklearn.model_selection <span class="k">import</span> train_test_split
+scaler = MinMaxScaler()
+X_scaled = scaler.fit_transform(df.values[:, :-1])          <span class="c"># 13 個特徵</span>
+y_scaler = MinMaxScaler()
+y_scaled = y_scaler.fit_transform(np.expand_dims(df.values[:, -1], axis=1))
+<span class="c"># y = y_scaler.inverse_transform(y_scaled)  # 預測結果要用 inverse_transform 還原</span>
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X_scaled, y_scaled, test_size=0.2, random_state=24)   <span class="c"># (404, 13) / (102, 13)</span></code></pre>
+  <p class="note">影片在切分前就對全部資料 <code>fit_transform</code>，測試資料的最大最小值也參與了正規化參數的計算，屬於輕微的<b>資料洩漏</b>。正確做法見下方「實作陷阱」。</p></div>
+  <div class="ex"><h3>scikit-learn <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=920s" target="_blank" rel="noopener">15:20</a></h3>
+  <span class="lang">Python｜影片程式碼</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">from</span> sklearn.linear_model <span class="k">import</span> LinearRegression
+<span class="k">from</span> sklearn.metrics <span class="k">import</span> mean_absolute_error
+reg = LinearRegression().fit(X_train, y_train)
+y_pred = reg.predict(X_test)
+mean_absolute_error(y_test, y_pred)     <span class="c"># 0.0730（正規化後的尺度）</span></code></pre>
+  <p>線性迴歸就是「找到一條誤差總和最小的線」。影片用殘差圖說明每個點到直線的距離 |y − ŷ|，MAE 就是這些距離的平均。</p></div>
+  <div class="ex"><h3>Keras <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=1225s" target="_blank" rel="noopener">20:25</a></h3>
+  <span class="lang">Python｜影片程式碼</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">from</span> tensorflow <span class="k">import</span> keras
+<span class="k">from</span> tensorflow.keras <span class="k">import</span> layers
+model = keras.Sequential([
+    layers.Dense(32, name=<span class="s">"hidden1"</span>),
+    layers.Dense(32, name=<span class="s">"hidden2"</span>),
+    layers.Dense(1, name=<span class="s">"output"</span>),
+])
+model.compile(loss=<span class="s">"mae"</span>, optimizer=<span class="s">"sgd"</span>)   <span class="c"># 梯度下降法最佳化模型參數權重</span>
+model.fit(X_train, y_train, epochs=100, batch_size=16)   <span class="c"># 404/16 → 每 epoch 26 步</span>
+mae = model.evaluate(X_test, y_test)          <span class="c"># MAE_test 0.0797</span></code></pre>
+  </div>
+  <div class="ex"><h3>PyTorch <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=1360s" target="_blank" rel="noopener">22:40</a></h3>
+  <span class="lang">Python｜影片程式碼</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">import</span> torch
+class Model(torch.nn.Module):
+    <span class="k">def</span> __init__(self, input_size, hidden_size, output_size):
+        super(Model, self).__init__()
+        self.hidden1 = torch.nn.Linear(input_size, hidden_size)
+        self.hidden2 = torch.nn.Linear(hidden_size, hidden_size)
+        self.predict = torch.nn.Linear(hidden_size, output_size)
+    <span class="k">def</span> forward(self, x):
+        output1 = self.hidden1(x)
+        output2 = self.hidden2(output1)
+        <span class="k">return</span> self.predict(output2)
+
+model = Model(X_test.shape[1], 32, 1)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.05)
+loss_func = torch.nn.L1Loss()                 <span class="c"># L1 = MAE</span>
+x_data = torch.tensor(X_train, dtype=torch.float32)   <span class="c"># [404, 13]</span>
+y_data = torch.tensor(y_train, dtype=torch.float32)   <span class="c"># [404, 1]</span>
+<span class="k">for</span> t <span class="k">in</span> range(100):                          <span class="c"># 100 個 epoch</span>
+    <span class="k">for</span> i <span class="k">in</span> range(0, len(x_data), 16):       <span class="c"># 手動切 batch = 16</span>
+        prediction = model(x_data[i:i+16])
+        loss = loss_func(prediction, y_data[i:i+16])
+        optimizer.zero_grad(); loss.backward(); optimizer.step()
+<span class="c"># 測試 MAE 0.0721</span></code></pre>
+  <p class="note">Keras 和 PyTorch 這兩個版本的隱藏層都<b>沒有啟用函數</b>，多層線性疊起來仍然是線性模型，所以三者的 MAE 才會那麼接近。這是很好的觀念題，詳見「實作陷阱」。</p></div>
+</section>
+<section id="iris" aria-labelledby="h-iris">
+  <div class="label">案例二 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=1680s" target="_blank" rel="noopener">28:00</a></div>
+  <h2 id="h-iris">鳶尾花：從迴歸換成多類別分類</h2>
+  <p class="lead">三種鳶尾花各 50 筆，4 個特徵（花萼長寬、花瓣長寬）。定義問題：分類預測。EDA 用散佈圖觀察每個特徵與 target 的關係，花瓣長度與寬度最能區分三類。</p>
+  <div class="tbl"><table><thead><tr><th>改變的地方</th><th>迴歸（房價）</th><th>多類別分類（鳶尾花）</th></tr></thead><tbody>
+    <tr><td>scikit-learn 模型</td><td>LinearRegression</td><td>LogisticRegression，<code>clf.score</code> 回傳 Accuracy（0.9）</td></tr>
+    <tr><td>輸出層</td><td>Dense(1)／Linear(32, 1)</td><td>Dense(3, activation=softmax)／Linear(32, 3)</td></tr>
+    <tr><td>損失函數</td><td>MAE／L1Loss</td><td>categorical_crossentropy／CrossEntropyLoss</td></tr>
+    <tr><td>標籤格式</td><td>連續數值</td><td>Keras：<code>to_categorical(y, num_classes=3)</code> 轉 One-hot</td></tr>
+    <tr><td>預測後處理</td><td>inverse_transform 還原尺度</td><td><code>argmax(1)</code>：One-hot 機率 → 類別編號</td></tr>
+    <tr><td>評估指標</td><td>MAE</td><td>Accuracy</td></tr>
+  </tbody></table></div>
+  <span class="lang">Python｜影片程式碼</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="c"># Keras 多類別分類</span>
+model = tf.keras.models.Sequential([
+    layers.Dense(32, name=<span class="s">"hidden1"</span>),
+    layers.Dense(32, name=<span class="s">"hidden2"</span>),
+    layers.Dense(3, name=<span class="s">"output"</span>, activation=tf.nn.softmax),
+])
+model.compile(optimizer=<span class="s">"sgd"</span>, loss=tf.keras.losses.categorical_crossentropy, metrics=[<span class="s">"Accuracy"</span>])
+<span class="c"># int array -&gt; one hot array:  [2, 1, 0] -&gt; [[0,0,1],[0,1,0],[1,0,0]]</span>
+y_train_onehot = tf.keras.utils.to_categorical(y_train, num_classes=3)
+model.fit(X_train, y_train_onehot, epochs=100, batch_size=16)   <span class="c"># 120/16 → 8 步</span></code></pre>
+</section>
+<section id="day08" aria-labelledby="h-day08">
+  <div class="label">作業 <a href="https://www.youtube.com/watch?v=Uvc3JeYi1m4&t=2470s" target="_blank" rel="noopener">41:10</a></div>
+  <h2 id="h-day08">小資料作業：是否購買與薪資預測</h2>
+  <p class="lead">資料只有 10 筆（Country、Age、Salary、Purchased），各有 1 筆 Age 與 Salary 缺值。題目一：用 Country、Age、Salary 預測 Purchased（分類）；題目二：用 Country、Age、Purchased 預測 Salary（迴歸）。最後 3 筆當測試資料。</p>
+  <span class="lang">Python｜影片程式碼（節錄）</span><pre class="code"><button type="button" class="cbtn">複製</button><code>df = pd.concat([df, pd.get_dummies(df[<span class="s">"Country"</span>])], axis=1)        <span class="c"># One-hot：France / Germany / Spain</span>
+le = preprocessing.LabelEncoder(); df[<span class="s">"y"</span>] = le.fit_transform(df[<span class="s">"Purchased"</span>])  <span class="c"># No/Yes -&gt; 0/1</span>
+df[[<span class="s">"Age"</span>,<span class="s">"Salary"</span>]] = df[[<span class="s">"Age"</span>,<span class="s">"Salary"</span>]].fillna(df[[<span class="s">"Age"</span>,<span class="s">"Salary"</span>]].mean())  <span class="c"># 平均值補缺值</span>
+test,  train = df.iloc[-3:], df.iloc[:-3]
+X = sm.add_constant(train[train.columns.difference([<span class="s">'Country'</span>,<span class="s">'Purchased'</span>,<span class="s">'y'</span>])])
+<span class="c"># model = sm.Logit(y, X).fit()          # 影片中這幾行被註解掉</span>
+<span class="c"># 薪資迴歸：</span>
+model = sm.OLS(y, X).fit(); y_pred = model.predict(testX)</code></pre>
+  <p>影片的註解寫出了正確的正規化順序：<b>訓練資料 → fit 正規化參數 → 轉換訓練資料與測試資料</b>（O）；而「訓練資料 fit 一次、測試資料再 fit 一次」是錯的（X）。</p>
+  <h3>實測：這份資料能用 Statsmodels 做邏輯迴歸嗎？</h3>
+  <p>我用同樣 10 筆資料、同樣的切法重跑（statsmodels 0.15、scikit-learn 1.9）：</p>
+  <div class="out wrap-lines">影片寫法（const + France + Germany + Spain）設計矩陣秩 = 5，但有 6 欄 → Logit：Singular matrix
+去掉一個國家虛擬變數（避免虛擬變數陷阱）→ 仍然 Singular matrix（7 筆資料估 5 個參數）
+scikit-learn LogisticRegression（預設 L2 正則化）→ 可以訓練，但 3 筆測試預測 [0, 0, 0]，實際 [1, 0, 1]
+sm.OLS 薪資迴歸：R² 0.896，但殘差自由度只有 2，所有係數 p 值都 &gt; 0.15</div>
+  <p class="note">這解釋了影片為什麼把 <code>sm.Logit</code> 註解掉：資料太少、加上 const 與三個虛擬變數完全共線，最大概似估計無法求解。Keras 在這份資料上訓練 Accuracy 達到 1.0，也只代表 7 筆資料被背下來，不代表模型有用。</p>
+</section>
+<section id="traps" aria-labelledby="h-traps">
+  <div class="label">實作陷阱</div>
+  <h2 id="h-traps">從影片程式碼看到的 8 個常見錯誤</h2>
+  <p class="lead">教學影片為了示範方便，有些寫法在正式專案中會出問題。這些正好是情境題最愛考的地方，數字都經過實際執行驗證。</p>
+  <div class="tbl"><table><thead><tr><th>#</th><th>影片中的寫法</th><th>問題</th><th>正確做法</th></tr></thead><tbody>
+    <tr><td>1</td><td><code>load_boston()</code></td><td>畫面已出現棄用警告：資料集含有種族相關特徵（B 欄），有倫理疑慮；scikit-learn 1.2 起已移除</td><td>改用 <code>fetch_california_housing</code> 等資料集，並在專案中評估特徵的公平性</td></tr>
+    <tr><td>2</td><td>切分前對全部資料 <code>fit_transform</code></td><td>測試資料的極值參與了正規化參數 → 資料洩漏，評估過度樂觀</td><td>先切分，scaler 只在訓練集 <code>fit</code>，再 <code>transform</code> 測試集；或用 <code>Pipeline</code></td></tr>
+    <tr><td>3</td><td>用全部 10 筆的平均補缺值</td><td>測試資料的值影響補值：訓練集平均 Age 35.67／Salary 57,500，全體平均 38.78／63,777.78</td><td>只用訓練集統計量補值（<code>SimpleImputer</code> 放進 Pipeline）</td></tr>
+    <tr><td>4</td><td>Dense／Linear 層之間沒有啟用函數</td><td>多層線性仍是線性。實測 sin 曲線：無啟用函數 MLP 的 MAE 0.365，與線性迴歸 0.363 幾乎相同；加 ReLU 降到 0.097</td><td>隱藏層加 <code>activation="relu"</code> 或 <code>F.relu</code></td></tr>
+    <tr><td>5</td><td>forward 最後做 <code>F.softmax</code> 又用 <code>CrossEntropyLoss</code></td><td>CrossEntropyLoss 內部已含 log-softmax，等於做兩次 softmax。三類時 loss 最低只能到 0.551（二類 0.313），梯度變小、訓練變慢；影片的 loss 停在 0.63 附近</td><td>forward 直接輸出 logits；要機率時在推論階段才做 softmax</td></tr>
+    <tr><td>6</td><td><code>sm.add_constant</code> ＋ 三個國家的虛擬變數</td><td>虛擬變數陷阱（完全共線），加上樣本太少 → Singular matrix</td><td><code>get_dummies(drop_first=True)</code>；樣本數要遠多於參數數</td></tr>
+    <tr><td>7</td><td>MAE 0.073 直接當成果報告</td><td>這是 0～1 正規化後的尺度，不是房價單位</td><td>用 <code>y_scaler.inverse_transform</code> 還原後再算 MAE</td></tr>
+    <tr><td>8</td><td>10 筆資料、訓練 Accuracy 1.0</td><td>訓練集表現不代表泛化能力；3 筆測試資料的準確率波動極大</td><td>收集更多資料、用交叉驗證、報告測試集指標</td></tr>
+  </tbody></table></div>
+  <div class="ex"><h3>改良版寫法（scikit-learn 與 PyTorch）</h3>
+  <span class="lang">Python｜改良版（已實測）</span><pre class="code"><button type="button" class="cbtn">複製</button><code><span class="k">from</span> sklearn.pipeline <span class="k">import</span> make_pipeline
+<span class="k">from</span> sklearn.preprocessing <span class="k">import</span> MinMaxScaler
+<span class="k">from</span> sklearn.linear_model <span class="k">import</span> LogisticRegression
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0, stratify=y)
+pipe = make_pipeline(MinMaxScaler(), LogisticRegression(max_iter=1000)).fit(X_train, y_train)
+pipe.score(X_test, y_test)      <span class="c"># 鳶尾花實測 0.9；scaler 只看過訓練資料</span></code></pre>
+  <span class="lang">Python｜改良版</span><pre class="code"><button type="button" class="cbtn">複製</button><code>class Model(torch.nn.Module):
+    <span class="k">def</span> __init__(self, n_in, n_hidden, n_class):
+        super().__init__()
+        self.net = torch.nn.Sequential(
+            torch.nn.Linear(n_in, n_hidden), torch.nn.ReLU(),      <span class="c"># 加上啟用函數</span>
+            torch.nn.Linear(n_hidden, n_hidden), torch.nn.ReLU(),
+            torch.nn.Linear(n_hidden, n_class))                   <span class="c"># 直接輸出 logits，不做 softmax</span>
+    <span class="k">def</span> forward(self, x):
+        <span class="k">return</span> self.net(x)
+
+loss_func = torch.nn.CrossEntropyLoss()          <span class="c"># 標籤用整數類別（torch.long），不必轉 One-hot</span>
+y_data = torch.tensor(y_train, dtype=torch.long)
+pred_class = model(x_test).argmax(dim=1)         <span class="c"># 推論時取最大值</span></code></pre>
+  </div>
+  <p class="note">觀眾在直播中問：「兩層是 test_size=0.2，那三層是不是設成 0.3？」兩者無關：<b>隱藏層數</b>是模型結構的超參數，<b>test_size</b> 是切多少比例資料當測試集。</p>
+</section>
+<section id="pick" aria-labelledby="h-pick">
+  <div class="label">選擇工具</div>
+  <h2 id="h-pick">什麼情況該用哪套工具</h2>
+  <ol class="steps">
+    <li><span><b>要解釋「哪個變數影響多少、是否顯著」</b>（例如政策評估、行銷歸因報告）→ Statsmodels 的 OLS／Logit，看係數、p 值、信賴區間。</span></li>
+    <li><span><b>表格資料、要快速做出可比較的基準模型</b> → scikit-learn。前處理、切分、交叉驗證、評估指標都有一致的 API，可用 Pipeline 防止洩漏。</span></li>
+    <li><span><b>需要神經網路，但結構是標準的全連接、CNN、RNN</b> → Keras，幾行就能完成建模、編譯、訓練。</span></li>
+    <li><span><b>需要客製化結構、特殊損失函數，或要掌控訓練迴圈每一步</b>（研究、生成式模型、微調大型模型）→ PyTorch。</span></li>
+    <li><span><b>先簡單後複雜</b>：先用 scikit-learn 建立基準，確認深度學習真的有明顯提升，再投入較高的開發與運算成本。</span></li>
+  </ol>
+</section>
+<section id="exam" aria-labelledby="h-exam">
+  <div class="label">考點對照</div>
+  <h2 id="h-exam">影片內容與 iPAS 中級考點</h2>
+  <div class="tbl"><table><thead><tr><th>影片內容</th><th>對應考點</th><th>本站相關頁面</th></tr></thead><tbody>
+    <tr><td>七步驟、問題定義（迴歸／分類）</td><td>機器學習專案流程、任務類型判斷</td><td><a href="titanic.html">鐵達尼號專案</a></td></tr>
+    <tr><td>EDA、缺值、One-hot、LabelEncoder、正規化</td><td>資料前處理、特徵工程、資料洩漏</td><td><a href="data-syntax.html">SQL／Pandas／視覺化語法</a></td></tr>
+    <tr><td>MAE、Accuracy、訓練與測試切分</td><td>模型評估指標、過擬合與泛化</td><td><a href="titanic.html">鐵達尼號專案</a></td></tr>
+    <tr><td>Dense、啟用函數、softmax、交叉熵、SGD、epoch、batch</td><td>神經網路基礎、損失函數與優化器</td><td><a href="ai-engineer-course.html">AI 工程師完整課程筆記</a></td></tr>
+    <tr><td>OLS、Logit、虛擬變數陷阱</td><td>統計模型與解釋性、共線性</td><td>—</td></tr>
+  </tbody></table></div>
+</section>
+<section id="quiz" aria-labelledby="h-quiz">
+  <div class="label">自我檢測</div>
+  <h2 id="h-quiz">30 題長文情境考題</h2>
+  <p class="lead">依影片三個案例延伸的實務情境，四個選項長度相近，需讀懂情境才能判斷。點選答案後立即顯示解析。</p>
+  <div id="qz"></div>
+  <p class="score" id="qscore" aria-live="polite">已作答 0 / 30</p>
+</section>
+</main>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a>
+<script>
+var Q=[["【流程與 EDA】情境：房仲公司請你用歷史成交資料預測新物件的成交價。主管在開會時直接說：「先把資料丟進神經網路試試看。」你想依影片的七步驟，先確認專案方向。在收集資料之前，最應該先完成的兩個步驟是什麼？", ["先把所有欄位做 One-hot 編碼並完成正規化", "確認題目目的，並依輸出格式定義為迴歸任務", "先挑選最新的深度學習框架並安裝好 GPU 環境", "先決定 epoch 數與 batch size 等訓練超參數"], 1, "七步驟前兩步是確認題目目的、定義問題（觀察輸出格式決定任務類型）。成交價是連續數值，屬於迴歸。工具與超參數屬於建模與優化階段。"], ["【流程與 EDA】情境：零售業者想預測顧客「下個月會不會流失」，資料科學家甲認為是迴歸問題，因為模型會輸出 0 到 1 之間的機率。依影片「觀察模型預期輸出格式」來定義問題，下列判斷何者最恰當？", ["沒有標籤也能做，應直接用分群取代監督式學習", "只要模型輸出介於 0 到 1 的小數，就應視為迴歸問題", "流失與時間有關，因此一定要當成時間序列預測問題", "目標是「流失／不流失」兩種類別，屬於二元分類問題"], 3, "任務類型由「要預測的目標」決定，不是由模型中間輸出的數值型態決定。邏輯迴歸輸出機率，但任務仍是分類。"], ["【流程與 EDA】情境：分析師對房價資料畫出 13×13 相關係數熱力圖，發現 RAD 與 TAX 相關係數高達 0.91，而 LSTAT 與房價 MEDV 的相關係數為 -0.74。依影片對 EDA「特徵關聯性」的說明，下列解讀何者正確？", ["RAD 與 TAX 可能是冗餘特徵；LSTAT 是與目標高度相關的重要特徵", "相關係數只適用分類問題，迴歸問題的 EDA 不需要觀察相關性", "相關係數越接近 0 的特徵越重要，因此應優先保留這些特徵", "RAD 與 TAX 都是重要特徵；LSTAT 為負相關，應直接從特徵中刪除"], 0, "特徵與特徵高度相關 → 可能冗餘；特徵與預測目標高度相關（不論正負）→ 重要特徵。負相關同樣有預測力。"], ["【流程與 EDA】情境：團隊用 describe() 觀察房價資料，發現 TAX 的範圍約 187 到 711，NOX 的範圍約 0.38 到 0.87，箱型圖上 TAX 的箱子大到把其他特徵壓成一條線。接下來準備訓練以 SGD 優化的神經網路，最合理的處理是？", ["不需要處理，神經網路會自動忽略數值範圍上的差異", "直接刪除數值範圍最大的 TAX 欄位，避免干擾其他特徵", "先對特徵做正規化或標準化，讓各特徵的數值範圍相近", "把 TAX 改成類別變數，再做 One-hot 編碼後放入模型"], 2, "尺度差異大會讓梯度下降收斂困難，影片因此用 MinMaxScaler 把特徵壓到 0～1。刪除特徵或改成類別都會丟失資訊。"], ["【流程與 EDA】情境：鳶尾花案例中，分析師對 4 個特徵畫出「特徵值 vs. target」散佈圖，發現花瓣長度與寬度在三個類別間幾乎不重疊，而花萼寬度的三類分布明顯重疊。這個觀察對建模最直接的意義是？", ["三類分布不重疊代表資料洩漏，必須重新收集資料", "花萼寬度分布重疊，代表資料有誤，應先清除整欄", "花瓣長寬對區分類別最有幫助，是較重要的特徵", "散佈圖只能看迴歸問題，對分類問題沒有參考價值"], 2, "EDA 的目的之一是找出與 label 相關的特徵。類別間分得越開的特徵，對分類越有幫助；重疊不代表資料錯誤。"], ["【前處理與資料洩漏】情境：工程師照著教學影片的寫法，先對全部 506 筆房價資料執行 MinMaxScaler().fit_transform()，再用 train_test_split 切出 20% 當測試集，得到不錯的測試 MAE。審查者指出流程有問題。最主要的問題是什麼？", ["測試資料的極值參與了正規化參數計算，造成資料洩漏", "先正規化會讓 train_test_split 無法隨機打亂資料順序", "正規化後的資料無法再用 MAE 評估，必須改用 R²", "MinMaxScaler 只能用於分類，迴歸問題應改用其他方法"], 0, "正規化參數（最大、最小值）只能從訓練集學。先 fit 全部資料，測試集的資訊就洩漏進前處理，評估結果會偏樂觀。"], ["【前處理與資料洩漏】情境：延續上題，團隊決定修正正規化流程。影片作業的註解列出兩種步驟：甲「訓練資料 fit 正規化參數 → 轉換訓練與測試資料」；乙「訓練資料 fit 後轉換訓練資料，測試資料再自己 fit 一次後轉換」。下列何者正確？", ["乙正確；測試資料自己 fit，才能反映測試集的分布", "甲乙都不對，正規化只能在模型訓練完成後才進行", "甲乙都正確，只要兩邊都轉換到 0～1 範圍就可以", "甲正確；測試資料必須沿用訓練集學到的正規化參數"], 3, "測試集要用訓練集的參數轉換，模擬「上線時只看得到過去資料」。乙會讓同一個數值在兩個資料集被轉成不同結果。"], ["【前處理與資料洩漏】情境：10 筆購買資料中，Age 與 Salary 各有一筆缺值。工程師先用全部 10 筆的平均值補缺，再切出最後 3 筆當測試集。實測發現訓練集平均 Salary 為 57,500，全體平均為 63,777。這個做法最大的問題是？", ["Salary 缺值應補 0，代表該顧客沒有任何收入來源", "補值用到測試資料的資訊，應只用訓練集統計量補值", "補值會改變資料型別，導致模型無法讀入這兩個欄位", "平均值補值一律錯誤，缺值的資料列必須全部刪除"], 1, "補值也是一種「從資料學參數」的前處理，和正規化一樣只能用訓練集。用 SimpleImputer 放進 Pipeline 可以避免。"], ["【前處理與資料洩漏】情境：資料的 Country 欄有 France、Germany、Spain 三個值。實習生用 LabelEncoder 轉成 0、1、2 後直接放進線性迴歸。主管提醒這樣做會讓模型誤解。影片中對 Country 的處理方式與原因是？", ["用 One-hot 編碼，避免模型把國家編號誤當有大小順序", "用國家名稱的字母數當數值，保留各國之間的差異", "把 Country 欄位刪除，因為文字資料無法放進模型中", "用 LabelEncoder 即可，數字大小對線性模型沒有影響"], 0, "名目變數沒有大小順序，編成 0、1、2 會讓模型以為 Spain 是 France 的兩倍。影片用 pd.get_dummies 做 One-hot；LabelEncoder 用在 Purchased 這種二元標籤。"], ["【前處理與資料洩漏】情境：房價模型的目標 MEDV 也被 MinMaxScaler 壓到 0～1，測試 MAE 為 0.073。業務主管問：「所以平均誤差是 0.073 千美元嗎？」你要如何正確回報誤差？", ["把 0.073 乘上 100，換算成百分比誤差後就能直接回報給主管", "正規化後無法換算回原單位，只能回報各模型之間的相對排名", "先用 inverse_transform 還原預測值，再計算原單位的 MAE", "0.073 就是千美元單位，正規化並不會改變誤差的大小與單位"], 2, "影片註解提到預測結果要用 inverse_transform 還原。MAE 0.073 是 0～1 尺度上的數字，必須還原後才有業務意義。"], ["【前處理與資料洩漏】情境：載入波士頓房價資料時，畫面出現警告：資料集含有可能涉及種族的特徵，scikit-learn 強烈不建議使用，新版本已移除。專案團隊要把這份教學程式改成內部培訓教材。最恰當的做法是？", ["自行刪除 B 欄位後即可完全排除所有公平性與偏誤疑慮", "改用其他公開資料集，並在教材中說明特徵公平性的考量", "改用舊版 scikit-learn，讓 load_boston 可以正常載入", "關閉警告訊息後繼續使用，教學用途不需要考慮倫理問題"], 1, "load_boston 已在 scikit-learn 1.2 移除。只刪一欄不等於排除偏誤（其他特徵可能是代理變數），教材應換資料集並說明公平性。"], ["【scikit-learn 與評估】情境：專案經理要求兩週內交出房價預測的第一版，資料是 13 個數值特徵、506 筆。團隊有人想直接寫 PyTorch 自訂網路。依影片「先簡單後複雜」的工具定位，第一版最合適的做法是？", ["直接用 PyTorch 寫自訂網路，因為深度學習一定比傳統模型準確", "先用 Keras 疊十層 Dense，層數越多越能找出複雜關係", "先用 Statsmodels 算 p 值，p 值小就代表預測一定準確", "先用 scikit-learn 建立線性迴歸基準，再判斷是否需要深度學習"], 3, "小型表格資料先用 scikit-learn 建立基準最有效率。影片中三套工具的 MAE 很接近（0.0730、0.0797、0.0721），深度學習不一定更好。"], ["【scikit-learn 與評估】情境：影片用一張殘差圖說明線性迴歸：每個點到紅色直線之間畫了藍色線段 |y − ŷ|。新進同仁問 MAE 和這張圖的關係。下列說明何者正確？", ["MAE 是所有藍色線段長度的平均，越小代表預測越接近", "MAE 是紅色直線的斜率，斜率越大代表模型越準確", "MAE 是預測正確的點所占比例，適合迴歸與分類問題", "MAE 是藍色線段長度的平方和，因此會放大離群值影響"], 0, "MAE（平均絕對誤差）= 平均 |y − ŷ|。平方和是 MSE 的概念；正確比例是 Accuracy，用在分類。"], ["【scikit-learn 與評估】情境：鳶尾花資料 150 筆、三類各 50 筆。工程師用 train_test_split(test_size=0.2, random_state=0) 切分後，LogisticRegression 的測試 Accuracy 為 0.9。主管想讓測試集三類比例與原資料一致，且結果可重現。最合適的調整是？", ["每次執行時改用不同的 random_state，再挑選分數最高的結果", "不需要切分，直接用全部資料訓練並計算 Accuracy", "加上 stratify=y 做分層抽樣，並固定 random_state", "把 test_size 改成 0.5，讓測試資料多到足以平均分配三個類別"], 2, "stratify=y 讓各類別比例在訓練與測試集一致；固定 random_state 讓切分可重現。挑最高分的 random_state 是在對測試集調參。"], ["【scikit-learn 與評估】情境：直播中有觀眾問：「兩層隱藏層時 test_size 設 0.2，那三層是不是要設成 0.3，以此類推？」講師需要澄清這兩個設定的關係。下列說明何者正確？", ["兩者相關：每多一層隱藏層，測試資料比例就要多 10%", "兩者無關：但 test_size 必須等於學習率才能正常收斂", "兩者相關：層數越多，測試資料越少才能避免過擬合", "兩者無關：層數是模型結構，test_size 是測試資料比例"], 3, "隱藏層數屬於模型超參數；test_size 決定保留多少資料做最終評估，通常依資料量決定（常見 0.2～0.3），與網路深度無關。"], ["【scikit-learn 與評估】情境：作業資料只有 10 筆，切出 7 筆訓練、3 筆測試。Keras 模型訓練到第 100 個 epoch 時，訓練 Accuracy 顯示 1.0000。團隊成員認為模型已經完美，可以上線。最合適的回應是？", ["應把 epoch 增加到 1,000，讓模型在測試集也達到 1.0", "訓練滿分只代表記住 7 筆資料，應增加資料並做交叉驗證", "應改看訓練 loss，只要 loss 持續下降就能保證泛化能力", "訓練 Accuracy 1.0 代表模型完全正確，可以直接部署上線"], 1, "樣本極少時模型容易過擬合，訓練表現無法代表泛化。3 筆測試資料錯一筆就差 33%，需要更多資料與交叉驗證。"], ["【Keras】情境：影片的 Keras 迴歸模型寫成 Dense(32) → Dense(32) → Dense(1)，三層都沒有指定 activation，測試 MAE 0.0797，與線性迴歸 0.0730 非常接近。同事想把隱藏層加到 10 層來提升效果。依神經網路原理，最合理的判斷是？", ["加到 10 層後模型一定能學到更複雜的關係，MAE 也會明顯下降", "沒有啟用函數的多層網路仍是線性模型，加層數無法學到非線性", "應把每層神經元增加到 1,000 個，單靠寬度就能學到非線性", "線性輸出是因為 epoch 不夠，訓練更久就會自動變成非線性"], 1, "線性層疊加仍等於一個線性轉換。實測 sin 資料：無啟用函數 MLP 的 MAE 0.365 ≈ 線性迴歸 0.363，加 ReLU 降到 0.097。"], ["【Keras】情境：Keras 迴歸模型以 model.fit(X_train, y_train, epochs=100, batch_size=16) 訓練，訓練資料有 404 筆，輸出顯示每個 epoch 為「26/26」。新進同仁不懂 26 是怎麼來的。下列說明何者正確？", ["26 代表模型已訓練了 26 個 epoch，剩下 74 個 epoch", "26 是隱藏層神經元數量 32 減去輸出層與偏差項的結果", "26 是 Keras 預設的批次數量，與資料筆數完全無關", "404 筆每批 16 筆，需要 26 個批次才能走完一個 epoch"], 3, "一個 epoch 走完全部訓練資料；404 ÷ 16 = 25.25，無條件進位為 26 個批次（step）。鳶尾花 120 筆時則是 8 步。"], ["【Keras】情境：要把 Keras 模型從房價迴歸改成鳶尾花三類分類。工程師只把輸出層從 Dense(1) 改成 Dense(3)，其他設定（loss=\"mae\"、標籤為 0／1／2）都沒動，結果準確率很差。依影片的寫法，還需要調整哪些地方？", ["輸出層加 softmax、改用交叉熵損失，並把標籤轉成 One-hot", "把 epochs 從 100 改成 1,000，讓模型有足夠的時間學會分類", "把標籤 0／1／2 正規化成 0～1，再繼續使用 MAE 當損失", "只要把 optimizer 從 sgd 換成 adam，其他設定都不需要另外調整"], 0, "多類別分類需要：softmax 輸出各類機率、交叉熵損失、One-hot 標籤（to_categorical）。預測後再用 argmax 取類別。"], ["【Keras】情境：Keras 分類模型的 metrics 設為 Accuracy，訓練過程中第 58 個 epoch 的 loss 為 0.4280、Accuracy 0.85；第 69 個 epoch 時 loss 降到 0.3799、Accuracy 0.90。下列對這段訓練紀錄的解讀何者最恰當？", ["Accuracy 已達 0.9，代表測試資料也一定會有 0.9 準確率", "loss 與 Accuracy 必須同時下降，否則代表訓練發生錯誤", "loss 下降、準確率上升，代表模型在訓練資料上持續改善", "這些數字是測試集結果，可以直接作為最終模型的成效"], 2, "fit 輸出的是訓練資料（批次平均）的 loss 與指標。最終成效要看 evaluate 在測試集上的結果，訓練表現不保證泛化。"], ["【PyTorch】情境：PyTorch 訓練迴圈中，工程師為了「讓程式更精簡」刪掉了 optimizer.zero_grad()，結果 loss 開始劇烈震盪甚至發散。依 PyTorch 的運作方式，最可能的原因是？", ["梯度會累加，沒清除時每次更新都疊加先前批次的舊梯度", "zero_grad 負責把資料轉成 tensor，刪除後型別會出錯", "zero_grad 負責前向計算，刪除後模型就不會產生預測值", "zero_grad 負責降低學習率，刪除後學習率會自動變大"], 0, "PyTorch 預設會累加梯度。標準流程：zero_grad 清除 → backward 計算 → step 更新。"], ["【PyTorch】情境：影片的 PyTorch 分類模型在 forward 最後寫 output = F.softmax(self.predict(output2))，再搭配 torch.nn.CrossEntropyLoss()。訓練時出現「Implicit dimension choice for softmax」警告，三類問題的 loss 一直停在 0.63 附近。最可能的問題與修正是？", ["三類問題不能用 CrossEntropyLoss，應改用 L1Loss 計算預測誤差", "學習率太高造成 loss 停滯，只要把 lr 從 0.05 降到 0.0001 就能解決", "這個警告代表 GPU 記憶體不足，改用 CPU 訓練就能讓 loss 繼續下降", "CrossEntropyLoss 已含 softmax，重複做了兩次；應直接輸出 logits"], 3, "CrossEntropyLoss 內部已做 log-softmax。先 softmax 再進損失，三類時 loss 最低只能到 0.551，梯度也變小。forward 輸出 logits，推論時再 argmax。"], ["【PyTorch】情境：同一個房價模型，Keras 版只要 compile 與 fit 兩行就能訓練；PyTorch 版則要自己寫雙層 for 迴圈、手動切 batch（x_data[i:i+16]）並呼叫 backward。研究團隊想在每個批次後加入自訂的梯度裁剪與特殊損失函數。依兩套工具的定位，下列敘述何者最恰當？", ["PyTorch 寫法較長，代表它的運算速度一定比 Keras 慢上許多", "Keras 程式碼較短，因此任何客製化需求都比 PyTorch 更容易實作", "PyTorch 自己寫訓練迴圈，較容易插入客製化步驟，適合研究需求", "兩者完全相同，選擇哪一套工具不會影響開發彈性與維護成本"], 2, "Keras 以高階 API 快速建模；PyTorch 讓開發者掌控每一步，適合客製化結構與訓練流程。程式碼長短與運算速度沒有必然關係。"], ["【PyTorch】情境：PyTorch 版房價模型 Model(13, 32, 1) 的 forward 只是 hidden1 → hidden2 → predict 三個 nn.Linear 直接相連，雖然 import 了 torch.nn.functional as F 但沒用到。若資料存在明顯非線性關係，最有效的改善是？", ["把 nn.Linear 的 hidden_size 從 32 加到 512，提升模型容量", "在隱藏層之間加入 ReLU 等啟用函數，讓網路能表達非線性關係", "把 SGD 的學習率由 0.05 提高到 0.5，加快模型收斂速度", "把 L1Loss 改成 MSELoss，讓模型更專注於學習非線性關係"], 1, "沒有啟用函數，再寬再深都是線性模型。換損失函數或學習率不會改變模型能表達的函數形式。"], ["【PyTorch】情境：PyTorch 分類程式把 Keras 用的 One-hot 標籤 y_train_onehot 直接轉成 float32 tensor 餵給 CrossEntropyLoss，預測時再用 y_pred.argmax(1) 轉回類別。同事想簡化標籤處理。依 PyTorch CrossEntropyLoss 的常見用法，較簡潔的做法是？", ["標籤一定要轉 One-hot，否則 CrossEntropyLoss 無法計算", "標籤應轉成字串類別名稱，讓損失函數自動對應類別編號", "標籤應先正規化到 0～1，再轉成 float32 tensor 餵入模型", "標籤直接用整數類別並轉成 torch.long，不必先轉 One-hot"], 3, "CrossEntropyLoss 可直接接受整數類別索引（long）。One-hot 機率形式也可用，但整數標籤更簡潔、記憶體更省。"], ["【Statsmodels 與工具選擇】情境：行銷部門想知道「年齡每增加一歲，薪資平均增加多少，以及這個效果是否顯著」，報告需附上係數、p 值與信賴區間。資料是 7 筆訓練資料。下列工具選擇與說明何者最恰當？", ["用 Statsmodels 的 OLS，summary 提供係數、p 值與信賴區間", "用 Keras 的 Dense 層建模，訓練後的權重大小就等於統計顯著性", "用 PyTorch 自訂模型，訓練 loss 越低就代表各係數越顯著", "用 scikit-learn 的 Accuracy 指標，數值越高代表影響越大"], 0, "Statsmodels 擅長統計推論。實測這 7 筆資料的 OLS R² 0.896，但殘差自由度只有 2、所有係數 p 值 > 0.15，樣本太少難以得到顯著結論。"], ["【Statsmodels 與工具選擇】情境：分析師用 sm.add_constant 加上截距，再放入 France、Germany、Spain 三個 One-hot 欄位，以 7 筆資料跑 sm.Logit，結果出現「Singular matrix」錯誤。影片中這段程式最後也被註解掉。最可能的原因是？", ["Statsmodels 不支援邏輯迴歸，只能用 OLS 做線性迴歸分析", "Purchased 必須是文字 Yes／No，轉成 0／1 後才會出錯", "截距與三個國家虛擬變數完全共線，加上樣本太少而無法估計", "Salary 數值太大造成溢位，只要除以 1,000 就能正常估計"], 2, "三個國家欄相加恆等於 1，與 const 完全共線（虛擬變數陷阱）。實測去掉一個國家後仍是 Singular matrix，因為 7 筆資料估 5 個參數太少。"], ["【Statsmodels 與工具選擇】情境：同一份 7 筆購買資料，Statsmodels Logit 無法估計，但 scikit-learn 的 LogisticRegression 卻能順利訓練，對 3 筆測試資料預測為 [0, 0, 0]，實際為 [1, 0, 1]。下列解釋何者最恰當？", ["兩者結果不同代表其中一套套件有錯誤，應回報給開發者修正", "scikit-learn 預設 L2 正則化讓求解穩定，但資料太少仍預測不準", "scikit-learn 會自動補足資料到 100 筆，所以才能順利完成訓練", "scikit-learn 的演算法比較先進，所以結果一定比 Statsmodels 準確"], 1, "scikit-learn 的 LogisticRegression 預設有 L2 正則化，可在共線或分離時求得解；但能訓練不代表準確，樣本數仍是根本問題。"], ["【Statsmodels 與工具選擇】情境：某金融機構要建立信用評分模型，法規要求向主管機關說明每個變數對違約機率的影響方向與顯著性；同時資料科學團隊也想試試深度學習能否提升預測力。依影片對四套工具的定位，最合適的規劃是？", ["以 Statsmodels Logit 做可解釋模型，再用其他工具比較預測力", "只用 Keras 建立模型，再把權重表格直接交給主管機關審查", "只用 PyTorch 建立深度模型，因為準確度最高就最符合法規要求", "只用 scikit-learn 的 Accuracy 報告，不需要說明變數影響"], 0, "可解釋與推論需求適合統計模型（係數、p 值）；預測力可另用 scikit-learn 或深度學習比較，兩者可並存。神經網路權重無法直接說明單一變數的影響與顯著性。"], ["【Statsmodels 與工具選擇】情境：製造業團隊要在一個月內做出產品照片瑕疵檢測的原型，模型是標準的卷積神經網路，團隊成員熟悉 Python 但沒有深度學習框架經驗，也沒有特殊的損失函數需求。依影片對各工具的定位，最合適的選擇是？", ["用 scikit-learn 的 LinearRegression 直接輸入原始像素值", "用 PyTorch 從頭撰寫訓練迴圈，才能做出合格的影像模型", "用 Statsmodels 建立 OLS 模型，再以 p 值判斷照片有無瑕疵", "用 Keras 高階 API，以少量程式碼快速搭出標準網路並訓練"], 3, "標準網路結構、時程緊、團隊經驗少 → Keras 的 Sequential／compile／fit 最省力。PyTorch 也能做，但適合需要客製化的情境；統計與線性模型不適合影像。"]];
+
+(function(){
+  var box=document.getElementById('qz'), sc=document.getElementById('qscore'), done=0, ok=0, L='ABCD';
+  Q.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='q';
+    var p=document.createElement('p'); p.textContent=(i+1)+'. '+q[0]; d.appendChild(p);
+    var o=document.createElement('div'); o.className='opts'; o.setAttribute('role','group');
+    var bs=[];
+    q[1].forEach(function(t,k){
+      var b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent='('+L[k]+') '+t;
+      b.addEventListener('click',function(){
+        bs.forEach(function(x,j){x.disabled=true; if(j===q[2])x.classList.add('ok'); else if(j===k)x.classList.add('ng');});
+        var e=document.createElement('div'); e.className='exp'; e.textContent=(k===q[2]?'答對！':'答錯，正確答案 '+L[q[2]]+'。')+q[3]; d.appendChild(e);
+        done++; if(k===q[2])ok++; sc.textContent='已作答 '+done+' / '+Q.length+'，答對 '+ok+' 題';
+      });
+      bs.push(b); o.appendChild(b);
+    });
+    d.appendChild(o); box.appendChild(d);
+  });
+})();
+
+document.querySelectorAll('.cbtn').forEach(function(b){b.addEventListener('click',function(){
+  var t=b.parentNode.querySelector('code').innerText;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='已複製';setTimeout(function(){b.textContent='複製'},1500)},function(){
+    var r=document.createRange();r.selectNodeContents(b.parentNode.querySelector('code'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='已選取';});
+});});
+</script>
+</body>
+</html>
