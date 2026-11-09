@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 工程師完整課程筆記：模型之外要打造什麼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --P:#4A3FA0;--Plt:#EEEAFF;--Pdk:#2E2680;
+  --R:#C0392B;--Rlt:#FDECEA;
+  --O:#D4720A;--Olt:#FFF3E0;
+  --G:#1A6B40;--Glt:#E0F4EA;
+  --bg:#F6F4FB;--s:#FFF;--s2:#F0ECFF;--b:#D0CAEE;
+  --t:#1A1440;--t2:#3A3070;--t3:#6A6298;
+  --font:'Nunito','Noto Sans TC',sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;
+  --t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;
+  --Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark;
+}}
+[data-theme=dark]{--bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;--t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;--Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:15px;line-height:1.7;min-height:100vh}
+a{color:var(--P)}
+:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}
+.hero{background:linear-gradient(135deg,var(--Pdk) 0%,var(--P) 55%,#7B6FD0 100%);padding:36px 24px 30px;color:#fff}
+.hero-in{max-width:1080px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.75);margin-bottom:8px}
+.hero h1{font-size:clamp(26px,4vw,34px);font-weight:900;line-height:1.2;margin-bottom:8px;text-wrap:balance}
+.hero p{font-size:14px;color:rgba(255,255,255,.88);max-width:680px;margin-bottom:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none}
+.chip:hover{background:rgba(255,255,255,.25)}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px;display:grid;gap:28px}
+section{background:var(--s);border:1.5px solid var(--b);border-radius:14px;padding:22px 24px;scroll-margin-top:12px}
+.label{font-size:11px;font-weight:800;color:var(--P);letter-spacing:1.5px;margin-bottom:6px}
+h2{font-size:21px;font-weight:900;margin-bottom:10px;text-wrap:balance}
+h3{font-size:16px;font-weight:800;margin-bottom:4px}
+p{max-width:72ch}
+.lead{color:var(--t2);margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:6px}
+.kpi{background:var(--s2);border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:26px;font-weight:900;color:var(--P);font-variant-numeric:tabular-nums;line-height:1.2}
+[data-theme=dark] .kpi b{color:#B9AEFF}
+.kpi span{font-size:13px;color:var(--t2)}
+.tbl{overflow-x:auto;border:1.5px solid var(--b);border-radius:12px;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--b)}
+th{background:var(--s2);font-size:12px;color:var(--t2);font-weight:800;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:800;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:8px}
+.card{background:var(--s2);border-radius:12px;padding:14px 16px;border-left:4px solid var(--P);display:grid;gap:6px;align-content:start}
+.card .en{font-family:var(--mono);font-size:12px;color:var(--t3)}
+.card .row{font-size:13.5px}
+.card .row b{color:var(--P)}
+[data-theme=dark] .card .row b{color:#B9AEFF}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:1px 8px;border-radius:10px;margin-right:4px;background:var(--Plt);color:var(--P)}
+.tag.hot{background:var(--Rlt);color:var(--R)}
+.tag.mid{background:var(--Olt);color:var(--O)}
+.trap{font-size:13px;background:var(--Rlt);color:var(--t);border-radius:8px;padding:6px 10px}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.fbtn{font:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:20px;padding:3px 12px;cursor:pointer}
+.fbtn[aria-pressed=true]{background:var(--P);border-color:var(--P);color:#fff}
+figure{margin-top:8px;background:var(--s2);border-radius:12px;padding:12px;overflow-x:auto}
+figcaption{font-size:12px;color:var(--t3);margin-top:6px}
+svg text{font-family:var(--font)}
+.steps{counter-reset:s;list-style:none;display:grid;gap:8px;margin-top:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);width:26px;height:26px;border-radius:50%;background:var(--P);color:#fff;font-weight:900;font-size:13px;display:grid;place-items:center}
+.q{border:1.5px solid var(--b);border-radius:12px;padding:14px 16px;margin-top:10px}
+.q p{font-weight:700;margin-bottom:8px}
+.opts{display:grid;gap:6px}
+.opt{font:inherit;font-size:14px;text-align:left;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:8px;padding:8px 10px;cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--P)}
+.opt.ok{background:var(--Glt);border-color:var(--G)}
+.opt.ng{background:var(--Rlt);border-color:var(--R)}
+.exp{margin-top:8px;font-size:13.5px;background:var(--Plt);border-radius:8px;padding:8px 10px}
+.score{font-weight:800;color:var(--P);margin-top:10px}
+.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.ipas-back:hover{background:#2C5282}
+@media(max-width:560px){section{padding:18px 16px}td:first-child{white-space:normal}}
+
+pre.code{position:relative;background:#1C1838;color:#ECE8FF;border-radius:10px;padding:14px 16px;margin-top:8px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.65;tab-size:4}
+pre.code .c{color:#9A93C9;font-style:italic}
+pre.code .k{color:#FFB86C;font-weight:700}
+pre.code .s{color:#A6E3A1}
+.cbtn{position:absolute;top:8px;right:8px;font:700 11px/1 var(--font);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:5px 8px;cursor:pointer}
+.cbtn:hover{background:rgba(255,255,255,.25)}
+.lang{display:inline-block;font:800 11px/1 var(--mono);background:var(--Plt);color:var(--P);border-radius:6px;padding:4px 7px;margin-top:14px}
+.ex{margin-top:16px;padding-top:14px;border-top:1px dashed var(--b)}
+.ex:first-of-type{border-top:none;padding-top:0}
+.out{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:8px;padding:8px 12px;margin-top:6px;white-space:pre;overflow-x:auto;color:var(--t2)}
+code.i{font-family:var(--mono);font-size:.9em;background:var(--s2);border-radius:5px;padding:1px 5px}
+td code{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:5px;padding:1px 5px;white-space:nowrap}
+.note{font-size:13.5px;background:var(--Olt);border-radius:10px;padding:10px 14px;margin-top:10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.bars{display:grid;gap:6px;margin-top:6px}
+.bar{display:grid;grid-template-columns:120px 1fr 54px;gap:8px;align-items:center;font-size:13px}
+.bar i{display:block;height:16px;border-radius:4px;background:var(--P)}
+.bar i.f{background:#C0587E}
+.bar span:last-child{font-variant-numeric:tabular-nums;font-weight:800;text-align:right}
+.bar .trk{background:var(--s2);border-radius:4px}
+.dl{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-weight:800;background:var(--P);color:#fff;text-decoration:none;border-radius:10px;padding:9px 16px}
+.dl:hover{background:var(--Pdk)}
+</style>
+</head>
+<body>
+<header class="hero"><div class="hero-in">
+  <div class="eyebrow">iPAS AI 應用規劃師｜影片筆記</div>
+  <h1>AI 工程師完整課程：模型之外，工程師要打造什麼</h1>
+  <p>整理自 YouTube 影片〈AI Engineer Full Course in 3 Hours〉（Cloud X Berry，2026-10-11，約 2 小時 54 分）。全片用同一個「退款 Agent」從頭貫穿：從只會回答，到能呼叫工具、查公司文件、跑在真實硬體上，最後在正式環境中被測試、監控與攻擊演練。內容幾乎完全對應中級科目一、三的 Agent、RAG、模型調整與 AI 治理考點。</p>
+  <nav class="chips" aria-label="頁內目錄"><a class="chip" href="#map">課程地圖</a><a class="chip" href="#case">貫穿案例</a><a class="chip" href="#m1">1 Agent</a><a class="chip" href="#m2">2 連接外部</a><a class="chip" href="#m3">3 公司資料</a><a class="chip" href="#m4">4 模型行為</a><a class="chip" href="#m5">5 硬體成本</a><a class="chip" href="#m6">6 正式環境</a><a class="chip" href="#final">完整系統</a><a class="chip" href="#qs">提問清單</a><a class="chip" href="#exam">考點對照</a><a class="chip" href="#quiz">自我檢測</a></nav>
+</div></header>
+<main class="wrap">
+<section id="map" aria-labelledby="h-map">
+  <div class="label">課程地圖</div>
+  <h2 id="h-map">What engineers build around a model：從模型到真正的產品</h2>
+  <p class="lead">影片的核心主張：讓模型回答問題是簡單的部分，難的是把它變成大家每天依賴的產品。下圖是影片的課程地圖，左邊是模型（MODEL），沿著 6 個模組往右，最後成為真正的產品（REAL PRODUCT）。</p>
+  <figure><img src="ai-engineer-map.webp" width="1100" height="581" alt="課程地圖：What engineers build around a model。從 MODEL 出發，經過 01 Agents、02 The outside world、03 Your company's data、04 Model behavior、05 Hardware and cost、06 Production，到 One production-ready AI system 與 REAL PRODUCT" style="width:100%;height:auto;border-radius:10px;display:block">
+  <figcaption>圖片來源：Cloud X Berry〈AI Engineer Full Course in 3 Hours〉影片截圖，僅供個人學習整理。</figcaption></figure>
+  <div class="tbl" style="margin-top:12px"><table><thead><tr><th>模組</th><th>英文標題</th><th>圖中子題（中譯）</th><th>要解決的問題</th></tr></thead><tbody>
+    <tr><td>01</td><td>Agents</td><td>Agent vs 聊天機器人、規劃、工具使用、記憶、Lost in the Middle</td><td>從「回答」變成「做事」</td></tr>
+    <tr><td>02</td><td>The outside world</td><td>工具呼叫、MCP、Agent Skills、AI 閘道</td><td>Agent 如何安全地碰到真實系統</td></tr>
+    <tr><td>03</td><td>Your company's data</td><td>基本 RAG、知識庫變大、自我修正檢索、知識圖譜、資料持續變動</td><td>答案藏在公司文件裡時怎麼辦</td></tr>
+    <tr><td>04</td><td>Model behavior</td><td>微調值得嗎、LoRA、蒸餾、強化學習</td><td>模型行為從哪來、怎麼改</td></tr>
+    <tr><td>05</td><td>Hardware and cost</td><td>為何大家搶 GPU、GPU/TPU/NPU、CUDA、Prompt Caching</td><td>跑在什麼上面、花多少錢</td></tr>
+    <tr><td>06</td><td>Production</td><td>下個月還能用嗎、追蹤單一請求、試點後停滯、攻擊測試、內部 AI 平台</td><td>如何知道它一直正常運作</td></tr>
+    <tr><td>終點</td><td>One production-ready AI system</td><td>模型放在哪、資料怎麼流、Agent 怎麼碰到工具、控制機制放在哪</td><td>把全部組成一個系統</td></tr>
+  </tbody></table></div>
+</section>
+<section id="case" aria-labelledby="h-case">
+  <div class="label">貫穿案例</div>
+  <h2 id="h-case">同一張退款單，走完整門課</h2>
+  <p class="lead">虛構網路商店 Cloud X Berry 的顧客寫信：「我買的果汁機送到時裂了，是節慶特價買的，還能退款嗎？」影片每遇到一道牆，就停下來講能跨過那道牆的概念。</p>
+  <ol class="steps">
+    <li><span><b>聊天機器人</b>只會回一段退款政策說明；<b>Agent</b> 會查訂單、查政策、發退款、寄信、關單。</span></li>
+    <li><span>模型碰不到付款系統 → 需要<b>工具呼叫</b>與控制迴圈；多個 App 都要用訂單系統 → <b>MCP</b>。</span></li>
+    <li><span>「特價品是否可退」寫在政策文件裡 → <b>RAG</b>；牽涉加拿大、合作品牌保固、會員資格 → <b>知識圖譜</b>與 <b>Agentic RAG</b>。</span></li>
+    <li><span>客服要求「語氣像公司」「成本更低」「選顧客最喜歡的回覆」→ <b>微調／LoRA、蒸餾、強化學習</b>。</span></li>
+    <li><span>尖峰時段變慢、帳單暴增 → <b>GPU 推論機制、批次處理、Prompt Caching</b>。</span></li>
+    <li><span>上線一個月後開始錯誤拒絕退款 → <b>追蹤、評估、紅隊演練、平台工程</b>，最後找出是索引同步失敗讀到舊版政策。</span></li>
+  </ol>
+</section>
+<section id="m1" aria-labelledby="h-m1">
+  <div class="label">模組 1</div>
+  <h2 id="h-m1">Agents：從回答到做事</h2>
+  <p class="lead">Agent 拿到目標後會自己完成任務：使用工具、看結果、再決定下一步。本模組拆解 Agent 的形狀。</p>
+  <div class="tbl"><table><thead><tr><th>時間</th><th>主題</th><th>重點</th></tr></thead><tbody><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=206s" target="_blank" rel="noopener">3:26</a></td><td>什麼是 Agent</td><td>代理迴圈（Agentic Loop）：決定 → 行動 → 觀察 → 再決定；ReAct 結合推理與行動。人寫好步驟、模型只填空是 Workflow；模型自己選下一步才是 Agent，實務多介於兩者之間。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=368s" target="_blank" rel="noopener">6:08</a></td><td>五大子系統</td><td>感知（Perception）、推理（Reasoning，含拆解與路由 Routing）、行動（Action，需驗證層與人工核准）、學習（執行期調整，例如反思 Reflection、儲存成技能，不是改權重）、溝通（交接給其他 Agent 或人）。在架構圖上會對應成：模型、工具、記憶、控制迴圈、權限。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=580s" target="_blank" rel="noopener">9:40</a></td><td>單一 vs 多代理</td><td>單一 Agent 只有一個決策迴圈，易追蹤除錯；多代理由協調者分派、可平行處理、可加獨立檢查者。代價是更多模型呼叫、交接遺失脈絡、出錯難歸責。原則：先用一個，有明確理由再拆。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=789s" target="_blank" rel="noopener">13:09</a></td><td>Agent 記憶</td><td>模型在請求之間不會自動記得。四種記憶：短期（目前的上下文，像白板）、情節（Episodic，何時發生什麼，像工作日誌）、語意（Semantic，與時間無關的事實，可用向量庫或知識圖譜存）、程序（Procedural，做事的步驟）。記憶是「存了什麼」，上下文是「這次放進去什麼」。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=1013s" target="_blank" rel="noopener">16:53</a></td><td>上下文是預算</td><td>Lost in the Middle：關鍵資訊放開頭或結尾效果較好、放中間容易被忽略，呈 U 型。對策：只放這一步需要的、核心指示釘在最前、最相關文件放頭尾、問題在結尾再說一次、寬搜後只留最好的幾筆、超長文件拆開處理。</td></tr></tbody></table></div>
+  <div class="cards" style="margin-top:14px"><div class="card"><h3>判斷是否為 Agent 的三個問題</h3><div class="row">會不會採取真實行動？下一步是不是模型在執行中自己選的？會不會看結果後改變做法？三個都是，才是多數人說的 Agent。</div></div><div class="card"><h3>Agent 為何要「短繩」</h3><div class="row">第三步猜錯，之後每一步都建立在錯誤上。所以實務會限制步數，並對轉帳等高風險動作要求人工核准。</div></div><div class="card"><h3>Agent 忘記事情時查三件事</h3><div class="row">有沒有存？有沒有找到正確那一筆？有沒有放進這次的上下文？</div></div><div class="card"><h3>更大的上下文視窗不是解方</h3><div class="row">不只問視窗多大，更要問關鍵資訊放在裡面的哪個位置。</div></div></div>
+  <h3 style="margin-top:16px">影片建議追問的問題</h3><ol class="steps"><li><span>這個產品是會採取行動，還是只會寫文字？</span></li><li><span>多代理設計有明確理由嗎（平行、太大、需要獨立檢查）？</span></li><li><span>關鍵資訊在上下文中的位置在哪裡？</span></li></ol>
+</section>
+<section id="m2" aria-labelledby="h-m2">
+  <div class="label">模組 2</div>
+  <h2 id="h-m2">The outside world：從一個 Agent 到一個系統</h2>
+  <p class="lead">模型本身碰不到付款系統。模型的決定與真實世界之間，必須有一層程式碼負責檢查、執行與記錄。</p>
+  <div class="tbl"><table><thead><tr><th>時間</th><th>主題</th><th>重點</th></tr></thead><tbody><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=1367s" target="_blank" rel="noopener">22:47</a></td><td>工具呼叫 Tool Calling</td><td>工具描述 = 名稱 + 說明 + 輸入格式（Schema）；模型只看得到描述，描述含糊就會選錯。模型產生結構化請求，控制迴圈檢查三件事：格式對不對、這個 Agent 有沒有權限、數值合不合理，才真正執行。超過金額上限就暫停、轉給主管核准。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=1367s" target="_blank" rel="noopener">22:47</a></td><td>失敗處理</td><td>付款逾時時：把錯誤濃縮成一句、計算重試次數、用冪等鍵（Idempotency Key）避免重複退款、重試幾次後轉人工。每一步都寫進追蹤（Trace）：呼叫哪個工具、輸入、結果、耗時、成本。工具越多不一定越好，描述會占上下文、也更容易選錯。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=1700s" target="_blank" rel="noopener">28:20</a></td><td>MCP 模型上下文協定</td><td>2024 年底推出的開放標準，像貨櫃一樣統一形狀。Host（使用者用的 AI App）內有 MCP Client，連到 MCP Server（包住真實系統）。Server 提供三種東西：Tools（模型選用）、Resources（App 管理的資料）、Prompts（使用者挑的範本）。10 個 App × 10 個工具不必寫 100 段膠水程式。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=1700s" target="_blank" rel="noopener">28:20</a></td><td>MCP 不等於安全</td><td>MCP 處理連線與授權，但不知道業務規則（這個 Agent 能不能退這筆金額）。Server 只給最小權限、只連信任的 Server、控制迴圈照樣檢查；惡意 Server 的工具描述可能夾帶隱藏指令。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=1993s" target="_blank" rel="noopener">33:13</a></td><td>MCP vs Agent Skills</td><td>連太多工具會讓描述塞滿上下文（Context Rot）。Skill 是一個資料夾：主說明檔（短標頭 + 詳細步驟）＋範本或腳本。啟動時只讀標頭，遇到相符任務才載入全文，稱為漸進式揭露（Progressive Disclosure）。MCP 回答「怎麼碰到系統」，Skill 回答「這類任務該怎麼做」；硬性限制仍要寫在程式碼。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=2274s" target="_blank" rel="noopener">37:54</a></td><td>角色與邊界</td><td>每個 Agent 寫下四件事：一句話職責、不准做什麼、上下游是誰、步驟與固定規則。再加一份整個系統的地圖。權限要跟著角色走（最小權限原則），交接用結構化欄位，共享資料要有擁有者或鎖定機制。依工作與資料流切分，不要依人類職稱切分。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=2581s" target="_blank" rel="noopener">43:01</a></td><td>AI 閘道 AI Gateway</td><td>所有模型呼叫的共同入口。比 API Gateway 多了：以 Token 計費與預算、依部門追蹤花費、選模型與備援切換、內容與隱私檢查（例如遮罩卡號）、快取安全的重複回答、記錄每次呼叫的收據。本身是單點，需要備援容量。</td></tr></tbody></table></div>
+  <div class="cards" style="margin-top:14px"><div class="card"><h3>模型提議，系統決定</h3><div class="row">模型只負責提出結構化請求；是否允許、如何執行、如何記錄，由工程師寫的控制迴圈負責。</div></div><div class="card"><h3>一個退款失敗可能有四種原因</h3><div class="row">模型選錯工具、傳錯金額、被權限擋下、付款服務本身故障。沒有 Trace 時四者看起來一樣。</div></div><div class="card"><h3>Prompt 要求 vs 系統強制</h3><div class="row">在提示詞寫「不准退款」只是請求；不給它付款工具才是強制。</div></div><div class="card"><h3>工具呼叫失敗時依序檢查</h3><div class="row">模型的選擇 → 控制迴圈的檢查 → MCP Server → 背後的真實系統 → 閘道。</div></div></div>
+  <h3 style="margin-top:16px">影片建議追問的問題</h3><ol class="steps"><li><span>請求執行前由什麼檢查？在哪裡暫停交給人？Trace 存在哪？</span></li><li><span>每個 Agent 的權限與它的角色相符，還是只是提示詞寫了？</span></li><li><span>模型呼叫都經過同一個閘道嗎？身分、預算、內容在哪裡檢查？</span></li></ol>
+</section>
+<section id="m3" aria-labelledby="h-m3">
+  <div class="label">模組 3</div>
+  <h2 id="h-m3">Your company's data：讓 Agent 有所依據</h2>
+  <p class="lead">退款規則寫在文件裡，而且會變。本模組說明 RAG 為何會悄悄失敗，以及各種改良方法分別解決什麼問題。</p>
+  <div class="tbl"><table><thead><tr><th>時間</th><th>主題</th><th>重點</th></tr></thead><tbody><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=3000s" target="_blank" rel="noopener">50:00</a></td><td>基本 RAG 的六種失敗</td><td>①切塊把規則和例外切開（「特價品不退」與「除非送達時損壞」分在兩塊）②語意相近但答案錯（別國政策、去年活動）③精確詞找不到（產品代碼、活動名稱）④問題太模糊 ⑤塞太多內容（Top-20 讓關鍵句埋在中間）⑥舊版或缺漏的知識。模型都沒推理錯，錯在模型看到問題之前。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=3000s" target="_blank" rel="noopener">50:00</a></td><td>除錯順序</td><td>文件在索引裡嗎？是最新版嗎？切塊有保留規則與例外嗎？搜尋有找回來嗎、排第幾？有放進上下文嗎？最後才問模型有沒有用好。每次檢索都要記錄查詢、排序結果與實際放入的段落。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=3293s" target="_blank" rel="noopener">54:53</a></td><td>RAG 變體四大家族</td><td>①混合檢索 Hybrid（語意 + 關鍵字，便宜、常預設開啟）②重新排序 Rerank（先撈幾十筆，再由較精細的模型評分；找不到的救不回來）③改善問題（改寫查詢、反問澄清、拆成子問題、HyDE 先寫假答案再去找）④檢查（CRAG 判斷檢索結果太弱就修正搜尋；Self-RAG 訓練模型自己決定何時檢索並反思）。另可加路由器把簡單問題走快速路徑。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=3603s" target="_blank" rel="noopener">1:00:03</a></td><td>知識圖譜三個名詞</td><td>用城市鐵路比喻：知識圖譜 Knowledge Graph 是地圖（節點、關係、屬性）；GraphRAG 是路線規劃（找到問題提到的實體，沿著連結收集相關事實；有些版本先分群並寫摘要，適合全域性問題）；圖譜工程 Graph Engineering 是測量隊（決定追蹤哪些實體與關係、抽取、實體對齊、維護一致性）。除錯從資料層 → 檢索層 → 決策層。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=3934s" target="_blank" rel="noopener">1:05:34</a></td><td>Agentic RAG</td><td>檢索從「固定步驟」變成 Agent 可選用的工具（查政策、查產品手冊、查圖譜、查訂單）。適合跨多來源的開放式問題，但成本與路徑難預測。對策：程式碼限制搜尋次數與預算、定義「完成」條件、工具描述清楚且結果精簡、保留 Trace、簡單問題仍走固定流程。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=4214s" target="_blank" rel="noopener">1:10:14</a></td><td>活的知識庫</td><td>避免「筆記墳場」：增量匯入（只處理有變動的檔案，表格與掃描檔另外處理）、版本與生效日期、真正的刪除（舊區塊要從索引移除並確認）、每份文件有擁有者與複審日期、來源可追溯（Provenance）、權限跟著文件走、共用詞彙表。可另建 LLM 維護的摘要層（LLM Wiki），但新頁面需人工審核；使用者回報的修正先進審核佇列。</td></tr></tbody></table></div>
+  <div class="cards" style="margin-top:14px"><div class="card"><h3>不要先換模型</h3><div class="row">RAG 答錯時，先沿著檢索路徑找出正確文字在哪一步遺失。</div></div><div class="card"><h3>每個元件問三件事</h3><div class="row">它修正哪種失敗？成本多少？怎麼知道它有效？一次加一個並量測。</div></div><div class="card"><h3>圖譜適用時機</h3><div class="row">知識本身是「關係」時（政策、合約、產品零件、誰擁有什麼）才值得；文件之間沒有太多有意義的連結時，一般搜尋就夠。</div></div><div class="card"><h3>知識庫要像程式碼一樣照顧</h3><div class="row">版本、擁有者、審核、退場機制，缺一不可。</div></div></div>
+  <h3 style="margin-top:16px">影片建議追問的問題</h3><ol class="steps"><li><span>正確答案是在檢索路徑的哪一步消失的？</span></li><li><span>Agentic RAG 能用哪些搜尋工具？什麼條件會讓它停下？</span></li><li><span>這份政策的擁有者是誰？上次複審是什麼時候？</span></li></ol>
+</section>
+<section id="m4" aria-labelledby="h-m4">
+  <div class="label">模組 4</div>
+  <h2 id="h-m4">Model behavior：行為從哪裡來，怎麼改</h2>
+  <p class="lead">客服團隊要求：語氣像公司、格式一致、成本更低、選顧客最喜歡的回覆。這些要求伸進了模型內部。</p>
+  <div class="tbl"><table><thead><tr><th>時間</th><th>主題</th><th>重點</th></tr></thead><tbody><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=4676s" target="_blank" rel="noopener">1:17:56</a></td><td>AI 的資料架構</td><td>兩年客服回覆不能直接拿來訓練：含舊政策、被糾正過的無禮語氣、重複工單、卡號地址、甚至和測試集重疊。資料管線：來源與授權 → 收集與品質檢查 → 清理（去重、去個資、過濾不良範例）→ 標註（標註者一致性）→ 切分訓練／驗證／測試（依時間或客戶切）→ 版本化與血緣（Lineage）。常見問題：資料洩漏、內容過時、分布偏斜、定義不一致、上線後漂移（Drift）。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=5011s" target="_blank" rel="noopener">1:23:31</a></td><td>從神經網路到 Transformer</td><td>反向傳播（Backpropagation）是共同的訓練方式。CNN 用滑動濾鏡處理影像；RNN 逐字讀並傳遞摘要，但有梯度消失；LSTM 加入長期記憶軌道與閘門；仍是逐步計算無法平行。2017 年〈Attention Is All You Need〉提出 Transformer：訓練時可平行處理、每個 Token 用注意力衡量其他 Token、多頭注意力。代價是注意力計算約隨長度平方成長。多數團隊從預訓練模型開始，而非從零訓練。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=5359s" target="_blank" rel="noopener">1:29:19</a></td><td>要改知識、行為還是大小</td><td>先爬便宜的階梯：更清楚的指示 → 檢索補資料 → 提示中放範例，最後才改模型。會變動、需引用的知識用 RAG；大量領域文本可考慮持續預訓練（Continued Pre-training）；語氣格式用監督式微調（少量優質範例勝過大量普通範例）；全參數微調可能造成遺忘；降成本用蒸餾、壓縮、路由。改任何東西都要量測「想改的」與「不能壞的」。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=5658s" target="_blank" rel="noopener">1:34:18</a></td><td>LoRA</td><td>凍結原模型，只訓練兩個細長的小矩陣（像在相機前加一個鏡頭）；矩陣寬度稱為秩（Rank）。訓練後可合併回權重，或保留成可抽換的小檔案（一個基礎模型搭配客服、法務、業務各自的轉接器）。QLoRA 把基礎模型量化以省記憶體。常見錯誤：沿用全參數微調的學習率、只掛在少數層、為保險把 Rank 調太高。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=5939s" target="_blank" rel="noopener">1:38:59</a></td><td>蒸餾 Distillation</td><td>學生模型模仿老師模型的輸出，不看老師權重。2015 年的研究：用老師完整的機率分布（軟標籤）訓練，並用溫度（Temperature）軟化分數，學生能學到選項之間的關係。只學老師的好答案時，學生沒見過自己的錯誤；On-policy 蒸餾讓學生自己作答、老師修正。學生會繼承老師的錯誤與偏見、能力較窄；使用供應商模型當老師前要確認服務條款。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=6217s" target="_blank" rel="noopener">1:43:37</a></td><td>強化學習 RL</td><td>以結果而非範例來教：產生多個回覆 → 給獎勵 → 更新讓高分回覆更可能出現，並加懲罰避免偏離參考模型太遠。獎勵來源：人類比較（RLHF，訓練獎勵模型）、模型評審、可自動驗證的檢查（程式測試、數學、格式）。PPO、DPO（直接用偏好配對）、GRPO（同題多個回覆相對比較）。風險是獎勵駭客（Reward Hacking）：回覆變長、過度自信、附和使用者；2025 年 4 月 OpenAI 曾因 GPT-4o 更新過度諂媚而回滾。</td></tr></tbody></table></div>
+  <div class="cards" style="margin-top:14px"><div class="card"><h3>四種需求，四種解法</h3><div class="row">知識會變 → 檢索；行為要改 → 微調（常用 LoRA）；成本要降 → 蒸餾、壓縮、路由；選擇要更好 → 偏好訓練，且獎勵要難以被鑽漏洞。</div></div><div class="card"><h3>模型怪怪的先問資料</h3><div class="row">哪個資料集版本訓練的？裡面有什麼、少了什麼？測試集真的有分開嗎？</div></div><div class="card"><h3>只用滿意度當獎勵會怎樣</h3><div class="row">最快拿高分的方法是答應每個人退款。所以獎勵要多面向（有解決、沒被重開、符合政策、顧客評分），退款上限仍寫在程式碼。</div></div><div class="card"><h3>預訓練給能力，RL 塑造用法</h3><div class="row">後訓練主要是塑造行為與偏好，建立在預訓練已有的能力上。</div></div></div>
+  <h3 style="margin-top:16px">影片建議追問的問題</h3><ol class="steps"><li><span>你想改的是知識、行為還是成本？試過更便宜的階梯了嗎？</span></li><li><span>LoRA 凍結了什麼？轉接器要改什麼？怎麼知道沒弄壞其他能力？</span></li><li><span>獎勵衡量什麼？模型可能怎麼鑽漏洞？</span></li></ol>
+</section>
+<section id="m5" aria-labelledby="h-m5">
+  <div class="label">模組 5</div>
+  <h2 id="h-m5">Hardware and cost：底層跑在什麼上面</h2>
+  <p class="lead">尖峰時段回覆變慢、帳單成長比工單量還快。要理解這兩件事，就得看模型底下的硬體。</p>
+  <div class="tbl"><table><thead><tr><th>時間</th><th>主題</th><th>重點</th></tr></thead><tbody><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=6679s" target="_blank" rel="noopener">1:51:19</a></td><td>晶片字母表</td><td>CPU：少量強大核心，擅長充滿判斷的流程（處理請求、權限、斷詞、資料庫、控制迴圈）。GPU：數千個簡單核心同時運算，適合神經網路的大量矩陣乘法；瓶頸常在記憶體頻寬。TPU：Google 為機器學習矩陣運算設計，效率高、彈性低，多透過 Google Cloud 使用。NPU：手機筆電內的低功耗晶片，處理背景模糊、即時字幕、臉部辨識。DPU：資料中心處理網路、儲存與資安。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=6954s" target="_blank" rel="noopener">1:55:54</a></td><td>CUDA</td><td>2006 年 NVIDIA 推出，讓 GPU 不必偽裝成繪圖就能做通用運算。執行緒（Thread）→ 區塊（Block）→ 網格（Grid）。同一組執行緒走不同分支會降速（Warp Divergence）；GPU 程式的功夫多半在搬資料。2012 年 AlexNet 用兩張遊戲 GPU 訓練並大勝，開啟深度學習熱潮；之後的函式庫生態系讓 AI 框架高度依賴 CUDA。換硬體前要用自己的工作負載實測，不要只看規格表。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=7242s" target="_blank" rel="noopener">2:00:42</a></td><td>訓練 vs 推論</td><td>訓練：大批次正向 + 反向傳播，需要大量運算與記憶體，常分散到多張 GPU（資料平行、模型切分），GPU 之間的網路很關鍵。推論分兩階段：Prefill 平行讀完整個提示（運算密集）；Decode 一次寫一個 Token，每個 Token 都要讀大量權重（受記憶體頻寬限制）。KV Cache 隨提示與回答長度成長並占用記憶體。批次處理提高吞吐量但增加單人延遲；尖峰變慢常是記憶體被 KV Cache 塞滿。觀察指標：首個 Token 時間（TTFT）與每 Token 時間。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=7547s" target="_blank" rel="noopener">2:05:47</a></td><td>為 AI 打造的雲</td><td>AI 機櫃耗電遠高於傳統伺服器，電力成為新建資料中心的主要限制。三類供應商：大型通用雲、AI 專用雲（NeoCloud）、裸 GPU 租用。差異多在晶片之外：自動配置、租戶隔離、換手時清除資料、GPU 切分共享、計量計費、故障自動復原。選擇時考量資料在哪、要裸機還是託管端點、容量是否可靠、隔離方式、搬遷難度。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=7859s" target="_blank" rel="noopener">2:10:59</a></td><td>Prompt Caching 與成本槓桿</td><td>每次請求中固定的指示、工具描述、政策、範例都被重算。提示快取把重複開頭的處理結果存起來，下次只處理新的結尾，回應更快、費用更低。規則：從開頭起要完全相同，所以「不變的放前面、會變的放後面」（日期、請求編號、客戶姓名放最後）；要量測命中率。多租戶時要隔離快取避免旁通道。其他槓桿：刪減 Token、路由、快取整段答案（只限安全的通用問題）、批次、較小或量化的模型、控制推理與 Agent 迴圈步數。</td></tr></tbody></table></div>
+  <div class="cards" style="margin-top:14px"><div class="card"><h3>最重要的成本指標</h3><div class="row">不是每次呼叫的價格，而是「每張解決工單的總成本」：檢索、重試、工具呼叫、安全檢查、人工審核都要算進去。</div></div><div class="card"><h3>服務變慢先問</h3><div class="row">時間花在 Prefill 還是 Decode？請求有批次處理嗎？KV Cache 有沒有塞滿記憶體？</div></div><div class="card"><h3>晶片要搭配軟體</h3><div class="row">規格相近的晶片，軟體成熟度不同，實際效能可能差很多。</div></div><div class="card"><h3>「我們租 GPU 就好」</h3><div class="row">要問誰負責配置、隔離、清除、計費，以及 GPU 在訓練中途故障時會怎樣。</div></div></div>
+  <h3 style="margin-top:16px">影片建議追問的問題</h3><ol class="steps"><li><span>這項工作充滿判斷，還是大量重複的數學？</span></li><li><span>每個提示有多少比例是重複的？有沒有被快取？</span></li><li><span>哪些請求真的需要大模型？</span></li></ol>
+</section>
+<section id="m6" aria-labelledby="h-m6">
+  <div class="label">模組 6</div>
+  <h2 id="h-m6">Production：怎麼知道它一直正常運作</h2>
+  <p class="lead">退款 Agent 上線一個月，通過所有上線前測試，卻開始錯誤拒絕損壞特價品的退款，而且沒有人改過任何東西。</p>
+  <div class="tbl"><table><thead><tr><th>時間</th><th>主題</th><th>重點</th></tr></thead><tbody><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=8318s" target="_blank" rel="noopener">2:18:38</a></td><td>SDLC vs AIDLC</td><td>四個差異：①交付物不只程式碼，還有提示詞、檢索設定、資料集、模型版本、轉接器，都要版本控管 ②資料是系統的一部分 ③測試是比率而非是非題，要設上線門檻 ④上線後會自己變差。AI 寫程式後，瓶頸從撰寫移到審查；產出者不能是唯一的檢查者。退款上限這類規則用一般程式碼，回覆語氣才交給模型學。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=8596s" target="_blank" rel="noopener">2:23:16</a></td><td>DevOps / MLOps / LLMOps 與追蹤</td><td>DevOps 管程式碼與服務健康；MLOps 加入資料與模型版本、監控漂移與重新訓練；LLMOps 透過提示詞、檢索內容、微調塑造行為，還要監控幻覺、是否有依據、是否違反政策，提示詞要能幾分鐘內回滾。Trace 回答七件事：模型看到什麼、檢索了什麼、呼叫哪些工具、用多少 Token、花多少錢、每步多久、在哪裡失敗；全部以同一個請求 ID 串起來。Trace 本身含個資，需遮罩、權限控管、定期刪除。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=8862s" target="_blank" rel="noopener">2:27:42</a></td><td>AI Evals 評估</td><td>核心是黃金資料集（Golden Dataset）：由懂政策的人標註、刻意包含困難案例、從幾十題開始並持續加入正式環境的失敗案例。評分兩種並用：程式檢查（格式、退款金額不超過訂單、含訂單編號）與模型評審（是否有依據、相關性、語氣，需定期與人工評分校準）。用明確分類比 1–10 分更一致。最昂貴的錯誤（該退沒退、不該退卻退）要獨立追蹤與告警。上線前設門檻、定期排程跑、正式流量抽樣用同一套評估；Agent 還要評估中間步驟。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=9179s" target="_blank" rel="noopener">2:32:59</a></td><td>AI 專案為何失敗</td><td>①資料定義不一致（訂單系統與財務系統對「退貨」定義不同）②沒人能描述工作流程（例外處理只存在人腦裡）③自動化一個本來就有問題的流程 ④Demo 與產品的落差（權限、測試、監控、資安、併發、故障計畫）⑤隱藏成本 ⑥沒有事先定義成功指標 ⑦缺少能連結業務問題與 AI 能力的人，資安法遵要在設計時就加入。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=9441s" target="_blank" rel="noopener">2:37:21</a></td><td>AI 紅隊演練</td><td>測試是確認它做該做的事；紅隊是試著讓它做不該做的事，涵蓋資安與安全兩類風險。每個風險描述六項：行為者、技術、攻擊、弱點、影響、緩解。案例：直接提示注入（假冒主管要求全額退款 → 控制迴圈檢查訂單、政策、上限）；間接提示注入（藏在文件、商品頁、MCP 工具描述中 → 指令與資料分離、限制可外送資料的工具、輸出檢查）；資料外洩（權限跟著使用者、隔離快取）；有害或違反政策內容（輸出檢查、閘道護欄）。每個修補都要變成每次發版都跑的測試。</td></tr><tr><td><a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=9737s" target="_blank" rel="noopener">2:42:17</a></td><td>AI 平台工程</td><td>讓每個團隊不必重造：AI 閘道、工具與資料目錄（核准的 MCP Server）、知識服務、提示詞與技能登錄庫、評估服務與發版門檻、預設追蹤、安全護欄與沙盒、模型服務與微調流程、依團隊與工單的成本可見性。原則：安全的路也要是最簡單的路；平台本身是產品。陷阱：太早建太多、把平台變成只會擋人的關卡。</td></tr></tbody></table></div>
+  <div class="cards" style="margin-top:14px"><div class="card"><h3>儀表板全綠，答案卻錯</h3><div class="row">伺服器健康、回應時間正常、沒有錯誤，答案還是可能錯。這就是 AI 營運不同之處。</div></div><div class="card"><h3>先問能不能拉出單一請求的 Trace</h3><div class="row">從顧客訊息到最終回覆，拉不出完整追蹤，就無法真正除錯。</div></div><div class="card"><h3>防禦放在哪</h3><div class="row">問一個 Agent 安不安全時，要問防禦是寫在提示詞裡，還是做在系統裡。</div></div><div class="card"><h3>上線前要回答的問題</h3><div class="row">改善哪個流程？每一步誰負責？資料定義一致嗎？用什麼數字證明有效？一張解決工單的總成本是多少？</div></div></div>
+  <h3 style="margin-top:16px">影片建議追問的問題</h3><ol class="steps"><li><span>除了程式碼，我們還版本控管哪些東西？上線門檻是多少？</span></li><li><span>黃金資料集漏掉了什麼？最昂貴的錯誤用哪個數字追蹤？</span></li><li><span>哪些元件是各團隊共用的，哪些是每個團隊各自重造的？</span></li></ol>
+</section>
+<section id="final" aria-labelledby="h-final">
+  <div class="label">完整系統 <a href="https://www.youtube.com/watch?v=XFNggsFFZJw&t=10026s" target="_blank" rel="noopener">2:47:06</a></div>
+  <h2 id="h-final">一個可上線的 AI 系統長什麼樣子</h2>
+  <figure><svg viewBox="0 0 980 360" width="100%" role="img" aria-label="可上線 AI 系統的分層架構：應用層、控制迴圈、AI 閘道、模型，以及工具、檢索、知識圖譜、記憶、安全層、觀測層與平台">
+    <g font-size="13" text-anchor="middle">
+      <rect x="10" y="10" width="960" height="44" rx="10" fill="#EEEAFF" stroke="#4A3FA0"/><text x="490" y="37">應用層：聊天介面、登入、工單系統　→　辨識顧客身分、建立請求 ID</text>
+      <rect x="10" y="66" width="960" height="44" rx="10" fill="#EEEAFF" stroke="#4A3FA0"/><text x="490" y="93">控制迴圈：組提示詞（不變的在前以利快取）、決定模型可以做什麼、強制不可違反的規則（退款上限）</text>
+      <rect x="10" y="122" width="960" height="44" rx="10" fill="#FFF3E0" stroke="#D4720A"/><text x="490" y="149">AI 閘道：身分與預算檢查、選模型與備援、記錄 Token 與成本　→　模型（加速器上 Prefill + Decode）</text>
+      <rect x="10" y="178" width="228" height="58" rx="10" fill="#E0F4EA" stroke="#1A6B40"/><text x="124" y="203">工具（MCP）</text><text x="124" y="222" font-size="11" fill="#6A6298">查訂單、發退款</text>
+      <rect x="254" y="178" width="228" height="58" rx="10" fill="#E0F4EA" stroke="#1A6B40"/><text x="368" y="203">檢索（RAG）</text><text x="368" y="222" font-size="11" fill="#6A6298">退款政策、保固條款</text>
+      <rect x="498" y="178" width="228" height="58" rx="10" fill="#E0F4EA" stroke="#1A6B40"/><text x="612" y="203">知識圖譜</text><text x="612" y="222" font-size="11" fill="#6A6298">產品 → 製造商 → 保固</text>
+      <rect x="742" y="178" width="228" height="58" rx="10" fill="#E0F4EA" stroke="#1A6B40"/><text x="856" y="203">記憶</text><text x="856" y="222" font-size="11" fill="#6A6298">這位顧客過去的工單</text>
+      <rect x="10" y="248" width="960" height="44" rx="10" fill="#FDECEA" stroke="#C0392B"/><text x="490" y="275">安全層：輸入輸出護欄、權限跟著顧客走過每次搜尋與工具、超過上限由人核准</text>
+      <rect x="10" y="304" width="470" height="44" rx="10" fill="#F0ECFF" stroke="#6A6298"/><text x="245" y="331">觀測層：Trace、Evals、品質／成本／速度儀表板</text>
+      <rect x="500" y="304" width="470" height="44" rx="10" fill="#F0ECFF" stroke="#6A6298"/><text x="735" y="331">平台：資料管線、版本化提示詞與轉接器、評估門檻</text>
+    </g>
+  </svg><figcaption>依影片最後一講重新繪製的分層架構。</figcaption></figure>
+  <h3 style="margin-top:14px">追蹤一張失敗的退款單（request-1187）</h3>
+  <div class="tbl"><table><thead><tr><th>步驟</th><th>Trace 內容</th><th>是不是問題所在</th></tr></thead><tbody>
+    <tr><td>1 應用層</td><td>辨識顧客、建立 request-1187</td><td>否</td></tr>
+    <tr><td>2 閘道</td><td>檢查預算、選模型；固定提示由快取提供，首個 Token 很快</td><td>否</td></tr>
+    <tr><td>3 工具呼叫</td><td>查訂單 4471：特價品、3 天前送達、合作品牌</td><td>否，資料正確</td></tr>
+    <tr><td>4 檢索</td><td>最高分結果「特價品不退」，來自<b>退款政策第 3 版</b></td><td><b>是：第 4 版兩週前已發布</b></td></tr>
+    <tr><td>5 模型</td><td>依讀到的內容禮貌地拒絕退款</td><td>否，忠實依據資料</td></tr>
+    <tr><td>6 評估</td><td>「依據性」分數正常，但「損壞品被錯誤拒絕」獨立指標暴增並告警</td><td>發現問題的關鍵</td></tr>
+  </tbody></table></div>
+  <p class="note"><b>根因：</b>權限變更後，政策同步到索引的匯入作業一直靜默失敗，舊版也沒被標記為已取代。<b>修正橫跨多層：</b>修好匯入權限並重建索引、標記第 3 版已取代、為匯入失敗加告警、把這張工單加進黃金資料集、用 Trace 找出所有被錯誤拒絕的顧客並主動聯繫。整段期間退款上限從未失守，因為它寫在程式碼裡。</p>
+  <p style="margin-top:10px"><b>「可上線」的定義：</b>不是永遠不出錯，而是出錯時你看得到、找得到、修得好，並確保不會再發生。</p>
+</section>
+<section id="qs" aria-labelledby="h-qs">
+  <div class="label">提問清單</div>
+  <h2 id="h-qs">看到 AI 架構圖時要問的問題</h2>
+  <p class="lead">影片的目標是讓你看得懂 AI 架構圖、知道取捨、問對問題。以下彙整各講的關鍵提問，也很適合拿來準備情境題。</p>
+  <div class="tbl"><table><thead><tr><th>主題</th><th>要問的問題</th></tr></thead><tbody>
+    <tr><td>Agent</td><td>會採取真實行動嗎？下一步由模型決定嗎？會依結果調整嗎？</td></tr>
+    <tr><td>多代理</td><td>拆開的理由是平行、太大，還是需要獨立檢查？</td></tr>
+    <tr><td>上下文</td><td>關鍵資訊放在上下文的哪個位置？</td></tr>
+    <tr><td>工具呼叫</td><td>執行前由什麼檢查？在哪裡交給人？Trace 存在哪？</td></tr>
+    <tr><td>MCP</td><td>Server 是誰做的？能碰到什麼？權限是最小的嗎？</td></tr>
+    <tr><td>Skills</td><td>這是「要碰到新系統」還是「要照我們的方式做事」？</td></tr>
+    <tr><td>多代理角色</td><td>每個 Agent 的職責、禁止事項、上下游，權限與角色相符嗎？</td></tr>
+    <tr><td>閘道</td><td>模型呼叫都經過同一處嗎？身分、預算、內容在哪檢查？</td></tr>
+    <tr><td>RAG</td><td>正確文字在檢索路徑哪一步遺失？每個元件解決哪種失敗？</td></tr>
+    <tr><td>Agentic RAG</td><td>能用哪些搜尋工具？什麼讓它停下？</td></tr>
+    <tr><td>微調</td><td>要改知識、行為還是成本？試過便宜的階梯了嗎？</td></tr>
+    <tr><td>蒸餾</td><td>學生和老師在真實測試集上差多少？允許用這個老師嗎？</td></tr>
+    <tr><td>強化學習</td><td>獎勵衡量什麼？模型可能怎麼鑽漏洞？</td></tr>
+    <tr><td>硬體</td><td>軟體堆疊能在這顆晶片上跑好嗎？量過自己的工作負載嗎？</td></tr>
+    <tr><td>效能</td><td>時間花在 Prefill 還是 Decode？KV Cache 塞滿了嗎？</td></tr>
+    <tr><td>成本</td><td>重複的提示有快取嗎？一張解決工單的總成本多少？</td></tr>
+    <tr><td>評估</td><td>黃金資料集漏了什麼？最昂貴的錯誤用哪個數字追蹤？</td></tr>
+    <tr><td>資安</td><td>試過讓它做什麼？防禦寫在提示詞還是系統裡？</td></tr>
+    <tr><td>平台</td><td>安全的路也是最簡單的路嗎？</td></tr>
+  </tbody></table></div>
+</section>
+<section id="exam" aria-labelledby="h-exam">
+  <div class="label">考點對照</div>
+  <h2 id="h-exam">影片內容與 iPAS 中級考點</h2>
+  <div class="tbl"><table><thead><tr><th>影片模組</th><th>對應考點</th><th>本站相關頁面</th></tr></thead><tbody>
+    <tr><td>1、2 Agent 與外部連接</td><td>Agent 定義、ReAct、多代理協作、MCP、工具呼叫、人工核准、最小權限</td><td><a href="agent-ai.html">Agent AI 知識與考點</a></td></tr>
+    <tr><td>3 公司資料</td><td>RAG 架構、切塊、混合檢索、Reranker、GraphRAG、知識庫治理</td><td><a href="rag.html">RAG 設計與 Python 實作</a></td></tr>
+    <tr><td>4 模型行為</td><td>資料前處理、資料洩漏、Transformer、微調 vs RAG、LoRA、蒸餾、RLHF</td><td><a href="titanic.html">鐵達尼號專案</a>（資料切分與洩漏）</td></tr>
+    <tr><td>5 硬體與成本</td><td>GPU/TPU/NPU 差異、訓練與推論資源、雲端部署選擇、成本估算</td><td>—</td></tr>
+    <tr><td>6 正式環境</td><td>MLOps／LLMOps、模型監控與漂移、評估指標、AI 資安（提示注入）、導入失敗原因</td><td><a href="weak-spots.html">弱項衝刺</a></td></tr>
+  </tbody></table></div>
+</section>
+<section id="quiz" aria-labelledby="h-quiz">
+  <div class="label">自我檢測</div>
+  <h2 id="h-quiz">10 題快速檢測</h2>
+  <p class="lead">點選答案後立即顯示解析。</p>
+  <div id="qz"></div>
+  <p class="score" id="qscore" aria-live="polite">已作答 0 / 10</p>
+</section>
+</main>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a>
+<script>
+var Q=[["依影片定義，下列哪一項最能區分 Agent 與 Workflow？", ["是否使用大型語言模型", "下一步是否由模型在執行中自己決定", "是否有圖形介面", "是否串接資料庫"], 1, "人事先寫好步驟、模型只填空是 Workflow；模型在執行中選擇下一步才是 Agent。"], ["Agent 記錄「上次在退款完成前就關單，顧客很生氣」以避免重犯，屬於哪種記憶？", ["短期記憶", "情節記憶 Episodic", "語意記憶 Semantic", "程序記憶 Procedural"], 1, "情節記憶記錄何時發生了什麼，失敗經驗特別有用。"], ["付款服務逾時後重試，為避免重複退款，影片建議的做法是？", ["提高 temperature", "每次退款附上唯一的冪等鍵", "把完整錯誤訊息丟回模型", "無限次重試直到成功"], 1, "冪等鍵讓服務認出重複請求並忽略，另外還要限制重試次數並在多次失敗後轉人工。"], ["MCP 與 Agent Skills 的關係，下列敘述何者正確？", ["兩者互相取代", "MCP 解決如何碰到系統，Skill 解決這類任務該怎麼做", "Skill 可以直接發出退款", "MCP 會自動強制業務規則"], 1, "Skill 需要底下的工具才能執行動作；業務規則仍要寫在程式碼裡由控制迴圈檢查。"], ["AI 閘道相較於一般 API 閘道，最主要多出的能力是？", ["檢查登入", "以 Token 計量並依團隊追蹤預算與成本", "路由到不同網址", "記錄存取日誌"], 1, "模型請求的成本差異極大，AI 閘道以 Token 而非請求數計量，並能選模型、備援與做內容檢查。"], ["RAG 回答「特價品不可退」，但文件兩段之後寫著「除非送達時損壞」。最可能的原因是？", ["模型推理錯誤", "切塊把規則與例外切到不同區塊", "GPU 記憶體不足", "溫度設定太低"], 1, "這是影片列出的第一種失敗：規則與例外被切開，只檢索到前半段。"], ["客服團隊要求「每次都用公司語氣與固定格式回覆」，影片建議的做法是？", ["持續預訓練", "監督式微調，常用 LoRA 轉接器", "換成更大的模型", "把政策放進向量資料庫"], 1, "語氣與格式是行為改變，適合微調；會變動的知識才交給檢索。"], ["只用顧客滿意度當強化學習獎勵，最可能出現什麼問題？", ["模型變得更保守", "獎勵駭客：模型學會答應所有人退款", "訓練時間縮短", "模型忘記語言能力"], 1, "最容易拿高分的方式是答應退款；因此獎勵要多面向，退款上限仍要寫在程式碼。"], ["模型逐字產生回答（Decode）時，最常見的瓶頸是？", ["CPU 時脈", "記憶體頻寬", "硬碟容量", "網路延遲"], 1, "每產生一個 Token 都要從記憶體讀取大量權重，運算量小但資料搬移量大。"], ["使用 Prompt Caching 時，下列哪種提示詞排列最能提高快取命中率？", ["日期與顧客姓名放最前面", "不變的指示、工具描述、政策放前面，顧客訊息與時間放最後", "每次隨機打亂範例順序", "把請求編號放在系統指示中間"], 1, "快取需要從開頭起完全相同，會變動的內容放前面會讓後面全部失效。"]];
+
+(function(){
+  var box=document.getElementById('qz'), sc=document.getElementById('qscore'), done=0, ok=0, L='ABCD';
+  Q.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='q';
+    var p=document.createElement('p'); p.textContent=(i+1)+'. '+q[0]; d.appendChild(p);
+    var o=document.createElement('div'); o.className='opts'; o.setAttribute('role','group');
+    var bs=[];
+    q[1].forEach(function(t,k){
+      var b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent='('+L[k]+') '+t;
+      b.addEventListener('click',function(){
+        bs.forEach(function(x,j){x.disabled=true; if(j===q[2])x.classList.add('ok'); else if(j===k)x.classList.add('ng');});
+        var e=document.createElement('div'); e.className='exp'; e.textContent=(k===q[2]?'答對！':'答錯，正確答案 '+L[q[2]]+'。')+q[3]; d.appendChild(e);
+        done++; if(k===q[2])ok++; sc.textContent='已作答 '+done+' / '+Q.length+'，答對 '+ok+' 題';
+      });
+      bs.push(b); o.appendChild(b);
+    });
+    d.appendChild(o); box.appendChild(d);
+  });
+})();
+
+document.querySelectorAll('.cbtn').forEach(function(b){b.addEventListener('click',function(){
+  var t=b.parentNode.querySelector('code').innerText;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='已複製';setTimeout(function(){b.textContent='複製'},1500)},function(){
+    var r=document.createRange();r.selectNodeContents(b.parentNode.querySelector('code'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='已選取';});
+});});
+</script>
+</body>
+</html>
