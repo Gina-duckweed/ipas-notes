@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent AI 知識與考點</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --P:#4A3FA0;--Plt:#EEEAFF;--Pdk:#2E2680;
+  --R:#C0392B;--Rlt:#FDECEA;
+  --O:#D4720A;--Olt:#FFF3E0;
+  --G:#1A6B40;--Glt:#E0F4EA;
+  --bg:#F6F4FB;--s:#FFF;--s2:#F0ECFF;--b:#D0CAEE;
+  --t:#1A1440;--t2:#3A3070;--t3:#6A6298;
+  --font:'Nunito','Noto Sans TC',sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;
+  --t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;
+  --Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark;
+}}
+[data-theme=dark]{--bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;--t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;--Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:15px;line-height:1.7;min-height:100vh}
+a{color:var(--P)}
+:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}
+.hero{background:linear-gradient(135deg,var(--Pdk) 0%,var(--P) 55%,#7B6FD0 100%);padding:36px 24px 30px;color:#fff}
+.hero-in{max-width:1080px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.75);margin-bottom:8px}
+.hero h1{font-size:clamp(26px,4vw,34px);font-weight:900;line-height:1.2;margin-bottom:8px;text-wrap:balance}
+.hero p{font-size:14px;color:rgba(255,255,255,.88);max-width:680px;margin-bottom:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none}
+.chip:hover{background:rgba(255,255,255,.25)}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px;display:grid;gap:28px}
+section{background:var(--s);border:1.5px solid var(--b);border-radius:14px;padding:22px 24px;scroll-margin-top:12px}
+.label{font-size:11px;font-weight:800;color:var(--P);letter-spacing:1.5px;margin-bottom:6px}
+h2{font-size:21px;font-weight:900;margin-bottom:10px;text-wrap:balance}
+h3{font-size:16px;font-weight:800;margin-bottom:4px}
+p{max-width:72ch}
+.lead{color:var(--t2);margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:6px}
+.kpi{background:var(--s2);border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:26px;font-weight:900;color:var(--P);font-variant-numeric:tabular-nums;line-height:1.2}
+[data-theme=dark] .kpi b{color:#B9AEFF}
+.kpi span{font-size:13px;color:var(--t2)}
+.tbl{overflow-x:auto;border:1.5px solid var(--b);border-radius:12px;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--b)}
+th{background:var(--s2);font-size:12px;color:var(--t2);font-weight:800;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:800;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:8px}
+.card{background:var(--s2);border-radius:12px;padding:14px 16px;border-left:4px solid var(--P);display:grid;gap:6px;align-content:start}
+.card .en{font-family:var(--mono);font-size:12px;color:var(--t3)}
+.card .row{font-size:13.5px}
+.card .row b{color:var(--P)}
+[data-theme=dark] .card .row b{color:#B9AEFF}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:1px 8px;border-radius:10px;margin-right:4px;background:var(--Plt);color:var(--P)}
+.tag.hot{background:var(--Rlt);color:var(--R)}
+.tag.mid{background:var(--Olt);color:var(--O)}
+.trap{font-size:13px;background:var(--Rlt);color:var(--t);border-radius:8px;padding:6px 10px}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.fbtn{font:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:20px;padding:3px 12px;cursor:pointer}
+.fbtn[aria-pressed=true]{background:var(--P);border-color:var(--P);color:#fff}
+figure{margin-top:8px;background:var(--s2);border-radius:12px;padding:12px;overflow-x:auto}
+figcaption{font-size:12px;color:var(--t3);margin-top:6px}
+svg text{font-family:var(--font)}
+.steps{counter-reset:s;list-style:none;display:grid;gap:8px;margin-top:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);width:26px;height:26px;border-radius:50%;background:var(--P);color:#fff;font-weight:900;font-size:13px;display:grid;place-items:center}
+.q{border:1.5px solid var(--b);border-radius:12px;padding:14px 16px;margin-top:10px}
+.q p{font-weight:700;margin-bottom:8px}
+.opts{display:grid;gap:6px}
+.opt{font:inherit;font-size:14px;text-align:left;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:8px;padding:8px 10px;cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--P)}
+.opt.ok{background:var(--Glt);border-color:var(--G)}
+.opt.ng{background:var(--Rlt);border-color:var(--R)}
+.exp{margin-top:8px;font-size:13.5px;background:var(--Plt);border-radius:8px;padding:8px 10px}
+.score{font-weight:800;color:var(--P);margin-top:10px}
+.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.ipas-back:hover{background:#2C5282}
+@media(max-width:560px){section{padding:18px 16px}td:first-child{white-space:normal}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="hero-in">
+  <div class="eyebrow">iPAS AI 應用規劃師｜專題整理</div>
+  <h1>Agent AI 知識與考點</h1>
+  <p>Agent 是初級科目二成長最快的題組，115-4 已出現完整的 Agent 流程設計題；中級預計從「這是什麼」進一步考「架構哪裡有風險、如何評估成本與效果」。本頁整理核心概念、易混淆比較、歷屆考點與自我檢測。</p>
+  <nav class="chips" aria-label="頁內目錄">
+    <a class="chip" href="#basic">基本定義</a><a class="chip" href="#arch">架構圖</a><a class="chip" href="#terms">核心名詞</a><a class="chip" href="#compare">易混淆比較</a><a class="chip" href="#history">歷屆考點</a><a class="chip" href="#predict">中級預測</a><a class="chip" href="#quiz">自我檢測</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+
+<section aria-labelledby="h-sum">
+  <div class="label">先看重點</div>
+  <h2 id="h-sum">三個數字看懂 Agent 題的份量</h2>
+  <div class="kpis">
+    <div class="kpi"><b>8% → 22%</b><span>初級科目二「代理與工具整合」占比，115-1 到 115-3（約 4 題增至 11 題）</span></div>
+    <div class="kpi"><b>6 場</b><span>114-3 至 115-4 連續出現 Agent、MCP、多代理或 Prompt Injection 相關題</span></div>
+    <div class="kpi"><b>1 題型</b><span>115-4 新出現「訂單 → 物流 → 補償判斷 → 客服」完整流程設計題</span></div>
+  </div>
+  <p style="margin-top:10px;font-size:13px;color:var(--t3)">占比為 CCChen 依公告試題自行分類統計（非官方）；115-4 為考生回憶。</p>
+</section>
+
+<section id="basic" aria-labelledby="h-basic">
+  <div class="label">01 基本定義</div>
+  <h2 id="h-basic">AI Agent 是「會自己決定下一步」的系統</h2>
+  <p class="lead">AI 代理人（AI Agent）以大型語言模型為推理核心，能依目標自行拆解任務、選擇並呼叫工具、觀察結果再決定下一步，直到完成任務。關鍵差別在「由模型決定流程」，而不是由人寫死流程。</p>
+  <div class="tbl"><table>
+    <thead><tr><th>類型</th><th>誰決定流程</th><th>能否呼叫工具</th><th>典型例子</th><th>考題常見判斷</th></tr></thead>
+    <tbody>
+      <tr><td>聊天機器人</td><td>無流程，一問一答</td><td>否</td><td>FAQ 問答</td><td>只能回答，不能「做事」</td></tr>
+      <tr><td>RAG 問答</td><td>固定：檢索 → 生成</td><td>只做檢索</td><td>內部知識庫問答</td><td>需要最新資料、降低幻覺、可引用來源</td></tr>
+      <tr><td>工作流程（Workflow）</td><td>人預先寫死步驟</td><td>可以，順序固定</td><td>表單自動化、RPA</td><td>流程固定、可預測、易稽核時較合適</td></tr>
+      <tr><td>AI Agent</td><td>模型動態決定</td><td>可以，自主選擇</td><td>延遲補償代理人、研究助理</td><td>步驟不固定、需依觀察結果調整時才值得用</td></tr>
+      <tr><td>多代理系統</td><td>多個 Agent 分工協作</td><td>可以</td><td>規劃 Agent + 執行 Agent + 審查 Agent</td><td>任務需不同專業或平行處理時；成本與協調複雜度較高</td></tr>
+    </tbody>
+  </table></div>
+  <h3 style="margin-top:16px">Agent 的四個組成</h3>
+  <ol class="steps">
+    <li><div><b>推理與規劃</b>：LLM 拆解任務、決定下一步（ReAct、任務分解、Thinking Budget）。</div></li>
+    <li><div><b>工具</b>：透過 Function Calling 或 MCP 呼叫外部系統（查訂單、發郵件、寫資料庫）。</div></li>
+    <li><div><b>記憶</b>：短期記憶（上下文）、長期記憶（外部儲存、共享狀態）、知識（RAG）。</div></li>
+    <li><div><b>護欄</b>：最小權限、人工核准、輸入輸出過濾、稽核紀錄，限制 Agent 能做什麼。</div></li>
+  </ol>
+</section>
+
+<section id="arch" aria-labelledby="h-arch">
+  <div class="label">02 架構圖</div>
+  <h2 id="h-arch">以 115-4「延遲補償代理人」看懂整體架構</h2>
+  <figure>
+    <svg viewBox="0 0 760 370" width="100%" role="img" aria-label="Agent 架構：LLM 推理加工具加記憶加護欄" font-size="13">
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--t3)"/></marker></defs>
+      <rect x="24" y="16" width="712" height="40" rx="8" fill="var(--s)" stroke="var(--b)"/>
+      <text x="380" y="41" text-anchor="middle" fill="var(--t)" font-size="12.5">護欄：最小權限、Prompt Injection 防護、Human-in / over-the-loop、稽核紀錄</text>
+      <g fill="none" stroke="var(--t3)" stroke-width="1.25">
+        <path d="M174 170H228" marker-end="url(#ar)"/><path d="M520 170H574" marker-end="url(#ar)"/>
+        <path d="M375 56V108" stroke-dasharray="4 4" marker-end="url(#ar)"/><path d="M375 232V268" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      </g>
+      <rect x="24" y="130" width="150" height="80" rx="8" fill="var(--s)" stroke="var(--b)"/>
+      <text x="99" y="162" text-anchor="middle" font-weight="800" fill="var(--t)">任務 / 使用者</text>
+      <text x="99" y="186" text-anchor="middle" font-size="11.5" fill="var(--t3)">例：訂單延遲申訴</text>
+      <rect x="230" y="110" width="290" height="120" rx="8" fill="var(--Plt)" stroke="var(--P)" stroke-width="2"/>
+      <text x="375" y="136" text-anchor="middle" font-weight="800" fill="var(--t)">Agent（LLM 推理核心）</text>
+      <text x="246" y="162" font-size="12" fill="var(--t)">ReAct：思考 → 行動 → 觀察，反覆循環</text>
+      <text x="246" y="184" font-size="12" fill="var(--t)">任務拆解、Model Routing</text>
+      <text x="246" y="206" font-size="12" fill="var(--t)">Thinking Budget 控制成本</text>
+      <rect x="576" y="100" width="160" height="212" rx="8" fill="var(--s)" stroke="var(--b)"/>
+      <text x="656" y="124" text-anchor="middle" font-weight="800" fill="var(--t)">工具（經 MCP 連接）</text>
+      <g fill="none" stroke="var(--b)"><rect x="590" y="136" width="132" height="34" rx="6"/><rect x="590" y="178" width="132" height="34" rx="6"/><rect x="590" y="220" width="132" height="34" rx="6"/><rect x="590" y="262" width="132" height="34" rx="6"/></g>
+      <g text-anchor="middle" font-size="12" fill="var(--t)"><text x="656" y="157">訂單系統</text><text x="656" y="199">物流查詢</text><text x="656" y="241">補償規則判斷</text><text x="656" y="283">客服 / 通知</text></g>
+      <rect x="230" y="270" width="290" height="56" rx="8" fill="var(--s)" stroke="var(--b)"/>
+      <text x="375" y="292" text-anchor="middle" font-weight="800" fill="var(--t)">記憶與知識</text>
+      <text x="375" y="314" text-anchor="middle" font-size="12" fill="var(--t3)">共享狀態、RAG + Reranker、對話紀錄</text>
+    </svg>
+    <figcaption>延遲補償流程：接收申訴 → 查訂單 → 查物流 → 依規則計算補償 →（超過門檻或狀態異常時人工核准）→ 發放並通知。人工核准節點要放在「不可逆動作」之前。</figcaption>
+  </figure>
+</section>
+
+<section id="terms" aria-labelledby="h-terms">
+  <div class="label">03 核心名詞</div>
+  <h2 id="h-terms">20 個必懂名詞：一句話、考法、陷阱</h2>
+  <div class="filter" role="group" aria-label="依類別篩選">
+    <button class="fbtn" type="button" data-f="all" aria-pressed="true">全部</button>
+    <button class="fbtn" type="button" data-f="core" aria-pressed="false">推理與規劃</button>
+    <button class="fbtn" type="button" data-f="tool" aria-pressed="false">工具與協定</button>
+    <button class="fbtn" type="button" data-f="mem" aria-pressed="false">記憶與知識</button>
+    <button class="fbtn" type="button" data-f="safe" aria-pressed="false">安全與治理</button>
+    <button class="fbtn" type="button" data-f="ops" aria-pressed="false">成本與維運</button>
+  </div>
+  <div class="cards" id="cards">
+    <article class="card" data-c="core"><h3>ReAct</h3><div class="en">Reasoning + Acting</div><div class="row"><b>一句話</b>　思考 → 行動（呼叫工具）→ 觀察結果 → 再思考，交替進行直到完成。</div><div class="row"><span class="tag hot">已考 114-3、115-3</span></div><div class="trap">陷阱：沒有取得「觀察結果」就執行不可逆動作（例如未查物流就退款）是錯誤步驟。</div></article>
+    <article class="card" data-c="core"><h3>任務分解 / 規劃</h3><div class="en">Task Decomposition, Planning</div><div class="row"><b>一句話</b>　把大目標拆成可執行的小步驟，再逐一完成或分派。</div><div class="row"><span class="tag">常與多代理一起考</span></div><div class="trap">陷阱：簡單、固定流程不需要讓模型規劃，用 Workflow 更穩定。</div></article>
+    <article class="card" data-c="core"><h3>Agentic AI</h3><div class="en">Agentic AI</div><div class="row"><b>一句話</b>　具備自主規劃、使用工具、持續執行能力的 AI 系統的統稱。</div><div class="row"><span class="tag hot">已考 114-4</span></div><div class="trap">陷阱：自主性越高，需要的護欄與人工監督越多，不是越自動越好。</div></article>
+    <article class="card" data-c="core"><h3>多代理系統</h3><div class="en">Multi-Agent System</div><div class="row"><b>一句話</b>　多個 Agent 分工，常見「協調者（Orchestrator）+ 執行者（Worker）」或階層式架構。</div><div class="row"><span class="tag hot">已考 114-3、114-4</span></div><div class="trap">陷阱：代理人越多不代表越準；會增加協調成本、延遲、Token 與狀態衝突。</div></article>
+    <article class="card" data-c="tool"><h3>Function Calling / Tool Use</h3><div class="en">Function Calling</div><div class="row"><b>一句話</b>　模型輸出結構化的函式名稱與參數，由程式實際執行並回傳結果。</div><div class="row"><span class="tag">基礎概念</span></div><div class="trap">陷阱：模型本身不執行工具，是應用程式執行；參數錯誤要靠驗證機制擋下。</div></article>
+    <article class="card" data-c="tool"><h3>MCP</h3><div class="en">Model Context Protocol</div><div class="row"><b>一句話</b>　連接 AI 應用與工具 / 資料來源的開放標準；工具伺服器實作一次，多個應用與模型共用。</div><div class="row"><span class="tag hot">已考 114-4、115-2、115-3</span></div><div class="trap">陷阱：MCP 不是模型壓縮、不取代身分驗證；權限仍要在伺服器端管控。</div></article>
+    <article class="card" data-c="tool"><h3>A2A</h3><div class="en">Agent2Agent Protocol</div><div class="row"><b>一句話</b>　讓不同團隊、不同框架開發的 Agent 互相揭露能力、委派任務、回傳結果。</div><div class="row"><span class="tag hot">已考 114-4</span></div><div class="trap">陷阱：MCP 是「Agent 對工具」，A2A 是「Agent 對 Agent」，兩者互補，不要記反。</div></article>
+    <article class="card" data-c="tool"><h3>Skill</h3><div class="en">Agent Skill</div><div class="row"><b>一句話</b>　把特定任務的指示、腳本與資源封裝成可重用的能力包，需要時才載入。</div><div class="row"><span class="tag hot">已考 115-3</span></div><div class="trap">陷阱：Skill 是封裝與重用，不是模型微調。</div></article>
+    <article class="card" data-c="tool"><h3>Router / Webhook</h3><div class="en">Router, Webhook</div><div class="row"><b>一句話</b>　Router 依請求類型分派到不同流程或模型；Webhook 讓外部事件主動觸發流程。</div><div class="row"><span class="tag hot">已考 115-2</span></div><div class="trap">陷阱：Webhook 是「事件推送」，不是定時輪詢。</div></article>
+    <article class="card" data-c="mem"><h3>共享狀態</h3><div class="en">Shared State</div><div class="row"><b>一句話</b>　多個 Agent 共同讀寫的任務資料，例如訂單狀態、已確認的條件。</div><div class="row"><span class="tag hot">已考 115-3</span></div><div class="trap">陷阱：同時寫入會衝突（Race Condition），要有單一事實來源、版本控制或鎖定。</div></article>
+    <article class="card" data-c="mem"><h3>上下文工程</h3><div class="en">Context Engineering</div><div class="row"><b>一句話</b>　設計每一步要放進模型上下文的內容：相關資料、摘要、工具說明，而不是全部塞進去。</div><div class="row"><span class="tag hot">已考 114-4</span></div><div class="trap">陷阱：上下文越長不一定越好，成本與延遲上升，還可能「迷失於中段」。</div></article>
+    <article class="card" data-c="mem"><h3>短期 / 長期記憶</h3><div class="en">Short-term / Long-term Memory</div><div class="row"><b>一句話</b>　短期記憶在上下文中；長期記憶存在外部資料庫，需要時檢索帶入。</div><div class="row"><span class="tag">中級可能考設計</span></div><div class="trap">陷阱：長任務「忘記」前面條件，對策是外部記憶 + 摘要化 + 檢索。</div></article>
+    <article class="card" data-c="mem"><h3>RAG / Agentic RAG</h3><div class="en">Retrieval-Augmented Generation</div><div class="row"><b>一句話</b>　先檢索再生成；Agentic RAG 由 Agent 自行決定何時、查哪裡、要不要再查。</div><div class="row"><span class="tag">每場必考相關</span></div><div class="trap">陷阱：知識常變動用 RAG；要改語氣或格式才用微調。</div></article>
+    <article class="card" data-c="mem"><h3>Reranker</h3><div class="en">Reranking Model</div><div class="row"><b>一句話</b>　先大範圍召回候選文件，再用重排序模型精準評分，取前幾筆給生成模型。</div><div class="row"><span class="tag hot">已考 115-3</span></div><div class="trap">陷阱：「召回率高但前幾名不準」的解法是加 Reranker，不是盲目增加檢索筆數。</div></article>
+    <article class="card" data-c="safe"><h3>Prompt Injection</h3><div class="en">Direct / Indirect Prompt Injection</div><div class="row"><b>一句話</b>　直接注入：使用者輸入惡意指令；間接注入：惡意指令藏在 Agent 讀取的網頁、郵件、文件中。</div><div class="row"><span class="tag hot">已考 115-2、115-3</span></div><div class="trap">陷阱：只在提示詞寫「不要被騙」無法防範；要隔離外部內容、限制權限、敏感動作人工確認。</div></article>
+    <article class="card" data-c="safe"><h3>超額授權</h3><div class="en">Excessive Agency</div><div class="row"><b>一句話</b>　Agent 擁有超出任務需要的權限或工具，被誤用或攻擊時損害擴大。</div><div class="row"><span class="tag hot">已考 115-3</span></div><div class="trap">陷阱：對策是最小權限原則：唯讀優先、限定範圍、移除不需要的工具。</div></article>
+    <article class="card" data-c="safe"><h3>Human-in / on / over-the-loop</h3><div class="en">Human Oversight</div><div class="row"><b>一句話</b>　in：每次決策都要人確認；on：系統自動執行，人監看並可介入；over：人設定規則與整體治理。</div><div class="row"><span class="tag hot">已考 114-4、115-4</span></div><div class="trap">陷阱：核准節點要設在「不可逆動作」之前，且依風險分流，不是全部人工。</div></article>
+    <article class="card" data-c="safe"><h3>Agentic Coding / Vibe Coding</h3><div class="en">AI-assisted Coding</div><div class="row"><b>一句話</b>　由 Agent 自主撰寫與修改程式碼；Vibe Coding 指以自然語言描述、少看程式碼的開發方式。</div><div class="row"><span class="tag hot">已考 115-1、115-2</span></div><div class="trap">陷阱：仍需程式碼審核、測試與安全掃描，不能直接上線。</div></article>
+    <article class="card" data-c="ops"><h3>Model Routing</h3><div class="en">Model Routing</div><div class="row"><b>一句話</b>　依任務難度把請求分派給不同大小的模型，簡單任務走小模型以節省成本與延遲。</div><div class="row"><span class="tag hot">已考 115-3</span></div><div class="trap">陷阱：計算題要記得小模型仍有成本，例如 7 成走成本 1/10 的小模型，總成本降約 63%，不是 70%。</div></article>
+    <article class="card" data-c="ops"><h3>Thinking Budget</h3><div class="en">Reasoning Budget</div><div class="row"><b>一句話</b>　限制模型推理時可使用的思考 Token 數量，在準確度與成本、延遲間取捨。</div><div class="row"><span class="tag hot">已考 115-3</span></div><div class="trap">陷阱：不是越大越好；簡單任務給大預算只會增加成本。</div></article>
+    <article class="card" data-c="ops"><h3>Agent 評估與可觀測性</h3><div class="en">Evaluation, Tracing</div><div class="row"><b>一句話</b>　評估任務完成率、工具呼叫正確性、步驟數與成本、違規率；以追蹤記錄每一步的提示、工具、參數與結果。</div><div class="row"><span class="tag mid">中級預測重點</span></div><div class="trap">陷阱：公開基準測試分數高不代表在你的業務情境可用；上線前要情境測試、紅隊測試、灰階發布。</div></article>
+  </div>
+</section>
+
+<section id="compare" aria-labelledby="h-compare">
+  <div class="label">04 易混淆比較</div>
+  <h2 id="h-compare">選項只差幾個字的地方</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>比較</th><th>A</th><th>B</th><th>判斷關鍵</th></tr></thead>
+    <tbody>
+      <tr><td>MCP vs A2A</td><td>Agent 連工具與資料</td><td>Agent 連其他 Agent</td><td>看連接的另一端是工具還是 Agent</td></tr>
+      <tr><td>MCP vs Function Calling</td><td>標準化協定，跨應用共用工具伺服器</td><td>單一模型 API 的工具呼叫格式</td><td>題目強調「多個應用重複開發介面」選 MCP</td></tr>
+      <tr><td>Workflow vs Agent</td><td>步驟固定、可預測、易稽核</td><td>步驟動態、依觀察結果調整</td><td>流程固定、量大、要穩定選 Workflow</td></tr>
+      <tr><td>單代理 vs 多代理</td><td>工具少、流程清楚</td><td>需不同專業分工或平行處理</td><td>題目只有 2～3 個工具時通常選單代理</td></tr>
+      <tr><td>RAG vs 微調</td><td>知識常更新、要引用來源、要權限過濾</td><td>改語氣、格式、特定任務行為</td><td>「每週新增文件」選 RAG；「固定公文格式」選微調（LoRA）</td></tr>
+      <tr><td>直接 vs 間接注入</td><td>使用者在對話中輸入惡意指令</td><td>惡意指令藏在外部內容</td><td>「供應商郵件中的隱藏文字」是間接注入</td></tr>
+      <tr><td>Human-in vs on the loop</td><td>每次都要人核准才執行</td><td>自動執行、人監看可介入</td><td>高風險、不可逆動作偏向 in</td></tr>
+      <tr><td>超額授權 vs 幻覺</td><td>權限或工具給太多</td><td>模型產生不實內容</td><td>「能讀到他人資料、能寄信」是超額授權</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="history" aria-labelledby="h-history">
+  <div class="label">05 歷屆考點</div>
+  <h2 id="h-history">Agent 相關考點時間軸（初級）</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>場次</th><th>Agent 相關考點</th></tr></thead>
+    <tbody>
+      <tr><td>115-4（2026/11/07）</td><td>延遲補償 Agent 流程設計、多模組整合、客服架構選型（考生回憶）</td></tr>
+      <tr><td>115-3（2026/08/15）</td><td>共享狀態、MCP、Skill、ReAct、Thinking Budget、Model Routing、Reranker、間接 Prompt Injection、超額授權</td></tr>
+      <tr><td>115-2（2026/05/16）</td><td>Router、Webhook、平台鎖定、Agentic Coding、MCP、Prompt Injection</td></tr>
+      <tr><td>115-1（2026/03/21）</td><td>Chunking、TCO / ROI、Vibe Coding 安全</td></tr>
+      <tr><td>114-4（2025/11/01）</td><td>Human-over-the-loop、MCP、A2A、Context Engineering、Agentic AI</td></tr>
+      <tr><td>114-3（2025/08/16）</td><td>RAG、AI Agent、多代理、ReAct 開始出現</td></tr>
+    </tbody>
+  </table></div>
+  <p style="margin-top:8px;font-size:13px;color:var(--t3)">115-3 以前依 CCChen 公告試題趨勢整理；評鑑範圍表未明列 MCP、多代理，但公告試題已出現。</p>
+</section>
+
+<section id="predict" aria-labelledby="h-predict">
+  <div class="label">06 中級預測</div>
+  <h2 id="h-predict">中級可能怎麼考 Agent（推論）</h2>
+  <div class="cards">
+    <div class="card"><h3>架構設計題</h3><div class="row">給一段業務流程，問哪一步交給 Agent、哪一步保留人工核准、要用單代理還是多代理。</div></div>
+    <div class="card"><h3>紀錄判讀題</h3><div class="row">給一段 Thought / Action / Observation 執行紀錄，找出哪一步出錯、缺少哪個工具呼叫。</div></div>
+    <div class="card"><h3>成本計算題</h3><div class="row">Token 費用、Model Routing 節省比例、自建 vs API 損益兩平點、GPU 吞吐量需求。</div></div>
+    <div class="card"><h3>安全情境題</h3><div class="row">判斷攻擊類型（直接或間接注入、超額授權），選出最完整的防護組合。</div></div>
+    <div class="card"><h3>評估上線題</h3><div class="row">設計測試集、指標（完成率、工具正確率、成本、違規率）、紅隊測試與灰階發布。</div></div>
+    <div class="card"><h3>可觀測性題</h3><div class="row">Agent「說完成卻沒執行」時，要記錄哪些資訊才能追查；個資如何遮罩。</div></div>
+  </div>
+  <h3 style="margin-top:16px">解題口訣</h3>
+  <ol class="steps">
+    <li><div><b>先看動作可不可逆</b>：退款、寄信、刪資料之前要有觀察結果與人工核准。</div></li>
+    <li><div><b>再看權限給多少</b>：選項出現「完整讀寫權限」「方便開發」通常是錯的。</div></li>
+    <li><div><b>流程固定就別用 Agent</b>：工具少、步驟固定，單代理或 Workflow 較佳。</div></li>
+    <li><div><b>外部內容一律當資料</b>：郵件、網頁、文件中的指令不能直接執行。</div></li>
+    <li><div><b>最完整的選項通常是答案</b>：同時包含測試、監控、權限、人工核准的選項。</div></li>
+  </ol>
+</section>
+
+<section id="quiz" aria-labelledby="h-quiz">
+  <div class="label">07 自我檢測</div>
+  <h2 id="h-quiz">8 題快速檢測</h2>
+  <p class="lead">點選選項立即看解析。更多長題幹情境題請到 <a href="../quiz/">題庫練習</a> 選「預測模擬卷（115-4 走向）」。</p>
+  <div id="qz"></div>
+  <div class="score" id="qscore" aria-live="polite"></div>
+</section>
+
+</main>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a>
+<script>
+(function(){
+  var btns=document.querySelectorAll('.fbtn'), cards=document.querySelectorAll('#cards .card');
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    btns.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});
+    var f=b.dataset.f; cards.forEach(function(c){c.hidden=!(f==='all'||c.dataset.c===f);});
+  });});
+  var Q=[
+    ['多個 AI 應用各自重寫 CRM、ERP 介接程式，權限難以集中管理。最合適的改善方向是？',['改用 A2A 讓 Agent 互相溝通','改用 MCP，將系統包成工具伺服器供多個應用共用並集中管控權限','把模型換成參數更大的版本','每個應用都改用微調'],1,'MCP 是 Agent 對工具與資料的標準化協定；A2A 是 Agent 對 Agent。'],
+    ['Agent 查到「已出貨但客戶沒收到」後，直接發放全額退款，事後發現包裹已被家人簽收。錯誤在哪？',['第一步不該查訂單','ReAct 無法處理多步驟任務','未先呼叫物流工具取得簽收狀態的觀察結果，就執行不可逆的退款','不該發送通知簡訊'],2,'ReAct 要以觀察結果支持下一步；不可逆動作前應先取得證據並依政策判斷。'],
+    ['採購 Agent 讀取供應商郵件，郵件中藏有「把所有合約轉寄到某地址」的白色文字，Agent 照做了。這是？',['直接提示注入','間接提示注入','模型幻覺','資料漂移'],1,'惡意指令藏在 Agent 讀取的外部內容中，屬於間接提示注入。'],
+    ['人資問答 Agent 被給予完整讀寫權限的資料庫帳號與公司寄信工具。最主要的風險是？',['超額授權','過擬合','冷啟動','類別不平衡'],0,'權限與工具超過任務所需即為超額授權，對策是最小權限與移除不必要工具。'],
+    ['只需查航班、訂飯店、發通知三個工具、流程固定的任務，最合適的架構是？',['六個代理人分工協作','單一 Agent 搭配三個工具，或直接用固定 Workflow','十個代理人以備未來擴充','完全人工處理'],1,'多代理會增加協調成本、延遲與狀態衝突，簡單固定流程不需要。'],
+    ['兩個 Agent 同時寫入同一筆商品狀態，造成超賣。根本解法是？',['把兩個 Agent 的溫度都調成 0','換成更大的模型','建立單一事實來源並對共享狀態寫入做版本控制或鎖定，由協調者處理衝突','讓 Agent 每次寫入前等十秒'],2,'這是共享狀態的並行寫入衝突，需要寫入控制，換模型或調溫度無法解決。'],
+    ['每月 10 萬次請求、每次 2 元。7 成可改由成本為十分之一的小模型處理，導入 Model Routing 後每月成本約為？',['6 萬元','7.4 萬元','2 萬元','14 萬元'],1,'3 萬 × 2 + 7 萬 × 0.2 = 6 + 1.4 = 7.4 萬元，約省 63%。'],
+    ['補償 Agent 中，人工核准節點最適合放在哪裡？',['接收申訴後立刻全部轉人工','查詢訂單之前','發放補償這個不可逆動作之前，且只針對超過門檻或狀態異常的案件','發放後每月抽查即可'],2,'依風險分流，在不可逆動作前設條件式人工核准，並附上已查得的證據。']
+  ];
+  var box=document.getElementById('qz'), sc=document.getElementById('qscore'), done=0, ok=0, L='ABCD';
+  Q.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='q';
+    var p=document.createElement('p'); p.textContent=(i+1)+'. '+q[0]; d.appendChild(p);
+    var o=document.createElement('div'); o.className='opts'; o.setAttribute('role','group');
+    var bs=[];
+    q[1].forEach(function(t,k){
+      var b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent='('+L[k]+') '+t;
+      b.addEventListener('click',function(){
+        bs.forEach(function(x,j){x.disabled=true; if(j===q[2])x.classList.add('ok'); else if(j===k)x.classList.add('ng');});
+        var e=document.createElement('div'); e.className='exp'; e.textContent=(k===q[2]?'答對！':'答錯，正確答案 '+L[q[2]]+'。')+q[3]; d.appendChild(e);
+        done++; if(k===q[2])ok++; sc.textContent='已作答 '+done+' / '+Q.length+'，答對 '+ok+' 題';
+      });
+      bs.push(b); o.appendChild(b);
+    });
+    d.appendChild(o); box.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>
