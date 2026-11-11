@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ERP、智慧倉儲與配送：重點整理與 50 題模擬考</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --P:#4A3FA0;--Plt:#EEEAFF;--Pdk:#2E2680;
+  --R:#C0392B;--Rlt:#FDECEA;
+  --O:#D4720A;--Olt:#FFF3E0;
+  --G:#1A6B40;--Glt:#E0F4EA;
+  --bg:#F6F4FB;--s:#FFF;--s2:#F0ECFF;--b:#D0CAEE;
+  --t:#1A1440;--t2:#3A3070;--t3:#6A6298;
+  --font:'Nunito','Noto Sans TC',sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:light;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;
+  --t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;
+  --Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark;
+}}
+[data-theme=dark]{--bg:#0F0C1E;--s:#1A1530;--s2:#221D40;--b:#35285A;--t:#E0D8FF;--t2:#A898D8;--t3:#8A7EC0;--Plt:#221D40;--Rlt:#2A0F0D;--Olt:#2A1800;--Glt:#0A1F14;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);font-size:15px;line-height:1.7;min-height:100vh}
+a{color:var(--P)}
+:focus-visible{outline:3px solid #F6AD55;outline-offset:2px}
+.hero{background:linear-gradient(135deg,var(--Pdk) 0%,var(--P) 55%,#7B6FD0 100%);padding:36px 24px 30px;color:#fff}
+.hero-in{max-width:1080px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,.75);margin-bottom:8px}
+.hero h1{font-size:clamp(26px,4vw,34px);font-weight:900;line-height:1.2;margin-bottom:8px;text-wrap:balance}
+.hero p{font-size:14px;color:rgba(255,255,255,.88);max-width:680px;margin-bottom:14px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;text-decoration:none}
+.chip:hover{background:rgba(255,255,255,.25)}
+.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 80px;display:grid;gap:28px}
+section{background:var(--s);border:1.5px solid var(--b);border-radius:14px;padding:22px 24px;scroll-margin-top:12px}
+.label{font-size:11px;font-weight:800;color:var(--P);letter-spacing:1.5px;margin-bottom:6px}
+h2{font-size:21px;font-weight:900;margin-bottom:10px;text-wrap:balance}
+h3{font-size:16px;font-weight:800;margin-bottom:4px}
+p{max-width:72ch}
+.lead{color:var(--t2);margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:6px}
+.kpi{background:var(--s2);border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:26px;font-weight:900;color:var(--P);font-variant-numeric:tabular-nums;line-height:1.2}
+[data-theme=dark] .kpi b{color:#B9AEFF}
+.kpi span{font-size:13px;color:var(--t2)}
+.tbl{overflow-x:auto;border:1.5px solid var(--b);border-radius:12px;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:9px 12px;border-bottom:1px solid var(--b)}
+th{background:var(--s2);font-size:12px;color:var(--t2);font-weight:800;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:800;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-top:8px}
+.card{background:var(--s2);border-radius:12px;padding:14px 16px;border-left:4px solid var(--P);display:grid;gap:6px;align-content:start}
+.card .en{font-family:var(--mono);font-size:12px;color:var(--t3)}
+.card .row{font-size:13.5px}
+.card .row b{color:var(--P)}
+[data-theme=dark] .card .row b{color:#B9AEFF}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:1px 8px;border-radius:10px;margin-right:4px;background:var(--Plt);color:var(--P)}
+.tag.hot{background:var(--Rlt);color:var(--R)}
+.tag.mid{background:var(--Olt);color:var(--O)}
+.trap{font-size:13px;background:var(--Rlt);color:var(--t);border-radius:8px;padding:6px 10px}
+.filter{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.fbtn{font:inherit;font-size:13px;font-weight:700;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:20px;padding:3px 12px;cursor:pointer}
+.fbtn[aria-pressed=true]{background:var(--P);border-color:var(--P);color:#fff}
+figure{margin-top:8px;background:var(--s2);border-radius:12px;padding:12px;overflow-x:auto}
+figcaption{font-size:12px;color:var(--t3);margin-top:6px}
+svg text{font-family:var(--font)}
+.steps{counter-reset:s;list-style:none;display:grid;gap:8px;margin-top:8px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);width:26px;height:26px;border-radius:50%;background:var(--P);color:#fff;font-weight:900;font-size:13px;display:grid;place-items:center}
+.q{border:1.5px solid var(--b);border-radius:12px;padding:14px 16px;margin-top:10px}
+.q p{font-weight:700;margin-bottom:8px}
+.opts{display:grid;gap:6px}
+.opt{font:inherit;font-size:14px;text-align:left;border:1.5px solid var(--b);background:var(--s);color:var(--t);border-radius:8px;padding:8px 10px;cursor:pointer}
+.opt:hover:not([disabled]){border-color:var(--P)}
+.opt.ok{background:var(--Glt);border-color:var(--G)}
+.opt.ng{background:var(--Rlt);border-color:var(--R)}
+.exp{margin-top:8px;font-size:13.5px;background:var(--Plt);border-radius:8px;padding:8px 10px}
+.score{font-weight:800;color:var(--P);margin-top:10px}
+.ipas-back{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));z-index:9999;font:700 13px/1 "Noto Sans TC",system-ui,sans-serif;color:#fff;background:#1F3A5F;padding:10px 14px;border-radius:999px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.ipas-back:hover{background:#2C5282}
+@media(max-width:560px){section{padding:18px 16px}td:first-child{white-space:normal}}
+
+pre.code{position:relative;background:#1C1838;color:#ECE8FF;border-radius:10px;padding:14px 16px;margin-top:8px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.65;tab-size:4}
+pre.code .c{color:#9A93C9;font-style:italic}
+pre.code .k{color:#FFB86C;font-weight:700}
+pre.code .s{color:#A6E3A1}
+.cbtn{position:absolute;top:8px;right:8px;font:700 11px/1 var(--font);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:5px 8px;cursor:pointer}
+.cbtn:hover{background:rgba(255,255,255,.25)}
+.lang{display:inline-block;font:800 11px/1 var(--mono);background:var(--Plt);color:var(--P);border-radius:6px;padding:4px 7px;margin-top:14px}
+.ex{margin-top:16px;padding-top:14px;border-top:1px dashed var(--b)}
+.ex:first-of-type{border-top:none;padding-top:0}
+.out{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:8px;padding:8px 12px;margin-top:6px;white-space:pre;overflow-x:auto;color:var(--t2)}
+code.i{font-family:var(--mono);font-size:.9em;background:var(--s2);border-radius:5px;padding:1px 5px}
+td code{font-family:var(--mono);font-size:12.5px;background:var(--s2);border-radius:5px;padding:1px 5px;white-space:nowrap}
+.note{font-size:13.5px;background:var(--Olt);border-radius:10px;padding:10px 14px;margin-top:10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.bars{display:grid;gap:6px;margin-top:6px}
+.bar{display:grid;grid-template-columns:120px 1fr 54px;gap:8px;align-items:center;font-size:13px}
+.bar i{display:block;height:16px;border-radius:4px;background:var(--P)}
+.bar i.f{background:#C0587E}
+.bar span:last-child{font-variant-numeric:tabular-nums;font-weight:800;text-align:right}
+.bar .trk{background:var(--s2);border-radius:4px}
+.wrap>section{min-width:0}
+.out.wrap-lines{white-space:pre-wrap;word-break:break-all}
+.dl{display:inline-flex;gap:6px;align-items:center;margin-top:10px;font-weight:800;background:var(--P);color:#fff;text-decoration:none;border-radius:10px;padding:9px 16px}
+.dl:hover{background:var(--Pdk)}
+</style>
+<style>.q p{line-height:1.8;font-size:15px;font-weight:500}.q .opt{line-height:1.6}</style></head>
+<body>
+<header class="hero"><div class="hero-in">
+  <div class="eyebrow">Alot 資料夾整理｜ERP × 智慧倉儲 × 智慧配送</div>
+  <h1>ERP、智慧倉儲與配送：課程重點整理與 50 題長文模擬考</h1>
+  <p>整理自 Alot 資料夾中 10/16、10/30、11/6 三次課程的簡報、講義、課堂範例、SAP Warehouse Insights 管理指南與字幕、雙 11 模擬數據集與資安宣導圖。內容涵蓋 ERP 基礎與導入、庫存控制公式、智慧倉儲作業優化、配送與路線最佳化，以及 AI 工具在倉儲管理的應用。所有數字都取自原始資料，數據集的統計由程式實際計算。</p>
+  <nav class="chips" aria-label="頁內目錄"><a class="chip" href="#files">資料清單</a><a class="chip" href="#erp">ERP 基礎</a><a class="chip" href="#impl">導入方法論</a><a class="chip" href="#inv">庫存控制</a><a class="chip" href="#wh">智慧倉儲作業</a><a class="chip" href="#dist">智慧配送</a><a class="chip" href="#sap">SAP WI</a><a class="chip" href="#cases">案例與數據</a><a class="chip" href="#ai">AI 工具</a><a class="chip" href="#quiz">50 題模擬考</a></nav>
+</div></header>
+<main class="wrap">
+<section id="files" aria-labelledby="h-files">
+  <div class="label">資料清單</div>
+  <h2 id="h-files">資料夾裡有什麼</h2>
+  <p class="lead">三次上課的教材依日期分資料夾存放，另有一份 SAP 影片字幕。影音檔（mp4、m4a）沒有逐字稿，本頁未納入。</p>
+<div class="tbl"><table><thead><tr><th>日期</th><th>檔案</th><th>主題</th><th>本頁對應</th></tr></thead><tbody><tr><td>10/16</td><td>01 ERP與庫存管理卓越實務.pdf（42 頁）</td><td>張育瑋老師：ERP 定義、導入生命週期、MIS 層次、物料主檔、ABC／EOQ／ROP、盤點</td><td><a href="#erp">ERP 基礎</a>、<a href="#inv">庫存控制</a></td></tr><tr><td>10/16</td><td>02 AI 賦能的 ERP 導入轉型實務.docx</td><td>Gemini、Workspace、Canvas、GEM、NotebookLM 的倉儲應用提示詞</td><td><a href="#ai">AI 工具</a></td></tr><tr><td>10/16</td><td>03 智慧倉儲技術分析與應用趨勢.docx</td><td>中小型批發業：現況挑戰、智慧倉儲技術、ERP 五大模組、AI＋ERP 案例</td><td><a href="#wh">智慧倉儲作業</a></td></tr><tr><td>10/16</td><td>課堂範例：系統導入方法論.docx</td><td>ERP 導入五階段＋變革管理、專案控制</td><td><a href="#impl">導入方法論</a></td></tr><tr><td>10/16</td><td>課堂範例：3C 商品進出貨明細＋分析建議</td><td>2025 年 9 月 12 項 3C 商品進出貨、負庫存異常、ABC、EOQ</td><td><a href="#cases">案例與數據</a></td></tr><tr><td>10/16</td><td>課堂範例：智慧化倉儲管理員工操作手冊.pdf</td><td>實為 SAP Warehouse Insights 管理指南（2024-10-14）</td><td><a href="#sap">SAP WI</a></td></tr><tr><td>10/30</td><td>智慧倉儲技術與作業優化_簡報.pdf（236 頁）</td><td>吳穎昌老師：安全庫存、AI 預測、持有成本、儲位、波次路徑、AS/RS、AGV/AMR、ROI</td><td><a href="#wh">智慧倉儲作業</a></td></tr><tr><td>11/6</td><td>智慧配送與路線最佳化_簡報.pdf（244 頁）</td><td>B2B／B2C、冷鏈、即時配送、TMS、車隊監控、VRP 節約法、最後一哩、TMS ROI</td><td><a href="#dist">智慧配送</a></td></tr><tr><td>11/6</td><td>智慧倉儲雙11模擬現場_結構化數據集.xlsx</td><td>碼頭、揀貨區、包裝台 7 天數據</td><td><a href="#cases">案例與數據</a></td></tr><tr><td>11/6</td><td>資安宣導_五起事件_簡潔版.png</td><td>2026 年 10–11 月五起資安事件</td><td><a href="#cases">案例與數據</a></td></tr><tr><td>—</td><td>SAP_智慧倉儲_核心部署藍圖.srt</td><td>SAP Warehouse Insights 五階段部署解說</td><td><a href="#sap">SAP WI</a></td></tr></tbody></table></div>
+</section>
+<section id="erp" aria-labelledby="h-erp">
+  <div class="label">10/16 ERP 與庫存管理</div>
+  <h2 id="h-erp">ERP 基礎：定義、演進與系統架構</h2>
+  <p class="lead">ERP 的核心使命是打破資訊孤島：製造、人資、會計、銷售各有系統時，資料交換耗人力又不即時；ERP 把流程資料彙整到單一資料庫。</p>
+<div class="tbl"><table><thead><tr><th>年代</th><th>系統</th><th>管理核心</th></tr></thead><tbody><tr><td>1960s</td><td>MRP 物料需求規劃</td><td>物料清單（BOM）展開、工單與庫存控制</td></tr><tr><td>1970s</td><td>MRP II 製造資源規劃</td><td>產能規劃、生產規劃、財會分析整合</td></tr><tr><td>1990s</td><td>ERP 企業資源規劃</td><td>企業流程即時整合、財務會計導向</td></tr><tr><td>2000s</td><td>ERP II／EERP</td><td>供應鏈協同、e 化企業、數位生態系整合</td></tr></tbody></table></div><div class="cards" style="margin-top:14px"><div class="card"><h3>權威定義</h3><div class="row"><b>Gartner（1990）</b>：跨越企業內外部、優化營運與財務流程的策略性應用軟體。<b>APICS（1995）</b>：以財務會計為導向，整合企業資源滿足客戶訂單。</div></div><div class="card"><h3>三大關鍵特色</h3><div class="row"><b>即時性</b>（交易發生即更新）、<b>整合性</b>（業務、倉儲、財務無縫接軌）、<b>單一真相</b>（共享同一中央資料庫）。</div></div><div class="card"><h3>成功案例</h3><div class="row">Autodesk 導入後 98% 產品一天內交付（原需 2 週）；IBM 產品重新定價由 5 天縮為 5 分鐘、更換零件運送由 22 天縮為 3 天。</div></div><div class="card"><h3>三層式架構</h3><div class="row">資料庫層（存儲）、應用程式層（業務規則與計算）、簡報層（網頁／瀏覽器操作介面），確保負載平衡與安全性。</div></div><div class="card"><h3>MIS 層次</h3><div class="row"><b>TPS</b> 交易處理（營運人員，ERP 所在層）→ <b>DSS</b> 決策支援（中階，模擬與「若…則」）→ <b>EIS</b> 高階主管（戰情看板、關鍵指標）。</div></div><div class="card"><h3>ERP 生態系與 ERP II</h3><div class="row">CRM（客戶關係）、APS（先進規劃排程，補足產能規劃）、BI（商業智慧）；ERP II 延伸到供應商與客戶：電子採購、協同設計、SCM。</div></div></div>
+</section>
+<section id="impl" aria-labelledby="h-impl">
+  <div class="label">導入方法論</div>
+  <h2 id="h-impl">ERP 導入：五階段＋兩條貫穿主軸</h2>
+  <p class="lead">課堂範例的方法論分為前置「初始評估」、核心五階段、上線後「持續改善」，底下貫穿「變革管理」與「專案控制」。</p>
+<div class="tbl"><table><thead><tr><th>階段</th><th>核心任務</th><th>產出</th></tr></thead><tbody><tr><td>初始評估</td><td>釐清痛點、目標、預算；軟體選型（SAP、Oracle、正航、鼎新等）與顧問評估</td><td>選型決策</td></tr><tr><td>1 專案準備</td><td>確定範圍、成立專案小組（雙方 PM、Key User）</td><td>Kick-off 會議、主計畫時程、職責與溝通機制</td></tr><tr><td>2 企業藍圖</td><td>As-Is 訪談、To-Be 設計，與標準功能做差異分析（Gap Analysis）</td><td>藍圖定義書：哪些走標準、哪些客製</td></tr><tr><td>3 系統建置</td><td>參數設定、客製開發、單元測試與整合測試</td><td>設定完成的環境、SOP 初稿</td></tr><tr><td>4 上線規劃</td><td>教育訓練、壓力測試、使用者驗收測試（UAT）、歷史資料轉檔</td><td>正式環境就緒、切換上線計畫（Cutover Plan）</td></tr><tr><td>5 正式上線</td><td>切換系統，通常有 1–3 個月新舊平行運作；戰情室支援到第一次月結</td><td>正常維運、結案報告</td></tr><tr><td>持續改善</td><td>依營運、法規、新需求優化、升級或二次開發</td><td>—</td></tr></tbody></table></div><div class="cards" style="margin-top:14px"><div class="card"><h3>變革管理</h3><div class="row">ERP 導入本質是企業流程再造，會改變工作習慣、引發抗拒；靠高階支持、溝通、激勵與心理建設降低排斥。</div></div><div class="card"><h3>專案控制</h3><div class="row">監控範疇、時間、成本、品質；避免範疇無限擴大（Scope Creep），用週／月進度會議控管風險。</div></div><div class="card"><h3>鋼鐵團隊</h3><div class="row">督導委員會（高階決策）、專案經理（進度預算風險）、應用顧問（MM、FI、PP 模組）、關鍵使用者（傳承操作）、技術顧問（主機與網路）。</div></div><div class="card"><h3>關鍵成功因素與選型</h3><div class="row">CSF：<b>高階主管支持</b>（第一關鍵）、<b>適當的變革管理</b>。選型看供應商穩定度、技術平台、TCO、功能完整度、售後服務、同業口碑。</div></div><div class="card"><h3>兩波段績效</h3><div class="row">第一波系統上線：消除孤島、資料整合；第二波流程最佳化：用數據優化庫存週轉、產能與服務水準。</div></div><div class="card"><h3>批發業選型重點</h3><div class="row">雲端化、API 擴展性（串蝦皮、momo、物流）、合規與在地化（電子發票）。瓶頸常不是技術，而是流程標準化與員工習慣。</div></div></div>
+</section>
+<section id="inv" aria-labelledby="h-inv">
+  <div class="label">庫存控制</div>
+  <h2 id="h-inv">庫存管理的公式與制度</h2>
+  <p class="lead">兩位老師的簡報都用到同一組公式；10/30 簡報的範例倉用實際數字示範，是計算題的最佳素材。</p>
+<div class="tbl"><table><thead><tr><th>公式／概念</th><th>內容</th><th>範例倉數字</th></tr></thead><tbody><tr><td>安全庫存 SS</td><td>Z × σ × √LT（95% 服務水準 Z≈1.65；99% Z≈2.33）</td><td>手機殼 1.65×30×√4＝99；耳機 1.65×15×3≈75；冷藏飲 1.65×12×1.414≈28</td></tr><tr><td>再訂購點 ROP</td><td>平均日需求 × LT ＋ SS</td><td>手機殼 120×4＋99＝579；耳機 360＋75＝435；冷藏飲 40＋28＝68</td></tr><tr><td>服務水準 95%→99%</td><td>Z 1.65→2.33，SS 約增加四成</td><td>手機殼 99→140；耳機 75→105；冷藏飲 28→40</td></tr><tr><td>交期 9→16 天</td><td>SS 與 ROP 都要重算；ERP 參數沒更新就會連續缺貨</td><td>耳機 SS 75→99、ROP 435→739（落差 304 件）</td></tr><tr><td>EOQ</td><td>√(2DS／H)；D 年需求、S 每次訂購成本、H 年單位持有成本</td><td>平衡持有成本與訂購成本</td></tr><tr><td>有效庫存</td><td>現有量＋已訂未交－已指定用途</td><td>—</td></tr><tr><td>持有成本</td><td>約占產品價值 20–25%／年：資金、空間、過時、折價</td><td>三品項年持有成本約 5.9 萬；最花錢的是單價高、交期長的耳機（41,250 元）</td></tr><tr><td>ABC 分類</td><td>張老師版：A 品項 15% 價值 80%、B 30%／15%、C 55%／5%；吳老師版：前約 20% SKU 貢獻約 80%</td><td>A 類放黃金儲位、高安全庫存</td></tr><tr><td>XYZ（變異係數 CV＝σ÷日均）</td><td>X＜0.3 穩定、Y 0.3–0.5 有波動、Z＞0.5 不規律（示意門檻）</td><td>手機殼 AX、耳機 AY、冷藏飲 BZ；AZ 最值得投資預測</td></tr></tbody></table></div><div class="cards" style="margin-top:14px"><div class="card"><h3>物料主檔是流程的基因</h3><div class="row">包含技術資訊（編號、單位、圖號）、庫存資訊（儲位、安全存量、批號）、訂購資訊（前置時間、批量、供應商）、成本資訊。編號原則：單一性、簡單性、彈性、完全性。</div></div><div class="card"><h3>庫存計價</h3><div class="row">移動平均價隨每次入庫更新、最貼近市場；標準價固定，用於分析生產效率與價差。存貨以成本與淨變現價值孰低衡量。</div></div><div class="card"><h3>呆料與廢料</h3><div class="row">呆料（Slow-moving）週轉低但功能未喪失；廢料（Obsolete）已喪失功能。處置：自行加工、調撥、拼修重組、拆零利用或出售。</div></div><div class="card"><h3>盤點制度</h3><div class="row">定期盤點（年度結算稽核）、循環盤點（依 ABC 持續清點、不停工）、複合盤點；目標料帳 100% 吻合。</div></div><div class="card"><h3>庫齡處理</h3><div class="row">0–90 天正常；91–180 天移出黃金儲位、促銷；181–365 天列呆滯、評估淨變現價值；＞365 天報廢、退回或出清，可能提列跌價。</div></div><div class="card"><h3>MM 跨模組</h3><div class="row">FI／CO 自動過帳與實際成本；SD 可用性檢查（ATP）、保留與扣減；PP 需求轉撥、MRP 計算與依賴需求保留。</div></div></div>
+</section>
+<section id="wh" aria-labelledby="h-wh">
+  <div class="label">10/30 智慧倉儲作業優化</div>
+  <h2 id="h-wh">智慧倉儲：預測、儲位、波次、設備與 ROI</h2>
+  <p class="lead">範例倉：台中混合倉 5,000 m²、樓高 10 m、SKU 2 萬、日均 3,000 單、揀貨員 30 人（月薪 25,000）、已有 WMS 與條碼但補貨靠 Excel、固定儲位；14:00 宅配截單、17:00 門市截單，旺季為平日 3–5 倍。</p>
+<div class="tbl"><table><thead><tr><th>主題</th><th>重點</th></tr></thead><tbody><tr><td>轉型四階段</td><td>數位化（WMS、條碼／RFID）→ 自動化（AGV、輸送線、AS/RS）→ 智慧化（預測、路徑、動態儲位、預測維護）→ 自主化。範例倉位於數位化與自動化之間。</td></tr><tr><td>預測模型</td><td>移動平均（入門）、ARIMA（趨勢季節、可解釋）、Prophet（假日效應，需 2 年以上數據）、XGBoost／LightGBM（促銷節慶多特徵，2 萬 SKU 起步首選）、LSTM、TFT。</td></tr><tr><td>預測時間層次</td><td>短期 1–2 週 MAPE＜10%；中期 1–3 月 MAPE＜20%；長期季／年看趨勢方向。</td></tr><tr><td>資料準備</td><td>至少 2–3 年、粒度到日；時序資料依時間切分（訓練 70–80%、測試為最新 20–30%），不可隨機打散。四個陷阱：缺貨的零、促銷沒標記、料號換號、B2B／B2C 混算。</td></tr><tr><td>評估指標</td><td>MAE 直觀；MAPE 可跨品項比較但實際值接近 0 會失真（長尾品改看 MAE）；RMSE 對大誤差敏感。</td></tr><tr><td>試點</td><td>Top 200 SKU、3 個月：先用移動平均建立基準 MAPE，再用 Prophet 或 XGBoost 比較，每週回寫 SS／ROP。</td></tr><tr><td>儲位</td><td>揀貨占倉儲勞動成本 50–60%，萬坪倉揀貨員一天走 15–20 公里。黃金儲位看距離、好拿高度、重貨放低、關聯品相鄰。Apriori：支持度是一起出現的頻率，信賴度是買 A 也買 B 的機率。移庫有成本，建議不等於命令。</td></tr><tr><td>波次與路徑</td><td>波次從「車幾點來」倒推。最近鄰法毫秒級、適合急單；遺傳演算法品質高、適合批次預排；蟻群適應動態；A* 保證最短、AGV/AMR 常用。路徑優化可縮短行走 20–40%。</td></tr><tr><td>揀貨防錯</td><td>Pick-to-Light、Put-to-Light、語音揀貨（冷鏈、戴手套）、AR 眼鏡。小件拆零先用亮燈＋相似品不相鄰。</td></tr><tr><td>AS/RS</td><td>單元負載（托盤，40 m＋）、迷你負載（料箱 10–20 m）、VLM（零件，慢）、穿梭車（料箱，很快，適合冷鏈）。系統層級：ERP 天／週、WMS 小時／天、WCS 秒／毫秒。</td></tr><tr><td>AGV vs AMR</td><td>AGV 固定路徑（磁條、雷射、二維碼），適合路線多年不變的製造廠；AMR 用 SLAM＋LiDAR 自主導航、隨插即用。FMS 管理多機任務、路徑、充電；急單優先等業務規則由 WMS 決定。</td></tr><tr><td>ROI</td><td>五項效益：揀貨人力、退貨成本、持有成本、空間效率、設備停機。範例倉 30 人×20%＝6 人，年省 180 萬，約 18 個月回本；AMR 案例 14 個月、AS/RS 一般 4–8 年。報告先講金額。24 個月藍圖：數位化 → 預測 → 路徑 → 設備；雙軌並行至少 3 個月。</td></tr></tbody></table></div><div class="cards" style="margin-top:14px"><div class="card"><h3>批發業智慧倉儲（講義）</h3><div class="row">AGV 轉向 AMR＋RaaS 租賃；數位孿生先模擬貨架與動線；分階段導入：雲端 WMS＋行動掃描（庫存 100% 準確）→ Pick-to-Light 或 AI 儲位 → 少量 AMR 或自動分揀。</div></div><div class="card"><h3>AI＋ERP 案例（講義）</h3><div class="row">預測型 AI：準確率提升 15–20%、持有成本降 12%；GenAI 助理（Copilot、Joule）決策從天變秒；Agentic AI 對帳與採購：結帳週期縮短 50%；視覺 AI：入庫速度提升 25%。前提是 SSOT 單一真實資料來源。</div></div></div>
+</section>
+<section id="dist" aria-labelledby="h-dist">
+  <div class="label">11/6 智慧配送</div>
+  <h2 id="h-dist">智慧配送與路線最佳化</h2>
+  <p class="lead">範例倉配送版：B2C 常溫約 2,480 單（委外，每件約 80 元）、B2C 低溫約 120 單（每件約 160 元）、B2B 約 400 張單送 60 家門市（自有 6 台 3.5 噸車，每車每天約 3,600 元）。門市 16:30 裝車、17:00 出車、18:00–21:30 收貨。</p>
+<div class="tbl"><table><thead><tr><th>主題</th><th>重點</th></tr></thead><tbody><tr><td>B2B vs B2C</td><td>B2B 看整車裝載率（計畫性、托盤、越庫）；B2C 看配送密度（碎片化、單件成本）。範例倉是 B2C 委外＋B2B 自有車的混合模式。</td></tr><tr><td>運輸名詞</td><td>FTL 整車、LTL 零擔、3PL 第三方物流；最後一哩約占供應鏈總成本 41%。</td></tr><tr><td>冷鏈</td><td>冷藏 7°C 以下、冷凍 −18°C 以下、藥品依標示（如 2–8°C）。食品看 HACCP，藥品看 GDP（藥事法第 53 條之 1）。重點是警報後的 SOP 與權責；多溫層車依訂單調比例、反序裝車。</td></tr><tr><td>即時配送</td><td>前置倉（暗倉）服務半徑約 2 公里、10–30 分鐘送達，只放高頻穩定 A 類品；眾包車隊用來消化波峰波谷。</td></tr><tr><td>TMS 鐵三角</td><td>訂單整合（OMS）、運輸計畫（決定哪張單上哪台車、先送哪裡）、即時監控（GPS、電子圍籬）。訂單整合五步中「地址正規化」最常被忽略、卻決定路線準不準。</td></tr><tr><td>配載五限制</td><td>載重、材積、溫層、時窗、裝卸順序（先送的後裝）。</td></tr><tr><td>車隊 KPI</td><td>裝載率、空駛率、準時率、每車日停靠數、單點成本、每公里油耗。系統斷線時啟動降級運作（人工派車 SOP）。</td></tr><tr><td>VRP</td><td>TSP 一台車排序；VRP 多台車分組＋排序。CVRP 容量、VRPTW 時間窗（門市 18:00–21:30 收貨）、MDVRP 多倉。10 個點有 3,628,800 種順序（組合爆炸）。</td></tr><tr><td>節約法</td><td>s(i,j)＝d(O,i)＋d(O,j)－d(i,j)；離倉庫遠又彼此近的組合節約最多。示範：一點一趟 108 km、經驗派車 80 km、節約法 55 km（比經驗少約 31%）。</td></tr><tr><td>配送密度</td><td>每車每日 3,600 元（司機 2,000、折舊保險 1,000、油料 600），固定成本占 83%。每車 10→12 家：6 台變 5 台，每店次 360→300 元，一年約省 108 萬。二次投遞等於人力與停留成本再付一次。</td></tr><tr><td>TMS ROI</td><td>30 台車、導入 200 萬、年維護 50 萬。樂觀版（油錢＋折舊都省 15%）年淨效益 460 萬、約 5.2 個月回本；保守版只算油錢，年淨效益 190 萬、約 12.6 個月。先報保守版，再列加分項。</td></tr></tbody></table></div>
+</section>
+<section id="sap" aria-labelledby="h-sap">
+  <div class="label">操作手冊＋字幕</div>
+  <h2 id="h-sap">SAP Warehouse Insights：部署五階段</h2>
+  <p class="lead">「智慧化倉儲管理員工操作手冊」實際上是 SAP Warehouse Insights 管理指南；字幕檔把它整理成五階段藍圖。</p>
+<div class="tbl"><table><thead><tr><th>階段</th><th>重點</th></tr></thead><tbody><tr><td>1 技術前提</td><td>連接地端系統必須有 SAP Cloud Connector；建議使用 Google Chrome；資料中心選離多數使用者最近的（延遲是即時優化的殺手）。</td></tr><tr><td>2 連接 SAP EWM</td><td>必須啟用 OData 服務（如 /SCWM/WI_INTEGRATION 與資源執行用的 OData V4 服務組）。雲連接器存取策略選「路徑及所有子路徑」、BTP 代理類型 OnPremise、指定用戶端時要建 sap-client 屬性。舊版 EWM 需實施對應 SAP Note。</td></tr><tr><td>3 整合 IoT</td><td>x、y、z 座標為浮點數、單位公尺；時間為長整數 Unix 毫秒。可在佈局圖看設備軌跡並設地理圍欄。</td></tr><tr><td>4 使用者角色</td><td>CONFIGURATION_EXPERT（業務配置專家，可建倉、上載主資料、定義 IoT）、WAREHOUSE_CLERK（分析人員，不能改核心配置）、WAREHOUSE_ACCESS（控制可存取哪個倉庫，屬性值填 * 代表全部）。流程：建角色 → 套屬性 → 綁成角色集合 → 指派使用者。</td></tr><tr><td>5 業務配置</td><td>建立倉庫節點（編號、時區、長度單位）；整個模型必須使用同一長度單位。測試／演示授權最多 5 個倉庫編號、上載最多 5 GB；含已確認訂單或任務的資料總天數不能超過 90 天；用 PDF 定義倉位坐標時需提供兩組參考坐標。</td></tr></tbody></table></div>
+</section>
+<section id="cases" aria-labelledby="h-cases">
+  <div class="label">案例與數據</div>
+  <h2 id="h-cases">三份實作素材：3C 進出貨、雙 11 數據、資安事件</h2>
+  <p class="lead">這三份資料最適合出情境題：一份有帳務異常、一份可以算出瓶頸、一份是近期真實事件。</p>
+<h3>3C 商品進出貨明細（2025/9/1–9/15）</h3><div class="tbl"><table><thead><tr><th>觀察</th><th>內容</th></tr></thead><tbody><tr><td>負庫存</td><td>旗艦手機（256G）沒有進貨紀錄，9/1 出 5、9/4 出 8、9/14 出 2，帳面結存 −5。可能原因：單據過帳延遲（未入帳先發出）、退貨未登錄、預售預支扣量。</td></tr><tr><td>處理</td><td>立即循環盤點、追溯未過帳入庫單；已入庫未取得發票者暫估入庫（借：庫存商品；貸：應付帳款—暫估）；ERP 啟用「禁止負庫存」控制。</td></tr><tr><td>動銷差異</td><td>15 吋 i7 筆電 50 台只出 3 台（滯銷風險）；13 吋 i5 進 20 台隔天出 5 台；Mini 智能音箱進 50 台未出貨。</td></tr><tr><td>ABC 與 EOQ</td><td>旗艦手機、i7 筆電、RTX 4080 屬 A 類（每日盤點）；滑鼠、行動電源屬 C 類（兩箱補貨法）。為了大量折扣一次進 1,000 個行動電源，持有成本會上升。</td></tr></tbody></table></div><h3 style="margin-top:16px">雙 11 模擬數據集（11/8–11/14，實際計算）</h3><div class="tbl"><table><thead><tr><th>工作表</th><th>計算結果</th></tr></thead><tbody><tr><td>01 進貨碼頭（35 筆）</td><td>7 筆嚴重堵塞、19 筆警戒、9 筆正常；Dock 05 七天全是警戒；平均卸貨 23–27 板／小時。</td></tr><tr><td>02 揀貨區（35 筆）</td><td>Zone D（複合重物）人均吞吐最低（約 80.6 件／時）、PDA 延遲最高（約 2.27%）；Zone B 儲位佔用最高達 97%。</td></tr><tr><td>03 包裝台（56 筆）</td><td>以「8 小時 ÷ 每單秒數」換算，每天複核量都超過產能：產能約 4,250–5,620 單，實際 5,797–7,671 單（11/10 約 1.5 倍）；15 筆紙箱緩衝材低於安全線；OTIF 最低約 92%。包裝台是最明顯的瓶頸。</td></tr></tbody></table></div><h3 style="margin-top:16px">資安宣導：一個月內 5 起事件（2026/10–11）</h3><div class="tbl"><table><thead><tr><th>事件</th><th>原因與提醒</th></tr></thead><tbody><tr><td>法國超市冷藏控制系統</td><td>舊款控制器暴露在網路上，遭遠端改除霜與溫控；停產設備要汰換，連網設備要隔離網段。</td></tr><tr><td>幣安熱錢包約 63 億美元</td><td>疑為工程師筆電遭入侵取得提領權限；不裝來路不明軟體，權限用多少給多少。</td></tr><tr><td>《勝利女神：妮姬》PC 啟動器</td><td>官方下載伺服器被入侵夾帶木馬；公司電腦不裝遊戲，官方來源也可能被植入。</td></tr><tr><td>永豐銀行新網銀</td><td>418 名客戶、427 筆、約 4,476 萬元異常轉出，利用外國系統供應商的安全設定漏洞；定期檢查交易通知。</td></tr><tr><td>Windows 11 小畫家</td><td>開啟特製圖檔可能執行惡意程式（CVSS 8.1），修補走 Microsoft Store；不開來路不明圖檔、確認已更新。</td></tr></tbody></table></div>
+</section>
+<section id="ai" aria-labelledby="h-ai">
+  <div class="label">10/16 AI 賦能</div>
+  <h2 id="h-ai">AI 工具在倉儲與 ERP 的應用</h2>
+  <p class="lead">講義用同一個「智慧化倉儲管理系統導入」情境，示範各種 Google AI 工具的提示詞。</p>
+<div class="tbl"><table><thead><tr><th>工具</th><th>倉儲情境中的用法</th></tr></thead><tbody><tr><td>Gemini</td><td>設定角色（智慧物流專家）、繁體中文回覆；寫導入企劃文案（痛點標題、核心亮點、CTA）；多份 PDF、白板照片、會議錄音彙整成報告；影片逐字稿轉 SRT（時間碼 hh:mm:ss,sss）。</td></tr><tr><td>Workspace 擴充</td><td>@Gmail 摘要與草擬回覆、@Google 文件、@Calendar 加入導入時程（7/1–9/30）、@Keep 與 @Tasks 記錄工作事項。</td></tr><tr><td>Canvas</td><td>依報告深化「倉儲營運流程優化」，加入補貨時機、AGV／AS/RS／RFID 效益與 ROI 對照表；製作 15 頁簡報並套用設計風格。</td></tr><tr><td>GEM</td><td>建立「24 小時客服工程師」，上傳操作手冊回答員工問題，無法回答時改請寄信至資訊部。</td></tr><tr><td>Nano Banana</td><td>把進出貨試算表轉成資訊圖表，指定受眾、字體、配色、圖表類型與繁體中文精準度。</td></tr><tr><td>Deep Research／引導式學習</td><td>深入研究資料並匯出；一步步學 ABC 分析、JIT 補貨與安全庫存。</td></tr><tr><td>NotebookLM</td><td>上傳進出貨明細與研究報告，產生資訊圖表、10 頁簡報、資料表，並設定用新進倉管聽得懂的語言解說。</td></tr></tbody></table></div><div class="cards" style="margin-top:14px"><div class="card"><h3>Prompt 結構（11/6 小組任務）</h3><div class="row">角色、數據、限制、問題、輸出要求。AI 的推導是草稿：要檢查是否引用數據、單位換算（秒／單換成 8 小時產能）、有沒有把分區單量誤當總量，並自己驗算。</div></div></div>
+</section>
+<section id="quiz" aria-labelledby="h-quiz">
+  <div class="label">自我檢測</div>
+  <h2 id="h-quiz">50 題長文模擬考</h2>
+  <p class="lead">題目依資料夾內容設計，四個選項長度相近。點選答案後立即顯示正解與解析。</p>
+  <div id="qz"></div>
+  <p class="score" id="qscore" aria-live="polite">已作答 0 / 50</p>
+</section>
+</main>
+<a href="./" class="ipas-back" aria-label="回到目錄">☰ 目錄</a>
+<script>
+var Q=[["【ERP 基礎】情境：某中型製造商的業務用 Excel 接單、倉庫用獨立的進銷存軟體、會計月底才從兩邊匯總報表，常發生業務承諾交期但倉庫早已缺料的情況。顧問建議導入 ERP。依課程對 ERP 核心使命的說明，最能解決這個問題的是哪一項特色？", ["為每個部門各自加購更進階的獨立管理軟體", "建立跨部門 LINE 群組即時通知缺料狀況", "各部門共用單一資料庫，交易即時更新", "請會計改成每週彙整一次報表以縮短落差"], 2, "ERP 的三大特色是即時性、整合性與單一真相；問題根源是資訊孤島與資料落差，必須讓各部門共用同一個中央資料庫。"], ["【ERP 基礎】情境：講師請學員依年代排列系統演進。學員甲寫出：MRP 重視 BOM 展開與庫存控制；MRP II 加入產能、生產規劃與財會整合；ERP 強調企業流程即時整合；ERP II 則延伸到供應鏈協同與電子化。下列哪一項描述 ERP II 最正確？", ["連結供應商與客戶，進行電子採購、協同設計與 SCM", "取代所有外部系統，企業不再需要與夥伴交換資料", "只聚焦廠內 BOM 展開，計算物料需求與工單用料", "以財務會計為唯一核心，不處理任何物流與生產"], 0, "ERP II 的定位是跨企業協同：e-Procurement、Collaborative Design、SCM，把 ERP 從企業內部延伸到上下游。"], ["【ERP 基礎】情境：總經理想要一個戰情中心看板，能看到全公司利潤與關鍵指標；生管主任想做「若訂單增加 20%，產能是否足夠」的模擬；倉管人員每天在系統登錄入出庫。依 MIS 層次，這三種需求分別對應哪一組？", ["總經理 TPS、生管主任 EIS、倉管人員 DSS", "總經理 EIS、生管主任 DSS、倉管人員 TPS", "總經理 DSS、生管主任 TPS、倉管人員 EIS", "三者都屬於 TPS，只是使用的報表格式不同"], 1, "TPS 是交易導向、線上即時（ERP 所在層）；DSS 做模擬與「若…則」分析；EIS 給高階主管看戰略決策與關鍵指標。"], ["【ERP 基礎】情境：IT 主管向老闆解釋公司 ERP 為何採用三層式架構：資料庫層、應用程式層、簡報層。老闆問：「為什麼不全部裝在一台電腦上就好？」下列說明何者最符合課程內容？", ["分層後使用者可以直接修改資料庫內容，不必透過應用程式處理", "分層只是為了讓軟體授權費用增加，對系統效能並沒有任何影響", "三層架構的目的是讓每個部門擁有自己獨立的資料庫，各自維護", "分層讓資料存儲、業務計算與操作介面分開，兼顧負載平衡與安全"], 3, "三層式主從架構：資料庫層負責存儲、應用程式層處理業務規則與計算、簡報層是使用者介面，確保負載平衡與安全性。"], ["【ERP 基礎】情境：公司已導入 ERP，但業務抱怨無法做好客戶關係經營，生管抱怨 ERP 的產能規劃太粗糙，老闆抱怨報表一堆卻看不出決策方向。依「以 ERP 為核心的數位生態系」，這三個痛點分別該搭配哪類系統？", ["業務用 APS、生管用 BI、老闆用 CRM", "業務用 BI、生管用 CRM、老闆用 APS", "業務用 CRM、生管用 APS、老闆用 BI", "三者都只要再加買 ERP 的進階授權即可"], 2, "CRM 優化銷售與行銷流程；APS 先進規劃排程，補足 ERP 對複雜產能規劃的限制；BI 把資料轉為決策價值。"], ["【ERP 導入】情境：ERP 專案進入第二階段，顧問逐一訪談生管、採購、業務與財務，整理現行作業流程，並設計導入後的理想流程，再與系統標準功能比對，決定哪些流程走標準、哪些要客製開發。這個階段的主要產出是什麼？", ["專案啟動大會簡報，宣布專案範圍與各組織職責", "正式結案報告，彙整第一次月結後的系統運作狀況", "切換上線計畫書，記錄舊系統停用與資料轉檔時程", "企業藍圖定義書，含現況、未來流程與差異分析結果"], 3, "企業藍圖規劃（Business Blueprint）做 As-Is／To-Be 與 Gap Analysis，產出藍圖定義書；Cutover Plan 屬上線規劃階段。"], ["【ERP 導入】情境：系統上線前一個月，專案經理安排終端使用者教育訓練、壓力測試與使用者驗收測試，同時要把基本資料、開帳庫存與應收應付轉入新系統。依導入方法論，這些工作屬於哪個階段？最關鍵的是哪一項？", ["專案準備階段；成立專案小組最關鍵", "企業藍圖規劃階段；教育訓練最關鍵", "持續改善階段；版本升級最關鍵", "上線規劃階段；歷史資料轉檔最關鍵"], 3, "上線規劃（Final Preparation）包含教育訓練、壓力測試、UAT，最關鍵的是歷史資料轉檔，產出正式環境與 Cutover Plan。"], ["【ERP 導入】情境：ERP 正式切換後，財務長擔心新系統出錯導致月結失敗，要求「第一天就把舊系統完全關掉，避免大家偷懶用舊的」。依課程方法論，較穩健的做法是？", ["只讓財務部先上線新系統，其他部門繼續沿用舊有系統", "依財務長要求立即關閉舊系統，並禁止任何人工換單作業", "安排 1–3 個月新舊平行運作，成立戰情室支援到首次月結", "延後上線半年，等所有使用者都完全熟悉後才開始切換"], 2, "正式上線通常伴隨 1–3 個月新舊平行運作，顧問與 IT 成立戰情室解決問題，直到順利完成第一次月結。"], ["【ERP 導入】情境：ERP 專案進行到一半，各部門不斷提出「順便加個報表」「這個畫面也客製一下」，專案時程已延誤兩個月、預算超支。依方法論中貫穿全期的支持架構，這屬於哪類問題？應如何處理？", ["範疇蔓延，應透過專案控制管理範疇與時程", "變革阻力，應增加員工獎金讓大家接受新系統的設計", "選型錯誤，應立即終止專案並重新挑選 ERP 供應商", "技術問題，應更換資料庫平台提升系統處理效能"], 0, "專案控制監控範疇、時間、成本、品質，避免 Scope Creep；透過週／月進度會議做風險控管與議題追蹤。"], ["【ERP 導入】情境：倉庫老員工私下抱怨：「新系統一直要掃條碼，以前憑記憶找貨還比較快。」導入後半年，仍有人偷偷用紙本記帳。依課程，這個狀況最需要強化的是哪一項？", ["系統建置：再增加客製程式，讓系統完全照舊流程運作", "初始評估：重新做軟體選型，改買操作更簡單的系統", "專案控制：縮短專案時程，讓上線日期提前到下個月", "變革管理：靠高階支持、溝通、激勵與教育訓練降低抗拒"], 3, "ERP 導入本質是流程再造，必然改變工作習慣；變革管理與高階主管支持是關鍵成功因素。"], ["【ERP 導入】情境：導入專案的組織架構中，有一位來自倉儲部、熟悉現場作業的資深課長，負責參與藍圖討論、測試系統，並在上線後教同事操作。他在專案中的角色是？", ["技術顧問（MIS）：負責系統主機、資料庫與網路", "應用顧問：負責 MM、FI、PP 等模組的專業建置", "關鍵使用者：產業知識專家，負責傳承操作", "督導委員會：負責高階決策與跨部門資源協調"], 2, "關鍵使用者是產業知識專家、負責傳承操作；應用顧問負責模組建置，技術顧問負責主機與網路。"], ["【ERP 導入】情境：一家中小型批發商比較三套 ERP：甲功能最多但授權昂貴、乙有完整的蝦皮與物流 API 且支援電子發票、丙是國外系統但沒有在地服務。依講義對批發業的選型建議，最合適的考量是？", ["國外系統技術先進，在地服務可以等日後再補足", "優先考量雲端、API 擴展與在地合規，選乙", "先買最便宜的系統，等營收成長後再全面更換", "功能越多越好，即使總成本較高也應優先選擇甲"], 1, "批發業選型重點：雲端化、API 擴展性（電商平台、物流）、合規與在地化（電子發票）；同時考量 TCO 與售後服務。"], ["【庫存控制】情境：範例倉的手機殼日均需求 120 件、日需求標準差 30 件、實際交期 4 天，目標服務水準 95%（Z≈1.65）。採購主管問再訂購點應設多少。依課程公式，下列何者正確？", ["安全庫存約 99 件，再訂購點約 579 件", "安全庫存約 99 件，再訂購點約 480 件", "安全庫存約 50 件，再訂購點約 530 件", "安全庫存約 198 件，再訂購點約 678 件"], 0, "SS＝1.65×30×√4＝99；ROP＝120×4＋99＝579。480 只是交期內需求，漏了安全庫存。"], ["【庫存控制】情境：藍牙耳機的供應商實際交期已從 9 天拉長到 16 天，但 ERP 參數仍停在 9 天。日均需求 40 件、σ＝15、Z＝1.65。若不更新參數，會發生什麼事？", ["ROP 仍用 739 觸發，實際應為 435，會庫存過多", "ROP 仍用 435 觸發，實際應為 739，會連續缺貨", "交期拉長會讓需求標準差變小，所以不必調整", "交期只影響安全庫存，再訂購點完全不受影響"], 1, "新 SS＝1.65×15×√16＝99、ROP＝40×16＋99＝739；舊參數 435 太晚觸發，差距 304 件。交期應以實際到貨紀錄計算。"], ["【庫存控制】情境：主管要求三個品項的服務水準從 95% 一律提高到 99%，Z 值由 1.65 變為 2.33，其他參數不變。財務擔心庫存資金增加。依課程示範，較合理的判斷是？", ["應該所有品項一律設為 100%，確保永不缺貨", "安全庫存只會增加 4%，對資金完全沒有明顯影響", "服務水準提高後，安全庫存反而會因此而降低", "安全庫存約增四成；A 類值得，C 類未必"], 3, "Z 由 1.65 到 2.33，安全庫存約 +41%。服務水準應依 ABC 分級，A 類設高、C 類設低。"], ["【庫存控制】情境：分析師計算安全庫存時，把「缺貨期間每天銷量為 0」直接放進需求資料計算平均與標準差。主管認為這樣會失真。下列說明何者正確？", ["只要把 0 換成前一天的銷量，就一定能得到正確的需求值", "缺貨期間的 0 是真實需求，應保留以反映淡季的低迷狀況", "缺貨時銷量 0 不等於需求 0，會低估需求並扭曲 σ", "σ 只和交期有關，需求資料是否有 0 並不會影響結果"], 2, "這是隨堂測驗 2 的重點；缺貨的零也是資料清洗的四大陷阱之一，應標記缺貨期間再處理。"], ["【庫存控制】情境：手機殼日均出貨金額高、變異係數 0.25；藍牙耳機金額最高、CV 0.38；冷藏保健飲金額較低、CV 0.6。依 ABC × XYZ 九宮格，下列管理方式何者最一致？", ["手機殼 AZ 人工審核預測；冷藏飲 CX 批量補貨低頻盤點", "三者都屬 A 類，應一律提高安全庫存並放在高層儲位", "依 CV 排序即可，金額高低對庫存策略沒有任何影響", "手機殼 AX 自動補貨並放黃金儲位；冷藏飲 BZ 重點監控"], 3, "CV＜0.3 為 X、0.3–0.5 為 Y、＞0.5 為 Z。手機殼 AX、耳機 AY、冷藏飲 BZ。AZ 最值得投資預測。"], ["【庫存控制】情境：採購主管想用 EOQ 決定行動電源的每次訂購量。供應商提出「一次訂 1,000 個享大量折扣」，但目前半個月只出貨 25 個。依 EOQ 的原理，下列判斷何者最恰當？", ["EOQ 平衡訂購與持有成本；大量進貨推高持有成本", "EOQ 公式是 D 乘 S 乘 H，與需求量無關", "EOQ 只考慮訂購成本，訂越多次總成本一定越低", "有折扣就應一次訂滿，持有成本對電子產品可忽略"], 0, "EOQ＝√(2DS／H)，在訂購準備成本與持有成本間找平衡；3C 報告指出大量訂購會讓倉儲占用與電池損耗等持有成本上升。"], ["【庫存控制】情境：倉管查詢系統，某料件現有量 500、已發出採購單但尚未入庫 300、已保留給生產工單與客戶訂單 450。業務問：「我還能再接多少這個料件的新單？」依課程定義，有效庫存是多少？", ["1,250（500＋300＋450）", "800（500＋300）", "50（500－450）", "350（500＋300－450）"], 3, "有效庫存＝現有量＋已訂未交－已指定用途＝500＋300－450＝350。"], ["【庫存控制】情境：倉庫有一批零件已 200 天沒有異動，但功能完好；另一批因受潮變質已無法使用。財務要求分類處理。依課程定義與庫齡處置原則，下列何者正確？", ["兩者都不必處理，等盤點時再一起決定即可", "前者是呆料可調撥促銷，後者是廢料", "前者是廢料，後者是呆料，可以拼修重組再出售", "兩者都屬廢料，應立即報廢並全數提列跌價損失"], 1, "呆料（Slow-moving）週轉低但功能未喪失；廢料（Obsolete）已喪失功能。181–365 天列呆滯清單並評估淨變現價值。"], ["【智慧倉儲作業】情境：範例倉已有 WMS 與條碼，但補貨靠 Excel、儲位固定，沒有任何自動化設備。董事長想直接跳到「AI 自主化倉庫」。依轉型四階段，範例倉目前位置與較務實的下一步是？", ["尚未開始數位化；必須先全面汰換現有 WMS", "介於數位化與自動化之間；先補資料從痛點試點", "已達自主化階段；只需增加更多機器人數量即可", "已達智慧化階段；可直接導入全倉自主決策系統"], 1, "WMS 與條碼代表已數位化，但沒有 AGV、AS/RS、預測與動態儲位。課程強調從痛點開始，而不是從最酷的技術開始。"], ["【智慧倉儲作業】情境：範例倉有 2 萬個 SKU，需求受促銷、節慶、廣告等多種因素影響，歷史資料有 3 年。IT 想挑一個起步的預測模型，既能處理多特徵又訓練快。依課程，最合適的是？", ["XGBoost／LightGBM，擅長多特徵但需做特徵工程", "LSTM，資料只要一年就足夠且不需要大量的算力", "ARIMA，能輕鬆同時處理上百個外部特徵變數", "移動平均，簡單易懂且能自動處理促銷與節慶效應"], 0, "隨堂測驗 4 的答案。移動平均抓不到趨勢與季節；ARIMA 難處理多變數；LSTM 需要大量數據與算力。"], ["【智慧倉儲作業】情境：資料科學家把 3 年日別出貨資料隨機打散，取 80% 訓練、20% 測試，測試結果非常好，但上線後預測明顯失準。依課程的資料準備原則，最可能的問題是？", ["時序資料應依時間切分，測試集要用最新一段資料", "資料量太大造成過度擬合，應只保留最近一個月", "隨機切分沒有問題，失準是因為模型選擇錯誤", "訓練集比例太低，應改成 95% 訓練、5% 測試"], 0, "時序資料不可隨機打散，訓練約 70–80%、測試用最新 20–30%，才能模擬真實上線情境。"], ["【智慧倉儲作業】情境：評估長尾品項的預測表現時，某品項實際銷量常為 0 或 1 件，報表上 MAPE 動輒好幾百 %。主管據此認為模型完全不能用。依課程，較恰當的解讀是？", ["MAPE 數字很大一定代表模型錯誤，應立即停用該模型", "把所有實際值為 0 的資料刪除，MAPE 就能變得正常", "MAPE 以實際值為分母，接近 0 會失真；改看 MAE", "應改看 RMSE，因為 RMSE 對小數值完全不會產生誤差"], 2, "MAPE 在實際值接近 0 時會被無限放大；長尾品改看 MAE 或缺貨次數，或採分群預測。"], ["【智慧倉儲作業】情境：範例倉想導入 AI 預測，IT 提議一次對 2 萬個 SKU 全面建模。顧問建議另一種試點做法。依課程，下列何者最符合試點設計？", ["先挑銷量最低的長尾品項，失敗時影響也最小", "先選 Top 200 SKU，以移動平均為基準驗證 3 個月", "直接上線最先進的 TFT 模型，跳過基準比較", "一次涵蓋全部 2 萬個 SKU，讓模型看到最多資料"], 1, "試點：依 ABC 選 Top 200 SKU，先用移動平均算 MAPE 作為要打敗的對手，再用 Prophet 或 XGBoost 比較，3 個月證明價值。"], ["【智慧倉儲作業】情境：倉庫主管列出黃金儲位的判斷原則，請新人挑出錯誤的一項：靠近出貨口、不用彎腰或墊腳、重貨放低層、常一起訂的品項相鄰，以及「單價最高的商品一律放最上層」。哪一項不符合課程內容？", ["單價最高的商品一律放最上層，與揀貨效率無關", "常一起被訂購的品項相鄰，一趟拿齊整張訂單", "靠近出貨口，縮短每一趟揀貨的往返距離", "放在不需彎腰或登高的高度，符合人因工程"], 0, "黃金儲位看距離、高度、重量與搬運安全、訂單關聯；價格不是判斷依據。"], ["【智慧倉儲作業】情境：分析歷史訂單發現：滑鼠出現在 1,000 張訂單中，其中 600 張也買了鍵盤；全部訂單共 10,000 張。依 Apriori 關聯規則，「買滑鼠也買鍵盤」的信賴度與支持度分別是？", ["信賴度 60%、支持度 6%", "信賴度 10%、支持度 60%", "信賴度 6%、支持度 60%", "信賴度 60%、支持度 10%"], 0, "支持度＝一起出現的比例＝600÷10,000＝6%；信賴度＝買 A 之後也買 B 的機率＝600÷1,000＝60%。"], ["【智慧倉儲作業】情境：AI 儲位系統每週產出上百筆移庫建議，主管要求「全部在週一早上一次搬完」，結果截單前人力不足、WMS 儲位也來不及更新，帳實不符。依課程的實務提醒，較好的執行方式是？", ["建議清單就是命令，應在出貨高峰前全部搬完再出貨", "把移庫工作全部外包，倉庫人員就不必再更新 WMS", "停止使用動態儲位，全面改回固定儲位以避免帳實不符", "先算效益，離峰分批只動前段班並即時更新 WMS"], 3, "移庫有成本：先算效益、離峰分批、只調前段班（如 A 類前 200 名）、移庫後即時更新 WMS；每週小調整勝過每年大搬家。"], ["【智慧倉儲作業】情境：上午的批次揀貨已用遺傳演算法排好路徑，10:30 突然插入一張急單，需要在毫秒級內算出揀貨路徑。依課程對路徑演算法的比較，最適合的是？", ["最近鄰法：計算極快，適合即時插單", "ARIMA：可同時預測需求與規劃路徑", "蟻群演算法：調參簡單，適合單筆急單", "遺傳演算法：品質最高，適合任何情況"], 0, "最近鄰法毫秒級回應但易陷局部最優，適合急單；遺傳演算法適合批次預排；ARIMA 是預測模型。實務常組合使用。"], ["【智慧倉儲作業】情境：範例倉冷藏品以料箱為主，要求存取速度快，樓高 10 公尺。廠商推薦四種 AS/RS：單元負載、迷你負載、垂直升降模組 VLM、穿梭車系統。依選型指南，最適合的是？", ["一般人工貨架：成本最低，冷藏品不需要自動化", "單元負載：以托盤為主，高度可達 40 公尺以上", "穿梭車系統：處理料箱、速度很快，適合冷鏈", "垂直升降模組：適合產線零件，但存取速度較慢"], 2, "穿梭車處理料箱、速度很快，適合高速電商、冷鏈；單元負載以托盤為主；VLM 速度慢。選型三問：托盤或料箱、要多快、淨高多少。"], ["【智慧倉儲作業】情境：某製造廠的搬運路線十年不變，從原料倉固定送到產線；另一家電商倉 SKU 多、每季調整佈局、人車混流。兩家都想導入搬運機器人。依課程，較合理的選擇是？", ["製造廠選 AGV、電商倉選 AMR", "兩家都應選 AMR，AGV 已被淘汰", "兩家都應選 AGV，技術最成熟", "製造廠選 AMR、電商倉選 AGV"], 0, "AGV 沿固定路徑，適合場景固定、佈局少變；AMR 用 SLAM 自主導航，適合佈局常變的動態環境。"], ["【智慧倉儲作業】情境：導入 AMR 後，範例倉規定「快到 14:00 截單的任務優先」。工程師打算把這條規則寫進每台 AMR 的單機程式。依系統分層，較恰當的做法是？", ["寫在每台 AMR 單機程式中，讓機器人各自判斷", "WMS 決定業務規則並下發，路權交給 FMS／WCS", "交由每台 AMR 的感測器在路口自行偵測決定", "由現場人員以口頭方式即時指揮優先順序"], 1, "截單、急單屬業務規則，由 WMS 決定；路口誰先過等即時控制才交給 FMS／WCS。ERP 天／週、WMS 小時／天、WCS 毫秒。"], ["【智慧倉儲作業】情境：倉儲經理準備向老闆提案路徑優化專案：30 名揀貨員、優化後人力需求可降 20%、月薪 25,000 元。下列哪一種開場最符合課程對 ROI 報告的建議？", ["「我們將導入最新的 AI 遺傳演算法與動態儲位」", "「預測模型的 MAPE 可以降到 10% 以下」", "「可省 6 人、年省約 180 萬，約 18 個月回本」", "「揀貨行走時間可縮短 30%，效率大幅提升」"], 2, "老闆要聽金額：6 人×25,000×12＝180 萬。效率與 MAPE 是佐證指標，AI 模型是手段，都不該當開場。"], ["【智慧配送】情境：一家傳統經銷商原本只送貨到門市，轉做電商直營後物流成本暴增。檢討後發現，B2B 用的是整車裝載率指標，B2C 卻沿用同樣指標評估。依課程，B2C 宅配能不能賺錢最直接取決於？", ["倉庫面積大小：倉庫越大單件成本越低", "配送密度：同區件數越多單件成本越低", "托盤標準化程度：托盤打得越好越省錢", "整車裝載率：每趟車載得越滿成本越低"], 1, "B2B 看整車裝載率，B2C 看配送密度。KPI 要跟著模式走，指標放錯會引導錯誤的改善方向。"], ["【智慧配送】情境：範例倉的 B2C 包裹分散全台、量不固定；B2B 是 60 家固定門市、班表穩定且重視到店服務。老闆想統一改成自有車隊或全部委外。依課程，較恰當的配置是？", ["兩條線都改為自有車隊，服務品質最容易掌控", "B2C 委外宅配按件付費、B2B 門市用自有車隊", "B2C 用自有車隊、B2B 全部改為委外零擔運輸", "兩條線都委外，固定成本最低且永遠最划算"], 1, "零散 B2C 按件付費最划算；固定門市、班表穩定且重視服務，自有車隊固定成本才分攤得掉。範例倉是典型混合模式。"], ["【智慧配送】情境：冷鏈車隊導入 IoT 溫度感測器，每 5 分鐘回傳一次，但上個月仍發生一批冷藏飲料斷鏈，事後發現警報響了卻沒人處理。依課程，最能避免「裝了感測器卻還是斷鏈」的是？", ["改成只在到貨時量一次溫度，減少誤報的干擾", "全部換成更大台的冷凍車，溫度就不會再升高", "把感測器回傳頻率提高到每秒一次，警報就不會漏掉", "寫清楚警報後的處置責任與 SOP，紀錄綁定訂單"], 3, "感測器只負責發現問題，警報後誰處理、怎麼處理、怎麼記錄才決定貨保不保得住。冷藏 7°C 以下、冷凍 −18°C 以下。"], ["【智慧配送】情境：即時配送平台想在社區設前置倉，承諾 30 分鐘送達，但前置倉只有 200 坪。商品部提議「全部 SKU 各放一點，讓顧客什麼都買得到」。依課程，前置倉最適合放哪類商品？", ["剛上市沒有銷售紀錄的新品，搶先曝光", "單價最高的商品，提高每一筆訂單的金額", "高頻穩定的 A 類品項；長尾品留在大倉", "全部 SKU 各放一點，滿足顧客所有的需求"], 2, "前置倉品項少、揀貨要在幾分鐘內完成，只放最常被買、需求穩定的品項；長尾品走一般配送。"], ["【智慧配送】情境：TMS 導入後，路線常排得很奇怪，司機抱怨系統把隔壁兩條街的地址排在不同車。檢查發現許多訂單地址缺門牌、寫法不一，系統無法轉成經緯度。依訂單整合五步驟，問題出在哪一步？", ["依截單分配，截單時間設定過早", "多通路匯入，訂單來源太多造成系統當機", "地址正規化與地理編碼，決定路線準不準", "拆單併單，同地址訂單沒有合併配送"], 2, "地址要統一格式並轉成經緯度，系統才能計算距離與停靠順序；這一步最常被忽略。防呆：地址比對失敗即退回客服。"], ["【智慧配送】情境：範例倉的 60 家門市只在 18:00–21:30 收貨、每台 3.5 噸車有載重材積上限、另有 1 台雙溫車專送冷藏品。排程人員問這屬於哪一種 VRP。最正確的描述是？", ["單純 TSP，只需決定一台車的順序", "MDVRP，因為有多個倉庫同時出貨", "CVRP＋VRPTW＋雙溫層的組合問題", "不屬於 VRP，人工排班即可解決"], 2, "容量限制是 CVRP、收貨時窗是 VRPTW，再加上雙溫層；目前單一倉，不是 MDVRP。"], ["【智慧配送】情境：倉庫 O 到客戶 B 為 12 km、到 D 為 15 km，B 與 D 相距 5 km；到 A 為 10 km，A 與 B 相距 4 km。用節約法 s(i,j)＝d(O,i)＋d(O,j)－d(i,j) 計算，哪一組的節約值最大？代表什麼？", ["A-B 節約 26 km；兩點離倉庫近，最適合優先合併", "A-B 節約 18 km；兩點距離最短，所以節約值最大", "B-D 節約 32 km；兩點距離加總最大，所以最划算", "B-D 節約 22 km；離倉庫遠又彼此近最划算"], 3, "B-D＝12＋15－5＝22；A-B＝10＋12－4＝18。課程示範中節約法 55 km，比經驗派車 80 km 少約 31%。"], ["【智慧配送】情境：門市配送每車每天成本約 3,600 元（司機 2,000、折舊保險 1,000、油料 600），每車送 10 家門市。路線重排後每車可送 12 家，60 家門市只需 5 台車。依課程示範，下列敘述何者正確？", ["每店次成本約 360 元降到 180 元，一年省 216 萬", "少一台車只省油料 600 元，一年約省 18 萬", "每店次成本約 360 元降到 300 元，一年約省 108 萬", "每店次成本不變，因為油料費用會同比例增加"], 2, "固定成本占 83%，密度提高後固定成本被更多點分攤；少一台車每天省 3,600 元×300 工作天＝108 萬。"], ["【智慧配送】情境：30 台車的車隊評估導入 TMS：導入費 200 萬、年維護 50 萬、無效里程減少 15%、少聘一位調度員。廠商簡報說「5 個月回本」，但假設油錢與折舊都會隨里程省 15%。依課程，向老闆報告的較穩健做法是？", ["只報告里程減少 15%，不必換算成金額避免爭議", "先報只算油錢的保守版約 12.6 個月，再列加分項", "等全面上線一年後再計算 ROI，事前不需要評估", "直接引用廠商的 5 個月回本，數字越漂亮越容易通過"], 1, "折舊不會因少跑 15% 就少 15%。保守版年效益 240 萬、淨 190 萬，約 12.6 個月回本；假設攤開，再用試點換成實測值。"], ["【SAP WI】情境：IT 要把雲端的 SAP Warehouse Insights 連到公司地端的 SAP EWM。同事提議「直接開防火牆讓雲端連進來就好」，並問該選哪個資料中心。依管理指南與部署藍圖，正確的做法是？", ["改用 VPN 撥接取代雲連接器，資料中心選總部所在國", "開放防火牆直連即可，資料中心選價格最便宜的地區", "把 EWM 搬上雲端後才能連線，資料中心可隨機選擇", "設定 SAP Cloud Connector，選離使用者最近的資料中心"], 3, "Cloud Connector 是連接雲端與地端的必備骨幹；選最近的資料中心，因為延遲是即時優化的最大殺手。"], ["【SAP WI】情境：工程師把 IoT 堆高機定位資料送進 SAP Warehouse Insights：座標用公分整數、時間用「2026-11-11 09:30」字串，結果佈局圖上的軌跡完全錯亂。依管理指南的格式要求，應如何修正？", ["座標改為公尺浮點數，時間改為 Unix 毫秒長整數", "只要把資料量減半，軌跡就會自動恢復正常", "座標改用英吋，時間改為當地時區的秒數表示", "座標維持公分整數，時間改為 ISO 日期字串即可"], 0, "x、y、z 必須是浮點數、單位公尺，且與倉庫佈局坐標一致；時間是從 1970 年起算的 Unix 毫秒長整數。"], ["【SAP WI】情境：倉儲處長需要查看公司所有倉庫的分析畫面，但不需要修改系統配置。管理員準備替他設定角色。依 SAP Warehouse Insights 的角色設計，最合適的做法是？", ["給 CONFIGURATION_EXPERT，讓他能看到所有倉庫", "給 WAREHOUSE_CLERK，ACCESS 屬性填 *", "直接給 BTP 全域管理員角色，權限一次到位", "逐一建立每個倉庫的帳號，請他輪流切換登入"], 1, "WAREHOUSE_CLERK 可分析但不能改核心配置；WAREHOUSE_ACCESS 控制倉庫範圍，屬性值 * 代表全部倉庫。符合最小權限原則。"], ["【SAP WI】情境：公司用 SAP Warehouse Insights 的測試演示授權做概念驗證，計畫建 8 個倉庫、上載 6 個月的已確認倉庫訂單，並混用公尺與公分建模。依管理指南，哪一組問題都會出現？", ["最多 5 個倉庫、資料不超過 90 天、單位必須一致", "只有倉庫數量會超過限制，資料天數與單位都沒有規定", "只要單位換算正確，公尺與公分混用不會影響優化結果", "倉庫數量不限，但資料必須至少上載一整年才能開始運算"], 0, "測試演示授權最多 5 個倉庫編號（上載最多 5 GB）；含已確認訂單或任務的總天數不能超過 90 天；整個模型必須用同一長度單位。"], ["【案例與 AI 應用】情境：3C 門市的旗艦手機在 9/1 沒有進貨紀錄卻出貨 5 台、9/4 再出 8 台，帳面結存變成 −5。財務發現實際已入庫但發票未到，倉管未做入庫。依課堂分析報告，下列處理何者最完整？", ["要求門市停止銷售所有手機，直到年底全面盤點", "盤點追溯單據、暫估入庫，ERP 禁止負庫存", "直接把帳面數字改成 0，下個月再一併調整即可", "把負庫存視為正常的預售現象，不需要任何處理"], 1, "報告建議：立即循環盤點、對已入庫未取得發票的貨暫估入帳（借庫存商品、貸應付帳款—暫估）、ERP 開啟禁止負庫存控制。"], ["【案例與 AI 應用】情境：雙 11 數據集中，包裝台每單平均包裝秒數換算成 8 小時產能，全倉每天約 4,250–5,620 單，但實際複核量為 5,797–7,671 單；同時有 15 筆紙箱緩衝材低於安全線。小組用 AI 分析瓶頸。依課程「先看數據再問 AI」，最合理的結論是？", ["AI 結論已經足夠，不必再自行驗算產能換算", "包裝台產能不足且耗材斷料，是最先撐不住的瓶頸", "揀貨區人均吞吐最低，所以揀貨區一定是唯一瓶頸", "碼頭有嚴重堵塞紀錄，代表包裝台完全沒有問題"], 1, "每天複核量都超過 8 小時產能（11/10 約 1.5 倍），耗材又低於安全線；講師提醒要檢查秒／單換算與分區單量，並自己驗算 AI 推導。"], ["【案例與 AI 應用】情境：資安宣導列出：幣安疑因工程師筆電遭入侵被轉走約 63 億美元；遊戲官方啟動器被植入木馬；法國超市舊款冷藏控制器暴露在網路上遭改溫控。倉儲公司要訂定內部規範。下列哪一組最符合宣導重點？", ["冷藏控制器只要還能運作就不必汰換或隔離網段", "只要從官方網站下載的軟體都可以放心安裝使用", "權限給越大越好，工程師才能即時處理緊急狀況", "只裝工作所需軟體、權限最小化、隔離網段"], 3, "三起事件的提醒：公司電腦不裝來路不明軟體與遊戲（官方來源也可能被植入）、權限用多少給多少、停產設備汰換並隔離網段。"], ["【案例與 AI 應用】情境：倉儲主管想讓新進員工隨時查詢 SAP 操作手冊的問題，例如「定義倉位坐標需要幾組參考坐標」，並在答不出來時引導員工寄信到資訊部。依講義的 AI 工具應用，最合適的做法是？", ["建立 GEM 客服工程師，上傳手冊並設定轉介方式", "用 Deep Research 搜尋網路公開資料，取代內部操作手冊", "用 Nano Banana 把手冊轉成資訊圖表，貼在倉庫牆上供查閱", "用 Google Calendar 排定每週一次手冊問答會議集中解答"], 0, "講義示範新增 GEM：命名、角色、上傳檔案；語氣禮貌專業，無法回答時改請寄信至資訊部。手冊中參考坐標為兩組。"]];
+
+(function(){
+  var box=document.getElementById('qz'), sc=document.getElementById('qscore'), done=0, ok=0, L='ABCD';
+  Q.forEach(function(q,i){
+    var d=document.createElement('div'); d.className='q';
+    var p=document.createElement('p'); p.textContent=(i+1)+'. '+q[0]; d.appendChild(p);
+    var o=document.createElement('div'); o.className='opts'; o.setAttribute('role','group');
+    var bs=[];
+    q[1].forEach(function(t,k){
+      var b=document.createElement('button'); b.type='button'; b.className='opt'; b.textContent='('+L[k]+') '+t;
+      b.addEventListener('click',function(){
+        bs.forEach(function(x,j){x.disabled=true; if(j===q[2])x.classList.add('ok'); else if(j===k)x.classList.add('ng');});
+        var e=document.createElement('div'); e.className='exp'; e.textContent=(k===q[2]?'答對！':'答錯，正確答案 '+L[q[2]]+'。')+q[3]; d.appendChild(e);
+        done++; if(k===q[2])ok++; sc.textContent='已作答 '+done+' / '+Q.length+'，答對 '+ok+' 題';
+      });
+      bs.push(b); o.appendChild(b);
+    });
+    d.appendChild(o); box.appendChild(d);
+  });
+})();
+
+document.querySelectorAll('.cbtn').forEach(function(b){b.addEventListener('click',function(){
+  var t=b.parentNode.querySelector('code').innerText;
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='已複製';setTimeout(function(){b.textContent='複製'},1500)},function(){
+    var r=document.createRange();r.selectNodeContents(b.parentNode.querySelector('code'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='已選取';});
+});});
+</script>
+</body>
+</html>
